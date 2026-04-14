@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VELTM Butler Button in the Americas — USA, Canada, Mexico, Costa Rica, Colombia, Peru, Brazil, Caribbean and more. Your personal travel butler from $25/day.">
+  <title>The Americas | VELTM Butler Button</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .dest-detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-lg); }
+    .dest-detail-card { background: var(--white); border-radius: var(--radius-md); border: 1px solid var(--gray-200); overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+    .dest-detail-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .dest-detail-card--high { border-top: 3px solid var(--veltm-gold); }
+    .dest-detail-card__header { padding: var(--space-lg) var(--space-lg) var(--space-sm); }
+    .dest-detail-card__name { font-size: 1.2rem; font-weight: 700; color: var(--veltm-navy); margin-bottom: var(--space-xs); }
+    .dest-detail-card__region { font-size: 0.78rem; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; }
+    .dest-detail-card__body { padding: 0 var(--space-lg) var(--space-md); }
+    .dest-detail-card__desc { font-size: 0.88rem; color: var(--gray-600); margin-bottom: var(--space-md); }
+    .dest-tags { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-bottom: var(--space-md); }
+    .dest-tag { font-size: 0.72rem; font-weight: 600; background: var(--veltm-ice); color: var(--veltm-blue); border-radius: var(--radius-full); padding: 3px 10px; }
+    .dest-prompt { background: var(--gray-100); border-left: 3px solid var(--veltm-gold); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: var(--space-sm) var(--space-md); font-size: 0.82rem; color: var(--gray-700); font-style: italic; margin: 0 var(--space-lg) var(--space-lg); }
+    .dest-prompt strong { display: block; font-style: normal; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-500); margin-bottom: 2px; }
+    .priority-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: var(--radius-full); margin-left: var(--space-sm); }
+    .priority-badge--high { background: var(--veltm-gold-light); color: #7D6608; }
+    .section-intro { max-width: 740px; margin-bottom: var(--space-2xl); }
+    .region-subhead { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-500); margin: var(--space-2xl) 0 var(--space-lg); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--gray-200); }
+    .region-section-title { font-size: 1.75rem; font-weight: 800; color: var(--veltm-navy); margin: var(--space-3xl) 0 var(--space-md); padding-top: var(--space-2xl); border-top: 2px solid var(--gray-200); }
+    .region-section-title:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../index.html" class="logo">VELTM <span>Butler Button</span></a>
+    <nav class="nav-main">
+      <a href="../index.html">Home</a>
+      <a href="../how-it-works.html">How It Works</a>
+      <a href="../pricing.html">Pricing</a>
+      <a href="../services.html">Services</a>
+      <a href="../use-cases.html">Use Cases</a>
+      <a href="../stories.html">Stories</a>
+      <a href="../compare.html">Compare</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../b2b.html">Partners</a>
+      <a href="../become-a-butler/">Become a Butler</a>
+      <a href="./" class="active">Destinations</a>
+      <a href="../reference/">Research</a>
+      <a href="../pricing.html" class="btn btn--primary btn--sm">Book Your Butler</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<main>
+
+  <section class="article-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a> &rsaquo;
+        <a href="./">Destinations</a> &rsaquo;
+        <span>The Americas</span>
+      </nav>
+      <h1>The Americas</h1>
+      <p class="hero-sub">North America, Central America, South America, and the Caribbean — over 120 destinations. From New York City restaurant reservations to Machu Picchu permit logistics, your Butler handles it.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- NORTH AMERICA -->
+      <h2 class="region-section-title" id="north-america">North America</h2>
+      <div class="section-intro">
+        <p>74 destinations across the USA and Canada. Even domestically, a Butler adds real value — concert tickets, last-minute hotel upgrades, airport emergency logistics, and local knowledge in cities you don't know well.</p>
+      </div>
+
+      <div class="region-subhead">High Priority</div>
+      <div class="dest-detail-grid">
+
+        <div class="dest-detail-card dest-detail-card--high" id="usa">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">USA — Major Cities <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">North America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">New York, Los Angeles, Chicago, Miami, San Francisco, New Orleans, Las Vegas. Your Butler secures sold-out restaurant reservations, sports and concert tickets, limo transfers, and hotel upgrades across all major US markets.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Urban</span>
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Entertainment</span>
+              <span class="dest-tag">Business Travel</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I need a table at Carbone in NYC for tomorrow night — 4 people. Can you make this happen?"</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">USA — National Parks <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">North America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Grand Canyon, Yellowstone, Yosemite, Glacier, Zion. Your Butler handles advance permit reservations (often released 6 months ahead), lodge bookings inside park boundaries, and shuttle logistics.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Nature</span>
+              <span class="dest-tag">Adventure</span>
+              <span class="dest-tag">Road Trip</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Can you get the Havasupai Falls permit for April? I know it's nearly impossible — try anyway."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Canada <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">North America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Banff and Jasper lodge bookings, Vancouver restaurant reservations, Quebec City winter festival logistics, and Churchill polar bear viewing tour arrangements.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Nature</span>
+              <span class="dest-tag">Ski</span>
+              <span class="dest-tag">Wildlife</span>
+              <span class="dest-tag">Urban</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a polar bear viewing tour from Churchill, Manitoba — October, 2 people, 3 nights."</div>
+        </div>
+
+      </div>
+
+      <!-- CENTRAL AMERICA -->
+      <h2 class="region-section-title" id="central-america">Central America</h2>
+      <div class="section-intro">
+        <p>8 destinations. Adventure travel, eco-lodges, and one of the most bio-diverse regions on Earth. Your Butler navigates the logistics so you can focus on the jungle.</p>
+      </div>
+
+      <div class="region-subhead">High Priority</div>
+      <div class="dest-detail-grid">
+
+        <div class="dest-detail-card dest-detail-card--high" id="mexico">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Mexico <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Central America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Mexico City restaurant reservations (Quintonil, Pujol), Oaxaca mezcal tour logistics, Tulum cenote bookings, Riviera Maya villa access, and CDMX museum skip-the-line arrangements.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Beach</span>
+              <span class="dest-tag">Adventure</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Get me a reservation at Quintonil in Mexico City — any day this week, 2 people."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="costa-rica">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Costa Rica <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Central America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler arranges Monteverde canopy tours, Manuel Antonio lodge bookings, Arenal volcano hot springs, Osa Peninsula eco-lodge reservations, and private surf lessons on the Pacific coast.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Eco-Tourism</span>
+              <span class="dest-tag">Adventure</span>
+              <span class="dest-tag">Surf</span>
+              <span class="dest-tag">Wildlife</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book an eco-lodge in the Osa Peninsula — 4 nights, 2 guests, with wildlife guide included."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Belize</div>
+            <div class="dest-detail-card__region">Central America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Great Blue Hole dive trip logistics, Ambergris Caye resort bookings, Mayan ruins guide arrangements, and jungle lodge stays in Cayo District.</p>
+            <div class="dest-tags"><span class="dest-tag">Diving</span><span class="dest-tag">Adventure</span><span class="dest-tag">History</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a Great Blue Hole dive trip — 1 day, 2 certified divers, from San Pedro."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Panama</div>
+            <div class="dest-detail-card__region">Central America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Panama Canal transit arrangements, Bocas del Toro island logistics, San Blas archipelago sailing bookings, and Panama City fine dining reservations.</p>
+            <div class="dest-tags"><span class="dest-tag">Culture</span><span class="dest-tag">Sailing</span><span class="dest-tag">Nature</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Arrange a San Blas island sailing trip — 5 days, 2 people, departing from Colon."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Guatemala</div>
+            <div class="dest-detail-card__region">Central America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Lake Atitlan boat tours, Antigua colonial city guide bookings, Tikal Mayan ruins arrangements, and Guatemalan textile market guide experiences.</p>
+            <div class="dest-tags"><span class="dest-tag">Culture</span><span class="dest-tag">History</span><span class="dest-tag">Nature</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a sunrise Tikal tour from Flores — 2 people, licensed guide, 2 nights."</div>
+        </div>
+
+      </div>
+
+      <!-- CARIBBEAN -->
+      <h2 class="region-section-title" id="caribbean">Caribbean</h2>
+      <div class="section-intro">
+        <p>27 island destinations. Catamaran charters, private beach clubs, resort upgrades, and island-hopping logistics — your Butler navigates the Caribbean's patchwork of airlines, ferries, and operators.</p>
+      </div>
+
+      <div class="region-subhead">High Priority</div>
+      <div class="dest-detail-grid">
+
+        <div class="dest-detail-card dest-detail-card--high" id="bahamas">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Bahamas <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler arranges Nassau resort upgrades, Exuma pig beach boat tours, private island day charters from Nassau, and Out Islands ferry logistics to Eleuthera and Harbour Island.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Beach</span>
+              <span class="dest-tag">Luxury</span>
+              <span class="dest-tag">Island-Hopping</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a private boat to the Exuma Cays — full day, 4 people, swimming pigs included."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="dominican-republic">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Dominican Republic <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Punta Cana resort bookings and upgrades, Samana whale-watching tours in season, Santo Domingo colonial city guide arrangements, and Cabarete kite-surfing lesson bookings.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Beach</span>
+              <span class="dest-tag">Wellness</span>
+              <span class="dest-tag">Adventure</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a whale watching tour from Samana — January, 2 people, small boat preferred."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="barbados">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Barbados <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler books Bridgetown's top beach clubs, arranges west coast catamaran sunset cruises, secures reservations at The Cliff and Cin Cin restaurants, and handles villa rentals in Sandy Lane.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Beach</span>
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Luxury</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Get a table at The Cliff in Barbados for our anniversary dinner — Saturday evening."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Jamaica</div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Montego Bay resort upgrades, Negril Seven Mile Beach villa bookings, Blue Mountains coffee tour arrangements, and Kingston music heritage experiences.</p>
+            <div class="dest-tags"><span class="dest-tag">Beach</span><span class="dest-tag">Culture</span><span class="dest-tag">Music</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a Blue Mountains coffee and hiking tour from Kingston — Saturday, 2 people."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Cuba</div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Havana casa particular sourcing, Vinales valley tobacco tour bookings, Trinidad colonial city guides, and classic car tour arrangements in Havana.</p>
+            <div class="dest-tags"><span class="dest-tag">Culture</span><span class="dest-tag">History</span><span class="dest-tag">Music</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Arrange a classic car tour of Havana and a good casa particular near the Malecon — 3 nights."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Puerto Rico</div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">San Juan Old City restaurant reservations, bioluminescent bay kayak bookings in Vieques, El Yunque rainforest guide arrangements, and Condado beach hotel access.</p>
+            <div class="dest-tags"><span class="dest-tag">Culinary</span><span class="dest-tag">Nature</span><span class="dest-tag">Culture</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a bioluminescent bay kayak tour in Vieques — 2 people, any night this week."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">St. Lucia</div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Jade Mountain and Ladera resort bookings, Pitons hiking guide arrangements, private catamaran Piton-view sunset charters, and Soufriere sulphur springs access.</p>
+            <div class="dest-tags"><span class="dest-tag">Luxury</span><span class="dest-tag">Adventure</span><span class="dest-tag">Honeymoon</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Find a honeymoon suite with Piton views — 5 nights, under $800/night if possible."</div>
+        </div>
+
+        <div class="dest-detail-card" id="middle-east">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Trinidad &amp; Tobago</div>
+            <div class="dest-detail-card__region">Caribbean</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Port of Spain Carnival logistics (the real one, February), Tobago coral reef dive bookings, Asa Wright Nature Centre birdwatching guide arrangements.</p>
+            <div class="dest-tags"><span class="dest-tag">Culture</span><span class="dest-tag">Diving</span><span class="dest-tag">Birdwatching</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I want to experience Carnival in Trinidad properly — not tourist stands. What do I need to book?"</div>
+        </div>
+
+      </div>
+
+      <!-- MIDDLE EAST (linked from index) -->
+      <h2 class="region-section-title">Middle East</h2>
+      <div class="section-intro">
+        <p>13 destinations. Modern megacities, ancient wonders, desert adventures. Your Butler navigates local customs, language, and access in the Arab world and Levant.</p>
+      </div>
+
+      <div class="region-subhead">High Priority</div>
+      <div class="dest-detail-grid">
+
+        <div class="dest-detail-card dest-detail-card--high" id="uae">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">UAE <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Middle East</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Dubai restaurant reservations at Nobu, Zuma, and Ossiano, arranges desert safari camps, secures Burj Khalifa At the Top tickets, and manages Abu Dhabi Louvre and Ferrari World logistics.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Luxury</span>
+              <span class="dest-tag">Adventure</span>
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Urban</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a private desert glamping experience near Dubai — 1 night, 2 people, with dinner under the stars."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="jordan">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Jordan <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Middle East</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler arranges Petra private guide bookings (including by-night candle walks), Wadi Rum Bedouin camp stays, Dead Sea resort access, and Amman food tour experiences.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">History</span>
+              <span class="dest-tag">Adventure</span>
+              <span class="dest-tag">Culture</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book Petra by Night for Thursday and a Wadi Rum camp for the next 2 nights — 2 people."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="israel">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Israel <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Middle East</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Tel Aviv restaurant bookings on Rothschild Boulevard, Jerusalem Old City guide arrangements across all quarters, Dead Sea resort access from Ein Bokek, and Negev desert hiking logistics.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">History</span>
+              <span class="dest-tag">Culture</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a private guide for Jerusalem's Old City — all four quarters, full day, 2 people."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Saudi Arabia</div>
+            <div class="dest-detail-card__region">Middle East</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">AlUla Hegra archaeological site guide bookings, Riyadh restaurant access, Red Sea resort sourcing at NEOM, and Diriyah cultural district arrangements.</p>
+            <div class="dest-tags"><span class="dest-tag">History</span><span class="dest-tag">Culture</span><span class="dest-tag">Luxury</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I'm visiting AlUla — can you book a licensed guide for Hegra and a good hotel in the area?"</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Oman</div>
+            <div class="dest-detail-card__region">Middle East</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Muscat cultural guide bookings, Wahiba Sands desert camp logistics, Wadi Bani Khalid swimming hole transport, and Musandam dhow cruise arrangements.</p>
+            <div class="dest-tags"><span class="dest-tag">Culture</span><span class="dest-tag">Adventure</span><span class="dest-tag">Nature</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Arrange a Wahiba Sands overnight camp and a Musandam dhow cruise — 5 days total in Oman."</div>
+        </div>
+
+      </div>
+
+      <!-- SOUTH AMERICA -->
+      <h2 class="region-section-title" id="south-america">South America</h2>
+      <div class="section-intro">
+        <p>12 destinations across the continent. Ancient ruins, Amazon expeditions, world-class urban food scenes, and Patagonian wilderness. Your Butler manages the Spanish, Portuguese, and logistics gap.</p>
+      </div>
+
+      <div class="region-subhead">High Priority</div>
+      <div class="dest-detail-grid">
+
+        <div class="dest-detail-card dest-detail-card--high" id="peru">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Peru <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">South America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Machu Picchu entry permits (strictly limited, sell out fast), Inca Trail guide and permit logistics, Lima fine dining at Central or Maido, and Amazon lodge bookings from Iquitos.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">History</span>
+              <span class="dest-tag">Trekking</span>
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Amazon</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Can you get Machu Picchu sunrise entry permits for June — 2 people? And book the Inca Trail if available."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="colombia">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Colombia <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">South America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler books Bogota's Andrés Carne de Res experience, arranges Cartagena old city guided walks, Coffee Region finca stays, and Tayrona National Park entrance permits and eco-lodge bookings.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Coffee</span>
+              <span class="dest-tag">Nature</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a coffee finca stay in Salento — 3 nights, 2 guests, with a tour of the plantation."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="argentina">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Argentina <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">South America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler secures Buenos Aires parrilla reservations (Don Julio books out weeks ahead), arranges Mendoza wine estate stays, coordinates Patagonia trekking logistics in Torres del Paine, and handles Iguazu Falls guide bookings.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Wine</span>
+              <span class="dest-tag">Trekking</span>
+              <span class="dest-tag">Nature</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Get a reservation at Don Julio in Buenos Aires — this week, 2 people, any night."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="brazil">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Brazil <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">South America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Rio Carnival logistics, Sao Paulo restaurant scene (D.O.M., A Casa do Porco), Amazon river expedition bookings from Manaus, and Fernando de Noronha marine park permits.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Amazon</span>
+              <span class="dest-tag">Beach</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I want to do Carnival in Rio properly — camarote box access, samba school parade. What do I need?"</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Chile</div>
+            <div class="dest-detail-card__region">South America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Torres del Paine W-trek logistics, Atacama Desert astronomy tour bookings, Santiago restaurant scene access, and Easter Island flight and guide arrangements.</p>
+            <div class="dest-tags"><span class="dest-tag">Trekking</span><span class="dest-tag">Desert</span><span class="dest-tag">Culinary</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book the W-trek in Torres del Paine — 5 days, 2 people, late November. Refugios preferred."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Ecuador</div>
+            <div class="dest-detail-card__region">South America</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Galapagos Islands liveaboard bookings (strictly limited permits), Quito colonial city guides, Amazon jungle lodge arrangements, and Cotopaxi volcano climb logistics.</p>
+            <div class="dest-tags"><span class="dest-tag">Wildlife</span><span class="dest-tag">Adventure</span><span class="dest-tag">Nature</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Find a Galapagos liveaboard for 8 days — 2 people, July. Budget around $4,000 per person."</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Planning a Trip to the Americas?</h2>
+        <p>From Machu Picchu permits to Carnival logistics — your Butler handles the impossible bookings. From $25/day.</p>
+        <a href="../pricing.html" class="btn btn--primary btn--lg">Book Your Butler &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">VELTM <span>Butler Button</span></div>
+        <p>Your personal travel butler — from $25/day, anywhere in the world.</p>
+      </div>
+      <div class="footer-col"><h4>Service</h4><a href="../how-it-works.html">How It Works</a><a href="../pricing.html">Pricing</a><a href="../services.html">Services</a><a href="../faq.html">FAQ</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="../stories.html">Stories</a><a href="../compare.html">Compare</a><a href="../b2b.html">Partners</a><a href="../become-a-butler/">Become a Butler</a></div>
+      <div class="footer-col"><h4>Connect</h4><a href="mailto:hello@veltmtours.com">hello@veltmtours.com</a><a href="https://www.veltmtours.com" target="_blank">veltmtours.com</a></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 VELTM Tours.</span><span>Butler Button &mdash; Personal Travel Concierge</span></div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

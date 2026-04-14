@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Real travel scenarios handled by your VELTM Butler — midnight transfers, fully-booked restaurants, lost luggage, medical help, surprise anniversaries and more. Text your Butler.">
+  <title>Use Cases — VELTM Butler Button</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .scenario-number {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+      margin-bottom: var(--space-sm);
+    }
+    .scenario__problem {
+      font-size: 1rem;
+      color: var(--gray-800);
+      font-style: italic;
+      margin-bottom: var(--space-md);
+      line-height: 1.55;
+    }
+    .scenario__context {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+      margin-bottom: var(--space-md);
+      line-height: 1.55;
+    }
+    .scenario__answer {
+      font-weight: 700;
+      color: var(--veltm-gold);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .scenario__answer::before {
+      content: '\2192';
+      font-size: 1.1rem;
+    }
+    .social-note {
+      background: var(--veltm-ice);
+      border: 1px solid var(--veltm-light);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+      text-align: center;
+      margin: var(--space-2xl) 0;
+    }
+    .social-note p {
+      color: var(--veltm-blue);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+    .social-note strong {
+      color: var(--veltm-navy);
+    }
+    .category-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-sm);
+      background: var(--gray-100);
+      color: var(--gray-500);
+    }
+    .category-label--travel   { background: #EBF5FB; color: #1A5276; }
+    .category-label--dining   { background: #FEF9E7; color: #7D6608; }
+    .category-label--errand   { background: #EAFAF1; color: #1E8449; }
+    .category-label--medical  { background: #FDEDEC; color: #922B21; }
+    .category-label--romance  { background: #F9EBEA; color: #922B21; }
+    .category-label--local    { background: #F4ECF7; color: #6C3483; }
+    .category-label--emergency { background: #FEF9E7; color: #7D6608; }
+    .intro-strip {
+      display: flex;
+      gap: var(--space-2xl);
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: var(--space-2xl) 0;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: var(--space-2xl);
+    }
+    .intro-strip__item {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray-600);
+    }
+    .intro-strip__item strong {
+      display: block;
+      font-size: 1.1rem;
+      color: var(--veltm-navy);
+      margin-bottom: var(--space-xs);
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo">VELTM <span>Butler Button</span></a>
+    <nav class="nav-main">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="services.html">Services</a>
+      <a href="use-cases.html" class="active">Use Cases</a>
+      <a href="stories.html">Stories</a>
+      <a href="compare.html">Compare</a>
+      <a href="faq.html">FAQ</a>
+      <a href="b2b.html">Partners</a>
+      <a href="become-a-butler/">Become a Butler</a>
+      <a href="destinations/">Destinations</a>
+      <a href="reference/">Research</a>
+      <a href="pricing.html" class="btn btn--primary btn--sm">Book Your Butler</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Text Your Butler.</h1>
+      <p class="lead">These are the moments Butler Button was built for. Real situations. Real problems. One solution &mdash; text your Butler and let them handle it.</p>
+    </div>
+  </section>
+
+  <!-- Intro strip -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="intro-strip">
+        <div class="intro-strip__item">
+          <strong>Any request</strong>
+          Restaurants to emergencies
+        </div>
+        <div class="intro-strip__item">
+          <strong>Any hour</strong>
+          8-hour or 24-hour coverage
+        </div>
+        <div class="intro-strip__item">
+          <strong>Any country</strong>
+          195+ countries covered
+        </div>
+        <div class="intro-strip__item">
+          <strong>Just text</strong>
+          No app. No forms. No hold music.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scenarios -->
+  <section class="section">
+    <div class="container">
+      <div class="scenario-grid">
+
+        <!-- 1 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 01</div>
+          <span class="category-label category-label--travel">Travel</span>
+          <p class="scenario__problem">"Your flight lands at midnight and you forgot to book a transfer."</p>
+          <p class="scenario__context">It's 10pm. You're still in the air. The taxi queues at this airport are notorious and you have an early meeting tomorrow.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 2 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 02</div>
+          <span class="category-label category-label--dining">Dining</span>
+          <p class="scenario__problem">"The restaurant you've been looking forward to for three months is fully booked."</p>
+          <p class="scenario__context">You check the app on arrival day. No tables. The maître d' doesn't respond to emails. Your anniversary dinner is tonight.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 3 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 03</div>
+          <span class="category-label category-label--errand">Errand</span>
+          <p class="scenario__problem">"You left your phone charger at the last hotel, three cities ago."</p>
+          <p class="scenario__context">Your phone is at 8%. You have a full day ahead. You don't know where the nearest electronics shop is, and you don't have time to find out.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 4 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 04</div>
+          <span class="category-label category-label--medical">Medical</span>
+          <p class="scenario__problem">"Your child is sick and you need a doctor who speaks English."</p>
+          <p class="scenario__context">It's Sunday morning in a city where you don't speak the language. The hotel front desk shrugs. You need someone you can trust with your child's health.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 5 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 05</div>
+          <span class="category-label category-label--romance">Romance</span>
+          <p class="scenario__problem">"You want flowers in the room when your partner arrives. You're already at a conference across town."</p>
+          <p class="scenario__context">You're stuck in back-to-back meetings until 5pm. Your partner checks in at 4pm. You want the room to say something before you get there.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 6 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 06</div>
+          <span class="category-label category-label--travel">Travel</span>
+          <p class="scenario__problem">"You're stuck in traffic and need to rebook a train you're about to miss."</p>
+          <p class="scenario__context">The taxi isn't moving. Your train departs in 22 minutes. The rail app won't load. Missing this connection costs you your hotel night on the other end.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 7 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 07</div>
+          <span class="category-label category-label--local">Local</span>
+          <p class="scenario__problem">"You want a local guide who speaks your language for tomorrow. It's 9pm."</p>
+          <p class="scenario__context">The tour you booked was cancelled. You've got a free day and want to see the city properly, not on a coach with 40 strangers. Tomorrow. Ideally in French.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 8 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 08</div>
+          <span class="category-label category-label--emergency">Emergency</span>
+          <p class="scenario__problem">"Your luggage was lost and you need essentials delivered to your hotel tonight."</p>
+          <p class="scenario__context">The airline says 48 hours. You have a client dinner in three hours and nothing to wear. You need toiletries, a clean shirt, and someone who can make that happen fast.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 9 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 09</div>
+          <span class="category-label category-label--romance">Romance</span>
+          <p class="scenario__problem">"You're celebrating an anniversary and want a surprise dinner reservation — but you haven't planned anything."</p>
+          <p class="scenario__context">It crept up on you. It's the morning of. You want somewhere memorable, not a tourist trap. You'd like the restaurant to know it's special, without you having to explain it all again on arrival.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+        <!-- 10 -->
+        <div class="scenario">
+          <div class="scenario-number">Scenario 10</div>
+          <span class="category-label category-label--local">Local</span>
+          <p class="scenario__problem">"You need last-minute tickets to a sold-out show."</p>
+          <p class="scenario__context">You saw a poster on the way back to the hotel. Tonight. Sold out online. No box office until morning. Your last night in the city and you don't want to waste it.</p>
+          <div class="scenario__answer">Text your Butler.</div>
+        </div>
+
+      </div>
+
+      <!-- Social note -->
+      <div class="social-note">
+        <p><strong>Every scenario above is a standalone social post.</strong><br>
+        Each one is a real travel moment that Butler Button was built for. Share yours &mdash; tag <strong>@veltmtours</strong> with what your Butler handled.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- More scenarios teaser -->
+  <section class="section section--alt">
+    <div class="container container--narrow">
+      <h2 style="text-align:center; margin-bottom: var(--space-md);">The list goes on</h2>
+      <p class="lead text-center" style="margin-bottom: var(--space-2xl);">These are just ten. Your Butler handles hundreds of situations &mdash; anything a well-connected local friend would help with.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-md);">
+        <div class="card" style="padding: var(--space-md) var(--space-lg);">
+          <p class="card__text" style="margin:0; font-size:0.875rem;">"Need a halal restaurant near the hotel before 7pm."</p>
+        </div>
+        <div class="card" style="padding: var(--space-md) var(--space-lg);">
+          <p class="card__text" style="margin:0; font-size:0.875rem;">"Can you get my prescription filled at a local pharmacy?"</p>
+        </div>
+        <div class="card" style="padding: var(--space-md) var(--space-lg);">
+          <p class="card__text" style="margin:0; font-size:0.875rem;">"My meeting ran long &mdash; can you push the restaurant to 9pm?"</p>
+        </div>
+        <div class="card" style="padding: var(--space-md) var(--space-lg);">
+          <p class="card__text" style="margin:0; font-size:0.875rem;">"I lost my passport. What do I do right now?"</p>
+        </div>
+        <div class="card" style="padding: var(--space-md) var(--space-lg);">
+          <p class="card__text" style="margin:0; font-size:0.875rem;">"Find me a yoga class near the hotel tomorrow morning."</p>
+        </div>
+        <div class="card" style="padding: var(--space-md) var(--space-lg);">
+          <p class="card__text" style="margin:0; font-size:0.875rem;">"Send a fruit basket to Room 412 &mdash; it's my colleague's birthday."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Your next trip has a Butler.</h2>
+        <p>Book for any day you're travelling. Text any request. Your Butler handles it &mdash; from the mundane to the urgent to the genuinely tricky.</p>
+        <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+          <a href="pricing.html" class="btn btn--primary btn--lg">Book Your Butler &mdash; from $25/day</a>
+          <a href="services.html" class="btn btn--outline btn--lg" style="color: var(--white); border-color: rgba(255,255,255,0.4);">Full Services List</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">VELTM <span>Butler Button</span></div>
+        <p>Your personal travel butler &mdash; from $25/day, anywhere in the world. AI plans it. A human handles it. You enjoy it.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Service</h4>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="services.html">What Your Butler Can Do</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="stories.html">Traveller Stories</a>
+        <a href="compare.html">Butler vs. Alternatives</a>
+        <a href="b2b.html">Partner With Us</a>
+        <a href="become-a-butler/">Become a Butler</a>
+        <a href="destinations/">Destinations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:hello@veltmtours.com">hello@veltmtours.com</a>
+        <a href="https://www.veltmtours.com" target="_blank">veltmtours.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 VELTM Tours. All rights reserved.</span>
+      <span>Butler Button &mdash; Personal Travel Concierge</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VELTM Butler Button pricing — Trip Planning from $25/country, 8-Hour Butler from $25/day, 24-Hour Butler from $100/day. No membership, no surprises.">
+  <title>Pricing — VELTM Butler Button</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .pricing-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xl);
+      flex-wrap: wrap;
+      margin-top: var(--space-xl);
+    }
+    .pricing-note__item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.9rem;
+      color: var(--gray-600);
+    }
+    .pricing-note__item::before {
+      content: '\2713';
+      color: var(--success);
+      font-weight: 700;
+    }
+    .compare-snippet {
+      overflow-x: auto;
+      margin-top: var(--space-2xl);
+    }
+    .value-callout {
+      background: var(--veltm-gold-light);
+      border: 2px solid var(--veltm-gold);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+      text-align: center;
+      margin: var(--space-2xl) 0;
+    }
+    .value-callout p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--veltm-navy);
+      margin-bottom: 0;
+    }
+    .example-day {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-sm);
+    }
+    .example-day h4 {
+      color: var(--veltm-navy);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 2px solid var(--veltm-gold);
+    }
+    .example-day ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .example-day ul li {
+      font-size: 0.9rem;
+      color: var(--gray-700);
+      padding-left: var(--space-lg);
+      position: relative;
+    }
+    .example-day ul li::before {
+      content: '\2192';
+      position: absolute;
+      left: 0;
+      color: var(--veltm-gold);
+      font-weight: 700;
+    }
+    .example-day__total {
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--gray-200);
+      font-weight: 700;
+      color: var(--veltm-navy);
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo">VELTM <span>Butler Button</span></a>
+    <nav class="nav-main">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="services.html">Services</a>
+      <a href="use-cases.html">Use Cases</a>
+      <a href="stories.html">Stories</a>
+      <a href="compare.html">Compare</a>
+      <a href="faq.html">FAQ</a>
+      <a href="b2b.html">Partners</a>
+      <a href="become-a-butler/">Become a Butler</a>
+      <a href="destinations/">Destinations</a>
+      <a href="reference/">Research</a>
+      <a href="pricing.html" class="btn btn--primary btn--sm">Book Your Butler</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container text-center">
+      <h1>Transparent pricing.<br>No membership. No surprises.</h1>
+      <p class="lead" style="margin-left: auto; margin-right: auto;">Pay only for what you use. Book by the day, by the country, or both. Cancel or adjust anytime before your trip starts.</p>
+    </div>
+  </section>
+
+  <!-- Pricing Cards -->
+  <section class="section">
+    <div class="container">
+      <div class="pricing-grid">
+
+        <!-- Trip Planning -->
+        <div class="pricing-card">
+          <h3>Trip Planning Assistant</h3>
+          <div class="pricing-amount">$25<small>/country</small></div>
+          <p class="pricing-desc">We build your itinerary before you arrive</p>
+          <ul class="pricing-features">
+            <li>AI-powered day-by-day itinerary</li>
+            <li>Curated accommodation suggestions by neighbourhood</li>
+            <li>Top restaurant picks with booking notes</li>
+            <li>Must-see attractions &amp; hidden gems</li>
+            <li>Local transport explained simply</li>
+            <li>Practical tips: tipping, etiquette, safety</li>
+            <li>Delivered 48hrs before departure</li>
+            <li>Edits &amp; refinements on request</li>
+          </ul>
+          <a href="mailto:hello@veltmtours.com?subject=Trip Planning Enquiry" class="btn btn--outline" style="width:100%;">Request a Plan</a>
+        </div>
+
+        <!-- 8-Hour Butler — FEATURED -->
+        <div class="pricing-card pricing-card--featured">
+          <div class="pricing-badge">Most Popular</div>
+          <h3>8-Hour Butler</h3>
+          <div class="pricing-amount">$25<small>/day</small></div>
+          <p class="pricing-desc">Your Butler is on call from morning to night</p>
+          <ul class="pricing-features">
+            <li>8 hours of dedicated personal support</li>
+            <li>Restaurant reservations &amp; waitlist management</li>
+            <li>Transport bookings &amp; transfer arrangements</li>
+            <li>In-person errands &amp; hotel deliveries</li>
+            <li>Language help &amp; translation support</li>
+            <li>Last-minute ticket &amp; event bookings</li>
+            <li>Real-time re-planning when things change</li>
+            <li>Local recommendations &amp; insider knowledge</li>
+            <li>Unlimited requests during active hours</li>
+            <li>150+ languages supported</li>
+          </ul>
+          <a href="mailto:hello@veltmtours.com?subject=8-Hour Butler Booking" class="btn btn--primary" style="width:100%;">Book Your Butler</a>
+        </div>
+
+        <!-- 24-Hour Butler -->
+        <div class="pricing-card">
+          <h3>24-Hour Butler</h3>
+          <div class="pricing-amount">$100<small>/day</small></div>
+          <p class="pricing-desc">Around-the-clock coverage, wherever you are</p>
+          <ul class="pricing-features">
+            <li>Full 24-hour on-call support</li>
+            <li>Night-time &amp; early morning availability</li>
+            <li>Emergency assistance at any hour</li>
+            <li>Lost passport &amp; document support</li>
+            <li>Medical referrals &amp; urgent care guidance</li>
+            <li>Everything in the 8-Hour tier</li>
+            <li>Priority response across all requests</li>
+            <li>Pre-trip briefing call available</li>
+            <li>Ideal for high-pressure business travel</li>
+          </ul>
+          <a href="mailto:hello@veltmtours.com?subject=24-Hour Butler Booking" class="btn btn--outline" style="width:100%;">Book 24-Hour Coverage</a>
+        </div>
+
+      </div>
+
+      <!-- Trust notes -->
+      <div class="pricing-note">
+        <div class="pricing-note__item">Pay only for what you use</div>
+        <div class="pricing-note__item">Cancel anytime before your trip</div>
+        <div class="pricing-note__item">No membership required</div>
+        <div class="pricing-note__item">No hidden fees</div>
+        <div class="pricing-note__item">195+ countries covered</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value callout -->
+  <section class="section section--alt">
+    <div class="container container--narrow">
+      <div class="value-callout">
+        <p>Less than a hotel minibar. More useful than a travel agent.<br>Your Butler costs less per day than a single checked bag fee &mdash; and does considerably more.</p>
+      </div>
+
+      <h2 style="text-align: center; margin-bottom: var(--space-2xl);">What does a typical trip cost?</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl);">
+        <div class="example-day">
+          <h4>5 days in Tokyo</h4>
+          <ul>
+            <li>Japan trip plan: $25</li>
+            <li>Butler on arrival day: $25</li>
+            <li>Butler on day 3 (busy day): $25</li>
+            <li>Butler on last day (departures): $25</li>
+          </ul>
+          <div class="example-day__total">Total: $100 for 5 days in Japan</div>
+        </div>
+        <div class="example-day">
+          <h4>2-week Europe trip (3 countries)</h4>
+          <ul>
+            <li>France, Italy, Spain plans: $75</li>
+            <li>8-Hour Butler, 6 selected days: $150</li>
+          </ul>
+          <div class="example-day__total">Total: $225 across 14 days, 3 countries</div>
+        </div>
+        <div class="example-day">
+          <h4>Business travel, 3 nights</h4>
+          <ul>
+            <li>24-Hour Butler, all 3 nights: $300</li>
+            <li>Full around-the-clock coverage</li>
+            <li>Emergency support included</li>
+          </ul>
+          <div class="example-day__total">Total: $300 — less than one night's hotel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison teaser -->
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 style="text-align: center; margin-bottom: var(--space-md);">How we compare</h2>
+      <p class="lead text-center" style="margin-bottom: var(--space-xl);">No membership, no card requirement, no $5K/year retainer.</p>
+
+      <div class="compare-snippet">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="highlight">Butler Button</th>
+              <th>Card Concierge</th>
+              <th>Quintessentially</th>
+              <th>AI Apps (Mindtrip etc.)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Human who acts on your behalf</td>
+              <td class="highlight check">&#10003;</td>
+              <td class="check">&#10003;</td>
+              <td class="check">&#10003;</td>
+              <td class="cross">&#10007;</td>
+            </tr>
+            <tr>
+              <td>In-person errands &amp; deliveries</td>
+              <td class="highlight check">&#10003;</td>
+              <td class="cross">&#10007;</td>
+              <td class="check">&#10003;</td>
+              <td class="cross">&#10007;</td>
+            </tr>
+            <tr>
+              <td>No membership required</td>
+              <td class="highlight check">&#10003;</td>
+              <td class="cross">&#10007;</td>
+              <td class="cross">&#10007;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>Starts from $25/day</td>
+              <td class="highlight check">&#10003;</td>
+              <td class="cross">&#10007;</td>
+              <td class="cross">&#10007;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+            <tr>
+              <td>195+ countries</td>
+              <td class="highlight check">&#10003;</td>
+              <td class="partial">&#126;</td>
+              <td class="check">&#10003;</td>
+              <td class="check">&#10003;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center" style="margin-top: var(--space-xl);">
+        <a href="compare.html" class="btn btn--outline">Full Comparison &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Ready to book your Butler?</h2>
+        <p>Email us to get started. We'll match you with a Butler and have you connected before your trip departs.</p>
+        <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+          <a href="mailto:hello@veltmtours.com?subject=Butler Booking" class="btn btn--primary btn--lg">Book via Email</a>
+          <a href="how-it-works.html" class="btn btn--outline btn--lg" style="color: var(--white); border-color: rgba(255,255,255,0.4);">How It Works</a>
+        </div>
+        <p style="margin-top: var(--space-lg); font-size: 0.85rem; color: var(--gray-400);">Questions? Email <a href="mailto:hello@veltmtours.com" style="color: var(--veltm-gold);">hello@veltmtours.com</a> &mdash; we reply fast.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">VELTM <span>Butler Button</span></div>
+        <p>Your personal travel butler &mdash; from $25/day, anywhere in the world. AI plans it. A human handles it. You enjoy it.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Service</h4>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="services.html">What Your Butler Can Do</a>
+        <a href="use-cases.html">Use Cases</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="stories.html">Traveller Stories</a>
+        <a href="compare.html">Butler vs. Alternatives</a>
+        <a href="b2b.html">Partner With Us</a>
+        <a href="become-a-butler/">Become a Butler</a>
+        <a href="destinations/">Destinations</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="mailto:hello@veltmtours.com">hello@veltmtours.com</a>
+        <a href="https://www.veltmtours.com" target="_blank">veltmtours.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 VELTM Tours. All rights reserved.</span>
+      <span>Butler Button &mdash; Personal Travel Concierge</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

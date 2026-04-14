@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VELTM Butler Button in Europe — Italy, France, Spain, Greece, UK, Portugal and 140+ destinations. Your personal travel butler from $25/day.">
+  <title>Europe Destinations | VELTM Butler Button</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .dest-detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-lg); }
+    .dest-detail-card { background: var(--white); border-radius: var(--radius-md); border: 1px solid var(--gray-200); overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+    .dest-detail-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .dest-detail-card--high { border-top: 3px solid var(--veltm-gold); }
+    .dest-detail-card__header { padding: var(--space-lg) var(--space-lg) var(--space-sm); }
+    .dest-detail-card__name { font-size: 1.2rem; font-weight: 700; color: var(--veltm-navy); margin-bottom: var(--space-xs); }
+    .dest-detail-card__region { font-size: 0.78rem; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; }
+    .dest-detail-card__body { padding: 0 var(--space-lg) var(--space-md); }
+    .dest-detail-card__desc { font-size: 0.88rem; color: var(--gray-600); margin-bottom: var(--space-md); }
+    .dest-tags { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-bottom: var(--space-md); }
+    .dest-tag { font-size: 0.72rem; font-weight: 600; background: var(--veltm-ice); color: var(--veltm-blue); border-radius: var(--radius-full); padding: 3px 10px; }
+    .dest-prompt { background: var(--gray-100); border-left: 3px solid var(--veltm-gold); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: var(--space-sm) var(--space-md); font-size: 0.82rem; color: var(--gray-700); font-style: italic; margin: 0 var(--space-lg) var(--space-lg); }
+    .dest-prompt strong { display: block; font-style: normal; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-500); margin-bottom: 2px; }
+    .priority-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: var(--radius-full); margin-left: var(--space-sm); }
+    .priority-badge--high { background: var(--veltm-gold-light); color: #7D6608; }
+    .section-intro { max-width: 740px; margin-bottom: var(--space-2xl); }
+    .region-subhead { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-500); margin: var(--space-2xl) 0 var(--space-lg); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--gray-200); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../index.html" class="logo">VELTM <span>Butler Button</span></a>
+    <nav class="nav-main">
+      <a href="../index.html">Home</a>
+      <a href="../how-it-works.html">How It Works</a>
+      <a href="../pricing.html">Pricing</a>
+      <a href="../services.html">Services</a>
+      <a href="../use-cases.html">Use Cases</a>
+      <a href="../stories.html">Stories</a>
+      <a href="../compare.html">Compare</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="../b2b.html">Partners</a>
+      <a href="../become-a-butler/">Become a Butler</a>
+      <a href="./" class="active">Destinations</a>
+      <a href="../reference/">Research</a>
+      <a href="../pricing.html" class="btn btn--primary btn--sm">Book Your Butler</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<main>
+
+  <section class="article-hero">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">Home</a> &rsaquo;
+        <a href="./">Destinations</a> &rsaquo;
+        <span>Europe</span>
+      </nav>
+      <h1>Europe</h1>
+      <p class="hero-sub">149 destinations. Michelin restaurants, vineyard estates, coastal villas, ski chalets. Your Butler handles the bookings, language barriers, and local knowledge — across all 40+ European countries.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="section-intro">
+        <p class="lead">Europe is VELTM's highest-demand region. From securing a last-minute table at a three-Michelin-star in Paris to arranging a private villa on a Greek island nobody's heard of yet — your Butler has done it before.</p>
+        <p>Coverage spans Western, Southern, Northern, and Eastern Europe. Language support includes Italian, French, Spanish, German, Portuguese, Greek, Dutch, and 20+ others via AI-assisted translation.</p>
+      </div>
+
+      <div class="region-subhead">High Priority &mdash; Most Butler Demand</div>
+      <div class="dest-detail-grid">
+
+        <div class="dest-detail-card dest-detail-card--high" id="italy">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Italy <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Southern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler secures Osteria Francescana-tier reservations, arranges private Cinque Terre boat access, negotiates Amalfi Coast villa upgrades, and handles Rome's skip-the-line Vatican tickets.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Coastal</span>
+              <span class="dest-tag">Wine</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Can you get a dinner reservation at a Michelin-starred restaurant near the Colosseum — Saturday, 2 people?"</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="france">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">France <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Western Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler books impossible Paris restaurant tables, arranges private Loire Valley chateau tours, coordinates Burgundy wine cellar tastings with vignerons, and handles Riviera yacht day charters from Nice.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Wine</span>
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Luxury</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I need a table at Septime in Paris — can you call them? We speak English only."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="spain">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Spain <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Southern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles San Sebastian pintxos bar circuits, Barcelona private Sagrada Familia access, Seville flamenco show reservations, and Ibiza beach club bookings in high season.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Nightlife</span>
+              <span class="dest-tag">Beach</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Plan me a pintxos crawl in San Sebastian — 4 stops, 2 people, Friday evening."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="uk">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">United Kingdom <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Northern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler books London's hottest restaurants (Brat, The Clove Club), arranges Cotswolds country pub stays, coordinates Scottish Highlands whisky distillery tours, and handles West End theatre tickets.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Theatre</span>
+              <span class="dest-tag">Nature</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Can you get tickets for Hamilton in London for next weekend and book dinner nearby beforehand?"</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="greece">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Greece <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Southern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler books Santorini caldera-view villas before they sell out, arranges Athens Acropolis private evening access, coordinates Cyclades island ferry routes, and finds Crete's best non-tourist tavernas.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Coastal</span>
+              <span class="dest-tag">History</span>
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Island</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I need a caldera-view villa in Oia for 5 nights in July — 2 guests, budget flexible."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="portugal">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Portugal <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Western Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler navigates Lisbon's emerging restaurant scene, arranges Douro Valley wine quintas, books Algarve coastal villa stays, and coordinates Madeira levada trekking guides.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">Wine</span>
+              <span class="dest-tag">Coastal</span>
+              <span class="dest-tag">Trekking</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a wine quinta stay in the Douro Valley — 2 nights, preferably with a boat tour included."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="germany">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Germany <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Central Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler handles Oktoberfest tent reservations (notoriously difficult), Berlin restaurant bookings, Bavarian castle day-trip logistics, and Rhine Valley wine cruise arrangements.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Culture</span>
+              <span class="dest-tag">Culinary</span>
+              <span class="dest-tag">History</span>
+              <span class="dest-tag">Nature</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Can you get us into an Oktoberfest tent with a reserved table? Arriving September 20, group of 6."</div>
+        </div>
+
+        <div class="dest-detail-card dest-detail-card--high" id="switzerland">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Switzerland <span class="priority-badge priority-badge--high">Top Pick</span></div>
+            <div class="dest-detail-card__region">Central Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Your Butler arranges Zermatt mountain guide bookings, Verbier ski chalet access, Zurich fine dining reservations, and Bernese Oberland scenic train itineraries.</p>
+            <div class="dest-tags">
+              <span class="dest-tag">Ski</span>
+              <span class="dest-tag">Mountain</span>
+              <span class="dest-tag">Luxury</span>
+              <span class="dest-tag">Culinary</span>
+            </div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book ski lessons and a mountain guide in Zermatt for 3 days — intermediate skier, solo."</div>
+        </div>
+
+      </div>
+
+      <div class="region-subhead">More European Destinations</div>
+      <div class="dest-detail-grid">
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Netherlands</div>
+            <div class="dest-detail-card__region">Western Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Amsterdam canal boat tours, tulip season logistics, Rijksmuseum skip-the-line access, and Rotterdam architecture guide bookings.</p>
+            <div class="dest-tags"><span class="dest-tag">Culture</span><span class="dest-tag">Cycling</span><span class="dest-tag">Art</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Can you book a private canal boat tour in Amsterdam for Tuesday afternoon — 4 people?"</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Austria</div>
+            <div class="dest-detail-card__region">Central Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Vienna opera house tickets, Salzburg Mozart Festival reservations, Hallstatt day-trip logistics, and Tyrol ski resort bookings.</p>
+            <div class="dest-tags"><span class="dest-tag">Music</span><span class="dest-tag">Culture</span><span class="dest-tag">Ski</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Get me 2 tickets for the Vienna State Opera — this week if possible, any good performance."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Croatia</div>
+            <div class="dest-detail-card__region">Southern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Dubrovnik Old Town restaurant reservations, Hvar island yacht charter bookings, Plitvice Lakes guide arrangements, and Split coastal villa sourcing.</p>
+            <div class="dest-tags"><span class="dest-tag">Coastal</span><span class="dest-tag">Sailing</span><span class="dest-tag">Culture</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"We want a 5-day sailing trip along the Dalmatian coast — 4 people, mid-June. Can you find a skippered yacht?"</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Turkey</div>
+            <div class="dest-detail-card__region">Southern Europe / Middle East</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Istanbul private Bosphorus dinner cruises, Cappadocia hot-air balloon bookings, Aegean gulet charter logistics, and Turkish hammam reservations.</p>
+            <div class="dest-tags"><span class="dest-tag">Culture</span><span class="dest-tag">Adventure</span><span class="dest-tag">Culinary</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a hot-air balloon ride over Cappadocia — sunrise, 2 people, with a good operator."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Ireland</div>
+            <div class="dest-detail-card__region">Northern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Dublin restaurant bookings, Wild Atlantic Way road trip logistics, Aran Islands ferry and guesthouse arrangements, and Killarney National Park guide bookings.</p>
+            <div class="dest-tags"><span class="dest-tag">Nature</span><span class="dest-tag">Culture</span><span class="dest-tag">Culinary</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Plan a 7-day West Ireland road trip — 2 people, mix of B&amp;Bs and one nice hotel."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Iceland</div>
+            <div class="dest-detail-card__region">Northern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Northern lights tour bookings, Golden Circle private guide arrangements, glacier hike logistics, and Blue Lagoon advance reservation handling.</p>
+            <div class="dest-tags"><span class="dest-tag">Adventure</span><span class="dest-tag">Nature</span><span class="dest-tag">Northern Lights</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Can you book a northern lights small-group tour from Reykjavik — 2 nights, late October?"</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Czech Republic</div>
+            <div class="dest-detail-card__region">Central Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Prague Old Town private walking tours, Cesky Krumlov day-trip logistics, Czech restaurant bookings away from tourist traps, and Bohemian spa town arrangements.</p>
+            <div class="dest-tags"><span class="dest-tag">History</span><span class="dest-tag">Culture</span><span class="dest-tag">Culinary</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Find me a non-touristy restaurant in Prague Old Town for dinner — 2 people, tonight."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Norway</div>
+            <div class="dest-detail-card__region">Northern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Fjord cruise bookings, Bergen fish market guides, midnight sun hiking logistics in Lofoten, and Oslo Michelin restaurant reservations.</p>
+            <div class="dest-tags"><span class="dest-tag">Nature</span><span class="dest-tag">Adventure</span><span class="dest-tag">Fjords</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a fjord kayaking day in Flam — 2 people, end of June."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Sweden</div>
+            <div class="dest-detail-card__region">Northern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Stockholm archipelago boat tour bookings, Abisko northern lights arrangements, Swedish design hotel sourcing, and Gothenburg restaurant reservations.</p>
+            <div class="dest-tags"><span class="dest-tag">Nature</span><span class="dest-tag">Design</span><span class="dest-tag">Culinary</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book a Stockholm archipelago day trip — private or small group, for a Wednesday."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Hungary</div>
+            <div class="dest-detail-card__region">Central Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Budapest thermal bath reservations, Danube river cruise bookings, Tokaj wine region tastings, and ruin bar experiences with local guides.</p>
+            <div class="dest-tags"><span class="dest-tag">Wellness</span><span class="dest-tag">Culture</span><span class="dest-tag">Wine</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Book the Szechenyi thermal bath for tomorrow morning and a ruin bar tour for the evening."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Poland</div>
+            <div class="dest-detail-card__region">Central Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Krakow Old Town private guides, Auschwitz memorial advance ticket handling, Warsaw restaurant bookings, and Tatra Mountains hiking logistics.</p>
+            <div class="dest-tags"><span class="dest-tag">History</span><span class="dest-tag">Culture</span><span class="dest-tag">Nature</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I need a licensed guide for Auschwitz-Birkenau — 2 people, next Thursday."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Scotland</div>
+            <div class="dest-detail-card__region">Northern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Isle of Skye private photography tours, Speyside distillery whisky tasting bookings, Edinburgh festival ticket access, and Highlands castle stays.</p>
+            <div class="dest-tags"><span class="dest-tag">Whisky</span><span class="dest-tag">Nature</span><span class="dest-tag">Culture</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Arrange a 3-distillery Speyside whisky tour — 2 people, mid-September."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Belgium</div>
+            <div class="dest-detail-card__region">Western Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Brussels Michelin restaurant bookings, Bruges canal tour logistics, Belgian beer brewery experiences, and Ghent cultural guide arrangements.</p>
+            <div class="dest-tags"><span class="dest-tag">Culinary</span><span class="dest-tag">Beer</span><span class="dest-tag">Culture</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"Find a great chocolate and beer experience in Bruges — half day, 2 people."</div>
+        </div>
+
+        <div class="dest-detail-card">
+          <div class="dest-detail-card__header">
+            <div class="dest-detail-card__name">Denmark</div>
+            <div class="dest-detail-card__region">Northern Europe</div>
+          </div>
+          <div class="dest-detail-card__body">
+            <p class="dest-detail-card__desc">Copenhagen restaurant reservations (including Noma alumni spots), Faroe Islands logistics, Danish design hotel sourcing, and Bornholm island bookings.</p>
+            <div class="dest-tags"><span class="dest-tag">Culinary</span><span class="dest-tag">Design</span><span class="dest-tag">Culture</span></div>
+          </div>
+          <div class="dest-prompt"><strong>Sample Butler text</strong>"I want dinner at a New Nordic restaurant in Copenhagen — not Noma, but that level. Saturday, 2 people."</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Planning a European Trip?</h2>
+        <p>From impossible restaurant reservations to private villa access — your Butler knows Europe inside out. From $25/day, 149 destinations.</p>
+        <a href="../pricing.html" class="btn btn--primary btn--lg">Book Your Butler &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">VELTM <span>Butler Button</span></div>
+        <p>Your personal travel butler — from $25/day, anywhere in the world.</p>
+      </div>
+      <div class="footer-col"><h4>Service</h4><a href="../how-it-works.html">How It Works</a><a href="../pricing.html">Pricing</a><a href="../services.html">Services</a><a href="../faq.html">FAQ</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="../stories.html">Stories</a><a href="../compare.html">Compare</a><a href="../b2b.html">Partners</a><a href="../become-a-butler/">Become a Butler</a></div>
+      <div class="footer-col"><h4>Connect</h4><a href="mailto:hello@veltmtours.com">hello@veltmtours.com</a><a href="https://www.veltmtours.com" target="_blank">veltmtours.com</a></div>
+    </div>
+    <div class="footer-bottom"><span>&copy; 2026 VELTM Tours.</span><span>Butler Button &mdash; Personal Travel Concierge</span></div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
