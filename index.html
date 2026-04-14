@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Butler Button by VELTM — Own Your Journey™</title>
   <meta name="description" content="The world's most accessible personal travel concierge. Trip Planning, Concierge Service, and Travel Advisor Program — starting at $25. Own Your Journey™.">
+  <link rel="icon" type="image/png" href="img/logos/VELTM-icon-indigo.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <header class="site-header">
     <div class="container">
-      <a href="index.html" class="logo">BUTLER BUTTON <span class="logo-sub">by VELTM</span></a>
+      <a href="index.html" class="logo">
+        <img src="img/logos/VELTM-logo-black.png" alt="VELTM" height="36">
+      </a>
       <nav class="nav-main">
         <a href="index.html" class="active">Home</a>
         <a href="trip-planning/">Trip Planning</a>
@@ -19,8 +22,7 @@
         <a href="advisor-program/">Advisors</a>
         <a href="pricing.html">Pricing</a>
         <a href="faq.html">FAQ</a>
-        <a href="messaging/">Messaging Bible</a>
-        <a href="pricing.html" class="btn btn--warm btn--sm">Own Your Journey</a>
+        <a href="pricing.html" class="btn btn--gradient btn--sm">Start Your Journey</a>
       </nav>
       <button class="nav-toggle" aria-label="Menu">&#9776;</button>
     </div>
@@ -29,53 +31,85 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <span class="eyebrow">BUTLER BUTTON</span>
-      <h1>Own Your Journey<span class="tm">™</span>.</h1>
-      <p class="lead">The world's most accessible personal travel concierge. Three products. One promise: your trip, built entirely around you.</p>
-      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-        <a href="#products" class="btn btn--warm btn--lg">Explore Products</a>
-        <a href="pricing.html" class="btn btn--ghost btn--lg">See Pricing</a>
+      <div class="hero-split">
+        <div>
+          <span class="eyebrow">Butler Button by VELTM</span>
+          <h1>Own Your Journey<span class="tm">™</span>.</h1>
+          <p class="lead">The world's most accessible personal travel concierge. Three products. One promise: your trip, built entirely around you.</p>
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <a href="#products" class="btn btn--gradient btn--lg">Explore Products</a>
+            <a href="pricing.html" class="btn btn--outline btn--lg">See Pricing</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="img/ads/veltm_itinerary_01.png" alt="Tokyo + Kyoto itinerary built by Butler Button" style="border-radius: var(--radius-lg);">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Badges -->
+  <section class="section--sm section--tint">
+    <div class="container">
+      <div class="feature-badges">
+        <div class="feature-badge">
+          <div class="feature-badge__icon">&#127758;</div>
+          <div><strong>195+ Countries</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Global coverage</span></div>
+        </div>
+        <div class="feature-badge">
+          <div class="feature-badge__icon">&#9201;</div>
+          <div><strong>24/7 Support</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Always available</span></div>
+        </div>
+        <div class="feature-badge">
+          <div class="feature-badge__icon">&#128100;</div>
+          <div><strong>Human First</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Real people, real expertise</span></div>
+        </div>
+        <div class="feature-badge">
+          <div class="feature-badge__icon">&#128274;</div>
+          <div><strong>No Hidden Fees</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Transparent pricing</span></div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Stats -->
-  <section class="section--sm section--dark">
+  <section class="section--sm section--indigo">
     <div class="container">
       <div class="stats">
         <div class="stat">
           <div class="stat__number">4 min</div>
-          <div class="stat__label">avg response time</div>
+          <div class="stat__label" style="color:rgba(255,255,255,0.6);">avg response time</div>
         </div>
         <div class="stat">
           <div class="stat__number">95%</div>
-          <div class="stat__label">itinerary satisfaction</div>
+          <div class="stat__label" style="color:rgba(255,255,255,0.6);">itinerary satisfaction</div>
         </div>
         <div class="stat">
           <div class="stat__number">150+</div>
-          <div class="stat__label">countries covered</div>
+          <div class="stat__label" style="color:rgba(255,255,255,0.6);">countries covered</div>
         </div>
         <div class="stat">
           <div class="stat__number">200K+</div>
-          <div class="stat__label">options scanned per trip</div>
+          <div class="stat__label" style="color:rgba(255,255,255,0.6);">options scanned per trip</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Products -->
-  <section class="section section--gray" id="products">
+  <section class="section" id="products">
     <div class="container">
       <div class="text-center" style="margin-bottom:var(--s12);">
         <span class="eyebrow">Three Products</span>
         <h2>Choose the support that fits your trip.</h2>
-        <p class="lead">Whether you need a plan, a person in your corner, or a concierge infrastructure for your clients — Butler Button has it.</p>
+        <p class="lead" style="max-width:600px; margin:0 auto;">Whether you need a plan, a person in your corner, or a concierge infrastructure for your clients — Butler Button has it.</p>
       </div>
 
       <div class="grid-3">
 
         <!-- Trip Planning -->
         <div class="product-card">
+          <img src="img/ads/veltm_travel_trending_01.png" alt="Travel destination" class="product-card__img">
           <div class="product-card__bar product-card__bar--trip"></div>
           <div class="product-card__name">Trip Planning</div>
           <h3 class="product-card__headline">Your Trip. Your Way. Finally.</h3>
@@ -86,6 +120,7 @@
 
         <!-- Concierge Service -->
         <div class="product-card">
+          <img src="img/ads/veltm_travel_trending_02.png" alt="Concierge experience" class="product-card__img">
           <div class="product-card__bar product-card__bar--concierge"></div>
           <div class="product-card__name">Concierge Service</div>
           <h3 class="product-card__headline">Your Personal Expert. Anywhere. Any Hour.</h3>
@@ -96,6 +131,7 @@
 
         <!-- Travel Advisor Program -->
         <div class="product-card">
+          <img src="img/ads/veltm_product_intro_01.png" alt="Butler Button for advisors" class="product-card__img">
           <div class="product-card__bar product-card__bar--advisor"></div>
           <div class="product-card__name">Travel Advisor Program</div>
           <h3 class="product-card__headline">Expand Your Reach. Keep Your Edge.</h3>
@@ -108,45 +144,90 @@
     </div>
   </section>
 
-  <!-- Why Butler Button -->
+  <!-- Social Proof / Before-After -->
+  <section class="section section--gray">
+    <div class="container">
+      <div class="social-proof">
+        <div>
+          <span class="eyebrow">Why Butler Button</span>
+          <h2>Your travel agency, one text away.</h2>
+          <p class="lead" style="margin-bottom: var(--s8);">Premium travel support used to require a black card or a $5,000 retainer. Butler Button starts at $25.</p>
+          <div style="display:grid; gap:var(--s4); margin-bottom:var(--s8);">
+            <div style="display:flex; align-items:start; gap:var(--s3);">
+              <span style="color:var(--indigo); font-weight:700; font-size:1.1rem;">&#10003;</span>
+              <div><strong>100% human first contact</strong><br><span style="color:var(--body-gray); font-size:0.9rem;">Every advisor studies your itinerary before departure.</span></div>
+            </div>
+            <div style="display:flex; align-items:start; gap:var(--s3);">
+              <span style="color:var(--indigo); font-weight:700; font-size:1.1rem;">&#10003;</span>
+              <div><strong>Independent recommendations</strong><br><span style="color:var(--body-gray); font-size:0.9rem;">No affiliate agreements. No commercial deals. We work for you.</span></div>
+            </div>
+            <div style="display:flex; align-items:start; gap:var(--s3);">
+              <span style="color:var(--indigo); font-weight:700; font-size:1.1rem;">&#10003;</span>
+              <div><strong>Transparent pricing</strong><br><span style="color:var(--body-gray); font-size:0.9rem;">$25/day. No membership. No annual fee. Cancel anytime.</span></div>
+            </div>
+          </div>
+          <a href="pricing.html" class="btn btn--gradient">Start Planning</a>
+        </div>
+        <div class="social-proof__img">
+          <img src="img/ads/veltm_social_proof_01.png" alt="Without VELTM vs With VELTM comparison">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Travel Imagery Showcase -->
   <section class="section">
     <div class="container">
       <div class="text-center" style="margin-bottom:var(--s12);">
-        <span class="eyebrow">Why Butler Button</span>
-        <h2>Three things that actually matter.</h2>
+        <span class="eyebrow">Trending Destinations</span>
+        <h2>Where will your journey take you?</h2>
+        <p class="lead" style="max-width:520px; margin:0 auto;">From Tokyo to Tuscany, Butler Button plans trips across 195+ countries and 150+ languages.</p>
       </div>
+      <div class="img-showcase">
+        <img src="img/ads/veltm_travel_trending_01.png" alt="Trending travel destination">
+        <img src="img/ads/veltm_travel_trending_02.png" alt="Trending travel destination">
+        <img src="img/ads/veltm_travel_trending_03.png" alt="Trending travel destination">
+      </div>
+    </div>
+  </section>
 
-      <div class="grid-3">
-
-        <div class="card">
-          <div class="card__eyebrow card__eyebrow--trip">Human First</div>
-          <h3 class="card__title">Not a chatbot.</h3>
-          <p class="card__text">100% human first contact. Every advisor studies your itinerary before departure. When you reach out, you reach a person who already knows your trip.</p>
+  <!-- Itinerary Showcase -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="social-proof">
+        <div class="social-proof__img">
+          <img src="img/ads/veltm_itinerary_02.png" alt="Sample Butler Button itinerary">
         </div>
-
-        <div class="card">
-          <div class="card__eyebrow card__eyebrow--concierge">No Conflicts</div>
-          <h3 class="card__title">Independent recommendations.</h3>
-          <p class="card__text">No affiliate agreements. No commercial deals. Every recommendation — restaurant, hotel, experience — is 100% independent. We work for you, not the property.</p>
+        <div>
+          <span class="eyebrow">How It Works</span>
+          <h2>Text Butler. Get a trip.</h2>
+          <p class="lead" style="margin-bottom:var(--s6);">No apps to download. No accounts to create. Just text Butler Button your travel dates and preferences — our team handles the rest.</p>
+          <ol style="list-style:none; counter-reset:steps; display:grid; gap:var(--s5);">
+            <li style="display:flex; align-items:start; gap:var(--s4); counter-increment:steps;">
+              <span style="background:var(--indigo); color:var(--white); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; flex-shrink:0;">1</span>
+              <div><strong>Text your travel details</strong><br><span style="color:var(--body-gray); font-size:0.9rem;">Dates, destinations, preferences, budget.</span></div>
+            </li>
+            <li style="display:flex; align-items:start; gap:var(--s4); counter-increment:steps;">
+              <span style="background:var(--indigo); color:var(--white); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; flex-shrink:0;">2</span>
+              <div><strong>We build your itinerary</strong><br><span style="color:var(--body-gray); font-size:0.9rem;">AI scans 200K+ options. Human experts curate the best.</span></div>
+            </li>
+            <li style="display:flex; align-items:start; gap:var(--s4); counter-increment:steps;">
+              <span style="background:var(--indigo); color:var(--white); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; flex-shrink:0;">3</span>
+              <div><strong>Own your journey</strong><br><span style="color:var(--body-gray); font-size:0.9rem;">Receive your complete, personalized trip plan.</span></div>
+            </li>
+          </ol>
         </div>
-
-        <div class="card">
-          <div class="card__eyebrow card__eyebrow--advisor">No Surprises</div>
-          <h3 class="card__title">Transparent pricing.</h3>
-          <p class="card__text">$25/day. No membership. No annual fee. No hidden commissions. You know exactly what you're paying before your trip begins. Cancel anytime.</p>
-        </div>
-
       </div>
     </div>
   </section>
 
   <!-- CTA Banner -->
-  <section class="section section--cream">
+  <section class="section">
     <div class="container">
       <div class="cta-banner">
         <h2>The trip you imagined. The concierge you deserve.</h2>
         <p>Premium travel support used to require a black card or a $5,000 retainer. Butler Button starts at $25.</p>
-        <a href="pricing.html" class="btn btn--warm btn--lg">Start Planning</a>
+        <a href="pricing.html" class="btn btn--white btn--lg">Start Planning</a>
       </div>
     </div>
   </section>
@@ -155,7 +236,9 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="logo">BUTLER BUTTON <span class="logo-sub">by VELTM</span></div>
+          <a href="index.html" class="logo">
+            <img src="img/logos/VELTM-logo-white.png" alt="VELTM" height="32">
+          </a>
           <p>Own Your Journey<span class="tm">™</span>. The world's most accessible personal travel concierge.</p>
         </div>
         <div class="footer-col">
