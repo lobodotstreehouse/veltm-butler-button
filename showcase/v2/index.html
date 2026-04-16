@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butler Button — Your Personal Travel Concierge</title>
+  <meta name="description" content="AI plans it. A human handles it. You enjoy it. Personal travel concierge from $25/day.">
+  <link rel="icon" type="image/png" href="../../img/logos/VELTM-icon-indigo.png">
+  <script src="https://veltmtours.com/butler-widget.js"></script>
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+                   'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #000;
+      color: #f5f5f7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── SCROLL PROGRESS BAR ──────────────────────────────────── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      background: #4f46e5; z-index: 2000;
+      transform-origin: left; transform: scaleX(0);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: scroll()) {
+        .scroll-progress {
+          animation: grow-bar linear both;
+          animation-duration: auto;
+          animation-timeline: scroll(root block);
+        }
+      }
+    }
+    @keyframes grow-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* ─── REVEAL SYSTEM ────────────────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      [data-reveal] {
+        opacity: 0; transform: translateY(36px);
+        transition:
+          opacity   0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+          transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s);
+      }
+      [data-reveal].visible { opacity: 1; transform: none; }
+      [data-reveal-left] {
+        opacity: 0; transform: translateX(-48px);
+        transition:
+          opacity   0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s);
+      }
+      [data-reveal-left].visible { opacity: 1; transform: none; }
+      [data-reveal-right] {
+        opacity: 0; transform: translateX(48px);
+        transition:
+          opacity   0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s);
+      }
+      [data-reveal-right].visible { opacity: 1; transform: none; }
+    }
+
+    /* ─── TOKENS ────────────────────────────────────────────────── */
+    :root {
+      --indigo:    #4f46e5;
+      --indigo-lt: #818cf8;
+      --dark:      #000;
+      --dark-2:    #0a0a12;
+      --dark-3:    #111;
+      --gray-bg:   #f5f5f7;
+      --white:     #fff;
+      --text-dark: #1d1d1f;
+      --text-mid:  #6e6e73;
+      --text-mute: #86868b;
+      --text-dim:  #3a3a3c;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 1.1rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .nav.bg {
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .nav-brand { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; color: #f5f5f7; }
+    .nav-brand em { color: var(--indigo-lt); font-style: normal; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem; color: rgba(255,255,255,0.55);
+      letter-spacing: -0.01em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #f5f5f7; }
+    .nav-book {
+      padding: 8px 22px; background: var(--indigo); color: #fff;
+      border-radius: 980px; font-size: 0.82rem; font-weight: 500;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-book:hover { background: #4338ca; transform: scale(1.02); }
+    @media (max-width: 700px) { .nav-links { display: none; } }
+
+    /* ─── BUTTONS ───────────────────────────────────────────────── */
+    .btn {
+      display: inline-block; cursor: pointer; border: none;
+      border-radius: 980px; font-weight: 500; letter-spacing: -0.01em;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(0.97) !important; }
+    .btn-lg { padding: 16px 40px; font-size: 1.05rem; }
+    .btn-md { padding: 12px 28px; font-size: 0.9rem; }
+    .btn-sm { padding: 9px 20px; font-size: 0.82rem; }
+    .btn-indigo { background: var(--indigo); color: #fff; }
+    .btn-indigo:hover { background: #4338ca; box-shadow: 0 8px 32px rgba(79,70,229,0.45); transform: scale(1.02); }
+    .btn-white { background: #fff; color: var(--text-dark); }
+    .btn-white:hover { background: #f0f0f5; transform: scale(1.02); }
+    .btn-ghost-light { background: transparent; color: #f5f5f7; border: 1px solid rgba(255,255,255,0.22); }
+    .btn-ghost-light:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); }
+    .btn-ghost-dark { background: transparent; color: var(--indigo); border: 1.5px solid var(--indigo); }
+    .btn-ghost-dark:hover { background: var(--indigo); color: #fff; }
+    .btn-outline-light { background: rgba(255,255,255,0.07); color: var(--indigo-lt); border: 1px solid rgba(129,140,248,0.3); }
+    .btn-outline-light:hover { background: rgba(255,255,255,0.12); }
+
+    /* ─── EYEBROW ───────────────────────────────────────────────── */
+    .eyebrow {
+      display: block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .eyebrow-indigo { color: var(--indigo); }
+    .eyebrow-soft   { color: var(--indigo-lt); }
+    .eyebrow-mute   { color: var(--text-mute); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 1 — HERO (NO scroll-jack — tab-based panels)
+    ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      position: relative; overflow: clip;
+      padding: 6rem 5vw 4rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 90% 70% at 50% 65%, #1a0a3e 0%, #000 68%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(99,102,241,0.18) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, black 30%, transparent 80%);
+    }
+    .hero-orb {
+      position: absolute; width: 640px; height: 640px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,70,229,0.18) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%, -48%);
+      animation: orb-pulse 5s ease-in-out infinite;
+    }
+    @keyframes orb-pulse {
+      0%, 100% { opacity: 0.5; transform: translate(-50%,-48%) scale(1); }
+      50%       { opacity: 1;   transform: translate(-50%,-48%) scale(1.12); }
+    }
+    .hero-ring {
+      position: absolute; width: 420px; height: 420px; border-radius: 50%;
+      border: 1px solid rgba(99,102,241,0.12);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      animation: ring-spin 20s linear infinite;
+    }
+    .hero-ring-2 { width: 620px; height: 620px; border-color: rgba(99,102,241,0.06); animation-duration: 30s; animation-direction: reverse; }
+    @keyframes ring-spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 860px; width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 6px 14px 6px 8px;
+      background: rgba(79,70,229,0.15); border: 1px solid rgba(129,140,248,0.25);
+      border-radius: 980px; font-size: 0.75rem; color: var(--indigo-lt);
+      letter-spacing: 0.04em; margin-bottom: 2rem;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--indigo-lt); animation: dot-blink 2s ease-in-out infinite;
+    }
+    @keyframes dot-blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero-h1 {
+      font-size: clamp(3.2rem, 8.5vw, 7.5rem);
+      font-weight: 700; letter-spacing: -0.04em; line-height: 0.97;
+      color: #f5f5f7; margin-bottom: 1.5rem;
+    }
+    .hero-h1 span { color: var(--indigo-lt); }
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: rgba(255,255,255,0.5); max-width: 480px; margin: 0 auto 2.5rem;
+      line-height: 1.6; letter-spacing: -0.01em;
+    }
+
+    /* ── Hero Tabs ───────────────────────────────── */
+    .hero-tabs {
+      display: flex; gap: 4px; justify-content: center;
+      margin-bottom: 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px; padding: 4px;
+      width: fit-content; margin-left: auto; margin-right: auto;
+    }
+    .hero-tab {
+      padding: 10px 20px; border-radius: 10px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: -0.01em;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer; border: none; background: none;
+      transition: all 0.25s ease; position: relative;
+      white-space: nowrap;
+    }
+    .hero-tab:hover { color: rgba(255,255,255,0.7); }
+    .hero-tab.active {
+      background: rgba(79,70,229,0.2);
+      color: var(--indigo-lt);
+    }
+    /* auto-advance timer bar under active tab */
+    .hero-tab.active::after {
+      content: '';
+      position: absolute; bottom: 3px; left: 16px; right: 16px;
+      height: 2px; border-radius: 1px;
+      background: var(--indigo-lt);
+      transform-origin: left;
+      animation: tab-timer 6s linear forwards;
+    }
+    .hero-tab.paused::after { animation-play-state: paused; }
+    @keyframes tab-timer { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    @media (max-width: 560px) {
+      .hero-tabs { flex-wrap: wrap; width: 90vw; }
+      .hero-tab { flex: 1; min-width: 0; padding: 8px 12px; font-size: 0.72rem; }
+    }
+
+    /* ── Hero Visual Panels (tab-controlled) ──────────── */
+    .hero-visual-wrap {
+      position: relative;
+      width: min(560px, 92vw);
+      height: min(320px, 40vh);
+      margin: 0 auto 2.5rem;
+    }
+    .hero-v-panel {
+      position: absolute; inset: 0;
+      border-radius: 20px; overflow: clip;
+      opacity: 0; transform: scale(0.97) translateY(14px);
+      transition: opacity 0.45s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.45s cubic-bezier(0.22,1,0.36,1);
+      pointer-events: none;
+      cursor: pointer;
+    }
+    .hero-v-panel.active { opacity: 1; transform: none; pointer-events: auto; }
+    .hero-v-panel:hover { box-shadow: 0 0 0 2px rgba(129,140,248,0.3); }
+    .vp-card {
+      width: 100%; height: 100%;
+      background: #0c0c18; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; display: flex; flex-direction: column; overflow: clip;
+    }
+    .vp-item { transform: translateY(10px); }
+    .hero-v-panel.active .vp-item {
+      transform: none;
+      transition: transform 0.55s cubic-bezier(0.22,1,0.36,1) var(--d, 0s);
+    }
+
+    /* ── PANEL 0: Itinerary Builder ──────────────────── */
+    .itin-hdr {
+      padding: 1rem 1.3rem 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .itin-hdr-label {
+      font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--indigo-lt);
+    }
+    .itin-hdr-status { display: flex; align-items: center; gap: 5px; }
+    .itin-live-dot {
+      width: 5px; height: 5px; border-radius: 50%; background: #34d399;
+      animation: vp-blink 2s ease-in-out infinite;
+    }
+    @keyframes vp-blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .itin-body { flex: 1; overflow: clip; padding: 0.5rem 0; }
+    .itin-group { padding: 0.4rem 1.3rem 0; }
+    .itin-day-name {
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2); margin-bottom: 0.35rem;
+    }
+    .itin-row {
+      display: grid; grid-template-columns: 2.4rem 1fr auto;
+      gap: 0.5rem; align-items: center;
+      padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .itin-time { font-size: 0.67rem; color: rgba(255,255,255,0.25); font-variant-numeric: tabular-nums; }
+    .itin-detail { font-size: 0.8rem; color: #e8e8f0; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .itin-detail-muted { color: rgba(255,255,255,0.28); font-style: italic; }
+    .itin-pill {
+      font-size: 0.58rem; font-weight: 700; padding: 2px 7px;
+      border-radius: 20px; letter-spacing: 0.02em; white-space: nowrap;
+    }
+    .itin-pill--green { background: rgba(52,211,153,0.1); color: #34d399; }
+    .itin-pill--blue  { background: rgba(129,140,248,0.1); color: var(--indigo-lt); }
+    .itin-pill--dim   { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.2); }
+    .itin-scanning { letter-spacing: 0.15em; color: var(--indigo-lt); animation: vp-blink 1.1s ease-in-out infinite; }
+    .itin-ftr {
+      padding: 0.65rem 1.3rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .itin-bar-track { height: 2px; border-radius: 1px; background: rgba(255,255,255,0.06); }
+    .itin-bar-fill {
+      height: 100%; width: 0%; border-radius: 1px;
+      background: linear-gradient(90deg, var(--indigo), var(--indigo-lt));
+      transition: width 1.2s cubic-bezier(0.22,1,0.36,1) 0.4s;
+    }
+    .hero-v-panel.active .itin-bar-fill { width: 73%; }
+    .itin-ftr-meta {
+      display: flex; gap: 1.25rem;
+      font-size: 0.58rem; color: rgba(255,255,255,0.22); margin-top: 6px;
+    }
+    .itin-ftr-meta b { color: rgba(255,255,255,0.45); font-weight: 600; }
+
+    /* ── PANEL 1: Chat — Emergency Resolved ──────────── */
+    .chat-ctx {
+      padding: 0.72rem 1.3rem;
+      background: rgba(220,60,60,0.06);
+      border-bottom: 1px solid rgba(220,80,80,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .chat-ctx-place { font-size: 0.7rem; letter-spacing: -0.01em; color: rgba(255,255,255,0.45); }
+    .chat-ctx-place strong { color: rgba(255,255,255,0.8); font-weight: 600; }
+    .chat-ctx-status { display: flex; align-items: center; gap: 4px; }
+    .chat-ctx-dot {
+      width: 5px; height: 5px; border-radius: 50%; background: #34d399;
+      animation: vp-blink 2s ease-in-out infinite;
+    }
+    .chat-thread {
+      flex: 1; padding: 0.9rem 1.2rem;
+      display: flex; flex-direction: column; gap: 0.65rem; overflow: clip;
+    }
+    .chat-m { display: flex; gap: 0.45rem; align-items: flex-start; }
+    .chat-m--user { flex-direction: row-reverse; align-self: flex-end; }
+    .chat-b {
+      padding: 0.6rem 0.9rem; border-radius: 15px;
+      font-size: 0.82rem; line-height: 1.48; letter-spacing: -0.01em;
+      max-width: 82%;
+    }
+    .chat-b--user { background: var(--indigo); color: #fff; border-top-right-radius: 4px; }
+    .chat-b--butler { background: rgba(255,255,255,0.07); color: #e8e8f0; border-top-left-radius: 4px; }
+    .chat-m--butler { display: flex; gap: 0.45rem; align-items: flex-start; }
+    .chat-m--typing { display: flex; gap: 0.45rem; align-items: center; }
+    .chat-ts { font-size: 0.56rem; color: rgba(255,255,255,0.2); margin-top: 3px; padding: 0 2px; }
+    .chat-avatar-sm {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--indigo), #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.56rem; font-weight: 800; color: #fff;
+    }
+    .chat-typing-dots {
+      display: flex; gap: 4px; align-items: center;
+      padding: 0.6rem 0.9rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 15px; border-top-left-radius: 4px; width: fit-content;
+    }
+    .chat-typing-dots span {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.3); display: block;
+    }
+    .hero-v-panel.active .chat-typing-dots span:nth-child(1) { animation: boing 1s 0.05s ease-in-out infinite; }
+    .hero-v-panel.active .chat-typing-dots span:nth-child(2) { animation: boing 1s 0.20s ease-in-out infinite; }
+    .hero-v-panel.active .chat-typing-dots span:nth-child(3) { animation: boing 1s 0.35s ease-in-out infinite; }
+    @keyframes boing { 0%,100%{transform:translateY(0);opacity:.3} 50%{transform:translateY(-5px);opacity:1} }
+    .chat-resolved {
+      margin: 0 1.2rem 0.85rem; padding: 0.65rem 0.9rem;
+      background: rgba(52,211,153,0.09); border: 1px solid rgba(52,211,153,0.18);
+      border-radius: 12px;
+      display: flex; align-items: center; gap: 0.65rem;
+      flex-shrink: 0;
+      font-size: 0.72rem; font-weight: 600; color: #34d399; letter-spacing: -0.01em;
+    }
+
+    /* ── PANEL 2: Trip Report Card ────────────────────── */
+    .vp-report { padding: 1.6rem 1.8rem; }
+    .report-ey {
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--indigo-lt); margin-bottom: 1.1rem;
+    }
+    .report-title {
+      font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+      font-weight: 800; letter-spacing: -0.045em; line-height: 1.1;
+      color: #f5f5f7; margin-bottom: 0.15rem;
+    }
+    .report-zero {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 900; letter-spacing: -0.06em; line-height: 1;
+      color: #34d399; margin-bottom: 1.4rem;
+    }
+    .report-stats {
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center; margin-bottom: 1.3rem;
+    }
+    .report-stat { text-align: center; }
+    .report-stat-num {
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1;
+      color: #f5f5f7; margin-bottom: 0.2rem;
+    }
+    .report-stat-lbl {
+      font-size: 0.58rem; color: rgba(255,255,255,0.25);
+      letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.4;
+    }
+    .report-stat-div {
+      width: 1px; background: rgba(255,255,255,0.07);
+      align-self: stretch; margin: 0 0.5rem;
+    }
+    .report-quote {
+      font-size: 0.88rem; color: rgba(255,255,255,0.65);
+      line-height: 1.55; letter-spacing: -0.01em;
+      margin-bottom: 0.75rem; font-style: italic;
+    }
+    .report-quote::before { content: '\201C'; color: var(--indigo-lt); font-style: normal; }
+    .report-quote::after  { content: '\201D'; color: var(--indigo-lt); font-style: normal; }
+    .report-attr { display: flex; align-items: center; justify-content: space-between; }
+    .report-attr > span:first-child { font-size: 0.67rem; color: rgba(255,255,255,0.3); }
+    .report-stars { color: #fbbf24; font-size: 0.78rem; letter-spacing: 1px; }
+    .report-tag {
+      font-size: 0.58rem; color: rgba(255,255,255,0.2);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.9rem;
+    }
+
+    /* ── PANEL 3: The Receipt ─────────────────────────── */
+    .vp-receipt { padding: 1.2rem 1.4rem; display: flex; flex-direction: column; }
+    .rcpt-hdr {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+    .rcpt-title {
+      font-size: 0.67rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--indigo-lt);
+    }
+    .rcpt-trip { font-size: 0.63rem; color: rgba(255,255,255,0.25); }
+    .rcpt-list { flex: 1; display: flex; flex-direction: column; }
+    .rcpt-row {
+      display: flex; align-items: center; gap: 0.65rem;
+      padding: 0.42rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .rcpt-icon { font-size: 0.85rem; flex-shrink: 0; width: 1.2rem; text-align: center; }
+    .rcpt-desc { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .rcpt-desc-main { font-size: 0.79rem; color: rgba(255,255,255,0.7); letter-spacing: -0.01em; }
+    .rcpt-desc-sub { font-size: 0.62rem; color: rgba(255,255,255,0.28); }
+    .rcpt-price--free { font-size: 0.72rem; font-weight: 700; color: #34d399; flex-shrink: 0; }
+    .rcpt-total {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-top: 0.75rem; padding-top: 0.65rem;
+      border-top: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 2 — STATS (compact strip)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-stats {
+      background: #000;
+      padding: clamp(4rem, 8vw, 7rem) 5vw;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .stats-inner {
+      max-width: 1040px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2rem; text-align: center;
+    }
+    .stat-num {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 1;
+      color: #f5f5f7; margin-bottom: 0.5rem;
+    }
+    .stat-num sup { font-size: 0.5em; vertical-align: super; color: var(--indigo-lt); }
+    .stat-label { font-size: 0.82rem; color: var(--text-mute); letter-spacing: -0.01em; }
+    @media (max-width: 700px) { .stats-inner { grid-template-columns: 1fr 1fr; } }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 3 — HOW IT WORKS (simple grid, NO scroll-jack)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-how {
+      background: var(--dark-2);
+      padding: clamp(6rem, 12vw, 10rem) 5vw;
+    }
+    .section-head { text-align: center; margin-bottom: 4.5rem; }
+    .section-title-light {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700; letter-spacing: -0.035em; line-height: 1.1;
+      color: #f5f5f7; margin-bottom: 0.75rem;
+    }
+    .section-sub-light {
+      font-size: 1.05rem; color: var(--text-mute);
+      max-width: 460px; margin: 0 auto; letter-spacing: -0.01em;
+    }
+    .how-grid {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .how-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px; padding: 2rem 1.5rem;
+      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer; text-decoration: none; display: block;
+    }
+    .how-card:hover {
+      border-color: rgba(99,102,241,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(79,70,229,0.12);
+    }
+    .how-card__step {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: rgba(79,70,229,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800; color: var(--indigo-lt);
+      margin-bottom: 1.25rem;
+    }
+    .how-card__title {
+      font-size: 1.15rem; font-weight: 700; color: #f5f5f7;
+      letter-spacing: -0.025em; line-height: 1.25; margin-bottom: 0.6rem;
+    }
+    .how-card__body {
+      font-size: 0.88rem; color: var(--text-mute);
+      line-height: 1.65; letter-spacing: -0.01em;
+    }
+    .how-card__link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600; color: var(--indigo-lt);
+      margin-top: 1.25rem; letter-spacing: -0.01em;
+      transition: gap 0.2s ease;
+    }
+    .how-card:hover .how-card__link { gap: 8px; }
+    @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .how-grid { grid-template-columns: 1fr; } }
+
+    /* ── Mid-page CTA strip ──────────────────────── */
+    .cta-strip {
+      background: var(--indigo);
+      padding: 3rem 5vw;
+      display: flex; align-items: center; justify-content: center;
+      gap: 2rem; flex-wrap: wrap; text-align: center;
+    }
+    .cta-strip__text {
+      font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700;
+      letter-spacing: -0.02em; color: #fff;
+    }
+    .cta-strip .btn-white:hover { transform: scale(1.04); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 4 — PRODUCTS (light gray)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-products {
+      background: var(--gray-bg);
+      padding: clamp(6rem, 12vw, 10rem) 5vw;
+    }
+    .section-title-dark {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700; letter-spacing: -0.035em; line-height: 1.1;
+      color: var(--text-dark); margin-bottom: 0.75rem;
+    }
+    .section-sub-dark {
+      font-size: 1.05rem; color: var(--text-mid);
+      max-width: 460px; margin: 0 auto; letter-spacing: -0.01em;
+    }
+    .products-grid {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .pcard {
+      background: #fff; border-radius: 22px;
+      padding: 2.5rem 2rem 2rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .pcard:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgba(0,0,0,0.09); }
+    .pcard--featured { background: linear-gradient(155deg, #1e1b4b 0%, #2e2878 100%); }
+    .pcard__badge {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #fff;
+      background: var(--indigo-lt); padding: 4px 10px; border-radius: 20px;
+    }
+    .pcard__bar { width: 36px; height: 3px; border-radius: 2px; margin-bottom: 2rem; }
+    .pcard--trip     .pcard__bar { background: var(--indigo); }
+    .pcard--featured .pcard__bar { background: var(--indigo-lt); }
+    .pcard--elite    .pcard__bar { background: #7c3aed; }
+    .pcard__tier {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .pcard--trip     .pcard__tier { color: var(--text-mid); }
+    .pcard--featured .pcard__tier { color: var(--indigo-lt); }
+    .pcard--elite    .pcard__tier { color: var(--text-mid); }
+    .pcard__name {
+      font-size: 1.45rem; font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 1.5rem;
+    }
+    .pcard--trip     .pcard__name { color: var(--text-dark); }
+    .pcard--featured .pcard__name { color: #f5f5f7; }
+    .pcard--elite    .pcard__name { color: var(--text-dark); }
+    .pcard__price-row { display: flex; align-items: baseline; gap: 0.25rem; margin-bottom: 0.2rem; }
+    .pcard__price { font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -0.045em; }
+    .pcard--trip     .pcard__price { color: var(--indigo); }
+    .pcard--featured .pcard__price { color: var(--indigo-lt); }
+    .pcard--elite    .pcard__price { color: #7c3aed; }
+    .pcard__unit { font-size: 0.8rem; letter-spacing: -0.01em; }
+    .pcard--trip     .pcard__unit { color: var(--text-mid); }
+    .pcard--featured .pcard__unit { color: rgba(199,210,254,0.8); }
+    .pcard--elite    .pcard__unit { color: var(--text-mid); }
+    .pcard__divider { border: none; border-top: 1px solid rgba(0,0,0,0.07); margin: 1.5rem 0; }
+    .pcard--featured .pcard__divider { border-color: rgba(255,255,255,0.08); }
+    .pcard__features { list-style: none; margin-bottom: 2rem; }
+    .pcard__features li {
+      font-size: 0.88rem; padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex; gap: 0.5rem; letter-spacing: -0.01em;
+    }
+    .pcard--featured .pcard__features li { color: rgba(199,210,254,0.85); border-bottom-color: rgba(255,255,255,0.06); }
+    .pcard--trip .pcard__features li,
+    .pcard--elite .pcard__features li { color: var(--text-mid); }
+    .pcard__features li::before { content: '\2713'; font-weight: 700; flex-shrink: 0; }
+    .pcard--trip     .pcard__features li::before { color: var(--indigo); }
+    .pcard--featured .pcard__features li::before { color: var(--indigo-lt); }
+    .pcard--elite    .pcard__features li::before { color: #7c3aed; }
+    .pcard .btn { width: 100%; text-align: center; }
+    @media (max-width: 820px) { .products-grid { grid-template-columns: 1fr; max-width: 420px; } }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 5 — SCENARIOS (dark)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-scenarios {
+      background: #000;
+      padding: clamp(6rem, 12vw, 10rem) 5vw;
+    }
+    .scenarios-grid {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .scard {
+      background: var(--dark-3); border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 20px; padding: 2rem;
+      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer; display: block; text-decoration: none; color: inherit;
+    }
+    .scard:hover {
+      border-color: rgba(99,102,241,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(79,70,229,0.12);
+    }
+    .scard__where {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--indigo); margin-bottom: 1.1rem;
+    }
+    .scard__situation {
+      font-size: 1.05rem; font-weight: 600; color: #f5f5f7;
+      letter-spacing: -0.02em; line-height: 1.45; margin-bottom: 1rem;
+    }
+    .scard__outcome {
+      font-size: 0.88rem; color: var(--text-mute);
+      line-height: 1.65; letter-spacing: -0.01em;
+    }
+    .scard__tag {
+      display: inline-flex; align-items: center; gap: 4px; margin-top: 1.5rem;
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--indigo-lt); letter-spacing: -0.01em;
+    }
+    @media (max-width: 820px) { .scenarios-grid { grid-template-columns: 1fr; max-width: 500px; } }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 6 — HUMAN FIRST (image + copy)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-human {
+      background: #fff;
+      padding: clamp(6rem, 12vw, 10rem) 5vw;
+    }
+    .human-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .human-img-wrap {
+      border-radius: 28px; overflow: clip;
+      background: linear-gradient(155deg, #e0e7ff, #c7d2fe);
+      aspect-ratio: 4/5; position: relative; cursor: pointer;
+    }
+    .human-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .human-img-wrap:hover img { transform: scale(1.03); }
+    .human-h2 {
+      font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 700;
+      letter-spacing: -0.035em; line-height: 1.1;
+      color: var(--text-dark); margin-bottom: 1.25rem;
+    }
+    .human-body {
+      font-size: 1.05rem; color: var(--text-mid);
+      line-height: 1.72; letter-spacing: -0.01em; margin-bottom: 2.5rem;
+    }
+    .human-stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.25rem; margin-bottom: 2.5rem;
+    }
+    .hstat { border-left: 2px solid var(--indigo); padding-left: 1rem; }
+    .hstat__num {
+      font-size: 1.8rem; font-weight: 700;
+      letter-spacing: -0.04em; color: var(--text-dark);
+    }
+    .hstat__label { font-size: 0.78rem; color: var(--text-mid); letter-spacing: -0.01em; }
+    @media (max-width: 820px) {
+      .human-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .human-img-wrap { aspect-ratio: 3/2; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 7 — GALLERY (dark, clickable images)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-gallery {
+      background: var(--dark-2);
+      padding: clamp(6rem, 12vw, 10rem) 5vw;
+    }
+    .gallery-grid {
+      max-width: 1200px; margin: 3.5rem auto 0;
+      display: grid; grid-template-columns: 1fr 1.3fr 1fr;
+      gap: 1rem; align-items: end;
+    }
+    .gallery-item {
+      border-radius: 18px; overflow: clip;
+      position: relative; cursor: pointer;
+      display: block; text-decoration: none;
+    }
+    .gallery-item:nth-child(2) { margin-bottom: -3rem; }
+    .gallery-item img {
+      width: 100%; display: block;
+      aspect-ratio: 3/4; object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .gallery-item:nth-child(2) img { aspect-ratio: 2/3; }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.3s ease;
+      display: flex; align-items: flex-end; padding: 1.5rem;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-cta {
+      font-size: 0.82rem; font-weight: 600; color: #fff;
+      display: flex; align-items: center; gap: 6px;
+    }
+    @media (max-width: 700px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:nth-child(3) { display: none; }
+      .gallery-item:nth-child(2) { margin-bottom: 0; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 8 — FINAL CTA
+    ═══════════════════════════════════════════════════════════════ */
+    .section-cta {
+      background: #000;
+      padding: clamp(8rem, 16vw, 14rem) 5vw;
+      text-align: center; position: relative; overflow: clip;
+    }
+    .cta-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(79,70,229,0.28) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-h2 {
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 0.97;
+      color: #f5f5f7; max-width: 820px; margin: 0 auto 1.25rem;
+    }
+    .cta-h2 span { color: var(--indigo-lt); }
+    .cta-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--text-mute);
+      margin-bottom: 3rem; letter-spacing: -0.01em;
+    }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cta-fine {
+      font-size: 0.72rem; color: var(--text-dim);
+      margin-top: 1.5rem; letter-spacing: -0.01em;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    .footer {
+      background: #000;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2.5rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand { font-size: 0.85rem; font-weight: 700; color: #86868b; }
+    .footer-brand em { color: var(--indigo-lt); font-style: normal; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.75rem; color: var(--text-dim); transition: color 0.2s; }
+    .footer-links a:hover { color: #86868b; }
+    .footer-legal { font-size: 0.72rem; color: var(--text-dim); }
+  </style>
+</head>
+<body>
+
+<!-- scroll progress -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ─── NAV ──────────────────────────────────────────────────── -->
+<nav class="nav" id="main-nav">
+  <a href="../../" class="nav-brand">Butler<em>Button</em></a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#products">Pricing</a></li>
+    <li><a href="#scenarios">Real Stories</a></li>
+  </ul>
+  <a href="#" class="nav-book" data-butler-button>Book from $25</a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 1 — HERO (tab-based, no scroll-jack)
+═══════════════════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring hero-ring-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Butler Button by VELTM
+    </div>
+
+    <h1 class="hero-h1">
+      Your personal<br><span>travel expert.</span>
+    </h1>
+    <p class="hero-sub">AI plans it. A human handles it. You enjoy it. From $25/day.</p>
+
+    <!-- CLICKABLE TABS -->
+    <div class="hero-tabs" id="hero-tabs">
+      <button class="hero-tab active" data-tab="0">AI Plans It</button>
+      <button class="hero-tab" data-tab="1">Human Handles It</button>
+      <button class="hero-tab" data-tab="2">You Enjoy It</button>
+      <button class="hero-tab" data-tab="3">From $25/day</button>
+    </div>
+
+    <!-- VISUAL PANELS (same content, now tab-controlled + clickable) -->
+    <div class="hero-visual-wrap">
+
+      <!-- Tab 0: AI plans it — Itinerary Builder -->
+      <a class="hero-v-panel active" data-phase="0" href="#" data-butler-button>
+        <div class="vp-card">
+          <div class="itin-hdr">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="5" stroke="#818cf8" stroke-width="1.2"/><path d="M6 3.5V6.5L7.5 8" stroke="#818cf8" stroke-width="1.2" stroke-linecap="round"/></svg>
+              <span class="itin-hdr-label">AI Planning Engine</span>
+            </div>
+            <div class="itin-hdr-status">
+              <span class="itin-live-dot"></span>
+              <span style="font-size:0.62rem;color:rgba(255,255,255,0.35);">Building now</span>
+            </div>
+          </div>
+          <div class="itin-body">
+            <div class="itin-group">
+              <div class="itin-day-name">Day 1 — Tokyo Arrival</div>
+              <div class="itin-row vp-item" style="--d:0.05s">
+                <span class="itin-time">10:45</span>
+                <span class="itin-detail">ANA 012 <span style="color:rgba(255,255,255,0.22);font-size:0.72rem;">JFK → NRT</span></span>
+                <span class="itin-pill itin-pill--green">Booked</span>
+              </div>
+              <div class="itin-row vp-item" style="--d:0.12s">
+                <span class="itin-time">14:30</span>
+                <span class="itin-detail">Park Hyatt Tokyo <span style="color:rgba(255,255,255,0.22);font-size:0.72rem;">Shinjuku</span></span>
+                <span class="itin-pill itin-pill--blue">Confirmed</span>
+              </div>
+              <div class="itin-row vp-item" style="--d:0.19s">
+                <span class="itin-time">17:00</span>
+                <span class="itin-detail">Tsukiji Outer Market <span style="color:rgba(255,255,255,0.22);font-size:0.72rem;">with guide</span></span>
+                <span class="itin-pill itin-pill--blue">Confirmed</span>
+              </div>
+            </div>
+            <div class="itin-group" style="margin-top:0.5rem;">
+              <div class="itin-day-name">Day 2 — Kyoto</div>
+              <div class="itin-row vp-item" style="--d:0.26s">
+                <span class="itin-time">07:00</span>
+                <span class="itin-detail">Shinkansen N700S <span style="color:rgba(255,255,255,0.22);font-size:0.72rem;">Shin-Osaka</span></span>
+                <span class="itin-pill itin-pill--green">Reserved</span>
+              </div>
+              <div class="itin-row vp-item" style="--d:0.33s">
+                <span class="itin-time">09:15</span>
+                <span class="itin-detail">Fushimi Inari — private open <span class="itin-detail-muted">before crowds</span></span>
+                <span class="itin-pill itin-pill--blue">Set</span>
+              </div>
+              <div class="itin-row vp-item" style="--d:0.40s">
+                <span class="itin-time">20:00</span>
+                <span class="itin-detail itin-scanning">Scanning 12,400+ dining options…</span>
+                <span class="itin-pill itin-pill--dim">—</span>
+              </div>
+            </div>
+          </div>
+          <div class="itin-ftr">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+              <span style="font-size:0.6rem;color:rgba(255,255,255,0.28);letter-spacing:0.06em;">SCANNING 200,000+ OPTIONS</span>
+              <span style="font-size:0.6rem;color:var(--indigo-lt);font-weight:700;">73%</span>
+            </div>
+            <div class="itin-bar-track"><div class="itin-bar-fill"></div></div>
+            <div class="itin-ftr-meta" style="margin-top:8px;">
+              <span><b>14</b> days</span>
+              <span><b>4</b> countries</span>
+              <span><b>47</b> experiences</span>
+              <span>avg <b>12 hrs</b> saved</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tab 1: Human handles it — Bangkok emergency -->
+      <a class="hero-v-panel" data-phase="1" href="#" data-butler-button>
+        <div class="vp-card">
+          <div class="chat-ctx">
+            <div>
+              <div class="chat-ctx-place">
+                <strong>Bangkok</strong>
+                <span style="color:rgba(255,255,255,0.2);margin:0 4px;">·</span>
+                <span style="color:rgba(255,255,255,0.35);">Suvarnabhumi Airport</span>
+              </div>
+              <div style="font-size:0.58rem;color:rgba(255,255,255,0.22);margin-top:2px;">Tuesday, 23:47 local time</div>
+            </div>
+            <div class="chat-ctx-status">
+              <span class="chat-ctx-dot"></span>
+              <span style="font-size:0.6rem;color:#34d399;">Active</span>
+            </div>
+          </div>
+          <div class="chat-thread">
+            <div class="chat-m chat-m--user vp-item" style="--d:0.04s">
+              <div class="chat-b chat-b--user">My flight was just cancelled. I have a morning tour at 8am that I cannot miss.</div>
+              <div class="chat-ts">23:47</div>
+            </div>
+            <div class="chat-m chat-m--typing vp-item" style="--d:0.1s">
+              <div class="chat-avatar-sm">BB</div>
+              <div class="chat-typing-dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="chat-m chat-m--butler vp-item" style="--d:0.18s">
+              <div class="chat-avatar-sm">BB</div>
+              <div>
+                <div class="chat-b chat-b--butler">Got you. Bangkok Airways 0714 departs 06:10, arrives 07:45 — you'll make it. Booking now. Hotel sorted for tonight. Tour guide notified.</div>
+                <div class="chat-ts">23:51</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-resolved vp-item" style="--d:0.26s">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="6" fill="#34d399" fill-opacity="0.15" stroke="#34d399" stroke-width="1"/><path d="M4 6.5L5.8 8.5L9 5" stroke="#34d399" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Resolved in <strong>4 min 2 sec</strong> · Tour saved · Hotel rebooked
+          </div>
+        </div>
+      </a>
+
+      <!-- Tab 2: You enjoy it — Trip Report Card -->
+      <a class="hero-v-panel" data-phase="2" href="#" data-butler-button>
+        <div class="vp-card vp-report">
+          <div class="report-ey vp-item" style="--d:0.04s">Trip Summary · Client #4,821</div>
+          <div class="report-title vp-item" style="--d:0.1s">14 Days. 4 Countries.</div>
+          <div class="report-zero vp-item" style="--d:0.16s">0 Problems.</div>
+          <div class="report-stats vp-item" style="--d:0.22s">
+            <div class="report-stat">
+              <div class="report-stat-num">97%</div>
+              <div class="report-stat-lbl">disruptions<br>resolved &lt;60 min</div>
+            </div>
+            <div class="report-stat-div"></div>
+            <div class="report-stat">
+              <div class="report-stat-num">3</div>
+              <div class="report-stat-lbl">proactive<br>interventions</div>
+            </div>
+            <div class="report-stat-div"></div>
+            <div class="report-stat">
+              <div class="report-stat-num">$0</div>
+              <div class="report-stat-lbl">surprise fees<br>or upsells</div>
+            </div>
+          </div>
+          <div class="report-quote vp-item" style="--d:0.3s">I didn't think about logistics once. Not once.</div>
+          <div class="report-attr vp-item" style="--d:0.36s">
+            <span>— Marcus T., Kyoto + Tokyo</span>
+            <span class="report-stars">★★★★★</span>
+          </div>
+          <div class="report-tag vp-item" style="--d:0.42s">Powered by Butler Button · $25/day</div>
+        </div>
+      </a>
+
+      <!-- Tab 3: From $25/day — The Receipt -->
+      <a class="hero-v-panel" data-phase="3" href="#" data-butler-button>
+        <div class="vp-card vp-receipt">
+          <div class="rcpt-hdr vp-item" style="--d:0.04s">
+            <div>
+              <div class="rcpt-title">What $250 actually bought</div>
+              <div class="rcpt-trip">10-day trip · Tokyo → Kyoto → Osaka</div>
+            </div>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="4" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><path d="M6 11h10M6 7.5h10M6 14.5h6" stroke="rgba(255,255,255,0.25)" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="rcpt-list">
+            <div class="rcpt-row vp-item" style="--d:0.1s">
+              <div class="rcpt-icon">✈</div>
+              <div class="rcpt-desc">
+                <span class="rcpt-desc-main">Same-day flight rebook, Osaka storm</span>
+                <span class="rcpt-desc-sub">Identified 2.3 hrs before departure</span>
+              </div>
+              <div class="rcpt-price--free">$0 extra</div>
+            </div>
+            <div class="rcpt-row vp-item" style="--d:0.17s">
+              <div class="rcpt-icon">🍽</div>
+              <div class="rcpt-desc">
+                <span class="rcpt-desc-main">Last-minute table, Kikunoi Honten</span>
+                <span class="rcpt-desc-sub">Omakase, Michelin 3-star, 2-week wait</span>
+              </div>
+              <div class="rcpt-price--free">$0 extra</div>
+            </div>
+            <div class="rcpt-row vp-item" style="--d:0.24s">
+              <div class="rcpt-icon">🏨</div>
+              <div class="rcpt-desc">
+                <span class="rcpt-desc-main">Early check-in + room upgrade</span>
+                <span class="rcpt-desc-sub">Aman Kyoto · negotiated directly</span>
+              </div>
+              <div class="rcpt-price--free">$0 extra</div>
+            </div>
+            <div class="rcpt-row vp-item" style="--d:0.31s">
+              <div class="rcpt-icon">🗣</div>
+              <div class="rcpt-desc">
+                <span class="rcpt-desc-main">Live translation, medical clinic</span>
+                <span class="rcpt-desc-sub">Prescription sorted in 35 minutes</span>
+              </div>
+              <div class="rcpt-price--free">$0 extra</div>
+            </div>
+          </div>
+          <div class="rcpt-total vp-item" style="--d:0.38s">
+            <div>
+              <div style="font-size:0.6rem;color:rgba(255,255,255,0.3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">Total cost of concierge</div>
+              <div style="font-size:1.5rem;font-weight:700;color:#fff;letter-spacing:-0.03em;">$250 <span style="font-size:0.75rem;font-weight:400;color:rgba(255,255,255,0.3);">for 10 days</span></div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:0.58rem;color:rgba(255,255,255,0.22);text-decoration:line-through;margin-bottom:2px;">$2,500+ retainer</div>
+              <div style="font-size:0.72rem;font-weight:700;color:#34d399;">$25 / day</div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="hero-actions">
+      <a href="#" class="btn btn-indigo btn-lg" data-butler-button>Start Your Trip</a>
+      <a href="#how" class="btn btn-ghost-light btn-lg">See How It Works</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 2 — STATS
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-stats">
+  <div class="stats-inner">
+    <div data-reveal>
+      <div class="stat-num"><span data-counter data-target="195">0</span><sup>+</sup></div>
+      <div class="stat-label">Countries covered</div>
+    </div>
+    <div data-reveal style="--delay:.08s">
+      <div class="stat-num"><span data-counter data-target="150">0</span><sup>+</sup></div>
+      <div class="stat-label">Languages supported</div>
+    </div>
+    <div data-reveal style="--delay:.16s">
+      <div class="stat-num"><span data-counter data-target="4">0</span></div>
+      <div class="stat-label">Avg response (minutes)</div>
+    </div>
+    <div data-reveal style="--delay:.24s">
+      <div class="stat-num">$<span data-counter data-target="25">0</span></div>
+      <div class="stat-label">Starting price / day</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 3 — HOW IT WORKS (simple grid, clickable cards)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-how" id="how">
+  <div class="section-head">
+    <span class="eyebrow eyebrow-soft" data-reveal>How It Works</span>
+    <h2 class="section-title-light" data-reveal style="--delay:.1s">Four steps.<br>Zero friction.</h2>
+    <p class="section-sub-light" data-reveal style="--delay:.2s">From first message to wheels-up — we handle everything in between.</p>
+  </div>
+
+  <div class="how-grid">
+    <a href="#" class="how-card" data-butler-button data-reveal>
+      <div class="how-card__step">1</div>
+      <h3 class="how-card__title">Tell us the trip you want.</h3>
+      <p class="how-card__body">A 3-minute preference survey. Your travel style, budget, pace, must-haves, and deal-breakers.</p>
+      <span class="how-card__link">Start planning →</span>
+    </a>
+
+    <a href="#" class="how-card" data-butler-button data-reveal style="--delay:.08s">
+      <div class="how-card__step">2</div>
+      <h3 class="how-card__title">AI scans 200,000+ options.</h3>
+      <p class="how-card__body">Every flight, stay, and experience filtered against your exact preferences in real time.</p>
+      <span class="how-card__link">See it in action →</span>
+    </a>
+
+    <a href="#" class="how-card" data-butler-button data-reveal style="--delay:.16s">
+      <div class="how-card__step">3</div>
+      <h3 class="how-card__title">A human expert makes the call.</h3>
+      <p class="how-card__body">A certified advisor who's been to your destination reviews every recommendation. 9 years avg expertise.</p>
+      <span class="how-card__link">Meet our advisors →</span>
+    </a>
+
+    <a href="#" class="how-card" data-butler-button data-reveal style="--delay:.24s">
+      <div class="how-card__step">4</div>
+      <h3 class="how-card__title">You travel. We handle everything else.</h3>
+      <p class="how-card__body">Real-time concierge throughout your trip. Whatever comes up, we're already on it.</p>
+      <span class="how-card__link">Get concierge →</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- ── Mid-page CTA ─────────────────────────────────────────── -->
+<div class="cta-strip">
+  <span class="cta-strip__text">Ready to plan your next trip?</span>
+  <a href="#" class="btn btn-white btn-md" data-butler-button>Start from $25</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 4 — PRODUCTS
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-products" id="products">
+  <div class="section-head">
+    <span class="eyebrow eyebrow-indigo" data-reveal>Simple Pricing</span>
+    <h2 class="section-title-dark" data-reveal style="--delay:.1s">One flat fee.<br>No surprises.</h2>
+    <p class="section-sub-dark" data-reveal style="--delay:.2s">Pay only for what you use. Cancel anytime — no fees.</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="pcard pcard--trip" data-reveal onclick="this.querySelector('.btn').click()">
+      <div class="pcard__bar"></div>
+      <div class="pcard__tier">Trip Planning</div>
+      <h3 class="pcard__name">Expert Itinerary</h3>
+      <div class="pcard__price-row">
+        <span class="pcard__price">$25</span>
+        <span class="pcard__unit">/ country</span>
+      </div>
+      <hr class="pcard__divider">
+      <ul class="pcard__features">
+        <li>Preference-first research</li>
+        <li>Flights, stays &amp; experiences</li>
+        <li>Transfers &amp; logistics</li>
+        <li>Unlimited revisions</li>
+        <li>24-hour delivery</li>
+        <li>Advisor-reviewed &amp; signed off</li>
+      </ul>
+      <a href="#" class="btn btn-ghost-dark btn-md" data-butler-button>Start Planning</a>
+    </div>
+
+    <div class="pcard pcard--featured" data-reveal style="--delay:.1s" onclick="this.querySelector('.btn').click()">
+      <div class="pcard__badge">Most Popular</div>
+      <div class="pcard__bar"></div>
+      <div class="pcard__tier">8-Hour Concierge</div>
+      <h3 class="pcard__name" style="color:#f5f5f7">Real-Time Expert</h3>
+      <div class="pcard__price-row">
+        <span class="pcard__price">$25</span>
+        <span class="pcard__unit">/ day</span>
+      </div>
+      <hr class="pcard__divider">
+      <ul class="pcard__features">
+        <li>Dedicated advisor, knows your trip</li>
+        <li>4-minute average response time</li>
+        <li>Restaurant &amp; transport bookings</li>
+        <li>Local intelligence &amp; insider access</li>
+        <li>In-person errands &amp; deliveries</li>
+        <li>150+ countries, 40+ languages</li>
+      </ul>
+      <a href="#" class="btn btn-outline-light btn-md" data-butler-button>Get Concierge</a>
+    </div>
+
+    <div class="pcard pcard--elite" data-reveal style="--delay:.2s" onclick="this.querySelector('.btn').click()">
+      <div class="pcard__bar"></div>
+      <div class="pcard__tier">24-Hour Concierge</div>
+      <h3 class="pcard__name">Round-the-Clock</h3>
+      <div class="pcard__price-row">
+        <span class="pcard__price" style="color:#7c3aed">$100</span>
+        <span class="pcard__unit">/ day</span>
+      </div>
+      <hr class="pcard__divider">
+      <ul class="pcard__features">
+        <li>Everything in 8-Hour</li>
+        <li>Overnight &amp; emergency coverage</li>
+        <li>Real-time itinerary monitoring</li>
+        <li>Proactive disruption prevention</li>
+        <li>Same advisor start to finish</li>
+        <li>97% of disruptions resolved &lt;60 min</li>
+      </ul>
+      <a href="#" class="btn btn-ghost-dark btn-md" style="border-color:#7c3aed; color:#7c3aed" data-butler-button>Get 24-Hour</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 5 — REAL SCENARIOS (clickable cards)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-scenarios" id="scenarios">
+  <div class="section-head">
+    <span class="eyebrow eyebrow-soft" data-reveal>Real Stories</span>
+    <h2 class="section-title-light" data-reveal style="--delay:.1s">The moments that<br>define a trip.</h2>
+    <p class="section-sub-light" data-reveal style="--delay:.2s">Things go wrong. That's not a risk — it's a guarantee. The question is who's in your corner.</p>
+  </div>
+
+  <div class="scenarios-grid">
+    <a href="#" class="scard" data-butler-button data-reveal>
+      <div class="scard__where">11 pm · Bangkok</div>
+      <p class="scard__situation">"My flight just got cancelled. I have meetings first thing tomorrow."</p>
+      <p class="scard__outcome">Your advisor already has your next-day schedule loaded. Rebooked, transported, and checked in within 40 minutes — without a single call.</p>
+      <span class="scard__tag">⚡ Resolved in 40 min →</span>
+    </a>
+
+    <a href="#" class="scard" data-butler-button data-reveal style="--delay:.1s">
+      <div class="scard__where">Day 3 · Rome</div>
+      <p class="scard__situation">"The restaurant closed. Our confirmed reservation — gone."</p>
+      <p class="scard__outcome">Six minutes later you have a table at a place locals actually eat. One that never appears on any review site's first page.</p>
+      <span class="scard__tag">⚡ Resolved in 6 min →</span>
+    </a>
+
+    <a href="#" class="scard" data-butler-button data-reveal style="--delay:.2s">
+      <div class="scard__where">Morning · Kyoto</div>
+      <p class="scard__situation">"What's worth doing today that isn't in any guide?"</p>
+      <p class="scard__outcome">Your advisor grew up in the region. You get the answer no algorithm can generate — a place, a moment, a memory.</p>
+      <span class="scard__tag">✦ The experience you'll remember →</span>
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 6 — HUMAN FIRST
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-human">
+  <div class="human-inner">
+
+    <a href="#" class="human-img-wrap" data-butler-button data-reveal-left>
+      <img src="../../img/ads/veltm_social_proof_01.png" alt="Butler Button concierge in action">
+    </a>
+
+    <div class="human-copy">
+      <span class="eyebrow eyebrow-indigo" data-reveal>The Butler Button Standard</span>
+      <h2 class="human-h2" data-reveal style="--delay:.1s">
+        Not a chatbot.<br>A real person who<br>already knows your trip.
+      </h2>
+      <p class="human-body" data-reveal style="--delay:.2s">
+        Every Butler Button advisor studies your full itinerary before you depart. When you reach out — whether it's a quick question or a full emergency — you're not starting from zero. 100% human first contact, every time.
+      </p>
+
+      <div class="human-stats-grid" data-reveal style="--delay:.3s">
+        <div class="hstat">
+          <div class="hstat__num">100%</div>
+          <div class="hstat__label">Human first contact, every time</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat__num">97%</div>
+          <div class="hstat__label">Disruptions resolved in under 60 min</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat__num">9 yr</div>
+          <div class="hstat__label">Avg advisor destination expertise</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat__num">4 min</div>
+          <div class="hstat__label">Average response time</div>
+        </div>
+      </div>
+
+      <a href="#" class="btn btn-indigo btn-lg" data-butler-button data-reveal style="--delay:.4s">
+        Book Your Butler
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 7 — GALLERY (clickable images)
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-gallery">
+  <div style="max-width:1160px; margin:0 auto; text-align:center;">
+    <span class="eyebrow eyebrow-soft" data-reveal>Built for Every Trip</span>
+    <h2 class="section-title-light" data-reveal style="--delay:.1s">195+ countries.<br>Every travel style.</h2>
+    <p class="section-sub-light" data-reveal style="--delay:.2s">One flat fee per country. From weekend escapes to month-long grand tours.</p>
+  </div>
+  <div class="gallery-grid">
+    <a href="#" class="gallery-item" data-butler-button data-reveal>
+      <img src="../../img/ads/veltm_travel_trending_02.png" alt="Trending destination">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-cta">Plan this trip →</span>
+      </div>
+    </a>
+    <a href="#" class="gallery-item" data-butler-button data-reveal style="--delay:.12s">
+      <img src="../../img/ads/veltm_travel_trending_03.png" alt="Trending destination">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-cta">Plan this trip →</span>
+      </div>
+    </a>
+    <a href="#" class="gallery-item" data-butler-button data-reveal style="--delay:.24s">
+      <img src="../../img/ads/veltm_travel_trending_04.png" alt="Trending destination">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-cta">Plan this trip →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 8 — FINAL CTA
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-cta">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <span class="eyebrow eyebrow-soft" data-reveal>Ready to travel differently?</span>
+    <h2 class="cta-h2" data-reveal style="--delay:.1s">
+      Start your trip<br><span>from $25.</span>
+    </h2>
+    <p class="cta-sub" data-reveal style="--delay:.2s">
+      No membership. No annual fee. Cancel anytime for a full refund.
+    </p>
+    <div class="cta-actions" data-reveal style="--delay:.3s">
+      <a href="#" class="btn btn-white btn-lg" data-butler-button>Book Your Butler</a>
+      <a href="../../pricing.html" class="btn btn-ghost-light btn-lg">See All Pricing</a>
+    </div>
+    <p class="cta-fine" data-reveal style="--delay:.4s">
+      Available in 195+ countries · 150+ languages · Starting at $25/day
+    </p>
+  </div>
+</section>
+
+
+<!-- ─── FOOTER ──────────────────────────────────────────────── -->
+<footer class="footer">
+  <span class="footer-brand">Butler<em>Button</em> by VELTM</span>
+  <ul class="footer-links">
+    <li><a href="../../">Home</a></li>
+    <li><a href="../../trip-planning/">Trip Planning</a></li>
+    <li><a href="../../concierge/">Concierge</a></li>
+    <li><a href="../../pricing.html">Pricing</a></li>
+    <li><a href="../../faq.html">FAQ</a></li>
+    <li><a href="../../advisor-program/">Advisors</a></li>
+  </ul>
+  <span class="footer-legal">&copy; 2026 VELTM Tours</span>
+</footer>
+
+
+<script>
+(function () {
+  'use strict';
+
+  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── NAV bg on scroll ──────────────────────────── */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('bg', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── HERO TABS — click to switch, auto-advance ─── */
+  const tabs    = document.querySelectorAll('.hero-tab');
+  const panels  = document.querySelectorAll('.hero-v-panel');
+  let   current = 0;
+  let   timer   = null;
+  let   paused  = false;
+  const INTERVAL = 6000; // 6s per tab
+
+  function setTab(idx) {
+    tabs[current].classList.remove('active', 'paused');
+    panels[current].classList.remove('active');
+    current = idx;
+    tabs[current].classList.remove('paused');
+    tabs[current].classList.add('active');
+    panels[current].classList.add('active');
+  }
+
+  function advance() {
+    setTab((current + 1) % tabs.length);
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    // Reset animation by removing/re-adding active class
+    tabs[current].classList.remove('active');
+    void tabs[current].offsetWidth; // force reflow
+    tabs[current].classList.add('active');
+    timer = setInterval(advance, INTERVAL);
+  }
+
+  // Click a tab — switch immediately, restart timer
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      setTab(i);
+      startTimer();
+    });
+  });
+
+  // Pause auto-advance on hover
+  const heroWrap = document.querySelector('.hero-visual-wrap');
+  const tabBar   = document.getElementById('hero-tabs');
+  [heroWrap, tabBar].forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      clearInterval(timer);
+      tabs[current].classList.add('paused');
+    });
+    el.addEventListener('mouseleave', () => {
+      startTimer();
+    });
+  });
+
+  startTimer();
+
+  /* ── REVEAL + COUNTERS ─────────────────────────── */
+  if (!noMotion) {
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -7% 0px', threshold: 0.08 });
+
+    document.querySelectorAll(
+      '[data-reveal], [data-reveal-left], [data-reveal-right]'
+    ).forEach(el => revealObs.observe(el));
+
+    /* ── NUMBER COUNTERS ──────────────────────────── */
+    const ease = t => 1 - Math.pow(1 - t, 4);
+
+    function runCounter(el) {
+      const target   = +el.dataset.target;
+      const duration = 1800;
+      const start    = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = Math.round(ease(p) * target).toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+
+    const ctrObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          runCounter(e.target);
+          ctrObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-counter]').forEach(el => ctrObs.observe(el));
+  }
+
+})();
+</script>
+</body>
+</html>
