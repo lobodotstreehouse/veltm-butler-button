@@ -676,3 +676,94 @@ a { text-decoration: none; color: inherit; }
   text-align: center; padding: 0 5vw;
 }
 .price-footnote--light { color: var(--text-mute); }
+
+/* ═══════════════════════════════════════════════════════════════
+   COMPETITOR LOGO IN TABLE HEADER
+═══════════════════════════════════════════════════════════════ */
+.comp-logo {
+  margin: 0 0 0.6rem;
+  display: flex; justify-content: center;
+}
+.comp-logo svg {
+  display: block;
+  height: 30px; width: auto; max-width: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PLEDGE CALLOUT (1% donation)
+═══════════════════════════════════════════════════════════════ */
+.pledge-callout {
+  max-width: 820px; margin: 2.5rem auto 0;
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  background: rgba(79,70,229,0.06);
+  border: 1px solid rgba(79,70,229,0.2);
+  border-radius: 12px;
+  font-size: 0.9rem; color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+}
+.pledge-callout strong { color: rgba(255,255,255,0.9); }
+.pledge-callout__icon {
+  font-size: 1.2rem; flex-shrink: 0; margin-top: 0.15rem; color: var(--indigo-lt);
+}
+.pledge-callout a {
+  color: var(--indigo-lt); text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CRYPTO NOTIFY SECTION
+═══════════════════════════════════════════════════════════════ */
+.section-crypto-notify {
+  background: var(--gray-bg);
+  padding: clamp(5rem, 10vw, 8rem) 5vw;
+  text-align: center;
+}
+.crypto-inner { max-width: 540px; margin: 0 auto; }
+.crypto-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.28rem 0.85rem;
+  background: rgba(79,70,229,0.08);
+  border: 1px solid rgba(79,70,229,0.2);
+  border-radius: 999px;
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--indigo);
+  margin-bottom: 1.5rem;
+}
+.crypto-h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1.1;
+  color: var(--text-dark); margin-bottom: 1rem;
+}
+.crypto-sub {
+  font-size: 1rem; color: var(--text-mid);
+  line-height: 1.6; margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+}
+.crypto-form {
+  display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+}
+.crypto-form input[type="email"] {
+  flex: 1 1 220px; min-width: 0;
+  padding: 0.75rem 1.25rem;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 999px;
+  font-size: 0.95rem; background: #fff;
+  color: var(--text-dark); outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+.crypto-form input[type="email"]:focus { border-color: var(--indigo); }
+.crypto-form button {
+  padding: 0.75rem 1.75rem;
+  background: var(--indigo); color: #fff;
+  border: none; border-radius: 999px;
+  font-size: 0.95rem; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: background 0.2s; white-space: nowrap;
+}
+.crypto-form button:hover { background: #4338ca; }
+.crypto-fine {
+  font-size: 0.72rem; color: var(--text-mute);
+  margin-top: 1rem; letter-spacing: -0.005em;
+}
+.crypto-fine a { color: var(--indigo); text-underline-offset: 3px; }

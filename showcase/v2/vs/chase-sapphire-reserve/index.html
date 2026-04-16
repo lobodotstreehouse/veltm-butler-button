@@ -99,6 +99,31 @@
         "@type": "Answer",
         "text": "Yes, operationally. Butler Button's dedicated advisor handles real-time disruption — rebooking flights, finding hotels, securing new reservations. Sapphire Reserve provides trip cancellation and delay insurance as a card benefit; those are separate things. Many travelers use both."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I pay with my Chase Sapphire Reserve and still earn Ultimate Rewards?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Butler Button is card-agnostic — you tell us which card to charge and we use it for all bookings. Using your Chase Sapphire Reserve earns 3x Ultimate Rewards on travel purchases. You can also share your rewards goals and Butler Button will design your itinerary to maximize earning, spending, or a hybrid strategy." }
+    },
+    {
+      "@type": "Question",
+      "name": "How does Butler Button get prices 30–40% below OTA rates?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Butler Button's operations center is based in India. Advisors purchase hotels, excursions, and ground transport from Indian IP addresses, which are offered local market pricing by suppliers — rather than the inflated rates western OTAs charge first-world consumers. Average savings are 30–40% on those categories. Air and sea pricing is not affected (globally priced)." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Butler Button's travel agency commission structure?",
+      "acceptedAnswer": { "@type": "Answer", "text": "0% commission if you pay for travel upfront or on arrival. If you prefer to be invoiced post-trip, the commission is 10% — below the industry standard of 12–15%. Most clients choose upfront or on-arrival payment to avoid commission entirely." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Butler Button donate to charity?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Butler Button automatically donates 1% of every purchase to a nonprofit of your choice, via our Pledge integration. At checkout you pick the beneficiary from over a million registered nonprofits. No extra steps, no extra cost to you." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I pay for Butler Button with cryptocurrency?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Crypto payments are coming soon via Stripe's stablecoin acceptance feature. Sign up to be notified the moment it launches. Currently Butler Button accepts all major credit and debit cards." }
     }
   ]
 }
@@ -232,8 +257,14 @@
       <thead>
         <tr>
           <th scope="col">Feature</th>
-          <th scope="col" class="col-us">Butler Button<small>Standalone travel concierge</small></th>
-          <th scope="col" class="col-them">Sapphire Reserve<small>Premium Visa Infinite card</small></th>
+          <th scope="col" class="col-us">
+            <figure class="comp-logo"><svg width="110" height="30" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg"><rect width="110" height="30" rx="5" fill="rgba(79,70,229,0.12)" stroke="rgba(129,140,248,0.35)" stroke-width="1"/><text x="55" y="12" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="700" fill="#818cf8" text-anchor="middle" letter-spacing="1.5">BUTLER</text><text x="55" y="23" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="700" fill="#818cf8" text-anchor="middle" letter-spacing="1.5">BUTTON</text></svg></figure>
+            Butler Button<small>Standalone travel concierge</small>
+          </th>
+          <th scope="col" class="col-them">
+            <figure class="comp-logo"><svg width="110" height="30" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg"><rect width="110" height="30" rx="5" fill="#0A3464"/><polygon points="6,9 10,5 17,5 21,9 21,21 17,25 10,25 6,21" fill="none" stroke="white" stroke-width="1.5"/><text x="62" y="20" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1.5">CHASE</text></svg></figure>
+            Sapphire Reserve<small>Premium Visa Infinite card</small>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -317,8 +348,38 @@
           <td class="col-us">Yes — pay with any card, including Sapphire Reserve <span class="win">Stackable</span></td>
           <td>Yes — can pair with other travel services</td>
         </tr>
+        <tr>
+          <th scope="row">Pay with your existing card</th>
+          <td class="col-us">Yes — use your Chase Sapphire Reserve to pay for all bookings; earn 3x Ultimate Rewards on travel. Butler Button is card-agnostic. <span class="win">Card-agnostic</span></td>
+          <td>All charges apply to your Chase account; 10% back via Chase Travel portal only</td>
+        </tr>
+        <tr>
+          <th scope="row">Rewards &amp; loyalty optimization</th>
+          <td class="col-us">Share your rewards goals at booking — earn, spend, or hybrid. Advisor designs your itinerary around your UR program, including strategies to maximize the 3x travel multiplier. <span class="win">Program-aware</span></td>
+          <td>Earns 3x Ultimate Rewards at standard rates; 10% back via Chase Travel portal only with eligible bookings</td>
+        </tr>
+        <tr>
+          <th scope="row">Price vs. OTA retail rates</th>
+          <td class="col-us">Avg. 30–40% below western OTA prices on hotels, excursions &amp; ground transport — purchased at local market rates via India-based operations center. <span class="win">Below retail</span></td>
+          <td>Standard OTA rates; 10% back via Chase Travel portal on some bookings</td>
+        </tr>
+        <tr>
+          <th scope="row">Travel agency commission</th>
+          <td class="col-us">0% if you pay for travel upfront or on arrival. 10% if Butler Button invoices you post-trip — vs. industry standard 12–15%. <span class="win">Transparent</span></td>
+          <td>N/A — premium credit card, not a travel agency</td>
+        </tr>
+        <tr>
+          <th scope="row">Charitable giving</th>
+          <td class="col-us">1% of every purchase automatically donated to a nonprofit of your choice. <span class="win">1% gives</span></td>
+          <td>No charitable giving component</td>
+        </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="pledge-callout" data-reveal>
+    <span class="pledge-callout__icon">♥</span>
+    <div><p><strong>Butler Button gives 1%</strong> of every purchase to a nonprofit of your choice — automatically, via our <a href="#faq-pledge">Pledge integration</a>. You pick the cause at checkout. We handle the donation.</p></div>
   </div>
 
   <p class="price-footnote">
@@ -513,6 +574,62 @@
         <p>Sapphire Reserve provides trip cancellation and delay insurance as a card benefit — reimbursement for covered conditions. Those are complementary: Butler Button handles the logistics in the moment; card insurance may reimburse you afterward.</p>
       </div>
     </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>Can I use my Chase Sapphire Reserve to pay and still earn Ultimate Rewards? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Yes. Butler Button is card-agnostic. You tell us which card to charge and we use it for all bookings — the $25/day service fee plus every hotel, excursion, and transport booking. Using your Chase Sapphire Reserve earns 3x Ultimate Rewards on travel purchases on every transaction.</p>
+        <p>You can also share your rewards goals at checkout — earn points, redeem points, or a hybrid strategy — and your advisor will design your itinerary and booking sequence around your UR program.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>How does Butler Button get prices 30–40% below OTA rates? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Butler Button's operations center is based in India. When advisors purchase hotels, excursions, and ground transport on your behalf, they do so from Indian IP addresses. Suppliers offer local market pricing at those addresses — rather than the inflated rates that western OTAs push on first-world consumers.</p>
+        <p>The average saving is 30–40% on hotels, excursions, and ground transport. Air and sea rates are globally priced and not affected.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>What is Butler Button's commission structure? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Butler Button operates a no-commission travel agency for clients who pay directly: <strong>0% commission</strong> if you pay for travel upfront or on arrival.</p>
+        <p>If you prefer to be invoiced after your trip, the commission is <strong>10%</strong> — below the industry standard of 12–15%. Most clients choose upfront or on-arrival payment to avoid commission entirely.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal id="faq-pledge">
+      <summary>Does Butler Button donate to charity? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Yes. Butler Button automatically donates <strong>1% of every purchase</strong> to a nonprofit of your choice, powered by our Pledge integration. At checkout you simply pick the beneficiary from over a million registered nonprofits.</p>
+        <p>No extra steps. No extra cost to you. Butler Button absorbs the donation.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>Can I pay for Butler Button with cryptocurrency? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Crypto payments are coming soon via Stripe's stablecoin acceptance feature. <a href="#crypto">Sign up below</a> to be the first to know when it launches.</p>
+        <p>Currently Butler Button accepts all major credit and debit cards.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+
+<!-- CRYPTO NOTIFY -->
+<section class="section-crypto-notify" id="crypto">
+  <div class="crypto-inner">
+    <div class="crypto-badge">⬡ Coming Soon</div>
+    <h2 class="crypto-h2" data-reveal>Pay with crypto.</h2>
+    <p class="crypto-sub" data-reveal style="--delay:.1s">Butler Button will soon accept stablecoin payments via Stripe. Be the first to know when it goes live.</p>
+    <form class="crypto-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST" data-reveal style="--delay:.2s">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+      <input type="hidden" name="_subject" value="Crypto payment notification signup">
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="crypto-fine" data-reveal style="--delay:.3s">No spam. One email when crypto payments launch. Powered by <a href="https://stripe.com/docs/crypto" target="_blank" rel="noopener noreferrer">Stripe</a>.</p>
   </div>
 </section>
 

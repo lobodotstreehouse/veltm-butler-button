@@ -99,6 +99,31 @@
         "@type": "Answer",
         "text": "Butler Button. If you take one to three trips per year, paying US$25 per day used typically costs significantly less than the US$895 Amex Platinum annual fee and avoids paying for benefits you do not use."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I pay with my Amex Platinum and still earn Membership Rewards points?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Butler Button is card-agnostic — you tell us which card to charge and we use it for all bookings. Using your Amex Platinum earns Membership Rewards on every transaction. You can also share your rewards goals and Butler Button will design your itinerary around earning, spending, or a hybrid strategy." }
+    },
+    {
+      "@type": "Question",
+      "name": "How does Butler Button get prices 30–40% below OTA rates?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Butler Button's operations center is based in India. Advisors purchase hotels, excursions, and ground transport from Indian IP addresses, which are offered local market pricing by suppliers — rather than the inflated rates western OTAs charge first-world consumers. Average savings are 30–40% on those categories. Air and sea pricing is not affected (globally priced)." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Butler Button's travel agency commission structure?",
+      "acceptedAnswer": { "@type": "Answer", "text": "0% commission if you pay for travel upfront or on arrival. If you prefer to be invoiced post-trip (Butler Button pays on your behalf then bills you), the commission is 10% — below the industry standard of 12–15%. Most clients choose upfront or on-arrival payment to avoid commission entirely." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Butler Button donate to charity?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Butler Button automatically donates 1% of every purchase to a nonprofit of your choice, via our Pledge integration. At checkout you pick the beneficiary from over a million registered nonprofits. No extra steps, no extra cost to you." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I pay for Butler Button with cryptocurrency?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Crypto payments are coming soon via Stripe's stablecoin acceptance feature. Sign up to be notified the moment it launches. Currently Butler Button accepts all major credit and debit cards." }
     }
   ]
 }
@@ -241,8 +266,14 @@
       <thead>
         <tr>
           <th scope="col">Feature</th>
-          <th scope="col" class="col-us">Butler Button<small>Standalone travel concierge</small></th>
-          <th scope="col" class="col-them">Amex Platinum<small>Premium credit card + benefits</small></th>
+          <th scope="col" class="col-us">
+            <figure class="comp-logo"><svg width="110" height="30" viewBox="0 0 110 30" xmlns="http://www.w3.org/2000/svg"><rect width="110" height="30" rx="5" fill="rgba(79,70,229,0.12)" stroke="rgba(129,140,248,0.35)" stroke-width="1"/><text x="55" y="12" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="700" fill="#818cf8" text-anchor="middle" letter-spacing="1.5">BUTLER</text><text x="55" y="23" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="700" fill="#818cf8" text-anchor="middle" letter-spacing="1.5">BUTTON</text></svg></figure>
+            Butler Button<small>Standalone travel concierge</small>
+          </th>
+          <th scope="col" class="col-them">
+            <figure class="comp-logo"><svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="30" rx="5" fill="#006FCF"/><text x="60" y="12" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1.5">AMERICAN</text><text x="60" y="23" font-family="system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1.5">EXPRESS</text></svg></figure>
+            Amex Platinum<small>Premium credit card + benefits</small>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -321,8 +352,38 @@
           <td class="col-us">Yes — pay with any card; stacks with points programs <span class="win">Open</span></td>
           <td>Benefits tied to the Amex ecosystem</td>
         </tr>
+        <tr>
+          <th scope="row">Pay with your existing card</th>
+          <td class="col-us">Yes — use your Amex Platinum to pay for all bookings; earn 5x Membership Rewards on every charge. Butler Button is card-agnostic. <span class="win">Card-agnostic</span></td>
+          <td>All charges apply to your Amex account; not interoperable with other cards</td>
+        </tr>
+        <tr>
+          <th scope="row">Rewards &amp; loyalty optimization</th>
+          <td class="col-us">Share your rewards goals at booking — earn, spend, or hybrid. Advisor designs your itinerary and booking strategy around your Membership Rewards program. <span class="win">Program-aware</span></td>
+          <td>Earns MR points at standard card rates; no rewards-first trip design service</td>
+        </tr>
+        <tr>
+          <th scope="row">Price vs. OTA retail rates</th>
+          <td class="col-us">Avg. 30–40% below western OTA prices on hotels, excursions &amp; ground transport — purchased at local market rates via India-based operations center. <span class="win">Below retail</span></td>
+          <td>Standard Amex Travel / Fine Hotels + Resorts rates; value delivered via credits and perks, not purchase price</td>
+        </tr>
+        <tr>
+          <th scope="row">Travel agency commission</th>
+          <td class="col-us">0% if you pay for travel upfront or on arrival. 10% if Butler Button invoices you post-trip — vs. industry standard 12–15%. <span class="win">Transparent</span></td>
+          <td>N/A — premium credit card, not a travel agency</td>
+        </tr>
+        <tr>
+          <th scope="row">Charitable giving</th>
+          <td class="col-us">1% of every purchase automatically donated to a nonprofit of your choice. <span class="win">1% gives</span></td>
+          <td>No charitable giving component</td>
+        </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="pledge-callout" data-reveal>
+    <span class="pledge-callout__icon">♥</span>
+    <div><p><strong>Butler Button gives 1%</strong> of every purchase to a nonprofit of your choice — automatically, via our <a href="#faq-pledge">Pledge integration</a>. You pick the cause at checkout. We handle the donation.</p></div>
   </div>
 
   <p class="price-footnote">
@@ -523,6 +584,64 @@
         <p>Four minutes. Every Butler Button advisor studies your full itinerary before you depart, so your first message goes to a human who already knows your destination, your schedule, and what matters on your trip. 97% of in-trip disruptions are resolved in under 60 minutes.</p>
       </div>
     </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>Can I use my Amex Platinum to pay and still earn Membership Rewards? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Yes. Butler Button is card-agnostic. You tell us which card to charge and we use it for all bookings — the $25/day service fee plus every hotel, excursion, and transport booking. Using your Amex Platinum earns Membership Rewards on every transaction exactly as it would with any other purchase.</p>
+        <p>You can also share your rewards goals at checkout — earn points, redeem points, or a hybrid strategy — and your advisor will design your itinerary and booking sequence around your program.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>How does Butler Button get prices 30–40% below OTA rates? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Butler Button's operations center is based in India. When advisors purchase hotels, excursions, and ground transport on your behalf, they do so from Indian IP addresses. Suppliers offer local market pricing at those addresses — rather than the inflated rates that western OTAs push on first-world consumers.</p>
+        <p>The average saving is 30–40% on hotels, excursions, and ground transport. Air and sea rates are globally priced and not affected.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>What is Butler Button's commission structure? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Butler Button operates a no-commission travel agency for clients who pay directly: <strong>0% commission</strong> if you pay for travel upfront (before the trip) or on arrival (you pay the vendor directly at the time of service).</p>
+        <p>If you prefer to be invoiced after your trip — Butler Button pays on your behalf and bills you — the commission is <strong>10%</strong>, below the industry standard of 12–15%. Most clients choose upfront or on-arrival payment to avoid commission entirely.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal id="faq-pledge">
+      <summary>Does Butler Button donate to charity? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Yes. Butler Button automatically donates <strong>1% of every purchase</strong> to a nonprofit of your choice, powered by our Pledge integration. At checkout you simply pick the beneficiary from over a million registered nonprofits — education, environment, health, disaster relief, and more.</p>
+        <p>No extra steps. No extra cost to you. Butler Button absorbs the donation.</p>
+      </div>
+    </details>
+
+    <details class="faq-item" data-reveal>
+      <summary>Can I pay for Butler Button with cryptocurrency? <span class="faq-icon" aria-hidden="true">+</span></summary>
+      <div class="faq-body">
+        <p>Crypto payments are coming soon via Stripe's stablecoin acceptance feature (USDC and other stablecoins). <a href="#crypto">Sign up below</a> to be the first to know when it launches.</p>
+        <p>Currently Butler Button accepts all major credit and debit cards.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CRYPTO NOTIFY
+═══════════════════════════════════════════════════════ -->
+<section class="section-crypto-notify" id="crypto">
+  <div class="crypto-inner">
+    <div class="crypto-badge">⬡ Coming Soon</div>
+    <h2 class="crypto-h2" data-reveal>Pay with crypto.</h2>
+    <p class="crypto-sub" data-reveal style="--delay:.1s">Butler Button will soon accept stablecoin payments via Stripe. Be the first to know when it goes live.</p>
+    <form class="crypto-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST" data-reveal style="--delay:.2s">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+      <input type="hidden" name="_subject" value="Crypto payment notification signup">
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="crypto-fine" data-reveal style="--delay:.3s">No spam. One email when crypto payments launch. Powered by <a href="https://stripe.com/docs/crypto" target="_blank" rel="noopener noreferrer">Stripe</a>.</p>
   </div>
 </section>
 
