@@ -258,26 +258,210 @@
     .hero-h1 span { color: var(--indigo-lt); }
 
     /* rotating tagline */
-    .hero-tagline-wrap {
-      height: 2rem; position: relative;
-      margin: 1.8rem 0 2.5rem; overflow: hidden;
+    /* ─── HERO VISUAL PANELS ──────────────────────────────────── */
+    .hero-visual-wrap {
+      position: relative;
+      width: min(540px, 92vw);
+      height: min(300px, 36vh);
+      margin: 2rem auto 2.5rem;
     }
-    .hero-tagline {
-      position: absolute; top: 0; left: 50%;
-      transform: translateX(-50%) translateY(100%);
-      white-space: nowrap;
-      font-size: clamp(0.9rem, 2vw, 1.15rem);
-      color: var(--text-mute); letter-spacing: -0.01em;
+    .hero-v-panel {
+      position: absolute; inset: 0;
+      border-radius: 20px; overflow: clip;
       opacity: 0;
-      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
-                  opacity 0.4s ease;
+      transform: scale(0.97) translateY(12px);
+      transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.55s cubic-bezier(0.22,1,0.36,1);
+      pointer-events: none;
     }
-    .hero-tagline.enter {
-      transform: translateX(-50%) translateY(0); opacity: 1;
+    .hero-v-panel.enter  { opacity: 1; transform: none; pointer-events: auto; }
+    .hero-v-panel.exit   { opacity: 0; transform: scale(1.02) translateY(-8px); }
+
+    /* shared card base */
+    .vp-card {
+      width: 100%; height: 100%;
+      background: #0d0d1a;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 1.4rem;
+      display: flex; flex-direction: column;
     }
-    .hero-tagline.exit {
-      transform: translateX(-50%) translateY(-120%); opacity: 0;
+    .vp-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem; flex-shrink: 0;
     }
+    .vp-hdr-title {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--indigo-lt);
+    }
+    .vp-live {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.62rem; color: #34d399; letter-spacing: 0.05em;
+    }
+    .vp-live-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #34d399;
+      animation: vp-blink 1.8s ease-in-out infinite;
+    }
+    @keyframes vp-blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── PANEL 0: AI route map ────────────────────────── */
+    .vp-route { gap: 0; }
+    .vp-route svg { flex: 1; width: 100%; overflow: visible; }
+    .route-path {
+      stroke-dasharray: 500;
+      stroke-dashoffset: 500;
+      fill: none;
+    }
+    .hero-v-panel.enter .route-path:nth-child(1) { animation: draw-path 1s cubic-bezier(0.4,0,0.2,1) 0.1s both; }
+    .hero-v-panel.enter .route-path:nth-child(2) { animation: draw-path 0.8s cubic-bezier(0.4,0,0.2,1) 0.45s both; }
+    .hero-v-panel.enter .route-path:nth-child(3) { animation: draw-path 0.7s cubic-bezier(0.4,0,0.2,1) 0.75s both; }
+    .hero-v-panel.enter .route-path:nth-child(4) { animation: draw-path 1s cubic-bezier(0.4,0,0.2,1) 1.0s both; }
+    @keyframes draw-path { to { stroke-dashoffset: 0; } }
+    .city-dot { opacity: 0; transition: opacity 0.3s ease; }
+    .hero-v-panel.enter .city-dot { opacity: 1; }
+    .vp-progress-wrap { flex-shrink: 0; margin-top: auto; }
+    .vp-progress-meta {
+      display: flex; justify-content: space-between;
+      font-size: 0.67rem; color: rgba(255,255,255,0.3);
+      margin-bottom: 0.4rem; letter-spacing: -0.01em;
+    }
+    .vp-progress-track {
+      height: 3px; border-radius: 2px;
+      background: rgba(255,255,255,0.07); overflow: clip;
+    }
+    .vp-progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--indigo), var(--indigo-lt));
+      border-radius: 2px;
+      transition: width 2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .hero-v-panel.enter .vp-progress-fill { width: 87%; }
+
+    /* ── PANEL 1: Chat UI ────────────────────────────── */
+    .vp-chat { gap: 0.55rem; }
+    .chat-row { display: flex; gap: 0.45rem; align-items: flex-end; }
+    .chat-row--user { justify-content: flex-end; }
+    .chat-avatar {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--indigo), #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700; color: #fff;
+    }
+    .chat-bubble {
+      max-width: 74%; padding: 0.5rem 0.8rem;
+      border-radius: 14px; font-size: 0.8rem; line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+    .chat-bubble--user {
+      background: var(--indigo); color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-bubble--butler {
+      background: rgba(255,255,255,0.08); color: #f5f5f7;
+      border-bottom-left-radius: 4px;
+    }
+    .chat-time { font-size: 0.58rem; color: rgba(255,255,255,0.22); margin-top: 2px; }
+    .chat-row--user .chat-time { text-align: right; }
+    .chat-typing {
+      display: flex; align-items: center; gap: 4px;
+      padding: 0.55rem 0.8rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px; border-bottom-left-radius: 4px;
+      width: fit-content;
+    }
+    .chat-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+    }
+    .hero-v-panel.enter .chat-dot:nth-child(1) { animation: typing 1.1s 0.1s ease-in-out infinite; }
+    .hero-v-panel.enter .chat-dot:nth-child(2) { animation: typing 1.1s 0.25s ease-in-out infinite; }
+    .hero-v-panel.enter .chat-dot:nth-child(3) { animation: typing 1.1s 0.4s ease-in-out infinite; }
+    @keyframes typing {
+      0%,100% { transform: translateY(0); opacity: 0.35; }
+      50%      { transform: translateY(-4px); opacity: 1; }
+    }
+    .chat-typing-row { transition: opacity 0.3s ease 1.1s, transform 0.3s ease 1.1s; }
+    .chat-response {
+      opacity: 0; transform: translateY(5px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .hero-v-panel.enter .chat-typing-row { opacity: 0; transform: translateY(-4px); }
+    .hero-v-panel.enter .chat-response  { opacity: 1; transform: none; transition-delay: 1.5s; }
+    .chat-resolved {
+      margin-top: auto; flex-shrink: 0;
+      font-size: 0.63rem; color: #34d399; letter-spacing: 0.04em;
+    }
+
+    /* ── PANEL 2: Destination photo ──────────────────── */
+    .vp-destination { padding: 0; position: relative; }
+    .vp-destination img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      transform: scale(1);
+      transition: transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .hero-v-panel.enter  .vp-destination img { transform: scale(1.05); }
+    .vp-dest-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+    }
+    .vp-dest-caption {
+      position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+    }
+    .vp-dest-stars { color: #fbbf24; font-size: 0.75rem; margin-bottom: 0.3rem; }
+    .vp-dest-city {
+      font-size: 1.15rem; font-weight: 700; color: #fff;
+      letter-spacing: -0.025em; margin-bottom: 0.25rem;
+    }
+    .vp-dest-meta { font-size: 0.68rem; color: rgba(255,255,255,0.55); }
+
+    /* ── PANEL 3: Pricing compare ────────────────────── */
+    .vp-pricing { gap: 0; }
+    .vp-compare {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.85rem; flex: 1;
+    }
+    .vp-col {
+      border-radius: 14px; padding: 1rem;
+      display: flex; flex-direction: column;
+    }
+    .vp-col--old {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .vp-col--new {
+      background: rgba(79,70,229,0.16);
+      border: 1px solid rgba(129,140,248,0.22);
+    }
+    .vp-col-tag {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .vp-col--old .vp-col-tag { color: rgba(255,255,255,0.22); }
+    .vp-col--new .vp-col-tag { color: var(--indigo-lt); }
+    .vp-col-price {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 1;
+      margin-bottom: 0.15rem;
+    }
+    .vp-col--old .vp-col-price {
+      color: rgba(255,255,255,0.18); text-decoration: line-through;
+    }
+    .vp-col--new .vp-col-price { color: var(--indigo-lt); }
+    .vp-col-unit { font-size: 0.68rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+    .vp-col--old .vp-col-unit { color: rgba(255,255,255,0.18); }
+    .vp-col--new .vp-col-unit { color: rgba(129,140,248,0.65); }
+    .vp-col-list { list-style: none; }
+    .vp-col-list li {
+      font-size: 0.65rem; padding: 2px 0;
+      display: flex; gap: 4px;
+    }
+    .vp-col--old .vp-col-list li { color: rgba(255,255,255,0.18); }
+    .vp-col--old .vp-col-list li::before { content: '✗'; color: rgba(255,80,80,0.3); }
+    .vp-col--new .vp-col-list li { color: rgba(199,210,254,0.7); }
+    .vp-col--new .vp-col-list li::before { content: '✓'; color: var(--indigo-lt); }
 
     .hero-actions {
       display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
@@ -779,11 +963,144 @@
         Your personal<br><span>travel expert.</span>
       </h1>
 
-      <div class="hero-tagline-wrap" aria-live="polite">
-        <div class="hero-tagline enter" data-phase="0">AI plans it. A human handles it. You enjoy it.</div>
-        <div class="hero-tagline" data-phase="1">Trip planning from $25 per country.</div>
-        <div class="hero-tagline" data-phase="2">Concierge support from $25 per day.</div>
-        <div class="hero-tagline" data-phase="3">195+ countries. 150+ languages. One butler.</div>
+      <!-- HERO VISUAL PANELS -->
+      <div class="hero-visual-wrap">
+
+        <!-- Phase 0: AI plans it — animated flight route -->
+        <div class="hero-v-panel enter" data-phase="0">
+          <div class="vp-card vp-route">
+            <div class="vp-hdr">
+              <span class="vp-hdr-title">✦ AI Planning Engine</span>
+              <span class="vp-live"><span class="vp-live-dot"></span>Building now</span>
+            </div>
+            <svg viewBox="0 0 480 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- subtle grid -->
+              <defs>
+                <pattern id="dot-grid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <circle cx="1" cy="1" r="0.8" fill="rgba(99,102,241,0.12)"/>
+                </pattern>
+              </defs>
+              <rect width="480" height="130" fill="url(#dot-grid)"/>
+              <!-- flight arc paths (draw in sequence) -->
+              <path class="route-path" d="M44,82 Q152,18 238,82"   stroke="#4f46e5" stroke-width="1.5" opacity="0.8"/>
+              <path class="route-path" d="M238,82 Q268,54 298,82"  stroke="#4f46e5" stroke-width="1.5" opacity="0.8"/>
+              <path class="route-path" d="M298,82 Q332,50 364,82"  stroke="#4f46e5" stroke-width="1.5" opacity="0.8"/>
+              <path class="route-path" d="M364,82 Q418,14 458,82"  stroke="#818cf8" stroke-width="1.5" opacity="0.9"/>
+              <!-- city nodes -->
+              <g class="city-dot" style="transition-delay:.12s">
+                <circle cx="44"  cy="82" r="5" fill="#4f46e5"/>
+                <circle cx="44"  cy="82" r="10" fill="#4f46e5" opacity="0.15"/>
+                <text x="44"  y="106" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.38)" font-family="sans-serif">JFK</text>
+              </g>
+              <g class="city-dot" style="transition-delay:.47s">
+                <circle cx="238" cy="82" r="5" fill="#4f46e5"/>
+                <circle cx="238" cy="82" r="10" fill="#4f46e5" opacity="0.15"/>
+                <text x="238" y="106" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.38)" font-family="sans-serif">LHR</text>
+              </g>
+              <g class="city-dot" style="transition-delay:.77s">
+                <circle cx="298" cy="82" r="5" fill="#4f46e5"/>
+                <circle cx="298" cy="82" r="10" fill="#4f46e5" opacity="0.15"/>
+                <text x="298" y="106" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.38)" font-family="sans-serif">CDG</text>
+              </g>
+              <g class="city-dot" style="transition-delay:1.07s">
+                <circle cx="364" cy="82" r="5" fill="#4f46e5"/>
+                <circle cx="364" cy="82" r="10" fill="#4f46e5" opacity="0.15"/>
+                <text x="364" y="106" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.38)" font-family="sans-serif">FCO</text>
+              </g>
+              <g class="city-dot" style="transition-delay:1.37s">
+                <circle cx="458" cy="82" r="5" fill="#818cf8"/>
+                <circle cx="458" cy="82" r="10" fill="#818cf8" opacity="0.15"/>
+                <text x="458" y="106" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.38)" font-family="sans-serif">NRT</text>
+              </g>
+            </svg>
+            <div class="vp-progress-wrap">
+              <div class="vp-progress-meta">
+                <span>Scanning 200,000+ options</span>
+                <span>87%</span>
+              </div>
+              <div class="vp-progress-track">
+                <div class="vp-progress-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 1: A human handles it — chat UI -->
+        <div class="hero-v-panel" data-phase="1">
+          <div class="vp-card vp-chat">
+            <div class="vp-hdr">
+              <span class="vp-hdr-title">Butler Button</span>
+              <span class="vp-live"><span class="vp-live-dot"></span>Your butler is online</span>
+            </div>
+            <div class="chat-row chat-row--user">
+              <div>
+                <div class="chat-bubble chat-bubble--user">My connecting flight was just cancelled. 😰</div>
+                <div class="chat-time">14:22</div>
+              </div>
+            </div>
+            <div class="chat-row chat-typing-row">
+              <div class="chat-avatar">BB</div>
+              <div class="chat-typing">
+                <div class="chat-dot"></div>
+                <div class="chat-dot"></div>
+                <div class="chat-dot"></div>
+              </div>
+            </div>
+            <div class="chat-row chat-response">
+              <div class="chat-avatar">BB</div>
+              <div>
+                <div class="chat-bubble chat-bubble--butler">Already rebooked you on the 18:45. Hotel sorted for tonight. Your luggage will follow. Anything else?</div>
+                <div class="chat-time">14:26</div>
+              </div>
+            </div>
+            <div class="chat-resolved">⚡ Response time: 3 min 42 sec</div>
+          </div>
+        </div>
+
+        <!-- Phase 2: You enjoy it — destination photo -->
+        <div class="hero-v-panel" data-phase="2">
+          <div class="vp-card vp-destination">
+            <img src="../img/ads/veltm_travel_trending_03.png" alt="Kyoto, Japan">
+            <div class="vp-dest-overlay"></div>
+            <div class="vp-dest-caption">
+              <div class="vp-dest-stars">★★★★★</div>
+              <div class="vp-dest-city">Kyoto, Japan</div>
+              <div class="vp-dest-meta">Day 3 of 14 &nbsp;·&nbsp; Planned by Butler Button &nbsp;·&nbsp; from $25</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3: From $25/day — pricing comparison -->
+        <div class="hero-v-panel" data-phase="3">
+          <div class="vp-card vp-pricing">
+            <div class="vp-hdr">
+              <span class="vp-hdr-title">What concierge actually costs</span>
+            </div>
+            <div class="vp-compare">
+              <div class="vp-col vp-col--old">
+                <div class="vp-col-tag">Traditional</div>
+                <div class="vp-col-price">$5,000</div>
+                <div class="vp-col-unit">/ year retainer</div>
+                <ul class="vp-col-list">
+                  <li>Annual membership required</li>
+                  <li>Limited destinations</li>
+                  <li>No AI-assisted planning</li>
+                </ul>
+              </div>
+              <div class="vp-col vp-col--new">
+                <div class="vp-col-tag">Butler Button</div>
+                <div class="vp-col-price">$25</div>
+                <div class="vp-col-unit">/ day · no membership</div>
+                <ul class="vp-col-list">
+                  <li>Cancel any time</li>
+                  <li>195+ countries</li>
+                  <li>AI + human expertise</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div class="hero-actions" id="hero-actions">
@@ -1157,17 +1474,24 @@
 
   /* ── HERO sticky scroll ─────────────────────────────────────── */
   const heroTrack   = document.querySelector('.hero-track');
-  const taglines    = document.querySelectorAll('.hero-tagline');
+  const heroPanels  = document.querySelectorAll('.hero-v-panel');
   const heroActions = document.getElementById('hero-actions');
   let   curPhase    = 0;
 
+  // init SVG path lengths for accurate dash animation
+  document.querySelectorAll('.route-path').forEach(p => {
+    const len = Math.ceil(p.getTotalLength()) + 2;
+    p.style.strokeDasharray  = len;
+    p.style.strokeDashoffset = len;
+  });
+
   function setPhase(p) {
     if (p === curPhase) return;
-    taglines[curPhase].classList.remove('enter');
-    taglines[curPhase].classList.add('exit');
-    setTimeout(() => taglines[curPhase].classList.remove('exit'), 500);
+    heroPanels[curPhase].classList.remove('enter');
+    heroPanels[curPhase].classList.add('exit');
+    setTimeout(() => heroPanels[curPhase].classList.remove('exit'), 600);
     curPhase = p;
-    taglines[curPhase].classList.add('enter');
+    heroPanels[curPhase].classList.add('enter');
   }
 
   function onHeroScroll() {
@@ -1176,7 +1500,7 @@
     const prog = Math.min(1, Math.max(0,
       -rect.top / (heroTrack.offsetHeight - window.innerHeight)
     ));
-    const phase = Math.min(taglines.length - 1, Math.floor(prog * taglines.length));
+    const phase = Math.min(heroPanels.length - 1, Math.floor(prog * heroPanels.length));
     setPhase(phase);
     if (prog > 0.55) heroActions.classList.add('show');
   }
