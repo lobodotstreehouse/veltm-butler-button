@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butler Button — Your Personal Travel Concierge</title>
+  <meta name="description" content="AI plans it. A human handles it. You enjoy it. Personal travel concierge from $25/day.">
+  <link rel="icon" type="image/png" href="../img/logos/VELTM-icon-indigo.png">
+  <script src="https://veltmtours.com/butler-widget.js"></script>
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+                   'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #000;
+      color: #f5f5f7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── SCROLL PROGRESS BAR ──────────────────────────────────── */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      background: #4f46e5; z-index: 2000;
+      transform-origin: left; transform: scaleX(0);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: scroll()) {
+        .scroll-progress {
+          animation: grow-bar linear both;
+          animation-duration: auto;
+          animation-timeline: scroll(root block);
+        }
+      }
+    }
+    @keyframes grow-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* ─── REVEAL SYSTEM ────────────────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(36px);
+        transition:
+          opacity   0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+          transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s);
+      }
+      [data-reveal].visible { opacity: 1; transform: none; }
+
+      [data-reveal-left] {
+        opacity: 0; transform: translateX(-48px);
+        transition:
+          opacity   0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s);
+      }
+      [data-reveal-left].visible { opacity: 1; transform: none; }
+
+      [data-reveal-right] {
+        opacity: 0; transform: translateX(48px);
+        transition:
+          opacity   0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s);
+      }
+      [data-reveal-right].visible { opacity: 1; transform: none; }
+    }
+
+    /* ─── TOKENS ────────────────────────────────────────────────── */
+    :root {
+      --indigo:    #4f46e5;
+      --indigo-lt: #818cf8;
+      --dark:      #000;
+      --dark-2:    #0a0a12;
+      --dark-3:    #111;
+      --gray-bg:   #f5f5f7;
+      --white:     #fff;
+      --text-dark: #1d1d1f;
+      --text-mid:  #6e6e73;
+      --text-mute: #86868b;
+      --text-dim:  #3a3a3c;
+    }
+
+    /* ─── NAV ───────────────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 1.1rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .nav.bg {
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .nav-brand {
+      font-size: 1rem; font-weight: 700; letter-spacing: -0.02em;
+      color: #f5f5f7;
+    }
+    .nav-brand em { color: var(--indigo-lt); font-style: normal; }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.82rem; color: rgba(255,255,255,0.55);
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #f5f5f7; }
+    .nav-book {
+      padding: 8px 22px;
+      background: var(--indigo); color: #fff;
+      border-radius: 980px; font-size: 0.82rem; font-weight: 500;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-book:hover { background: #4338ca; transform: scale(1.02); }
+    @media (max-width: 700px) { .nav-links { display: none; } }
+
+    /* ─── BUTTONS ───────────────────────────────────────────────── */
+    .btn {
+      display: inline-block; cursor: pointer; border: none;
+      border-radius: 980px; font-weight: 500; letter-spacing: -0.01em;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(0.97) !important; }
+    .btn-lg { padding: 16px 40px; font-size: 1.05rem; }
+    .btn-md { padding: 12px 28px; font-size: 0.9rem; }
+    .btn-sm { padding: 9px 20px; font-size: 0.82rem; }
+
+    .btn-indigo { background: var(--indigo); color: #fff; }
+    .btn-indigo:hover {
+      background: #4338ca;
+      box-shadow: 0 8px 32px rgba(79,70,229,0.45);
+      transform: scale(1.02);
+    }
+    .btn-white { background: #fff; color: var(--text-dark); }
+    .btn-white:hover { background: #f0f0f5; transform: scale(1.02); }
+    .btn-ghost-light {
+      background: transparent; color: #f5f5f7;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .btn-ghost-light:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.4);
+    }
+    .btn-ghost-dark {
+      background: transparent; color: var(--indigo);
+      border: 1.5px solid var(--indigo);
+    }
+    .btn-ghost-dark:hover { background: var(--indigo); color: #fff; }
+    .btn-outline-light {
+      background: rgba(255,255,255,0.07); color: var(--indigo-lt);
+      border: 1px solid rgba(129,140,248,0.3);
+    }
+    .btn-outline-light:hover { background: rgba(255,255,255,0.12); }
+
+    /* ─── EYEBROW ───────────────────────────────────────────────── */
+    .eyebrow {
+      display: block;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .eyebrow-indigo { color: var(--indigo); }
+    .eyebrow-soft   { color: var(--indigo-lt); }
+    .eyebrow-mute   { color: var(--text-mute); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 1 — HERO (sticky scroll, dark)
+    ═══════════════════════════════════════════════════════════════ */
+    .hero-track {
+      position: relative;
+      height: 500vh;
+    }
+    .hero-pin {
+      position: sticky; top: 0; height: 100vh;
+      overflow: clip;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+    }
+
+    /* layered background */
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 90% 70% at 50% 65%, #1a0a3e 0%, #000 68%);
+    }
+    /* dot grid overlay */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(99,102,241,0.18) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, black 30%, transparent 80%);
+    }
+    /* pulsing glow orb */
+    .hero-orb {
+      position: absolute;
+      width: 640px; height: 640px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,70,229,0.18) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%, -48%);
+      animation: orb-pulse 5s ease-in-out infinite;
+    }
+    @keyframes orb-pulse {
+      0%, 100% { opacity: 0.5; transform: translate(-50%,-48%) scale(1); }
+      50%       { opacity: 1;   transform: translate(-50%,-48%) scale(1.12); }
+    }
+    /* floating ring */
+    .hero-ring {
+      position: absolute;
+      width: 420px; height: 420px; border-radius: 50%;
+      border: 1px solid rgba(99,102,241,0.12);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      animation: ring-spin 20s linear infinite;
+    }
+    .hero-ring-2 {
+      width: 620px; height: 620px;
+      border-color: rgba(99,102,241,0.06);
+      animation-duration: 30s; animation-direction: reverse;
+    }
+    @keyframes ring-spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 2rem 5vw; max-width: 860px; width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 6px 14px 6px 8px;
+      background: rgba(79,70,229,0.15);
+      border: 1px solid rgba(129,140,248,0.25);
+      border-radius: 980px;
+      font-size: 0.75rem; color: var(--indigo-lt);
+      letter-spacing: 0.04em;
+      margin-bottom: 2rem;
+      animation: badge-float 3s ease-in-out infinite;
+    }
+    @keyframes badge-float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-4px); }
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--indigo-lt);
+      animation: dot-blink 2s ease-in-out infinite;
+    }
+    @keyframes dot-blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero-h1 {
+      font-size: clamp(3.2rem, 8.5vw, 7.5rem);
+      font-weight: 700; letter-spacing: -0.04em; line-height: 0.97;
+      color: #f5f5f7; margin-bottom: 0;
+    }
+    .hero-h1 span { color: var(--indigo-lt); }
+
+    /* rotating tagline */
+    .hero-tagline-wrap {
+      height: 2rem; position: relative;
+      margin: 1.8rem 0 2.5rem; overflow: hidden;
+    }
+    .hero-tagline {
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      white-space: nowrap;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      color: var(--text-mute); letter-spacing: -0.01em;
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
+                  opacity 0.4s ease;
+    }
+    .hero-tagline.enter {
+      transform: translateX(-50%) translateY(0); opacity: 1;
+    }
+    .hero-tagline.exit {
+      transform: translateX(-50%) translateY(-120%); opacity: 0;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    }
+    .hero-actions.show { opacity: 1; transform: none; }
+
+    .hero-scroll-cue {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.25); font-size: 0.68rem; letter-spacing: 0.14em;
+      text-transform: uppercase;
+      animation: cue-bounce 2.5s ease-in-out infinite;
+    }
+    .hero-scroll-cue svg { opacity: 0.5; }
+    @keyframes cue-bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      55%      { transform: translateX(-50%) translateY(7px); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 2 — STATEMENT (light bg)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-statement {
+      background: var(--gray-bg);
+      padding: clamp(6rem, 12vw, 12rem) 5vw;
+      text-align: center;
+    }
+    /* mask-reveal headline */
+    .mask-headline {
+      font-size: clamp(2.8rem, 6.5vw, 5.8rem);
+      font-weight: 700; letter-spacing: -0.035em; line-height: 1.07;
+      color: var(--text-dark); max-width: 880px; margin: 0 auto 1.5rem;
+    }
+    .mask-word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+    .mask-inner {
+      display: inline-block;
+      transform: translateY(110%);
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mask-headline.visible .mask-inner { transform: none; }
+    .statement-sub {
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--text-mid); max-width: 520px;
+      margin: 0 auto; letter-spacing: -0.01em; line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 3 — STATS (dark)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-stats {
+      background: #000;
+      padding: clamp(5rem, 10vw, 10rem) 5vw;
+    }
+    .stats-inner {
+      max-width: 1040px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2rem; text-align: center;
+    }
+    .stat-num {
+      font-size: clamp(3.5rem, 7.5vw, 6rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 1;
+      color: #f5f5f7; margin-bottom: 0.5rem;
+    }
+    .stat-num sup { font-size: 0.5em; vertical-align: super; color: var(--indigo-lt); }
+    .stat-label { font-size: 0.82rem; color: var(--text-mute); letter-spacing: -0.01em; }
+    @media (max-width: 700px) {
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 4 — HOW IT WORKS (sticky scroll, dark)
+    ═══════════════════════════════════════════════════════════════ */
+    .how-track {
+      position: relative;
+      height: 500vh;
+      background: var(--dark-2);
+    }
+    .how-pin {
+      position: sticky; top: 0; height: 100vh;
+      overflow: clip;
+      display: flex; align-items: center;
+    }
+    .how-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 5vw;
+      width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+
+    /* left: step list */
+    .how-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--indigo-lt);
+      margin-bottom: 2.5rem;
+    }
+    .how-step {
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      opacity: 0.2;
+      transform: translateX(-8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .how-step.active { opacity: 1; transform: none; }
+    .how-step-tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--indigo);
+      margin-bottom: 0.6rem;
+    }
+    .how-step-title {
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem); font-weight: 700;
+      letter-spacing: -0.025em; color: #f5f5f7;
+      margin-bottom: 0.6rem; line-height: 1.25;
+    }
+    .how-step-body {
+      font-size: 0.92rem; color: var(--text-mute);
+      line-height: 1.65; letter-spacing: -0.01em;
+    }
+
+    /* pip strip */
+    .how-pips {
+      display: flex; gap: 6px; margin-top: 2rem;
+    }
+    .how-pip {
+      height: 3px; border-radius: 2px;
+      background: rgba(255,255,255,0.12);
+      flex: 1;
+      transition: background 0.3s ease;
+    }
+    .how-pip.active { background: var(--indigo); }
+
+    /* right: visual panel */
+    .how-visual {
+      position: relative; height: 460px;
+      border-radius: 24px; overflow: clip;
+    }
+    .how-slide {
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: 24px; overflow: clip;
+    }
+    .how-slide.active { opacity: 1; }
+    .how-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .how-slide.active img { transform: scale(1); }
+    .how-slide-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+    }
+    .how-slide-caption {
+      position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+      font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: -0.01em;
+    }
+
+    @media (max-width: 800px) {
+      .how-inner { grid-template-columns: 1fr; }
+      .how-visual { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 5 — PRODUCTS (light gray)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-products {
+      background: var(--gray-bg);
+      padding: clamp(6rem, 12vw, 12rem) 5vw;
+    }
+    .section-head { text-align: center; margin-bottom: 4.5rem; }
+    .section-title-dark {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700; letter-spacing: -0.035em; line-height: 1.1;
+      color: var(--text-dark); margin-bottom: 0.75rem;
+    }
+    .section-sub-dark {
+      font-size: 1.05rem; color: var(--text-mid);
+      max-width: 460px; margin: 0 auto; letter-spacing: -0.01em;
+    }
+
+    .products-grid {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .pcard {
+      background: #fff; border-radius: 22px;
+      padding: 2.5rem 2rem 2rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.3s ease;
+    }
+    .pcard:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.09);
+    }
+    .pcard--featured {
+      background: linear-gradient(155deg, #1e1b4b 0%, #2e2878 100%);
+    }
+    .pcard__badge {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #fff;
+      background: var(--indigo-lt); padding: 4px 10px; border-radius: 20px;
+    }
+    .pcard__bar {
+      width: 36px; height: 3px; border-radius: 2px;
+      margin-bottom: 2rem;
+    }
+    .pcard--trip     .pcard__bar { background: var(--indigo); }
+    .pcard--featured .pcard__bar { background: var(--indigo-lt); }
+    .pcard--elite    .pcard__bar { background: #7c3aed; }
+
+    .pcard__tier {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .pcard--trip     .pcard__tier { color: var(--text-mid); }
+    .pcard--featured .pcard__tier { color: var(--indigo-lt); }
+    .pcard--elite    .pcard__tier { color: var(--text-mid); }
+
+    .pcard__name {
+      font-size: 1.45rem; font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .pcard--trip     .pcard__name { color: var(--text-dark); }
+    .pcard--featured .pcard__name { color: #f5f5f7; }
+    .pcard--elite    .pcard__name { color: var(--text-dark); }
+
+    .pcard__price-row { display: flex; align-items: baseline; gap: 0.25rem; margin-bottom: 0.2rem; }
+    .pcard__price {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      font-weight: 700; letter-spacing: -0.045em;
+    }
+    .pcard--trip     .pcard__price { color: var(--indigo); }
+    .pcard--featured .pcard__price { color: var(--indigo-lt); }
+    .pcard--elite    .pcard__price { color: #7c3aed; }
+
+    .pcard__unit {
+      font-size: 0.8rem; letter-spacing: -0.01em;
+    }
+    .pcard--trip     .pcard__unit { color: var(--text-mid); }
+    .pcard--featured .pcard__unit { color: rgba(199,210,254,0.8); }
+    .pcard--elite    .pcard__unit { color: var(--text-mid); }
+
+    .pcard__divider {
+      border: none; border-top: 1px solid rgba(0,0,0,0.07);
+      margin: 1.5rem 0;
+    }
+    .pcard--featured .pcard__divider { border-color: rgba(255,255,255,0.08); }
+
+    .pcard__features { list-style: none; margin-bottom: 2rem; }
+    .pcard__features li {
+      font-size: 0.88rem; padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex; gap: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .pcard--featured .pcard__features li {
+      color: rgba(199,210,254,0.85);
+      border-bottom-color: rgba(255,255,255,0.06);
+    }
+    .pcard--trip .pcard__features li,
+    .pcard--elite .pcard__features li { color: var(--text-mid); }
+    .pcard__features li::before { content: '✓'; font-weight: 700; flex-shrink: 0; }
+    .pcard--trip     .pcard__features li::before { color: var(--indigo); }
+    .pcard--featured .pcard__features li::before { color: var(--indigo-lt); }
+    .pcard--elite    .pcard__features li::before { color: #7c3aed; }
+
+    .pcard .btn { width: 100%; text-align: center; }
+
+    @media (max-width: 820px) {
+      .products-grid { grid-template-columns: 1fr; max-width: 420px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 6 — SCENARIOS (dark)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-scenarios {
+      background: #000;
+      padding: clamp(6rem, 12vw, 12rem) 5vw;
+    }
+    .scenarios-grid {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .scard {
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 20px; padding: 2rem;
+      transition: border-color 0.3s ease, transform 0.3s ease,
+                  box-shadow 0.3s ease;
+    }
+    .scard:hover {
+      border-color: rgba(99,102,241,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(79,70,229,0.12);
+    }
+    .scard__where {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--indigo);
+      margin-bottom: 1.1rem;
+    }
+    .scard__situation {
+      font-size: 1.05rem; font-weight: 600; color: #f5f5f7;
+      letter-spacing: -0.02em; line-height: 1.45;
+      margin-bottom: 1rem;
+    }
+    .scard__outcome {
+      font-size: 0.88rem; color: var(--text-mute);
+      line-height: 1.65; letter-spacing: -0.01em;
+    }
+    .scard__tag {
+      display: inline-block; margin-top: 1.5rem;
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--indigo-lt); letter-spacing: -0.01em;
+    }
+    @media (max-width: 820px) {
+      .scenarios-grid { grid-template-columns: 1fr; max-width: 500px; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 7 — FULL-BLEED FEATURE (image + copy side-by-side)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-human {
+      background: #fff;
+      padding: clamp(6rem, 12vw, 12rem) 5vw;
+    }
+    .human-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .human-img-wrap {
+      border-radius: 28px; overflow: clip;
+      background: linear-gradient(155deg, #e0e7ff, #c7d2fe);
+      aspect-ratio: 4/5;
+      position: relative;
+    }
+    .human-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .human-img-wrap:hover img { transform: scale(1.03); }
+
+    .human-copy {}
+    .human-h2 {
+      font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 700;
+      letter-spacing: -0.035em; line-height: 1.1;
+      color: var(--text-dark); margin-bottom: 1.25rem;
+    }
+    .human-body {
+      font-size: 1.05rem; color: var(--text-mid);
+      line-height: 1.72; letter-spacing: -0.01em;
+      margin-bottom: 2.5rem;
+    }
+    .human-stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.25rem; margin-bottom: 2.5rem;
+    }
+    .hstat {
+      border-left: 2px solid var(--indigo);
+      padding-left: 1rem;
+    }
+    .hstat__num {
+      font-size: 1.8rem; font-weight: 700;
+      letter-spacing: -0.04em; color: var(--text-dark);
+    }
+    .hstat__label { font-size: 0.78rem; color: var(--text-mid); letter-spacing: -0.01em; }
+
+    @media (max-width: 820px) {
+      .human-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .human-img-wrap { aspect-ratio: 3/2; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 8 — GALLERY (3-up images, dark)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-gallery {
+      background: var(--dark-2);
+      padding: clamp(6rem, 12vw, 12rem) 5vw;
+    }
+    .gallery-grid {
+      max-width: 1200px; margin: 3.5rem auto 0;
+      display: grid; grid-template-columns: 1fr 1.3fr 1fr;
+      gap: 1rem; align-items: end;
+    }
+    .gallery-item {
+      border-radius: 18px; overflow: clip;
+      position: relative;
+    }
+    .gallery-item:nth-child(2) { margin-bottom: -3rem; }
+    .gallery-item img {
+      width: 100%; display: block;
+      aspect-ratio: 3/4; object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .gallery-item:nth-child(2) img { aspect-ratio: 2/3; }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    @media (max-width: 700px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:nth-child(3) { display: none; }
+      .gallery-item:nth-child(2) { margin-bottom: 0; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 9 — FINAL CTA (dark, gradient)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-cta {
+      background: #000;
+      padding: clamp(8rem, 16vw, 18rem) 5vw;
+      text-align: center; position: relative; overflow: clip;
+    }
+    .cta-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 100%,
+                  rgba(79,70,229,0.28) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-h2 {
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 700; letter-spacing: -0.045em; line-height: 0.97;
+      color: #f5f5f7; max-width: 820px; margin: 0 auto 1.25rem;
+    }
+    .cta-h2 span { color: var(--indigo-lt); }
+    .cta-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem); color: var(--text-mute);
+      margin-bottom: 3rem; letter-spacing: -0.01em;
+    }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .cta-fine {
+      font-size: 0.72rem; color: var(--text-dim);
+      margin-top: 1.5rem; letter-spacing: -0.01em;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────── */
+    .footer {
+      background: #000;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2.5rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand { font-size: 0.85rem; font-weight: 700; color: #86868b; }
+    .footer-brand em { color: var(--indigo-lt); font-style: normal; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.75rem; color: var(--text-dim); transition: color 0.2s; }
+    .footer-links a:hover { color: #86868b; }
+    .footer-legal { font-size: 0.72rem; color: var(--text-dim); }
+  </style>
+</head>
+<body>
+
+<!-- scroll progress -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- ─── NAV ─────────────────────────────────────────────────────── -->
+<nav class="nav" id="main-nav">
+  <a href="../" class="nav-brand">Butler<em>Button</em></a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#products">Pricing</a></li>
+    <li><a href="#scenarios">Real Stories</a></li>
+  </ul>
+  <a href="#" class="nav-book" data-butler-button>Book from $25</a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 1 — HERO
+═══════════════════════════════════════════════════════════════ -->
+<section class="hero-track" id="hero">
+  <div class="hero-pin">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring hero-ring-2"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Butler Button by VELTM
+      </div>
+
+      <h1 class="hero-h1">
+        Your personal<br><span>travel expert.</span>
+      </h1>
+
+      <div class="hero-tagline-wrap" aria-live="polite">
+        <div class="hero-tagline enter" data-phase="0">AI plans it. A human handles it. You enjoy it.</div>
+        <div class="hero-tagline" data-phase="1">Trip planning from $25 per country.</div>
+        <div class="hero-tagline" data-phase="2">Concierge support from $25 per day.</div>
+        <div class="hero-tagline" data-phase="3">195+ countries. 150+ languages. One butler.</div>
+      </div>
+
+      <div class="hero-actions" id="hero-actions">
+        <a href="#" class="btn btn-indigo btn-lg" data-butler-button>Start Your Trip</a>
+        <a href="#how" class="btn btn-ghost-light btn-lg">See how it works</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <svg width="14" height="22" viewBox="0 0 14 22" fill="none">
+        <rect x="1" y="1" width="12" height="20" rx="6" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="7" cy="6" r="1.5" fill="currentColor">
+          <animate attributeName="cy" values="6;14;6" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 2 — STATEMENT
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-statement">
+  <span class="eyebrow eyebrow-indigo" data-reveal>Travel, Reimagined</span>
+  <h2 class="mask-headline" id="mask-headline">
+    The trip you imagined.
+    Finally possible.
+  </h2>
+  <p class="statement-sub" data-reveal style="--delay:.3s">
+    Five-star planning and real-time concierge support —
+    without the five-star price tag.
+  </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 3 — STATS
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-stats">
+  <div class="stats-inner">
+    <div data-reveal>
+      <div class="stat-num"><span data-counter data-target="195">0</span><sup>+</sup></div>
+      <div class="stat-label">Countries covered</div>
+    </div>
+    <div data-reveal style="--delay:.08s">
+      <div class="stat-num"><span data-counter data-target="150">0</span><sup>+</sup></div>
+      <div class="stat-label">Languages supported</div>
+    </div>
+    <div data-reveal style="--delay:.16s">
+      <div class="stat-num"><span data-counter data-target="4">0</span></div>
+      <div class="stat-label">Avg response (minutes)</div>
+    </div>
+    <div data-reveal style="--delay:.24s">
+      <div class="stat-num">$<span data-counter data-target="25">0</span></div>
+      <div class="stat-label">Starting price / day</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 4 — HOW IT WORKS (sticky scroll)
+═══════════════════════════════════════════════════════════════ -->
+<section class="how-track" id="how">
+  <div class="how-pin">
+    <div class="how-inner">
+
+      <!-- left: steps -->
+      <div>
+        <p class="how-label">How It Works</p>
+
+        <div class="how-step active" data-step="0">
+          <div class="how-step-tag">01 — Tell Us</div>
+          <h3 class="how-step-title">Tell us the trip you want.</h3>
+          <p class="how-step-body">A 3-minute preference survey. Your travel style, budget, pace, must-haves, and deal-breakers. That's all we need to get started.</p>
+        </div>
+
+        <div class="how-step" data-step="1">
+          <div class="how-step-tag">02 — AI Scans</div>
+          <h3 class="how-step-title">AI scans 200,000+ options.</h3>
+          <p class="how-step-body">Every flight, stay, experience, and transfer filtered in real time against your exact preferences. No cookie-cutter packages.</p>
+        </div>
+
+        <div class="how-step" data-step="2">
+          <div class="how-step-tag">03 — Expert Reviews</div>
+          <h3 class="how-step-title">A human expert makes the call.</h3>
+          <p class="how-step-body">A certified advisor who's actually been to your destination reviews every recommendation. 9 years of on-ground expertise, on average.</p>
+        </div>
+
+        <div class="how-step" data-step="3">
+          <div class="how-step-tag">04 — You Enjoy</div>
+          <h3 class="how-step-title">You travel. We handle everything else.</h3>
+          <p class="how-step-body">Real-time concierge throughout your trip. Flight disruptions, reservations, local intelligence — whatever comes up, we're already on it.</p>
+        </div>
+
+        <div class="how-pips">
+          <div class="how-pip active"></div>
+          <div class="how-pip"></div>
+          <div class="how-pip"></div>
+          <div class="how-pip"></div>
+        </div>
+      </div>
+
+      <!-- right: image slides -->
+      <div class="how-visual">
+        <div class="how-slide active">
+          <img src="../img/ads/veltm_itinerary_01.png" alt="Trip preference survey">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">Tell us what you want</div>
+        </div>
+        <div class="how-slide">
+          <img src="../img/ads/veltm_travel_trending_01.png" alt="AI scanning options">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">AI finds every option</div>
+        </div>
+        <div class="how-slide">
+          <img src="../img/ads/veltm_itinerary_03.png" alt="Expert review">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">Human expert signs off</div>
+        </div>
+        <div class="how-slide">
+          <img src="../img/ads/veltm_product_02.png" alt="Travel experience">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">You enjoy every moment</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 5 — PRODUCTS
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-products" id="products">
+  <div class="section-head">
+    <span class="eyebrow eyebrow-indigo" data-reveal>Simple Pricing</span>
+    <h2 class="section-title-dark" data-reveal style="--delay:.1s">One flat fee.<br>No surprises.</h2>
+    <p class="section-sub-dark" data-reveal style="--delay:.2s">Pay only for what you plan. Cancel before delivery for a full refund.</p>
+  </div>
+
+  <div class="products-grid">
+
+    <div class="pcard pcard--trip" data-reveal>
+      <div class="pcard__bar"></div>
+      <div class="pcard__tier">Trip Planning</div>
+      <h3 class="pcard__name">Expert Itinerary</h3>
+      <div class="pcard__price-row">
+        <span class="pcard__price">$25</span>
+        <span class="pcard__unit">/ country</span>
+      </div>
+      <hr class="pcard__divider">
+      <ul class="pcard__features">
+        <li>Preference-first research</li>
+        <li>Flights, stays &amp; experiences</li>
+        <li>Transfers &amp; logistics</li>
+        <li>Unlimited revisions</li>
+        <li>24-hour delivery</li>
+        <li>Advisor-reviewed &amp; signed off</li>
+      </ul>
+      <a href="#" class="btn btn-ghost-dark btn-md" data-butler-button>Start Planning</a>
+    </div>
+
+    <div class="pcard pcard--featured" data-reveal style="--delay:.1s">
+      <div class="pcard__badge">Most Popular</div>
+      <div class="pcard__bar"></div>
+      <div class="pcard__tier">8-Hour Concierge</div>
+      <h3 class="pcard__name" style="color:#f5f5f7">Real-Time Expert</h3>
+      <div class="pcard__price-row">
+        <span class="pcard__price">$25</span>
+        <span class="pcard__unit">/ day</span>
+      </div>
+      <hr class="pcard__divider">
+      <ul class="pcard__features">
+        <li>Dedicated advisor, knows your trip</li>
+        <li>4-minute average response time</li>
+        <li>Restaurant &amp; transport bookings</li>
+        <li>Local intelligence &amp; insider access</li>
+        <li>In-person errands &amp; deliveries</li>
+        <li>150+ countries, 40+ languages</li>
+      </ul>
+      <a href="#" class="btn btn-outline-light btn-md" data-butler-button>Get Concierge</a>
+    </div>
+
+    <div class="pcard pcard--elite" data-reveal style="--delay:.2s">
+      <div class="pcard__bar"></div>
+      <div class="pcard__tier">24-Hour Concierge</div>
+      <h3 class="pcard__name">Round-the-Clock</h3>
+      <div class="pcard__price-row">
+        <span class="pcard__price" style="color:#7c3aed">$100</span>
+        <span class="pcard__unit">/ day</span>
+      </div>
+      <hr class="pcard__divider">
+      <ul class="pcard__features">
+        <li>Everything in 8-Hour</li>
+        <li>Overnight &amp; emergency coverage</li>
+        <li>Real-time itinerary monitoring</li>
+        <li>Proactive disruption prevention</li>
+        <li>Same advisor start to finish</li>
+        <li>97% of disruptions resolved &lt;60 min</li>
+      </ul>
+      <a href="#" class="btn btn-ghost-dark btn-md" style="border-color:#7c3aed; color:#7c3aed" data-butler-button>Get 24-Hour</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 6 — REAL SCENARIOS
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-scenarios" id="scenarios">
+  <div class="section-head">
+    <span class="eyebrow eyebrow-soft" data-reveal>Real Stories</span>
+    <h2 class="section-title-dark" style="color:#f5f5f7" data-reveal style="--delay:.1s">The moments that<br>define a trip.</h2>
+    <p class="section-sub-dark" style="color:var(--text-mute)" data-reveal style="--delay:.2s">Things go wrong. That's not a risk — it's a guarantee. The question is who's in your corner.</p>
+  </div>
+
+  <div class="scenarios-grid">
+    <div class="scard" data-reveal>
+      <div class="scard__where">11 pm · Bangkok</div>
+      <p class="scard__situation">"My flight just got cancelled. I have meetings first thing tomorrow."</p>
+      <p class="scard__outcome">Your advisor already has your next-day schedule loaded. You're rebooked, transported, and checked into a hotel within 40 minutes — without making a single call yourself.</p>
+      <span class="scard__tag">⚡ Resolved in 40 min</span>
+    </div>
+
+    <div class="scard" data-reveal style="--delay:.1s">
+      <div class="scard__where">Day 3 · Rome</div>
+      <p class="scard__situation">"The restaurant closed. Our confirmed reservation — gone."</p>
+      <p class="scard__outcome">Six minutes later you have a table at a place locals actually eat. One that never appears on any review site's first page. Better than the original.</p>
+      <span class="scard__tag">⚡ Resolved in 6 min</span>
+    </div>
+
+    <div class="scard" data-reveal style="--delay:.2s">
+      <div class="scard__where">Morning · Kyoto</div>
+      <p class="scard__situation">"What's worth doing today that isn't in any guide?"</p>
+      <p class="scard__outcome">Your advisor grew up in the region. You get the answer no algorithm can generate — a place, a moment, a memory that doesn't exist on any platform.</p>
+      <span class="scard__tag">✦ The experience you'll remember</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 7 — HUMAN FIRST
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-human">
+  <div class="human-inner">
+
+    <div class="human-img-wrap" data-reveal-left>
+      <img src="../img/ads/veltm_social_proof_01.png" alt="Butler Button concierge in action">
+    </div>
+
+    <div class="human-copy">
+      <span class="eyebrow eyebrow-indigo" data-reveal>The Butler Button Standard</span>
+      <h2 class="human-h2" data-reveal style="--delay:.1s">
+        Not a chatbot.<br>A real person who<br>already knows your trip.
+      </h2>
+      <p class="human-body" data-reveal style="--delay:.2s">
+        Every Butler Button advisor studies your full itinerary before you depart. When you reach out — whether it's a quick question or a full emergency — you're not starting from zero. You're talking to someone who already knows your destination, your schedule, and what matters to you. 100% human first contact, every time. No chatbot on any channel.
+      </p>
+
+      <div class="human-stats-grid" data-reveal style="--delay:.3s">
+        <div class="hstat">
+          <div class="hstat__num">100%</div>
+          <div class="hstat__label">Human first contact, every time</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat__num">97%</div>
+          <div class="hstat__label">Disruptions resolved in under 60 min</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat__num">9 yr</div>
+          <div class="hstat__label">Avg advisor destination expertise</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat__num">4 min</div>
+          <div class="hstat__label">Average response time</div>
+        </div>
+      </div>
+
+      <a href="#" class="btn btn-indigo btn-lg" data-butler-button data-reveal style="--delay:.4s">
+        Book Your Butler
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 8 — DESTINATION GALLERY
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-gallery">
+  <div style="max-width:1160px; margin:0 auto; text-align:center;">
+    <span class="eyebrow eyebrow-soft" data-reveal>Built for Every Trip</span>
+    <h2 class="section-title-dark" style="color:#f5f5f7" data-reveal style="--delay:.1s">195+ countries.<br>Every travel style.</h2>
+    <p class="section-sub-dark" style="color:var(--text-mute)" data-reveal style="--delay:.2s">One flat fee per country. From weekend escapes to month-long grand tours.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item" data-reveal>
+      <img src="../img/ads/veltm_travel_trending_02.png" alt="Trending destination">
+      <div class="gallery-item-overlay"></div>
+    </div>
+    <div class="gallery-item" data-reveal style="--delay:.12s">
+      <img src="../img/ads/veltm_travel_trending_03.png" alt="Trending destination">
+      <div class="gallery-item-overlay"></div>
+    </div>
+    <div class="gallery-item" data-reveal style="--delay:.24s">
+      <img src="../img/ads/veltm_travel_trending_04.png" alt="Trending destination">
+      <div class="gallery-item-overlay"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 9 — FINAL CTA
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-cta">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <span class="eyebrow eyebrow-soft" data-reveal>Ready to travel differently?</span>
+    <h2 class="cta-h2" data-reveal style="--delay:.1s">
+      Start your trip<br><span>from $25.</span>
+    </h2>
+    <p class="cta-sub" data-reveal style="--delay:.2s">
+      No membership. No annual fee. Cancel before delivery for a full refund.
+    </p>
+    <div class="cta-actions" data-reveal style="--delay:.3s">
+      <a href="#" class="btn btn-white btn-lg" data-butler-button>Book Your Butler</a>
+      <a href="../pricing.html" class="btn btn-ghost-light btn-lg">See All Pricing</a>
+    </div>
+    <p class="cta-fine" data-reveal style="--delay:.4s">
+      Available in 195+ countries &nbsp;·&nbsp; 150+ languages &nbsp;·&nbsp; Starting at $25/day
+    </p>
+  </div>
+</section>
+
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <span class="footer-brand">Butler<em>Button</em> by VELTM</span>
+  <ul class="footer-links">
+    <li><a href="../">Home</a></li>
+    <li><a href="../trip-planning/">Trip Planning</a></li>
+    <li><a href="../concierge/">Concierge</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../faq.html">FAQ</a></li>
+    <li><a href="../advisor-program/">Advisors</a></li>
+  </ul>
+  <span class="footer-legal">© 2026 VELTM Tours</span>
+</footer>
+
+
+<script>
+(function () {
+  'use strict';
+
+  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── NAV bg on scroll ────────────────────────────────────────── */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('bg', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── HERO sticky scroll ─────────────────────────────────────── */
+  const heroTrack   = document.querySelector('.hero-track');
+  const taglines    = document.querySelectorAll('.hero-tagline');
+  const heroActions = document.getElementById('hero-actions');
+  let   curPhase    = 0;
+
+  function setPhase(p) {
+    if (p === curPhase) return;
+    taglines[curPhase].classList.remove('enter');
+    taglines[curPhase].classList.add('exit');
+    setTimeout(() => taglines[curPhase].classList.remove('exit'), 500);
+    curPhase = p;
+    taglines[curPhase].classList.add('enter');
+  }
+
+  function onHeroScroll() {
+    if (!heroTrack) return;
+    const rect = heroTrack.getBoundingClientRect();
+    const prog = Math.min(1, Math.max(0,
+      -rect.top / (heroTrack.offsetHeight - window.innerHeight)
+    ));
+    const phase = Math.min(taglines.length - 1, Math.floor(prog * taglines.length));
+    setPhase(phase);
+    if (prog > 0.55) heroActions.classList.add('show');
+  }
+
+  window.addEventListener('scroll', onHeroScroll, { passive: true });
+  onHeroScroll();
+
+  /* ── HOW IT WORKS sticky scroll ─────────────────────────────── */
+  const howTrack  = document.querySelector('.how-track');
+  const howSteps  = document.querySelectorAll('.how-step');
+  const howSlides = document.querySelectorAll('.how-slide');
+  const howPips   = document.querySelectorAll('.how-pip');
+  let   curStep   = 0;
+
+  function setStep(s) {
+    if (s === curStep) return;
+    howSteps[curStep].classList.remove('active');
+    howSlides[curStep].classList.remove('active');
+    howPips[curStep].classList.remove('active');
+    curStep = s;
+    howSteps[curStep].classList.add('active');
+    howSlides[curStep].classList.add('active');
+    howPips[curStep].classList.add('active');
+  }
+
+  function onHowScroll() {
+    if (!howTrack) return;
+    const rect = howTrack.getBoundingClientRect();
+    const prog = Math.min(1, Math.max(0,
+      -rect.top / (howTrack.offsetHeight - window.innerHeight)
+    ));
+    const step = Math.min(howSteps.length - 1, Math.floor(prog * howSteps.length));
+    setStep(step);
+  }
+
+  window.addEventListener('scroll', onHowScroll, { passive: true });
+  onHowScroll();
+
+  if (!noMotion) {
+
+    /* ── REVEAL OBSERVER ─────────────────────────────────────── */
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -7% 0px', threshold: 0.08 });
+
+    document.querySelectorAll(
+      '[data-reveal], [data-reveal-left], [data-reveal-right]'
+    ).forEach(el => revealObs.observe(el));
+
+    /* ── MASK HEADLINE ───────────────────────────────────────── */
+    const maskEl = document.getElementById('mask-headline');
+    if (maskEl) {
+      const words = maskEl.textContent.trim().split(/\s+/);
+      maskEl.innerHTML = words.map((w, i) =>
+        `<span class="mask-word"><span class="mask-inner" style="transition-delay:${0.06 * i + 0.05}s">${w}</span></span>`
+      ).join(' ');
+
+      const maskObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            maskObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      maskObs.observe(maskEl);
+    }
+
+    /* ── NUMBER COUNTERS ─────────────────────────────────────── */
+    const ease = t => 1 - Math.pow(1 - t, 4); // easeOutQuart
+
+    function runCounter(el) {
+      const target   = +el.dataset.target;
+      const duration = 1800;
+      const start    = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = Math.round(ease(p) * target).toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+
+    const ctrObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          runCounter(e.target);
+          ctrObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-counter]').forEach(el => ctrObs.observe(el));
+
+  } // end !noMotion
+
+})();
+</script>
+</body>
+</html>
