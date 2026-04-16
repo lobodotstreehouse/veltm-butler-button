@@ -526,11 +526,17 @@
     }
 
     /* ═══════════════════════════════════════════════════════════════
-       SECTION 3 — HOW IT WORKS (click-based steps + image slides)
+       SECTION 3 — HOW IT WORKS (sticky parallax + clickable steps)
     ═══════════════════════════════════════════════════════════════ */
-    .section-how {
+    .how-track {
+      position: relative;
+      height: 500vh;
       background: var(--dark-2);
-      padding: clamp(6rem, 12vw, 10rem) 5vw;
+    }
+    .how-pin {
+      position: sticky; top: 0; height: 100vh;
+      overflow: clip;
+      display: flex; align-items: center;
     }
     .section-head { text-align: center; margin-bottom: 4.5rem; }
     .section-title-light {
@@ -543,7 +549,8 @@
       max-width: 460px; margin: 0 auto; letter-spacing: -0.01em;
     }
     .how-inner {
-      max-width: 1160px; margin: 0 auto;
+      max-width: 1160px; margin: 0 auto; padding: 0 5vw;
+      width: 100%;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 5rem; align-items: center;
     }
@@ -611,6 +618,8 @@
       font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: -0.01em;
     }
     @media (max-width: 800px) {
+      .how-track { height: auto; }
+      .how-pin { position: relative; height: auto; padding: clamp(4rem, 8vw, 7rem) 0; }
       .how-inner { grid-template-columns: 1fr; }
       .how-visual { display: none; }
     }
@@ -1327,71 +1336,73 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     HOW IT WORKS (click-based steps + image slides)
+     HOW IT WORKS (sticky parallax + clickable steps + image slides)
 ═══════════════════════════════════════════════════════════════ -->
-<section class="section-how" id="how">
-  <div class="how-inner">
+<section class="how-track" id="how">
+  <div class="how-pin">
+    <div class="how-inner">
 
-    <!-- left: clickable steps -->
-    <div>
-      <p class="how-label">How It Works</p>
+      <!-- left: clickable steps -->
+      <div>
+        <p class="how-label">How It Works</p>
 
-      <div class="how-step active" data-step="0">
-        <div class="how-step-tag">01 — Tell Us</div>
-        <h3 class="how-step-title">Tell us the trip you want.</h3>
-        <p class="how-step-body">A 3-minute preference survey. Your travel style, budget, pace, must-haves, and deal-breakers. That's all we need to get started.</p>
+        <div class="how-step active" data-step="0">
+          <div class="how-step-tag">01 — Tell Us</div>
+          <h3 class="how-step-title">Tell us the trip you want.</h3>
+          <p class="how-step-body">A 3-minute preference survey. Your travel style, budget, pace, must-haves, and deal-breakers. That's all we need to get started.</p>
+        </div>
+
+        <div class="how-step" data-step="1">
+          <div class="how-step-tag">02 — AI Scans</div>
+          <h3 class="how-step-title">AI scans 200,000+ options.</h3>
+          <p class="how-step-body">Every flight, stay, experience, and transfer filtered in real time against your exact preferences. No cookie-cutter packages.</p>
+        </div>
+
+        <div class="how-step" data-step="2">
+          <div class="how-step-tag">03 — Expert Reviews</div>
+          <h3 class="how-step-title">A human expert makes the call.</h3>
+          <p class="how-step-body">A certified advisor who's actually been to your destination reviews every recommendation. 9 years of on-ground expertise, on average.</p>
+        </div>
+
+        <div class="how-step" data-step="3">
+          <div class="how-step-tag">04 — You Enjoy</div>
+          <h3 class="how-step-title">You travel. We handle everything else.</h3>
+          <p class="how-step-body">Real-time concierge throughout your trip. Flight disruptions, reservations, local intelligence — whatever comes up, we're already on it.</p>
+        </div>
+
+        <div class="how-pips">
+          <div class="how-pip active" data-pip="0"></div>
+          <div class="how-pip" data-pip="1"></div>
+          <div class="how-pip" data-pip="2"></div>
+          <div class="how-pip" data-pip="3"></div>
+        </div>
       </div>
 
-      <div class="how-step" data-step="1">
-        <div class="how-step-tag">02 — AI Scans</div>
-        <h3 class="how-step-title">AI scans 200,000+ options.</h3>
-        <p class="how-step-body">Every flight, stay, experience, and transfer filtered in real time against your exact preferences. No cookie-cutter packages.</p>
-      </div>
+      <!-- right: image slides — full panel is clickable -->
+      <a href="#" class="how-visual" data-butler-button>
+        <div class="how-slide active">
+          <img src="../../img/ads/veltm_itinerary_01.png" alt="Trip preference survey">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">Tell us what you want</div>
+        </div>
+        <div class="how-slide">
+          <img src="../../img/ads/veltm_travel_trending_01.png" alt="AI scanning options">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">AI finds every option</div>
+        </div>
+        <div class="how-slide">
+          <img src="../../img/ads/veltm_itinerary_03.png" alt="Expert review">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">Human expert signs off</div>
+        </div>
+        <div class="how-slide">
+          <img src="../../img/ads/veltm_product_02.png" alt="Travel experience">
+          <div class="how-slide-overlay"></div>
+          <div class="how-slide-caption">You enjoy every moment</div>
+        </div>
+      </a>
 
-      <div class="how-step" data-step="2">
-        <div class="how-step-tag">03 — Expert Reviews</div>
-        <h3 class="how-step-title">A human expert makes the call.</h3>
-        <p class="how-step-body">A certified advisor who's actually been to your destination reviews every recommendation. 9 years of on-ground expertise, on average.</p>
-      </div>
-
-      <div class="how-step" data-step="3">
-        <div class="how-step-tag">04 — You Enjoy</div>
-        <h3 class="how-step-title">You travel. We handle everything else.</h3>
-        <p class="how-step-body">Real-time concierge throughout your trip. Flight disruptions, reservations, local intelligence — whatever comes up, we're already on it.</p>
-      </div>
-
-      <div class="how-pips">
-        <div class="how-pip active" data-pip="0"></div>
-        <div class="how-pip" data-pip="1"></div>
-        <div class="how-pip" data-pip="2"></div>
-        <div class="how-pip" data-pip="3"></div>
-      </div>
     </div>
-
-    <!-- right: image slides -->
-    <div class="how-visual">
-      <div class="how-slide active">
-        <img src="../../img/ads/veltm_itinerary_01.png" alt="Trip preference survey">
-        <div class="how-slide-overlay"></div>
-        <div class="how-slide-caption">Tell us what you want</div>
-      </div>
-      <div class="how-slide">
-        <img src="../../img/ads/veltm_travel_trending_01.png" alt="AI scanning options">
-        <div class="how-slide-overlay"></div>
-        <div class="how-slide-caption">AI finds every option</div>
-      </div>
-      <div class="how-slide">
-        <img src="../../img/ads/veltm_itinerary_03.png" alt="Expert review">
-        <div class="how-slide-overlay"></div>
-        <div class="how-slide-caption">Human expert signs off</div>
-      </div>
-      <div class="how-slide">
-        <img src="../../img/ads/veltm_product_02.png" alt="Travel experience">
-        <div class="how-slide-overlay"></div>
-        <div class="how-slide-caption">You enjoy every moment</div>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -1700,14 +1711,14 @@
 
   startTimer();
 
-  /* ── HOW IT WORKS — click to switch steps + slides ── */
+  /* ── HOW IT WORKS — sticky parallax + click-to-step ── */
+  const howTrack  = document.querySelector('.how-track');
   const howSteps  = document.querySelectorAll('.how-step');
   const howSlides = document.querySelectorAll('.how-slide');
   const howPips   = document.querySelectorAll('.how-pip');
   let   curStep   = 0;
 
   function setStep(s) {
-    if (s === curStep) return;
     howSteps[curStep].classList.remove('active');
     howSlides[curStep].classList.remove('active');
     howPips[curStep].classList.remove('active');
@@ -1717,12 +1728,35 @@
     howPips[curStep].classList.add('active');
   }
 
+  // Scroll-driven: map scroll position within the track to step 0–3
+  function onHowScroll() {
+    if (!howTrack) return;
+    const rect = howTrack.getBoundingClientRect();
+    const prog = Math.min(1, Math.max(0,
+      -rect.top / (howTrack.offsetHeight - window.innerHeight)
+    ));
+    const s = Math.min(howSteps.length - 1, Math.floor(prog * howSteps.length));
+    if (s !== curStep) setStep(s);
+  }
+
+  window.addEventListener('scroll', onHowScroll, { passive: true });
+  onHowScroll();
+
+  // Click-driven: scroll the page to the position that maps to the chosen step,
+  // so visual state and scroll state remain perfectly in sync
+  function scrollToStep(s) {
+    if (!howTrack) return;
+    const scrollable = howTrack.offsetHeight - window.innerHeight;
+    const target = howTrack.offsetTop + (s / howSteps.length) * scrollable;
+    window.scrollTo({ top: target, behavior: 'smooth' });
+  }
+
   howSteps.forEach((step, i) => {
-    step.addEventListener('click', () => setStep(i));
+    step.addEventListener('click', () => scrollToStep(i));
   });
 
   howPips.forEach((pip, i) => {
-    pip.addEventListener('click', () => setStep(i));
+    pip.addEventListener('click', () => scrollToStep(i));
   });
 
   /* ── MOBILE STICKY CTA — show after hero CTA scrolls out ── */
