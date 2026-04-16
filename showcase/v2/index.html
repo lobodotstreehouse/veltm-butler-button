@@ -500,7 +500,33 @@
     @media (max-width: 700px) { .stats-inner { grid-template-columns: 1fr 1fr; } }
 
     /* ═══════════════════════════════════════════════════════════════
-       SECTION 3 — HOW IT WORKS (simple grid, NO scroll-jack)
+       SECTION — STATEMENT (light bg, mask-reveal headline)
+    ═══════════════════════════════════════════════════════════════ */
+    .section-statement {
+      background: var(--gray-bg);
+      padding: clamp(6rem, 12vw, 12rem) 5vw;
+      text-align: center;
+    }
+    .mask-headline {
+      font-size: clamp(2.8rem, 6.5vw, 5.8rem);
+      font-weight: 700; letter-spacing: -0.035em; line-height: 1.07;
+      color: var(--text-dark); max-width: 880px; margin: 0 auto 1.5rem;
+    }
+    .mask-word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+    .mask-inner {
+      display: inline-block;
+      transform: translateY(110%);
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mask-headline.visible .mask-inner { transform: none; }
+    .statement-sub {
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--text-mid); max-width: 520px;
+      margin: 0 auto; letter-spacing: -0.01em; line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION 3 — HOW IT WORKS (click-based steps + image slides)
     ═══════════════════════════════════════════════════════════════ */
     .section-how {
       background: var(--dark-2);
@@ -516,47 +542,78 @@
       font-size: 1.05rem; color: var(--text-mute);
       max-width: 460px; margin: 0 auto; letter-spacing: -0.01em;
     }
-    .how-grid {
-      max-width: 1080px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
+    .how-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
     }
-    .how-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 20px; padding: 2rem 1.5rem;
-      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer; text-decoration: none; display: block;
+    .how-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--indigo-lt);
+      margin-bottom: 2.5rem;
     }
-    .how-card:hover {
-      border-color: rgba(99,102,241,0.35);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(79,70,229,0.12);
+    .how-step {
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      opacity: 0.2; transform: translateX(-8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      cursor: pointer;
     }
-    .how-card__step {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: rgba(79,70,229,0.15);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; font-weight: 800; color: var(--indigo-lt);
-      margin-bottom: 1.25rem;
+    .how-step.active { opacity: 1; transform: none; }
+    .how-step-tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--indigo);
+      margin-bottom: 0.6rem;
     }
-    .how-card__title {
-      font-size: 1.15rem; font-weight: 700; color: #f5f5f7;
-      letter-spacing: -0.025em; line-height: 1.25; margin-bottom: 0.6rem;
+    .how-step-title {
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem); font-weight: 700;
+      letter-spacing: -0.025em; color: #f5f5f7;
+      margin-bottom: 0.6rem; line-height: 1.25;
     }
-    .how-card__body {
-      font-size: 0.88rem; color: var(--text-mute);
+    .how-step-body {
+      font-size: 0.92rem; color: var(--text-mute);
       line-height: 1.65; letter-spacing: -0.01em;
     }
-    .how-card__link {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.78rem; font-weight: 600; color: var(--indigo-lt);
-      margin-top: 1.25rem; letter-spacing: -0.01em;
-      transition: gap 0.2s ease;
+    .how-pips {
+      display: flex; gap: 6px; margin-top: 2rem;
     }
-    .how-card:hover .how-card__link { gap: 8px; }
-    @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 560px) { .how-grid { grid-template-columns: 1fr; } }
+    .how-pip {
+      height: 3px; border-radius: 2px;
+      background: rgba(255,255,255,0.12);
+      flex: 1; transition: background 0.3s ease;
+      cursor: pointer;
+    }
+    .how-pip.active { background: var(--indigo); }
+    .how-visual {
+      position: relative; height: 460px;
+      border-radius: 24px; overflow: clip;
+    }
+    .how-slide {
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      border-radius: 24px; overflow: clip;
+    }
+    .how-slide.active { opacity: 1; }
+    .how-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .how-slide.active img { transform: scale(1); }
+    .how-slide-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+    }
+    .how-slide-caption {
+      position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+      font-size: 0.85rem; color: rgba(255,255,255,0.6); letter-spacing: -0.01em;
+    }
+    @media (max-width: 800px) {
+      .how-inner { grid-template-columns: 1fr; }
+      .how-visual { display: none; }
+    }
 
     /* ── Mid-page CTA strip ──────────────────────── */
     .cta-strip {
@@ -1254,43 +1311,87 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 3 — HOW IT WORKS (simple grid, clickable cards)
+     STATEMENT
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-statement">
+  <span class="eyebrow eyebrow-indigo" data-reveal>Travel, Reimagined</span>
+  <h2 class="mask-headline" id="mask-headline">
+    The trip you imagined.
+    Finally possible.
+  </h2>
+  <p class="statement-sub" data-reveal style="--delay:.3s">
+    Five-star planning and real-time concierge support —
+    without the five-star price tag.
+  </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HOW IT WORKS (click-based steps + image slides)
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-how" id="how">
-  <div class="section-head">
-    <span class="eyebrow eyebrow-soft" data-reveal>How It Works</span>
-    <h2 class="section-title-light" data-reveal style="--delay:.1s">Four steps.<br>Zero friction.</h2>
-    <p class="section-sub-light" data-reveal style="--delay:.2s">From first message to wheels-up — we handle everything in between.</p>
-  </div>
+  <div class="how-inner">
 
-  <div class="how-grid">
-    <a href="#" class="how-card" data-butler-button data-reveal>
-      <div class="how-card__step">1</div>
-      <h3 class="how-card__title">Tell us the trip you want.</h3>
-      <p class="how-card__body">A 3-minute preference survey. Your travel style, budget, pace, must-haves, and deal-breakers.</p>
-      <span class="how-card__link">Start planning →</span>
-    </a>
+    <!-- left: clickable steps -->
+    <div>
+      <p class="how-label">How It Works</p>
 
-    <a href="#" class="how-card" data-butler-button data-reveal style="--delay:.08s">
-      <div class="how-card__step">2</div>
-      <h3 class="how-card__title">AI scans 200,000+ options.</h3>
-      <p class="how-card__body">Every flight, stay, and experience filtered against your exact preferences in real time.</p>
-      <span class="how-card__link">See it in action →</span>
-    </a>
+      <div class="how-step active" data-step="0">
+        <div class="how-step-tag">01 — Tell Us</div>
+        <h3 class="how-step-title">Tell us the trip you want.</h3>
+        <p class="how-step-body">A 3-minute preference survey. Your travel style, budget, pace, must-haves, and deal-breakers. That's all we need to get started.</p>
+      </div>
 
-    <a href="#" class="how-card" data-butler-button data-reveal style="--delay:.16s">
-      <div class="how-card__step">3</div>
-      <h3 class="how-card__title">A human expert makes the call.</h3>
-      <p class="how-card__body">A certified advisor who's been to your destination reviews every recommendation. 9 years avg expertise.</p>
-      <span class="how-card__link">Meet our advisors →</span>
-    </a>
+      <div class="how-step" data-step="1">
+        <div class="how-step-tag">02 — AI Scans</div>
+        <h3 class="how-step-title">AI scans 200,000+ options.</h3>
+        <p class="how-step-body">Every flight, stay, experience, and transfer filtered in real time against your exact preferences. No cookie-cutter packages.</p>
+      </div>
 
-    <a href="#" class="how-card" data-butler-button data-reveal style="--delay:.24s">
-      <div class="how-card__step">4</div>
-      <h3 class="how-card__title">You travel. We handle everything else.</h3>
-      <p class="how-card__body">Real-time concierge throughout your trip. Whatever comes up, we're already on it.</p>
-      <span class="how-card__link">Get concierge →</span>
-    </a>
+      <div class="how-step" data-step="2">
+        <div class="how-step-tag">03 — Expert Reviews</div>
+        <h3 class="how-step-title">A human expert makes the call.</h3>
+        <p class="how-step-body">A certified advisor who's actually been to your destination reviews every recommendation. 9 years of on-ground expertise, on average.</p>
+      </div>
+
+      <div class="how-step" data-step="3">
+        <div class="how-step-tag">04 — You Enjoy</div>
+        <h3 class="how-step-title">You travel. We handle everything else.</h3>
+        <p class="how-step-body">Real-time concierge throughout your trip. Flight disruptions, reservations, local intelligence — whatever comes up, we're already on it.</p>
+      </div>
+
+      <div class="how-pips">
+        <div class="how-pip active" data-pip="0"></div>
+        <div class="how-pip" data-pip="1"></div>
+        <div class="how-pip" data-pip="2"></div>
+        <div class="how-pip" data-pip="3"></div>
+      </div>
+    </div>
+
+    <!-- right: image slides -->
+    <div class="how-visual">
+      <div class="how-slide active">
+        <img src="../../img/ads/veltm_itinerary_01.png" alt="Trip preference survey">
+        <div class="how-slide-overlay"></div>
+        <div class="how-slide-caption">Tell us what you want</div>
+      </div>
+      <div class="how-slide">
+        <img src="../../img/ads/veltm_travel_trending_01.png" alt="AI scanning options">
+        <div class="how-slide-overlay"></div>
+        <div class="how-slide-caption">AI finds every option</div>
+      </div>
+      <div class="how-slide">
+        <img src="../../img/ads/veltm_itinerary_03.png" alt="Expert review">
+        <div class="how-slide-overlay"></div>
+        <div class="how-slide-caption">Human expert signs off</div>
+      </div>
+      <div class="how-slide">
+        <img src="../../img/ads/veltm_product_02.png" alt="Travel experience">
+        <div class="how-slide-overlay"></div>
+        <div class="how-slide-caption">You enjoy every moment</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1303,7 +1404,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 4 — PRODUCTS
+     PRODUCTS
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-products" id="products">
   <div class="section-head">
@@ -1378,7 +1479,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 5 — REAL SCENARIOS (clickable cards)
+     REAL SCENARIOS (clickable cards)
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-scenarios" id="scenarios">
   <div class="section-head">
@@ -1391,21 +1492,21 @@
     <a href="#" class="scard" data-butler-button data-reveal>
       <div class="scard__where">11 pm · Bangkok</div>
       <p class="scard__situation">"My flight just got cancelled. I have meetings first thing tomorrow."</p>
-      <p class="scard__outcome">Your advisor already has your next-day schedule loaded. Rebooked, transported, and checked in within 40 minutes — without a single call.</p>
+      <p class="scard__outcome">Your advisor already has your next-day schedule loaded. You're rebooked, transported, and checked into a hotel within 40 minutes — without making a single call yourself.</p>
       <span class="scard__tag">⚡ Resolved in 40 min →</span>
     </a>
 
     <a href="#" class="scard" data-butler-button data-reveal style="--delay:.1s">
       <div class="scard__where">Day 3 · Rome</div>
       <p class="scard__situation">"The restaurant closed. Our confirmed reservation — gone."</p>
-      <p class="scard__outcome">Six minutes later you have a table at a place locals actually eat. One that never appears on any review site's first page.</p>
+      <p class="scard__outcome">Six minutes later you have a table at a place locals actually eat. One that never appears on any review site's first page. Better than the original.</p>
       <span class="scard__tag">⚡ Resolved in 6 min →</span>
     </a>
 
     <a href="#" class="scard" data-butler-button data-reveal style="--delay:.2s">
       <div class="scard__where">Morning · Kyoto</div>
       <p class="scard__situation">"What's worth doing today that isn't in any guide?"</p>
-      <p class="scard__outcome">Your advisor grew up in the region. You get the answer no algorithm can generate — a place, a moment, a memory.</p>
+      <p class="scard__outcome">Your advisor grew up in the region. You get the answer no algorithm can generate — a place, a moment, a memory that doesn't exist on any platform.</p>
       <span class="scard__tag">✦ The experience you'll remember →</span>
     </a>
   </div>
@@ -1413,7 +1514,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 6 — HUMAN FIRST
+     HUMAN FIRST
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-human">
   <div class="human-inner">
@@ -1428,7 +1529,7 @@
         Not a chatbot.<br>A real person who<br>already knows your trip.
       </h2>
       <p class="human-body" data-reveal style="--delay:.2s">
-        Every Butler Button advisor studies your full itinerary before you depart. When you reach out — whether it's a quick question or a full emergency — you're not starting from zero. 100% human first contact, every time.
+        Every Butler Button advisor studies your full itinerary before you depart. When you reach out — whether it's a quick question or a full emergency — you're not starting from zero. You're talking to someone who already knows your destination, your schedule, and what matters to you. 100% human first contact, every time. No chatbot on any channel.
       </p>
 
       <div class="human-stats-grid" data-reveal style="--delay:.3s">
@@ -1460,7 +1561,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 7 — GALLERY (clickable images)
+     GALLERY (clickable images)
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-gallery">
   <div style="max-width:1160px; margin:0 auto; text-align:center;">
@@ -1492,7 +1593,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 8 — FINAL CTA
+     FINAL CTA
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-cta">
   <div class="cta-glow"></div>
@@ -1502,14 +1603,14 @@
       Start your trip<br><span>from $25.</span>
     </h2>
     <p class="cta-sub" data-reveal style="--delay:.2s">
-      No membership. No annual fee. Cancel anytime for a full refund.
+      No membership. No annual fee. Cancel before delivery for a full refund.
     </p>
     <div class="cta-actions" data-reveal style="--delay:.3s">
       <a href="#" class="btn btn-white btn-lg" data-butler-button>Book Your Butler</a>
       <a href="../../pricing.html" class="btn btn-ghost-light btn-lg">See All Pricing</a>
     </div>
     <p class="cta-fine" data-reveal style="--delay:.4s">
-      Available in 195+ countries · 150+ languages · Starting at $25/day
+      Available in 195+ countries &nbsp;·&nbsp; 150+ languages &nbsp;·&nbsp; Starting at $25/day
     </p>
   </div>
 </section>
@@ -1555,8 +1656,7 @@
   const panels  = document.querySelectorAll('.hero-v-panel');
   let   current = 0;
   let   timer   = null;
-  let   paused  = false;
-  const INTERVAL = 6000; // 6s per tab
+  const INTERVAL = 6000;
 
   function setTab(idx) {
     tabs[current].classList.remove('active', 'paused');
@@ -1573,14 +1673,12 @@
 
   function startTimer() {
     clearInterval(timer);
-    // Reset animation by removing/re-adding active class
     tabs[current].classList.remove('active');
-    void tabs[current].offsetWidth; // force reflow
+    void tabs[current].offsetWidth;
     tabs[current].classList.add('active');
     timer = setInterval(advance, INTERVAL);
   }
 
-  // Click a tab — switch immediately, restart timer
   tabs.forEach((tab, i) => {
     tab.addEventListener('click', () => {
       setTab(i);
@@ -1588,7 +1686,6 @@
     });
   });
 
-  // Pause auto-advance on hover
   const heroWrap = document.querySelector('.hero-visual-wrap');
   const tabBar   = document.getElementById('hero-tabs');
   [heroWrap, tabBar].forEach(el => {
@@ -1603,6 +1700,31 @@
 
   startTimer();
 
+  /* ── HOW IT WORKS — click to switch steps + slides ── */
+  const howSteps  = document.querySelectorAll('.how-step');
+  const howSlides = document.querySelectorAll('.how-slide');
+  const howPips   = document.querySelectorAll('.how-pip');
+  let   curStep   = 0;
+
+  function setStep(s) {
+    if (s === curStep) return;
+    howSteps[curStep].classList.remove('active');
+    howSlides[curStep].classList.remove('active');
+    howPips[curStep].classList.remove('active');
+    curStep = s;
+    howSteps[curStep].classList.add('active');
+    howSlides[curStep].classList.add('active');
+    howPips[curStep].classList.add('active');
+  }
+
+  howSteps.forEach((step, i) => {
+    step.addEventListener('click', () => setStep(i));
+  });
+
+  howPips.forEach((pip, i) => {
+    pip.addEventListener('click', () => setStep(i));
+  });
+
   /* ── MOBILE STICKY CTA — show after hero CTA scrolls out ── */
   const stickyCta = document.getElementById('sticky-cta');
   const heroActions = document.querySelector('.hero-actions');
@@ -1615,7 +1737,7 @@
     stickyObs.observe(heroActions);
   }
 
-  /* ── REVEAL + COUNTERS ─────────────────────────── */
+  /* ── REVEAL + COUNTERS + MASK HEADLINE ─────────── */
   if (!noMotion) {
     const revealObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -1629,6 +1751,25 @@
     document.querySelectorAll(
       '[data-reveal], [data-reveal-left], [data-reveal-right]'
     ).forEach(el => revealObs.observe(el));
+
+    /* ── MASK HEADLINE ───────────────────────────── */
+    const maskEl = document.getElementById('mask-headline');
+    if (maskEl) {
+      const words = maskEl.textContent.trim().split(/\s+/);
+      maskEl.innerHTML = words.map((w, i) =>
+        `<span class="mask-word"><span class="mask-inner" style="transition-delay:${0.06 * i + 0.05}s">${w}</span></span>`
+      ).join(' ');
+
+      const maskObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            maskObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      maskObs.observe(maskEl);
+    }
 
     /* ── NUMBER COUNTERS ──────────────────────────── */
     const ease = t => 1 - Math.pow(1 - t, 4);
