@@ -7,7 +7,10 @@
   <link rel="icon" type="image/png" href="../img/logos/VELTM-icon-indigo.png">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* V3: PHONE MOCKUP — animated Butler Button signup + WhatsApp handoff */
+    /* V3: PHONE MOCKUP — faithful Butler Button widget flow + WhatsApp handoff
+       Screens based on actual veltmtours.com widget observed 2026-04-16
+       Screens 1–5 = real widget UI; Screen 6 = confirmation; Screen 7 = WhatsApp */
+
     .hero-v3 {
       min-height: 100vh;
       display: flex;
@@ -18,7 +21,7 @@
     }
     .hero-v3__grid {
       display: grid;
-      grid-template-columns: 1fr 380px;
+      grid-template-columns: 1fr 360px;
       gap: var(--s16);
       align-items: center;
     }
@@ -57,7 +60,7 @@
       background: var(--indigo); box-shadow: 0 0 0 4px rgba(79,70,229,0.15);
     }
 
-    /* ── Phone frame ───────────────────────────────────────────── */
+    /* ── Phone frame ─────────────────────────────────── */
     .phone {
       width: 340px;
       background: var(--near-black);
@@ -75,330 +78,756 @@
       z-index: 10;
     }
     .phone__screen {
-      background: var(--white);
+      background: #EEF2FF;
       border-radius: 34px;
       overflow: hidden;
       height: 640px;
       position: relative;
     }
 
-    /* Screen layering — each .screen is stacked; JS toggles active class */
+    /* Screen layering */
     .screen {
       position: absolute;
       inset: 0;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: opacity 0.45s ease;
       display: flex;
       flex-direction: column;
       pointer-events: none;
+      overflow: hidden;
     }
     .screen[data-active="true"] {
       opacity: 1;
       visibility: visible;
     }
 
-    /* ── Screen 1: Landing page mini ─────────────────────────── */
-    .landing {
-      background: linear-gradient(180deg, #EEF2FF 0%, #F5F3FF 100%);
-      padding: 48px 20px 20px;
+    /* ── Screen 1: Landing / VELTM mini-site ──────────── */
+    .s1-nav {
+      background: white;
+      border-bottom: 1px solid #E5E7EB;
+      padding: 36px 14px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .s1-logo {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--near-black);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .s1-logo-icon {
+      width: 20px; height: 20px;
+      background: var(--gradient);
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .s1-nav-pills {
+      display: flex;
+      gap: 4px;
+    }
+    .s1-nav-pill {
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: var(--body-gray);
+    }
+    .s1-nav-pill.active {
+      background: var(--indigo);
+      color: white;
+    }
+    .s1-hero {
+      background: linear-gradient(160deg, #EEF2FF 0%, #F5F3FF 60%, #FDF2F8 100%);
+      padding: 18px 16px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .s1-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #22C55E;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .s1-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+    }
+    .s1-h1 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1.15;
+      color: var(--near-black);
+      margin-bottom: 6px;
+    }
+    .s1-h1 span { color: var(--indigo); }
+    .s1-sub {
+      font-size: 0.65rem;
+      color: var(--body-gray);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .s1-badges {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .s1-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.6rem;
+      color: var(--body-gray);
+    }
+    .s1-badge-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+    .s1-badge-icon--globe { background: #EEF2FF; }
+    .s1-badge-icon--clock { background: #FEF3C7; }
+    .s1-badge-icon--shield { background: #DCFCE7; }
+    .s1-badge-icon--map { background: #F3E8FF; }
+    .s1-trustline {
+      display: flex;
+      gap: 10px;
+      font-size: 0.58rem;
+      color: var(--body-gray);
+      margin-bottom: 10px;
+    }
+    .s1-trustline span {
+      display: flex; align-items: center; gap: 3px;
+    }
+    /* The widget card preview */
+    .s1-widget-preview {
+      background: white;
+      border-radius: 12px;
+      padding: 10px 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin-top: auto;
+      position: relative;
+    }
+    .s1-widget-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+    .s1-widget-icon {
+      width: 24px; height: 24px;
+      border-radius: 6px;
+      background: var(--indigo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .s1-widget-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--near-black);
+    }
+    .s1-widget-sub {
+      font-size: 0.58rem;
+      color: var(--gray-400);
+    }
+    .s1-service-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+    .s1-card {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 6px 4px;
       text-align: center;
+      font-size: 0.55rem;
+      color: var(--gray-500);
     }
-    .landing__brand {
-      font-family: var(--font-display);
-      font-size: 0.95rem; font-weight: 700;
-      color: var(--near-black); margin-bottom: 2rem;
+    .s1-card.selected {
+      border-color: var(--indigo);
+      background: #EEF2FF;
+      color: var(--indigo);
     }
-    .landing__brand em { color: var(--indigo); font-style: normal; }
-    .landing__eyebrow {
-      font-size: 0.55rem; letter-spacing: 0.14em;
-      font-weight: 700; color: var(--indigo); text-transform: uppercase;
-      margin-bottom: 0.5rem;
+    .s1-card-name {
+      font-weight: 700;
+      font-size: 0.6rem;
+      display: block;
+      margin-bottom: 1px;
     }
-    .landing__h1 {
-      font-family: var(--font-display);
-      font-size: 1.65rem; line-height: 1.1;
-      color: var(--near-black); margin-bottom: 0.75rem;
+    .s1-card-price {
+      font-size: 0.55rem;
     }
-    .landing__lead {
-      font-size: 0.78rem; color: var(--body-gray);
-      line-height: 1.5; margin-bottom: 1.5rem;
-      padding: 0 0.5rem;
-    }
-    .landing__cta {
+    .s1-cta-btn {
+      width: 100%;
       background: var(--gradient);
       color: white;
       border: none;
-      font-size: 0.82rem; font-weight: 600;
-      padding: 0.75rem 1.5rem;
-      border-radius: 999px;
-      box-shadow: var(--shadow-indigo);
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
       animation: cta-pulse 2s ease-in-out infinite;
       position: relative;
+      cursor: pointer;
     }
     @keyframes cta-pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(79,70,229,0.3); }
-      50% { transform: scale(1.04); box-shadow: 0 4px 28px rgba(79,70,229,0.5); }
+      0%, 100% { box-shadow: 0 3px 12px rgba(79,70,229,0.3); }
+      50% { box-shadow: 0 3px 20px rgba(79,70,229,0.55); }
     }
-    .tap-ripple {
+    .tap-ring {
       position: absolute;
       top: 50%; left: 50%;
-      width: 40px; height: 40px;
+      width: 36px; height: 36px;
       border-radius: 50%;
-      background: rgba(79,70,229,0.4);
+      background: rgba(255,255,255,0.4);
       transform: translate(-50%, -50%) scale(0);
       pointer-events: none;
     }
-    .screen[data-active="true"] .tap-ripple {
-      animation: tap-it 1.2s ease-out 0.8s;
+    .screen[data-active="true"] .tap-ring {
+      animation: tap-ring 1.1s ease-out 1.4s;
     }
-    @keyframes tap-it {
-      0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
-      100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+    @keyframes tap-ring {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0.7; }
+      100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
     }
-    .landing__products {
-      display: grid; gap: 0.5rem;
-      margin-top: 1.5rem; text-align: left;
-    }
-    .landing__product {
-      background: white;
-      border: 1px solid var(--border-gray);
-      border-radius: 12px;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.7rem;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .landing__product strong { color: var(--near-black); }
-    .landing__product span { color: var(--gray-400); }
 
-    /* ── Screen 2: Modal opens / plan selection ─────────────── */
-    .modal-screen {
-      background: rgba(0,0,0,0.5);
-      padding: 44px 16px 12px;
-      justify-content: flex-end;
-    }
-    .modal-card {
+    /* ── Shared widget chrome (screens 2–5) ───────────────────── */
+    .widget-chrome {
       background: white;
-      border-radius: 20px 20px 0 0;
-      padding: 1.25rem 1.25rem 1rem;
-      animation: slide-up 0.5s ease;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding-top: 36px; /* notch clearance */
     }
-    @keyframes slide-up {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    .widget-topbar {
+      padding: 6px 12px 0;
+      border-bottom: 1px solid #F3F4F6;
     }
-    .modal-card__header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1rem;
+    .widget-brand-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-bottom: 6px;
     }
-    .modal-card__title {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 700;
+    .widget-brand-icon {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      background: var(--indigo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.65rem;
     }
-    .modal-card__close {
-      width: 26px; height: 26px; border-radius: 50%;
-      background: var(--gray-100); color: var(--gray-500);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem;
-    }
-    .plan-options {
-      display: grid; gap: 0.6rem;
-    }
-    .plan-option {
-      border: 2px solid var(--border-gray);
-      border-radius: 12px;
-      padding: 0.75rem;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: all 0.3s;
-    }
-    .plan-option.selected {
-      border-color: var(--indigo);
-      background: var(--indigo-tint);
-    }
-    .plan-option__name {
-      font-size: 0.78rem; font-weight: 600;
+    .widget-brand-text strong {
+      font-size: 0.72rem;
+      display: block;
       color: var(--near-black);
+      line-height: 1.1;
     }
-    .plan-option__desc {
-      font-size: 0.65rem; color: var(--gray-500);
-      margin-top: 0.1rem;
-    }
-    .plan-option__price {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 700;
-      color: var(--near-black);
-    }
-    .plan-option__price small {
-      font-size: 0.6rem; font-weight: 400;
+    .widget-brand-text small {
+      font-size: 0.55rem;
       color: var(--gray-400);
     }
-
-    /* ── Screen 3: Form ─────────────────────────────────────── */
-    .form-screen {
-      background: white;
-      padding: 44px 18px 18px;
+    /* 5-step progress */
+    .widget-steps {
+      display: flex;
+      align-items: center;
+      padding: 7px 0 8px;
+      overflow: hidden;
     }
-    .form-header {
-      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
-    }
-    .form-back {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--gray-100); display: flex;
-      align-items: center; justify-content: center;
-      font-size: 0.8rem; color: var(--gray-500);
-    }
-    .form-title {
-      font-family: var(--font-display);
-      font-size: 0.95rem; font-weight: 700;
-    }
-    .form-progress {
-      display: flex; gap: 0.25rem; margin-bottom: 1rem;
-    }
-    .form-progress__dot {
-      flex: 1; height: 3px; border-radius: 2px;
-      background: var(--gray-200);
-    }
-    .form-progress__dot.active { background: var(--indigo); }
-    .form-field {
-      margin-bottom: 0.75rem;
-    }
-    .form-field__label {
-      font-size: 0.65rem; font-weight: 600;
-      color: var(--gray-500); letter-spacing: 0.04em;
-      text-transform: uppercase; margin-bottom: 0.3rem;
-    }
-    .form-field__input {
-      width: 100%;
-      border: 1.5px solid var(--border-gray);
-      border-radius: 10px;
-      padding: 0.55rem 0.7rem;
-      font-size: 0.78rem;
-      color: var(--near-black);
-      background: white;
-      transition: all 0.3s;
-      font-family: var(--font-body);
-    }
-    .form-field__input.filled {
-      border-color: var(--indigo);
-      background: var(--indigo-tint);
-    }
-    .form-field__input.typing::after {
-      content: '|';
-      animation: blink 0.6s infinite;
-    }
-    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-    .form-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;
-    }
-
-    /* ── Screen 4: Coupon ─────────────────────────────────── */
-    .coupon-box {
-      margin-top: 1rem;
-      padding: 0.75rem;
-      border: 1.5px dashed var(--border-gray);
-      border-radius: 10px;
-      background: var(--gray-50);
-    }
-    .coupon-box.applied {
-      border: 1.5px solid var(--trip-planning);
-      background: var(--trip-planning-light);
-    }
-    .coupon-box__label {
-      font-size: 0.65rem; font-weight: 600;
-      color: var(--gray-500); letter-spacing: 0.04em;
-      text-transform: uppercase; margin-bottom: 0.3rem;
-    }
-    .coupon-box__input-wrap {
-      display: flex; align-items: center; gap: 0.4rem;
-    }
-    .coupon-box__input {
+    .wstep {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       flex: 1;
-      background: white;
-      border: 1px solid var(--border-gray);
-      border-radius: 8px;
-      padding: 0.5rem 0.6rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      font-family: ui-monospace, monospace;
+      font-size: 0.48rem;
+      color: #9CA3AF;
+      gap: 2px;
+      position: relative;
     }
-    .coupon-box__apply {
-      background: var(--near-black); color: white;
-      border: none; border-radius: 8px;
-      padding: 0.5rem 0.8rem;
-      font-size: 0.7rem; font-weight: 600;
+    .wstep-circle {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #9CA3AF;
     }
-    .coupon-box__msg {
-      margin-top: 0.5rem;
-      font-size: 0.7rem;
-      color: var(--trip-planning);
-      font-weight: 600;
-      display: flex; align-items: center; gap: 0.3rem;
+    .wstep.done .wstep-circle {
+      background: var(--indigo);
+      color: white;
     }
-    .price-summary {
-      margin-top: 1rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--border-gray);
-      display: grid; gap: 0.3rem;
-      font-size: 0.75rem;
+    .wstep.done .wstep-circle::after {
+      content: '✓';
     }
-    .price-summary__row {
-      display: flex; justify-content: space-between;
-      color: var(--gray-500);
+    .wstep.active .wstep-circle {
+      background: var(--indigo);
+      color: white;
     }
-    .price-summary__row.total {
-      padding-top: 0.4rem;
-      margin-top: 0.2rem;
-      border-top: 1px solid var(--gray-200);
-      color: var(--near-black); font-weight: 700;
-      font-size: 0.9rem;
+    .wstep.active {
+      color: var(--indigo);
+      font-weight: 700;
     }
-    .price-summary__row .strike {
-      text-decoration: line-through;
-      color: var(--gray-300);
-      margin-right: 0.3rem;
+    /* connector lines between steps */
+    .wstep-line {
+      flex: 0.6;
+      height: 1.5px;
+      background: #E5E7EB;
+      margin-bottom: 12px;
     }
-    .price-summary__row .discount {
-      color: var(--trip-planning); font-weight: 600;
+    .wstep-line.done {
+      background: var(--indigo);
+    }
+    .widget-body {
+      flex: 1;
+      padding: 10px 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .widget-section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--near-black);
+      margin-bottom: 4px;
     }
 
-    /* ── Screen 5: Processing ──────────────────────────────── */
-    .processing-screen {
+    /* ── Screen 2: Service cards + destination ───────────── */
+    .svc-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+    .svc-card {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 7px 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .svc-card.selected {
+      border-color: var(--indigo);
+      background: #EEF2FF;
+    }
+    .svc-card-icon {
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+    .svc-card-name {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--near-black);
+      display: block;
+    }
+    .svc-card.selected .svc-card-name { color: var(--indigo); }
+    .svc-card.selected .svc-card-price { color: var(--indigo); }
+    .svc-card-price {
+      font-size: 0.55rem;
+      color: #6B7280;
+      display: block;
+      margin-top: 1px;
+    }
+    .svc-card-sub {
+      font-size: 0.48rem;
+      color: #9CA3AF;
+      margin-top: 1px;
+      display: block;
+    }
+    .dest-field {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 7px 9px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.62rem;
+      color: #9CA3AF;
       background: white;
-      padding: 44px 18px 18px;
-      align-items: center; justify-content: center;
+    }
+    .dest-field .search-icon {
+      font-size: 0.7rem;
+      opacity: 0.5;
+    }
+    .dest-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: #F3F4F6;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--near-black);
+      margin-right: 4px;
+    }
+    .dest-tag .x { color: #9CA3AF; font-size: 0.55rem; }
+    .widget-cta {
+      background: #D1D5DB;
+      color: #6B7280;
+      border: none;
+      border-radius: 8px;
+      padding: 9px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-align: center;
+      width: 100%;
+    }
+    .widget-cta.active {
+      background: var(--gradient);
+      color: white;
+    }
+    .hint-text {
+      font-size: 0.52rem;
+      color: #9CA3AF;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    /* ── Screen 3: Destination done + details ────────────── */
+    .travelers-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .qty-btn {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--near-black);
+      font-weight: 600;
+    }
+    .qty-val {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--near-black);
+      min-width: 14px;
       text-align: center;
     }
-    .spinner {
-      width: 56px; height: 56px; border-radius: 50%;
-      border: 3px solid var(--gray-200);
-      border-top-color: var(--indigo);
-      animation: spin 0.9s linear infinite;
-      margin: 0 auto 1rem;
+    .solo-pill {
+      background: #F3F4F6;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      display: flex;
+      align-items: center;
+      gap: 3px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .processing-title {
-      font-family: var(--font-display);
-      font-size: 1rem; font-weight: 700;
-      margin-bottom: 0.3rem;
+    .solo-hint {
+      font-size: 0.55rem;
+      color: #9CA3AF;
+      margin-top: 2px;
     }
-    .processing-sub {
-      font-size: 0.75rem; color: var(--gray-500);
+    .date-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+    .date-pill {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 6px;
+      text-align: center;
+    }
+    .date-pill.selected {
+      border-color: var(--indigo);
+      background: #EEF2FF;
+    }
+    .date-pill-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      display: block;
+    }
+    .date-pill.selected .date-pill-label { color: var(--indigo); }
+    .date-pill-sub {
+      font-size: 0.5rem;
+      color: #9CA3AF;
+    }
+    .date-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+    .date-input {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 6px 7px;
+      font-size: 0.6rem;
+      color: var(--near-black);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .date-input span { font-size: 0.65rem; }
+    .mix-toggle-row {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 8px;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mix-toggle-text strong {
+      font-size: 0.6rem;
+      color: #92400E;
+      display: block;
+    }
+    .mix-toggle-text small {
+      font-size: 0.52rem;
+      color: #B45309;
+    }
+    .toggle-switch {
+      width: 26px; height: 14px;
+      border-radius: 999px;
+      background: #D1D5DB;
+      position: relative;
+    }
+    .toggle-switch::after {
+      content: '';
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      top: 2px; left: 2px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
-    /* ── Screen 6: Confirmation ────────────────────────────── */
+    /* ── Screen 4: Contact form + promo ──────────────────── */
+    .form-input-row {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 0.62rem;
+      color: var(--near-black);
+      background: white;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .form-input-row.filled {
+      border-color: #C7D2FE;
+      background: #F5F3FF;
+    }
+    .phone-flag { font-size: 0.7rem; }
+    .phone-code {
+      font-size: 0.6rem;
+      color: #6B7280;
+      border-right: 1px solid #E5E7EB;
+      padding-right: 5px;
+      margin-right: 2px;
+    }
+    .wa-check-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .wa-check-circle {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 2px solid #E5E7EB;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wa-check-circle.checked {
+      background: #25D366;
+      border-color: #25D366;
+      color: white;
+      font-size: 0.55rem;
+    }
+    .wa-check-label {
+      font-size: 0.6rem;
+      color: var(--near-black);
+    }
+    .promo-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .promo-input {
+      flex: 1;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 0.62rem;
+      color: var(--near-black);
+      background: white;
+      font-family: ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .promo-input.applied {
+      border-color: #22C55E;
+      background: #F0FDF4;
+      color: #166534;
+    }
+    .promo-icon { font-size: 0.7rem; opacity: 0.5; }
+    .promo-apply-btn {
+      background: var(--indigo);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 9px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .promo-apply-btn.success {
+      background: #22C55E;
+    }
+    .promo-success-msg {
+      font-size: 0.57rem;
+      color: #166534;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-top: 3px;
+    }
+    /* order summary */
+    .order-summary {
+      background: #F9FAFB;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .order-summary-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9CA3AF;
+      margin-bottom: 5px;
+    }
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.62rem;
+      color: #6B7280;
+      margin-bottom: 2px;
+    }
+    .order-row.total {
+      color: var(--near-black);
+      font-weight: 700;
+      font-size: 0.72rem;
+      border-top: 1px solid #E5E7EB;
+      padding-top: 5px;
+      margin-top: 4px;
+    }
+    .strike { text-decoration: line-through; color: #D1D5DB; margin-right: 3px; }
+    .discount-badge { color: #22C55E; font-weight: 700; }
+
+    /* ── Screen 5: Processing ────────────────────────────── */
+    .processing-screen {
+      background: white;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    .spinner {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 3px solid #E5E7EB;
+      border-top-color: var(--indigo);
+      animation: spin 0.85s linear infinite;
+      margin: 0 auto 14px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .proc-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--near-black);
+      margin-bottom: 4px;
+    }
+    .proc-sub {
+      font-size: 0.72rem;
+      color: #6B7280;
+      line-height: 1.5;
+    }
+    .proc-dots {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .proc-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--indigo);
+      animation: dot-bounce 1.2s ease-in-out infinite;
+    }
+    .proc-dot:nth-child(2) { animation-delay: 0.2s; }
+    .proc-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dot-bounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ── Screen 6: Confirmation ──────────────────────────── */
     .confirm-screen {
-      background: linear-gradient(180deg, var(--trip-planning-light) 0%, white 100%);
-      padding: 44px 18px 18px;
-      align-items: center; justify-content: center;
+      background: linear-gradient(180deg, #F0FDF4 0%, white 50%);
+      padding: 36px 20px 20px;
+      align-items: center;
+      justify-content: center;
       text-align: center;
     }
     .confirm-check {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: var(--trip-planning);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1rem;
-      color: white; font-size: 1.8rem;
-      animation: pop-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: #22C55E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      color: white;
+      font-size: 1.6rem;
+      animation: pop-in 0.55s cubic-bezier(0.4, 0, 0.2, 1);
     }
     @keyframes pop-in {
       0% { transform: scale(0); opacity: 0; }
@@ -407,95 +836,126 @@
     }
     .confirm-title {
       font-family: var(--font-display);
-      font-size: 1.3rem; font-weight: 700;
-      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--near-black);
+      margin-bottom: 6px;
     }
     .confirm-sub {
-      font-size: 0.78rem; color: var(--body-gray);
-      margin-bottom: 1.2rem;
-      line-height: 1.5;
-      padding: 0 0.5rem;
+      font-size: 0.72rem;
+      color: var(--body-gray);
+      line-height: 1.55;
+      margin-bottom: 14px;
+      padding: 0 6px;
     }
+    .confirm-detail-box {
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.62rem;
+      color: #6B7280;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+    .confirm-detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .confirm-detail-row:last-child { margin-bottom: 0; }
+    .confirm-detail-row strong { color: var(--near-black); }
     .confirm-ref {
       font-family: ui-monospace, monospace;
-      font-size: 0.7rem;
-      background: white;
-      border: 1px solid var(--border-gray);
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-      color: var(--gray-600);
-      margin-bottom: 1rem;
-      display: inline-block;
+      font-size: 0.6rem;
+      color: #9CA3AF;
+      margin-bottom: 14px;
     }
-    .confirm-next {
+    .wa-cta-btn {
       background: #25D366;
       color: white;
       border: none;
-      padding: 0.75rem 1.3rem;
       border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
+      padding: 10px 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 6px;
+    }
+    .wa-logo {
+      width: 14px; height: 14px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* ── Screen 7: WhatsApp handoff ─────────────────────────── */
-    .whatsapp-screen {
+    /* ── Screen 7: WhatsApp handoff ──────────────────────── */
+    .wa-screen {
       background: #E5DDD5;
-      padding: 0;
-    }
-    .whatsapp-bg {
-      position: absolute; inset: 44px 0 0;
-      background-image:
-        radial-gradient(ellipse at top, rgba(0,0,0,0.03) 0%, transparent 40%),
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><circle cx='20' cy='20' r='0.5' fill='%23000' opacity='0.04'/></svg>");
+      display: flex;
+      flex-direction: column;
     }
     .wa-header {
-      background: #128C7E;
+      background: #075E54;
       color: white;
-      padding: 48px 14px 8px;
-      display: flex; align-items: center; gap: 0.6rem;
-      position: relative; z-index: 1;
+      padding: 38px 12px 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+    .wa-back { font-size: 0.75rem; opacity: 0.9; }
     .wa-avatar {
-      width: 36px; height: 36px; border-radius: 50%;
+      width: 32px; height: 32px;
+      border-radius: 50%;
       background: var(--indigo);
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 0.85rem; font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
       font-family: var(--font-display);
     }
-    .wa-header__meta { flex: 1; }
-    .wa-header__name { font-size: 0.85rem; font-weight: 600; }
-    .wa-header__status { font-size: 0.65rem; opacity: 0.8; }
+    .wa-name { font-size: 0.75rem; font-weight: 600; line-height: 1.2; }
+    .wa-status { font-size: 0.55rem; opacity: 0.8; }
+    .wa-icons {
+      margin-left: auto;
+      display: flex;
+      gap: 10px;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
     .wa-body {
       flex: 1;
-      padding: 0.75rem 0.5rem;
-      display: flex; flex-direction: column;
-      gap: 0.4rem;
-      position: relative; z-index: 1;
+      padding: 8px 8px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       overflow: hidden;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><text x='50%' y='50%' font-size='80' text-anchor='middle' dominant-baseline='middle' opacity='0.04'>💬</text></svg>");
     }
-    .wa-date {
-      text-align: center;
+    .wa-date-chip {
       align-self: center;
-      background: rgba(225,245,254,0.9);
-      padding: 0.2rem 0.6rem;
+      background: rgba(225,245,254,0.92);
+      padding: 2px 8px;
       border-radius: 6px;
-      font-size: 0.58rem;
-      color: #667781;
-      margin-bottom: 0.4rem;
+      font-size: 0.52rem;
+      color: #4A5568;
+      margin-bottom: 2px;
     }
     .wa-msg {
-      max-width: 85%;
-      padding: 0.45rem 0.6rem 0.35rem;
+      max-width: 86%;
+      padding: 6px 8px 5px;
       border-radius: 8px;
-      font-size: 0.73rem;
-      line-height: 1.4;
-      position: relative;
-      box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+      font-size: 0.65rem;
+      line-height: 1.45;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
       opacity: 0;
-      animation: wa-in 0.4s ease forwards;
+      animation: wa-pop 0.35s ease forwards;
     }
     .wa-msg--butler {
       background: white;
@@ -503,46 +963,52 @@
       border-top-left-radius: 2px;
     }
     .wa-msg--user {
-      background: #DCF8C6;
+      background: #D9FDD3;
       align-self: flex-end;
       border-top-right-radius: 2px;
     }
-    .wa-msg__time {
-      font-size: 0.55rem;
-      color: rgba(0,0,0,0.45);
-      margin-left: 0.4rem;
+    .wa-time {
+      font-size: 0.5rem;
+      color: rgba(0,0,0,0.4);
       float: right;
-      margin-top: 0.15rem;
+      margin-left: 6px;
+      margin-top: 2px;
     }
-    .screen[data-active="true"] .wa-msg:nth-of-type(1) { animation-delay: 0.3s; }
-    .screen[data-active="true"] .wa-msg:nth-of-type(2) { animation-delay: 1.2s; }
-    .screen[data-active="true"] .wa-msg:nth-of-type(3) { animation-delay: 2.0s; }
-    .screen[data-active="true"] .wa-msg:nth-of-type(4) { animation-delay: 2.8s; }
-    @keyframes wa-in {
-      from { opacity: 0; transform: translateY(10px); }
+    .screen[data-active="true"] .wa-msg:nth-child(2) { animation-delay: 0.3s; }
+    .screen[data-active="true"] .wa-msg:nth-child(3) { animation-delay: 1.4s; }
+    .screen[data-active="true"] .wa-msg:nth-child(4) { animation-delay: 2.3s; }
+    .screen[data-active="true"] .wa-msg:nth-child(5) { animation-delay: 3.2s; }
+    @keyframes wa-pop {
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .wa-input {
-      background: #F0F0F0;
-      padding: 0.45rem 0.6rem;
-      display: flex; align-items: center; gap: 0.4rem;
-      position: relative; z-index: 1;
+    .wa-input-bar {
+      background: #F0F2F5;
+      padding: 5px 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-    .wa-input-field {
-      flex: 1; background: white;
-      border-radius: 18px;
-      padding: 0.4rem 0.7rem;
-      font-size: 0.68rem;
-      color: #999;
+    .wa-input-box {
+      flex: 1;
+      background: white;
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 0.6rem;
+      color: #9CA3AF;
     }
-    .wa-send {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: #128C7E; color: white;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem;
+    .wa-send-btn {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.8rem;
     }
 
-    /* ── Replay button ─────────────────────────────────────── */
+    /* ── Replay ──────────────────────────────────────────── */
     .replay-btn {
       position: absolute;
       bottom: -44px; left: 50%; transform: translateX(-50%);
@@ -596,19 +1062,20 @@
   <section class="hero-v3">
     <div class="container">
       <div class="hero-v3__grid">
+        <!-- Left: copy + step tracker -->
         <div class="hero-v3__text">
           <span class="eyebrow">Butler Button by VELTM</span>
           <h1>Tap once.<br>Travel smarter.</h1>
           <p class="hero-v3__tagline">AI plans it. A human handles it. You enjoy it.</p>
-          <p class="lead">One button. One modal. Then you're talking to your dedicated Butler on WhatsApp. Watch the whole flow &rarr;</p>
+          <p class="lead">One widget. Five steps. Then your Butler is pinging you on WhatsApp. Watch the real flow &rarr;</p>
           <ul class="hero-v3__step-list" id="stepList">
-            <li data-step="1">Open the site &mdash; one CTA</li>
-            <li data-step="2">Pick your plan</li>
-            <li data-step="3">Tell us where you're going</li>
-            <li data-step="4">Apply your code &mdash; real discount</li>
-            <li data-step="5">Pay securely</li>
-            <li data-step="6">You're booked</li>
-            <li data-step="7">Your Butler pings you on WhatsApp</li>
+            <li data-step="1">Open the widget &mdash; choose your service</li>
+            <li data-step="2">Pick a service &mdash; 8-Hour Butler</li>
+            <li data-step="3">Set destination, travelers &amp; dates</li>
+            <li data-step="4">Your details &amp; SEVENSPRINGS code</li>
+            <li data-step="5">Securing payment&hellip;</li>
+            <li data-step="6">You&rsquo;re booked &mdash; open WhatsApp</li>
+            <li data-step="7">Your Butler checks in immediately</li>
           </ul>
           <div style="display:flex; gap:1rem; flex-wrap:wrap;">
             <a href="../pricing.html" class="btn btn--gradient btn--lg">Start Your Journey</a>
@@ -616,204 +1083,397 @@
           </div>
         </div>
 
+        <!-- Right: Phone mockup -->
         <div style="position:relative;">
           <div class="phone">
             <div class="phone__notch"></div>
             <div class="phone__screen" id="phoneScreen">
 
-              <!-- Screen 1: Landing -->
-              <div class="screen landing" data-screen="1">
-                <div class="landing__brand">Butler<em>Button</em></div>
-                <div class="landing__eyebrow">Own Your Journey&trade;</div>
-                <div class="landing__h1">Your trip, handled.</div>
-                <div class="landing__lead">AI plans it. A real human handles it. Starting at $25.</div>
-                <button class="landing__cta">
-                  Book Your Butler
-                  <span class="tap-ripple"></span>
-                </button>
-                <div class="landing__products">
-                  <div class="landing__product"><strong>Trip Planning</strong><span>$25/country</span></div>
-                  <div class="landing__product"><strong>8-Hour Butler</strong><span>$25/day</span></div>
-                  <div class="landing__product"><strong>24-Hour Butler</strong><span>$100/day</span></div>
-                </div>
-              </div>
-
-              <!-- Screen 2: Modal with plan selection -->
-              <div class="screen modal-screen" data-screen="2">
-                <div class="modal-card">
-                  <div class="modal-card__header">
-                    <div class="modal-card__title">Choose your plan</div>
-                    <div class="modal-card__close">&times;</div>
+              <!-- ══ Screen 1: VELTM site landing ══════════════════ -->
+              <div class="screen" data-screen="1">
+                <div class="s1-nav">
+                  <div class="s1-logo">
+                    <div class="s1-logo-icon"></div>
+                    Veltm
                   </div>
-                  <div class="plan-options">
-                    <div class="plan-option">
-                      <div>
-                        <div class="plan-option__name">Trip Planning</div>
-                        <div class="plan-option__desc">Personalized itinerary</div>
-                      </div>
-                      <div class="plan-option__price">$25<small>/country</small></div>
+                  <div class="s1-nav-pills">
+                    <div class="s1-nav-pill">VELTM AI</div>
+                    <div class="s1-nav-pill active">Butler Button</div>
+                  </div>
+                </div>
+                <div class="s1-hero">
+                  <div class="s1-eyebrow">Trusted by 1,000+ travelers worldwide</div>
+                  <div class="s1-h1">Your Personal <span>Butler Button</span></div>
+                  <div class="s1-sub">We plan your trip or assist you while you're on one. From USD 25/day — just drop us a text.</div>
+                  <div class="s1-badges">
+                    <div class="s1-badge">
+                      <div class="s1-badge-icon s1-badge-icon--globe">🌐</div>
+                      <div><strong style="font-size:0.6rem; color:var(--near-black);">Global Coverage</strong><br><span>195+ countries</span></div>
                     </div>
-                    <div class="plan-option selected">
-                      <div>
-                        <div class="plan-option__name">8-Hour Butler</div>
-                        <div class="plan-option__desc">Real-time concierge support</div>
-                      </div>
-                      <div class="plan-option__price">$25<small>/day</small></div>
+                    <div class="s1-badge">
+                      <div class="s1-badge-icon s1-badge-icon--clock">🕐</div>
+                      <div><strong style="font-size:0.6rem; color:var(--near-black);">24/7 Support</strong><br><span>Always available</span></div>
                     </div>
-                    <div class="plan-option">
-                      <div>
-                        <div class="plan-option__name">24-Hour Butler</div>
-                        <div class="plan-option__desc">Round-the-clock coverage</div>
-                      </div>
-                      <div class="plan-option__price">$100<small>/day</small></div>
+                    <div class="s1-badge">
+                      <div class="s1-badge-icon s1-badge-icon--map">🧳</div>
+                      <div><strong style="font-size:0.6rem; color:var(--near-black);">Trip Planning</strong><br><span>Plan or assist on-trip</span></div>
+                    </div>
+                    <div class="s1-badge">
+                      <div class="s1-badge-icon s1-badge-icon--shield">🛡️</div>
+                      <div><strong style="font-size:0.6rem; color:var(--near-black);">Secure &amp; Reliable</strong><br><span>Professional team</span></div>
                     </div>
                   </div>
+                  <div class="s1-trustline">
+                    <span>✓ Instant setup</span>
+                    <span>✓ No hidden fees</span>
+                    <span>✓ Cancel anytime</span>
+                  </div>
+                  <div class="s1-widget-preview">
+                    <div class="s1-widget-header">
+                      <div class="s1-widget-icon">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg>
+                      </div>
+                      <div>
+                        <div class="s1-widget-title">Book Your Butler</div>
+                        <div class="s1-widget-sub">Your personal trip assistant</div>
+                      </div>
+                    </div>
+                    <div class="s1-service-cards">
+                      <div class="s1-card">
+                        <span class="s1-card-name">Trip Planning</span>
+                        <span class="s1-card-price">$25/country</span>
+                      </div>
+                      <div class="s1-card selected">
+                        <span class="s1-card-name">8-Hour</span>
+                        <span class="s1-card-price">$25/day</span>
+                      </div>
+                      <div class="s1-card">
+                        <span class="s1-card-name">24-Hour</span>
+                        <span class="s1-card-price">$100/day</span>
+                      </div>
+                    </div>
+                    <button class="s1-cta-btn">
+                      Start Your Journey →
+                      <span class="tap-ring"></span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <!-- Screen 3: Trip details form -->
-              <div class="screen form-screen" data-screen="3">
-                <div class="form-header">
-                  <div class="form-back">&larr;</div>
-                  <div class="form-title">Trip details</div>
-                </div>
-                <div class="form-progress">
-                  <div class="form-progress__dot active"></div>
-                  <div class="form-progress__dot active"></div>
-                  <div class="form-progress__dot"></div>
-                  <div class="form-progress__dot"></div>
-                </div>
-                <div class="form-field">
-                  <div class="form-field__label">Destination</div>
-                  <div class="form-field__input filled" id="field-destination">Kyoto, Japan</div>
-                </div>
-                <div class="form-row">
-                  <div class="form-field">
-                    <div class="form-field__label">Check-in</div>
-                    <div class="form-field__input filled">Oct 14</div>
+              <!-- ══ Screen 2: Widget — Service selection ═══════════ -->
+              <div class="screen" data-screen="2">
+                <div class="widget-chrome">
+                  <div class="widget-topbar">
+                    <div class="widget-brand-row">
+                      <div class="widget-brand-icon">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg>
+                      </div>
+                      <div class="widget-brand-text">
+                        <strong>Book Your Butler</strong>
+                        <small>Your personal trip assistant</small>
+                      </div>
+                    </div>
+                    <!-- 5-step progress bar -->
+                    <div class="widget-steps">
+                      <div class="wstep active">
+                        <div class="wstep-circle">1</div>
+                        Service
+                      </div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep">
+                        <div class="wstep-circle">2</div>
+                        Destination
+                      </div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep">
+                        <div class="wstep-circle">3</div>
+                        Details
+                      </div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep">
+                        <div class="wstep-circle">4</div>
+                        Contact
+                      </div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep">
+                        <div class="wstep-circle">5</div>
+                        Review
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-field">
-                    <div class="form-field__label">Check-out</div>
-                    <div class="form-field__input filled">Oct 21</div>
+                  <div class="widget-body">
+                    <div class="widget-section-label">Choose your service</div>
+                    <div class="svc-cards">
+                      <div class="svc-card">
+                        <div class="svc-card-icon">⊙</div>
+                        <span class="svc-card-name">Trip Planning</span>
+                        <span class="svc-card-price">$25/country</span>
+                        <span class="svc-card-sub">5 Revisions</span>
+                      </div>
+                      <div class="svc-card selected">
+                        <div class="svc-card-icon" style="color:var(--indigo);">🕐</div>
+                        <span class="svc-card-name">8-Hour</span>
+                        <span class="svc-card-price">$25/day</span>
+                        <span class="svc-card-sub">Remote Support</span>
+                      </div>
+                      <div class="svc-card">
+                        <div class="svc-card-icon">🕐</div>
+                        <span class="svc-card-name">24-Hour</span>
+                        <span class="svc-card-price">$100/day</span>
+                        <span class="svc-card-sub">Full Day Support</span>
+                      </div>
+                    </div>
+                    <div class="widget-section-label" style="margin-top:4px;">Where are you headed?</div>
+                    <div style="font-size:0.55rem; color:#9CA3AF; margin-top:-6px; margin-bottom:2px;">Search by country name. You can add city details later.</div>
+                    <div class="dest-field">
+                      <span class="search-icon">🔍</span>
+                      <span>Type a country name...</span>
+                    </div>
+                    <div class="widget-cta" style="margin-top:auto;">Select a Destination to continue</div>
+                    <div class="hint-text">ⓘ Complete: destination, trip purpose, travel dates, name, email, phone</div>
                   </div>
-                </div>
-                <div class="form-field">
-                  <div class="form-field__label">Travelers</div>
-                  <div class="form-field__input filled">2 adults</div>
-                </div>
-                <div class="form-field">
-                  <div class="form-field__label">Email</div>
-                  <div class="form-field__input filled" id="field-email">carlremi@gmail.com</div>
                 </div>
               </div>
 
-              <!-- Screen 4: Coupon + price summary -->
-              <div class="screen form-screen" data-screen="4">
-                <div class="form-header">
-                  <div class="form-back">&larr;</div>
-                  <div class="form-title">Review &amp; apply code</div>
-                </div>
-                <div class="form-progress">
-                  <div class="form-progress__dot active"></div>
-                  <div class="form-progress__dot active"></div>
-                  <div class="form-progress__dot active"></div>
-                  <div class="form-progress__dot"></div>
-                </div>
-                <div class="coupon-box applied" id="couponBox">
-                  <div class="coupon-box__label">Promo Code</div>
-                  <div class="coupon-box__input-wrap">
-                    <div class="coupon-box__input" id="couponInput">SEVENSPRINGS</div>
-                    <button class="coupon-box__apply" style="background:var(--trip-planning);">&#10003;</button>
+              <!-- ══ Screen 3: Destination filled + travelers + dates ═ -->
+              <div class="screen" data-screen="3">
+                <div class="widget-chrome">
+                  <div class="widget-topbar">
+                    <div class="widget-brand-row">
+                      <div class="widget-brand-icon">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg>
+                      </div>
+                      <div class="widget-brand-text">
+                        <strong>Book Your Butler</strong>
+                        <small>Your personal trip assistant</small>
+                      </div>
+                    </div>
+                    <div class="widget-steps">
+                      <div class="wstep done">
+                        <div class="wstep-circle"></div>
+                        Service
+                      </div>
+                      <div class="wstep-line done"></div>
+                      <div class="wstep done">
+                        <div class="wstep-circle"></div>
+                        Destination
+                      </div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep active">
+                        <div class="wstep-circle">3</div>
+                        Details
+                      </div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep">
+                        <div class="wstep-circle">4</div>
+                        Contact
+                      </div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep">
+                        <div class="wstep-circle">5</div>
+                        Review
+                      </div>
+                    </div>
                   </div>
-                  <div class="coupon-box__msg" id="couponMsg">
-                    &#10003; Partner discount applied &mdash; 20% off
+                  <div class="widget-body">
+                    <!-- Service + destination summary -->
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <div class="dest-tag" style="background:#EEF2FF; color:var(--indigo);">🕐 8-Hour · $25/day</div>
+                      <div class="dest-tag">🇮🇹 Italy <span class="x">×</span></div>
+                    </div>
+                    <!-- Travelers -->
+                    <div class="widget-section-label">How many travelers?</div>
+                    <div class="travelers-row">
+                      <div class="qty-btn">−</div>
+                      <div class="qty-val">1</div>
+                      <div class="qty-btn">+</div>
+                      <div class="solo-pill">👤 Solo</div>
+                    </div>
+                    <div class="solo-hint">Solo travel — personalized just for you</div>
+                    <!-- Travel dates -->
+                    <div class="widget-section-label">When are you traveling?</div>
+                    <div class="date-toggle">
+                      <div class="date-pill selected">
+                        <span class="date-pill-label">📅 Fixed Dates</span>
+                        <span class="date-pill-sub">I know my exact dates</span>
+                      </div>
+                      <div class="date-pill">
+                        <span class="date-pill-label" style="color:#6B7280;">🕐 Tentative</span>
+                        <span class="date-pill-sub">I'm flexible with dates</span>
+                      </div>
+                    </div>
+                    <div class="date-row">
+                      <div class="date-input"><span>📅</span> May 01, 2026</div>
+                      <div class="date-input"><span>📅</span> May 08, 2026</div>
+                    </div>
+                    <!-- Mix toggle -->
+                    <div class="mix-toggle-row">
+                      <div class="mix-toggle-text">
+                        <strong>Mix service levels per day?</strong>
+                        <small>Customize 8-hour vs 24-hour for each day</small>
+                      </div>
+                      <div class="toggle-switch"></div>
+                    </div>
+                    <div class="widget-cta active" style="margin-top:auto;">Continue →</div>
                   </div>
                 </div>
-                <div class="price-summary">
-                  <div class="price-summary__row"><span>8-Hour Butler &times; 7 days</span><span>$175.00</span></div>
-                  <div class="price-summary__row"><span>Discount (SEVENSPRINGS)</span><span class="discount">&minus; $35.00</span></div>
-                  <div class="price-summary__row"><span>Service fee</span><span>$0.00</span></div>
-                  <div class="price-summary__row total">
-                    <span>Total</span>
-                    <span><span class="strike">$175.00</span>$140.00</span>
-                  </div>
-                </div>
-                <button class="landing__cta" style="width:100%; margin-top:1rem; animation:none;">
-                  Confirm &amp; Pay &rarr;
-                </button>
               </div>
 
-              <!-- Screen 5: Processing payment -->
-              <div class="screen processing-screen" data-screen="5">
-                <div class="spinner"></div>
-                <div class="processing-title">Securing your Butler...</div>
-                <div class="processing-sub">Confirming payment &bull; Assigning advisor</div>
+              <!-- ══ Screen 4: Contact form + promo code ════════════ -->
+              <div class="screen" data-screen="4">
+                <div class="widget-chrome">
+                  <div class="widget-topbar">
+                    <div class="widget-brand-row">
+                      <div class="widget-brand-icon">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg>
+                      </div>
+                      <div class="widget-brand-text">
+                        <strong>Book Your Butler</strong>
+                        <small>Your personal trip assistant</small>
+                      </div>
+                    </div>
+                    <div class="widget-steps">
+                      <div class="wstep done"><div class="wstep-circle"></div>Service</div>
+                      <div class="wstep-line done"></div>
+                      <div class="wstep done"><div class="wstep-circle"></div>Destination</div>
+                      <div class="wstep-line done"></div>
+                      <div class="wstep done"><div class="wstep-circle"></div>Details</div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep active"><div class="wstep-circle">4</div>Contact</div>
+                      <div class="wstep-line"></div>
+                      <div class="wstep"><div class="wstep-circle">5</div>Review</div>
+                    </div>
+                  </div>
+                  <div class="widget-body">
+                    <div class="widget-section-label">Your details</div>
+                    <div class="form-input-row filled">
+                      <span style="font-size:0.7rem;">👤</span>
+                      Alex Pires
+                    </div>
+                    <div class="form-input-row filled">
+                      <span style="font-size:0.7rem;">✉️</span>
+                      apires@gmail.com
+                    </div>
+                    <div class="form-input-row filled">
+                      <span class="phone-flag">🇺🇸</span>
+                      <span class="phone-code">+1</span>
+                      555 123 4567
+                    </div>
+                    <div class="wa-check-row">
+                      <div class="wa-check-circle checked">✓</div>
+                      <span class="wa-check-label">Add WhatsApp for trip updates</span>
+                    </div>
+                    <!-- Promo code — SEVENSPRINGS applied -->
+                    <div class="widget-section-label" style="margin-top:4px;">🎁 Promo Code (Optional)</div>
+                    <div class="promo-row">
+                      <div class="promo-input applied">
+                        <span class="promo-icon">🏷️</span>
+                        SEVENSPRINGS
+                      </div>
+                      <button class="promo-apply-btn success">✓</button>
+                    </div>
+                    <div class="promo-success-msg">✓ Partner discount applied — 20% off</div>
+                    <!-- Order summary -->
+                    <div class="order-summary" style="margin-top:4px;">
+                      <div class="order-summary-label">Order Summary</div>
+                      <div class="order-row"><span>8 days × 1 country</span><span>$200.00</span></div>
+                      <div class="order-row"><span>Discount (SEVENSPRINGS)</span><span class="discount-badge">−$40.00</span></div>
+                      <div class="order-row total">
+                        <span>Total</span>
+                        <span><span class="strike">$200</span> $160.00</span>
+                      </div>
+                    </div>
+                    <div class="widget-cta active" style="margin-top:auto;">Continue to checkout — $160.00 →</div>
+                  </div>
+                </div>
               </div>
 
-              <!-- Screen 6: Confirmation -->
+              <!-- ══ Screen 5: Processing ═══════════════════════════ -->
+              <div class="screen" data-screen="5">
+                <div class="processing-screen">
+                  <div class="spinner"></div>
+                  <div class="proc-title">Securing your Butler&hellip;</div>
+                  <div class="proc-sub">Confirming payment<br>Matching your advisor</div>
+                  <div class="proc-dots">
+                    <div class="proc-dot"></div>
+                    <div class="proc-dot"></div>
+                    <div class="proc-dot"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ══ Screen 6: Confirmation ══════════════════════════ -->
               <div class="screen confirm-screen" data-screen="6">
-                <div class="confirm-check">&#10003;</div>
+                <div class="confirm-check">✓</div>
                 <div class="confirm-title">You're booked!</div>
-                <div class="confirm-sub">Your Butler, <strong>Priya</strong>, is on the way. We'll ping you on WhatsApp in the next 4 minutes.</div>
-                <div class="confirm-ref">Ref: BB-2026-KY8H42</div>
-                <button class="confirm-next">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                  Open WhatsApp
+                <div class="confirm-sub">Your Butler has been assigned. Expect a WhatsApp message within 4 minutes.</div>
+                <div class="confirm-detail-box">
+                  <div class="confirm-detail-row"><span>Service</span><strong>8-Hour Butler</strong></div>
+                  <div class="confirm-detail-row"><span>Destination</span><strong>Italy</strong></div>
+                  <div class="confirm-detail-row"><span>Dates</span><strong>May 1–8, 2026</strong></div>
+                  <div class="confirm-detail-row"><span>Total paid</span><strong>$160.00</strong></div>
+                </div>
+                <div class="confirm-ref">Ref: BB-2026-IT-A42X</div>
+                <button class="wa-cta-btn">
+                  <div class="wa-logo">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  </div>
+                  Open WhatsApp →
                 </button>
               </div>
 
-              <!-- Screen 7: WhatsApp handoff -->
-              <div class="screen whatsapp-screen" data-screen="7">
-                <div class="wa-bg"></div>
+              <!-- ══ Screen 7: WhatsApp handoff ═════════════════════ -->
+              <div class="screen wa-screen" data-screen="7">
                 <div class="wa-header">
-                  <div style="font-size:0.75rem; margin-right:0.2rem;">&larr;</div>
-                  <div class="wa-avatar">P</div>
-                  <div class="wa-header__meta">
-                    <div class="wa-header__name">Butler Priya &bull; VELTM</div>
-                    <div class="wa-header__status">online</div>
+                  <div class="wa-back">←</div>
+                  <div class="wa-avatar">B</div>
+                  <div>
+                    <div class="wa-name">Butler · VELTM</div>
+                    <div class="wa-status">online</div>
                   </div>
-                  <div style="font-size:1rem;">&#9742;</div>
+                  <div class="wa-icons">📞 ⋮</div>
                 </div>
                 <div class="wa-body">
-                  <div class="wa-date">Today</div>
+                  <div class="wa-date-chip">Today, May 1</div>
                   <div class="wa-msg wa-msg--butler">
-                    Hi Carl! I'm Priya, your Butler for Kyoto. I've pulled up your trip &mdash; Oct 14&ndash;21, 2 travelers.
-                    <span class="wa-msg__time">9:42 AM &#10003;&#10003;</span>
+                    Hi Alex! 👋 I'm your VELTM Butler for Italy, May 1–8. Booking confirmed — ref BB-2026-IT-A42X.
+                    <span class="wa-time">Just now ✓✓</span>
                   </div>
                   <div class="wa-msg wa-msg--butler">
-                    Nice pick on the SEVENSPRINGS code &#128521; <br>Quick q: temples + tea ceremony vibe, or more food &amp; nightlife?
-                    <span class="wa-msg__time">9:42 AM &#10003;&#10003;</span>
+                    Nice save with the SEVENSPRINGS code 😄 Are you heading to a specific city, or want me to plan a multi-city route?
+                    <span class="wa-time">Just now ✓✓</span>
                   </div>
                   <div class="wa-msg wa-msg--user">
-                    Mix of both! Definitely want to eat our way through
-                    <span class="wa-msg__time">9:44 AM &#10003;&#10003;</span>
+                    Rome + Amalfi coast please!
+                    <span class="wa-time">Just now ✓✓</span>
                   </div>
                   <div class="wa-msg wa-msg--butler">
-                    Love it. I'll have a full itinerary + restaurant list in your inbox by tonight. Anything on the no-go list (allergies, won't-eat, budget ceiling)?
-                    <span class="wa-msg__time">9:45 AM &#10003;&#10003;</span>
+                    Perfect combo. I'll have your full day-by-day itinerary ready in ~4 hours. Any dietary needs or must-do experiences?
+                    <span class="wa-time">Just now ✓✓</span>
                   </div>
                 </div>
-                <div class="wa-input">
-                  <div class="wa-input-field">Type a message...</div>
-                  <div class="wa-send">&uarr;</div>
+                <div class="wa-input-bar">
+                  <div class="wa-input-box">Type a message...</div>
+                  <div class="wa-send-btn">↑</div>
                 </div>
               </div>
 
-            </div>
-          </div>
-          <button class="replay-btn" id="replayBtn">&#8634; Replay demo</button>
+            </div><!-- /phone__screen -->
+          </div><!-- /phone -->
+          <button class="replay-btn" id="replayBtn">↺ Replay demo</button>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Trust signals -->
   <section class="section--sm section--tint">
     <div class="container">
       <div class="feature-badges">
-        <div class="feature-badge"><div class="feature-badge__icon">&#127758;</div><div><strong>195+ Countries</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Global coverage</span></div></div>
-        <div class="feature-badge"><div class="feature-badge__icon">&#9201;</div><div><strong>24/7 Support</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Always available</span></div></div>
-        <div class="feature-badge"><div class="feature-badge__icon">&#128100;</div><div><strong>Human First</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Real people, real expertise</span></div></div>
-        <div class="feature-badge"><div class="feature-badge__icon">&#128274;</div><div><strong>No Hidden Fees</strong><br><span style="font-size:0.78rem; color:var(--body-gray);">Transparent pricing</span></div></div>
+        <div class="feature-badge"><div class="feature-badge__icon">🌐</div><div><strong>195+ Countries</strong><br><span style="font-size:0.78rem;color:var(--body-gray);">Global coverage</span></div></div>
+        <div class="feature-badge"><div class="feature-badge__icon">⏱</div><div><strong>4 min avg response</strong><br><span style="font-size:0.78rem;color:var(--body-gray);">Human Butler, always on</span></div></div>
+        <div class="feature-badge"><div class="feature-badge__icon">👤</div><div><strong>Human First</strong><br><span style="font-size:0.78rem;color:var(--body-gray);">Real people, real expertise</span></div></div>
+        <div class="feature-badge"><div class="feature-badge__icon">🔒</div><div><strong>No Hidden Fees</strong><br><span style="font-size:0.78rem;color:var(--body-gray);">Stripe-secured checkout</span></div></div>
       </div>
     </div>
   </section>
@@ -823,7 +1483,7 @@
       <div class="stats">
         <div class="stat"><div class="stat__number">4 min</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">avg response time</div></div>
         <div class="stat"><div class="stat__number">95%</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">itinerary satisfaction</div></div>
-        <div class="stat"><div class="stat__number">150+</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">countries covered</div></div>
+        <div class="stat"><div class="stat__number">195+</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">countries covered</div></div>
         <div class="stat"><div class="stat__number">200K+</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">options scanned per trip</div></div>
       </div>
     </div>
@@ -832,61 +1492,61 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>&copy; 2026 VELTM Tours. Hero test &mdash; V3 Phone Mockup (live signup flow).</span>
+        <span>&copy; 2026 VELTM Tours. Hero test &mdash; V3 Phone Mockup.</span>
         <span>Butler Button &mdash; Own Your Journey<span class="tm">&trade;</span></span>
       </div>
     </div>
   </footer>
 
   <script>
-    // ── Animated signup flow driver ──────────────────────────
     (function(){
-      var screens = document.querySelectorAll('.screen');
+      var screens   = document.querySelectorAll('.screen');
       var stepItems = document.querySelectorAll('#stepList li');
       var replayBtn = document.getElementById('replayBtn');
 
-      // Timings (ms) for each screen — total ~26s then loop
+      /* Timings for each screen — total ~27 s then loops */
       var timeline = [
-        { screen: 1, duration: 3200 },  // Landing with pulsing CTA + tap
-        { screen: 2, duration: 3400 },  // Modal slides up with plan selection
-        { screen: 3, duration: 3800 },  // Form fills with trip details + gmail
-        { screen: 4, duration: 4200 },  // Coupon SEVENSPRINGS applied, 20% off
-        { screen: 5, duration: 2200 },  // Processing payment
-        { screen: 6, duration: 3400 },  // Booked! Open WhatsApp
-        { screen: 7, duration: 5800 }   // WhatsApp chat with Priya
+        { screen: 1, duration: 3500 },  // Landing with pulsing tap
+        { screen: 2, duration: 3200 },  // Service selection — 8-Hour active, destination search
+        { screen: 3, duration: 3800 },  // Italy + Solo + May 1–8 + mix toggle
+        { screen: 4, duration: 4500 },  // Contact filled, SEVENSPRINGS applied, order summary
+        { screen: 5, duration: 2400 },  // Processing spinner
+        { screen: 6, duration: 4000 },  // Booked! Open WhatsApp
+        { screen: 7, duration: 6000 }   // WhatsApp Butler conversation
       ];
 
       var currentIndex = 0;
       var timer = null;
 
-      function show(idx){
-        screens.forEach(function(s){ s.removeAttribute('data-active'); });
-        stepItems.forEach(function(li){ li.removeAttribute('data-active'); });
+      function show(idx) {
+        screens.forEach(function(s) { s.removeAttribute('data-active'); });
+        stepItems.forEach(function(li) { li.removeAttribute('data-active'); });
         var step = timeline[idx];
-        var scr = document.querySelector('[data-screen="'+step.screen+'"]');
-        if (scr) scr.setAttribute('data-active','true');
-        var li = document.querySelector('#stepList li[data-step="'+step.screen+'"]');
-        if (li) li.setAttribute('data-active','true');
+        var scr  = document.querySelector('[data-screen="' + step.screen + '"]');
+        if (scr) scr.setAttribute('data-active', 'true');
+        var li   = document.querySelector('#stepList li[data-step="' + step.screen + '"]');
+        if (li) li.setAttribute('data-active', 'true');
       }
 
-      function advance(){
+      function advance() {
         show(currentIndex);
-        timer = setTimeout(function(){
+        var dur = timeline[currentIndex].duration;
+        timer = setTimeout(function() {
           currentIndex = (currentIndex + 1) % timeline.length;
           advance();
-        }, timeline[currentIndex].duration);
+        }, dur);
       }
 
-      replayBtn.addEventListener('click', function(){
+      replayBtn.addEventListener('click', function() {
         clearTimeout(timer);
         currentIndex = 0;
         advance();
       });
 
-      // Start when phone is visible
+      /* Start when phone enters viewport */
       if ('IntersectionObserver' in window) {
-        var obs = new IntersectionObserver(function(entries){
-          entries.forEach(function(e){
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
             if (e.isIntersecting && !timer) {
               advance();
               obs.unobserve(e.target);
