@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butler Button — Full Marketing Audit | Phase 3 Applied Skill Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --indigo: #4F46E5;
+      --indigo-dark: #3730A3;
+      --purple: #7C3AED;
+      --teal: #0D9488;
+      --indigo-tint: #EEF2FF;
+      --near-black: #09090B;
+      --white: #FFFFFF;
+      --off-white: #FAFAFA;
+      --gray-50: #F9FAFB;
+      --gray-100: #F3F4F6;
+      --gray-200: #E5E7EB;
+      --gray-300: #D1D5DB;
+      --gray-400: #9CA3AF;
+      --gray-500: #6B7280;
+      --gray-600: #4B5563;
+      --gray-700: #374151;
+      --gray-800: #1F2937;
+      --gradient: linear-gradient(135deg, #4F46E5, #7C3AED);
+      --green: #059669;
+      --green-light: #D1FAE5;
+      --red: #DC2626;
+      --red-light: #FEE2E2;
+      --amber: #D97706;
+      --amber-light: #FEF3C7;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+      --radius: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-display: Georgia, 'Times New Roman', serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --max-w: 1200px;
+      --max-w-narrow: 800px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--gray-700);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0.75rem 2rem;
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-size: 1.05rem;
+      font-weight: 700; color: var(--indigo); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.25rem; list-style: none; flex-wrap: wrap; }
+    .nav-links a {
+      font-size: 0.75rem; font-weight: 500; color: var(--gray-500);
+      text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--indigo); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #09090B 0%, #1a1040 60%, #0f172a 100%);
+      color: white; padding: 5rem 2rem 4rem;
+    }
+    .hero-inner { max-width: var(--max-w-narrow); margin: 0 auto; }
+    .hero-badge {
+      display: inline-block; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: #a78bfa; background: rgba(167,139,250,0.12);
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 99px; padding: 0.3rem 0.9rem; margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 700; line-height: 1.15;
+      color: white; margin-bottom: 1.25rem;
+    }
+    .hero-sub {
+      font-size: 1.15rem; color: rgba(255,255,255,0.7);
+      line-height: 1.7; margin-bottom: 2rem; max-width: 640px;
+    }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 2rem;
+      font-size: 0.82rem; color: rgba(255,255,255,0.5);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* SCORECARD */
+    .scorecard {
+      background: var(--gray-50); border-bottom: 1px solid var(--gray-200);
+      padding: 3rem 2rem;
+    }
+    .scorecard-inner { max-width: var(--max-w); margin: 0 auto; }
+    .scorecard-title {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--gray-400); margin-bottom: 1.5rem;
+    }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .score-card {
+      background: white; border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md); padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .score-label {
+      font-size: 0.78rem; font-weight: 600; color: var(--gray-500);
+      margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .score-number {
+      font-size: 2.2rem; font-weight: 800; line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+    .score-bar-wrap {
+      height: 4px; background: var(--gray-100); border-radius: 99px; overflow: hidden;
+    }
+    .score-bar { height: 100%; border-radius: 99px; }
+    .score-note { font-size: 0.72rem; color: var(--gray-400); margin-top: 0.5rem; }
+    .s-green { color: var(--green); }
+    .s-green .score-bar { background: var(--green); }
+    .s-amber { color: var(--amber); }
+    .s-amber .score-bar { background: var(--amber); }
+    .s-red { color: var(--red); }
+    .s-red .score-bar { background: var(--red); }
+
+    /* MAIN LAYOUT */
+    .page { max-width: var(--max-w); margin: 0 auto; padding: 4rem 2rem; }
+    .section { margin-bottom: 5rem; }
+    .section-header { margin-bottom: 2rem; }
+    .section-num {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--indigo); margin-bottom: 0.5rem;
+    }
+    .section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      color: var(--near-black); line-height: 1.25; margin-bottom: 0.75rem;
+    }
+    .section-intro {
+      font-size: 1.05rem; color: var(--gray-600); max-width: 660px;
+      line-height: 1.7; border-left: 3px solid var(--indigo);
+      padding-left: 1rem; margin-bottom: 2rem;
+    }
+
+    /* FINDING CARDS */
+    .finding-grid { display: grid; gap: 1.25rem; }
+    .finding {
+      border: 1px solid var(--gray-200); border-radius: var(--radius-md);
+      background: white; overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .finding-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 1.25rem; border-bottom: 1px solid var(--gray-100);
+    }
+    .finding-verdict {
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 0.2rem 0.65rem; border-radius: 99px;
+    }
+    .verdict-win { background: var(--green-light); color: #065F46; }
+    .verdict-gap { background: var(--amber-light); color: #92400E; }
+    .verdict-fix { background: var(--red-light); color: #991B1B; }
+    .finding-title { font-size: 0.95rem; font-weight: 700; color: var(--near-black); }
+    .finding-skill {
+      margin-left: auto; font-size: 0.68rem; color: var(--gray-400);
+      font-weight: 500; white-space: nowrap;
+    }
+    .finding-body { padding: 1.25rem; }
+    .finding-body p { font-size: 0.92rem; color: var(--gray-600); margin-bottom: 0.75rem; line-height: 1.65; }
+    .finding-body p:last-child { margin-bottom: 0; }
+    .finding-body .evidence {
+      background: var(--gray-50); border-left: 3px solid var(--gray-300);
+      padding: 0.75rem 1rem; border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 0.85rem; color: var(--gray-600); font-style: italic; margin: 0.75rem 0;
+    }
+    .finding-body .rec {
+      background: var(--indigo-tint);
+      border-left: 3px solid var(--indigo);
+      padding: 0.75rem 1rem; border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 0.85rem; color: var(--indigo-dark); margin-top: 0.75rem;
+    }
+    .finding-body .rec strong { color: var(--indigo); }
+
+    /* VARIANT TABLE */
+    .variant-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 1.5rem 0; }
+    .variant-table th {
+      background: var(--gray-800); color: white;
+      padding: 0.65rem 1rem; text-align: left;
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .variant-table td {
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--gray-100);
+      vertical-align: top; line-height: 1.5;
+    }
+    .variant-table tr:hover td { background: var(--gray-50); }
+    .winner-row td { background: #ECFDF5 !important; }
+    .winner-badge {
+      display: inline-block; background: var(--green); color: white;
+      font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 0.15rem 0.5rem; border-radius: 99px;
+      margin-left: 0.4rem;
+    }
+    .tag {
+      display: inline-block; font-size: 0.68rem; font-weight: 600;
+      padding: 0.15rem 0.55rem; border-radius: 99px; margin: 0.1rem;
+    }
+    .tag-green { background: var(--green-light); color: #065F46; }
+    .tag-amber { background: var(--amber-light); color: #92400E; }
+    .tag-red { background: var(--red-light); color: #991B1B; }
+    .tag-blue { background: var(--indigo-tint); color: var(--indigo-dark); }
+
+    /* PRIORITY MATRIX */
+    .priority-list { display: grid; gap: 1rem; }
+    .priority-item {
+      display: grid; grid-template-columns: auto 1fr auto;
+      align-items: start; gap: 1.25rem;
+      padding: 1.25rem; border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md); background: white;
+    }
+    .priority-rank {
+      font-size: 1.6rem; font-weight: 800; color: var(--gray-200);
+      line-height: 1; padding-top: 0.1rem;
+    }
+    .priority-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--near-black); margin-bottom: 0.3rem; }
+    .priority-content p { font-size: 0.87rem; color: var(--gray-600); line-height: 1.6; }
+    .priority-effort {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 0.25rem 0.65rem; border-radius: 99px;
+      white-space: nowrap; margin-top: 0.1rem;
+    }
+    .effort-low { background: var(--green-light); color: #065F46; }
+    .effort-med { background: var(--amber-light); color: #92400E; }
+    .effort-high { background: var(--red-light); color: #991B1B; }
+
+    /* COMPARISON TABLES */
+    .compare-wrap { overflow-x: auto; }
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    .compare-table th {
+      background: var(--gray-800); color: white; padding: 0.7rem 1rem;
+      text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .compare-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--gray-100); }
+    .check { color: var(--green); font-weight: 700; }
+    .cross { color: var(--red); }
+    .partial { color: var(--amber); }
+
+    /* DIVIDER */
+    .divider {
+      border: none; border-top: 1px solid var(--gray-200);
+      margin: 3rem 0;
+    }
+
+    /* CALLOUT */
+    .callout {
+      border-radius: var(--radius-md); padding: 1.5rem 1.75rem;
+      margin: 1.5rem 0;
+    }
+    .callout-indigo { background: var(--indigo-tint); border: 1px solid #C7D2FE; }
+    .callout-indigo h4 { color: var(--indigo); font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .callout-indigo p, .callout-indigo li { font-size: 0.88rem; color: var(--indigo-dark); line-height: 1.65; }
+    .callout-amber { background: var(--amber-light); border: 1px solid #FDE68A; }
+    .callout-amber h4 { color: #92400E; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .callout-amber p, .callout-amber li { font-size: 0.88rem; color: #78350F; line-height: 1.65; }
+    .callout ul { padding-left: 1.25rem; margin-top: 0.5rem; }
+    .callout li { margin-bottom: 0.3rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--near-black); color: rgba(255,255,255,0.5);
+      padding: 2.5rem 2rem; text-align: center; font-size: 0.82rem;
+    }
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    @media (max-width: 768px) {
+      .score-grid { grid-template-columns: repeat(2, 1fr); }
+      .priority-item { grid-template-columns: auto 1fr; }
+      .priority-effort { display: none; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .page { padding: 2.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/veltm-butler-button/">Butler Button</a>
+    <ul class="nav-links">
+      <li><a href="#scorecard">Scorecard</a></li>
+      <li><a href="#brand">Brand</a></li>
+      <li><a href="#copy">Copy</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#conversion">Conversion</a></li>
+      <li><a href="#proof">Social Proof</a></li>
+      <li><a href="#variants">Variants</a></li>
+      <li><a href="#lifecycle">Lifecycle</a></li>
+      <li><a href="#competitive">Competitive</a></li>
+      <li><a href="#digital">Digital</a></li>
+      <li><a href="#priorities">Priorities</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Phase 3 · Applied Skill Assessment</div>
+    <h1>Butler Button — Full Marketing Audit</h1>
+    <p class="hero-sub">
+      A MECE assessment of all 41 pages across butlerbutton.co, applying the complete 391-skill taxonomy
+      extracted from 1,206 pages of Ogilvy, Bly, Benson, Schwerin, the Swipe File, and the Frequency textbook.
+      Every finding is anchored to a named principle, scored, and paired with a specific action.
+    </p>
+    <div class="hero-meta">
+      <span>41 pages audited</span>
+      <span>12 marketing disciplines</span>
+      <span>391 skills applied</span>
+      <span>April 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCORECARD -->
+<section class="scorecard" id="scorecard">
+  <div class="scorecard-inner">
+    <p class="scorecard-title">Overall Scorecard — 12 Disciplines</p>
+    <div class="score-grid">
+
+      <div class="score-card s-green">
+        <div class="score-label">Brand &amp; Positioning</div>
+        <div class="score-number">78<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:78%"></div></div>
+        <div class="score-note">Strong counter-positioning; tagline too abstract</div>
+      </div>
+
+      <div class="score-card s-amber">
+        <div class="score-label">Headline Writing</div>
+        <div class="score-number">68<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:68%"></div></div>
+        <div class="score-note">V2/V5 variants excel; hub headlines underdeliver</div>
+      </div>
+
+      <div class="score-card s-green">
+        <div class="score-label">Body Copy &amp; Persuasion</div>
+        <div class="score-number">82<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:82%"></div></div>
+        <div class="score-note">Scenario copy is exceptional; PAS structure used well</div>
+      </div>
+
+      <div class="score-card s-green">
+        <div class="score-label">Offer &amp; Pricing Architecture</div>
+        <div class="score-number">85<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:85%"></div></div>
+        <div class="score-note">Best strength; anchoring and value math are excellent</div>
+      </div>
+
+      <div class="score-card s-red">
+        <div class="score-label">Conversion &amp; Direct Response</div>
+        <div class="score-number">52<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:52%"></div></div>
+        <div class="score-note">No urgency, no email capture, weak CTA hierarchy</div>
+      </div>
+
+      <div class="score-card s-red">
+        <div class="score-label">Social Proof &amp; Trust</div>
+        <div class="score-number">44<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:44%"></div></div>
+        <div class="score-note">Biggest gap: stats only, no named/photo testimonials</div>
+      </div>
+
+      <div class="score-card s-amber">
+        <div class="score-label">Variant Testing Design</div>
+        <div class="score-number">72<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:72%"></div></div>
+        <div class="score-note">15 variants built; no declared winner deployed</div>
+      </div>
+
+      <div class="score-card s-amber">
+        <div class="score-label">Customer Lifecycle &amp; Referral</div>
+        <div class="score-number">63<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:63%"></div></div>
+        <div class="score-note">Referral mechanics articulated; no nurture sequence</div>
+      </div>
+
+      <div class="score-card s-green">
+        <div class="score-label">Competitive Positioning</div>
+        <div class="score-number">80<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+        <div class="score-note">4 comparison pages are a major strategic asset</div>
+      </div>
+
+      <div class="score-card s-amber">
+        <div class="score-label">Digital &amp; Page Architecture</div>
+        <div class="score-number">61<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:61%"></div></div>
+        <div class="score-note">Internal docs publicly exposed; funnel not unified</div>
+      </div>
+
+      <div class="score-card s-green">
+        <div class="score-label">Frequency &amp; Media Readiness</div>
+        <div class="score-number">74<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:74%"></div></div>
+        <div class="score-note">Message variety built; no paid channel assets yet</div>
+      </div>
+
+      <div class="score-card s-green">
+        <div class="score-label">Regional &amp; Niche Depth</div>
+        <div class="score-number">79<span style="font-size:1rem;opacity:.5">/100</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:79%"></div></div>
+        <div class="score-note">India/Zanzibar pages are best-in-class; UK strong</div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:2rem;padding:1.25rem;background:white;border:1px solid var(--gray-200);border-radius:var(--radius-md);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+      <div>
+        <div class="score-label" style="margin-bottom:0.3rem">Composite Score</div>
+        <div style="font-size:2.8rem;font-weight:800;color:var(--indigo);line-height:1;">71<span style="font-size:1.2rem;opacity:.5">/100</span></div>
+      </div>
+      <div style="flex:1;min-width:260px;font-size:0.88rem;color:var(--gray-600);line-height:1.65;">
+        Butler Button enters launch in <strong style="color:var(--near-black)">strong strategic shape</strong> with exceptional pricing architecture and a genuine positioning moat.
+        The primary drag on score is a <strong style="color:var(--red)">near-total absence of authentic social proof</strong> and a <strong style="color:var(--red)">direct-response infrastructure gap</strong>
+        (no urgency, no email capture, no lead magnet, no nurture sequence). These are correctable before April 21.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="page">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 1: BRAND & POSITIONING
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="brand">
+    <div class="section-header">
+      <p class="section-num">01 — Brand Strategy &amp; Positioning</p>
+      <h2>The Brand Case: Sharp Where It Counts, Vague Where It Matters</h2>
+      <p class="section-intro">
+        Ogilvy's foundational principle: positioning is the most important decision in advertising.
+        "What the product does and who it is for." Butler Button has a defensible position — but
+        the tagline and master headline leave money on the table.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Counter-Positioning Against Chatbots Is Genuinely Distinctive</span>
+          <span class="finding-skill">Ogilvy #2 · Positioning</span>
+        </div>
+        <div class="finding-body">
+          <p>"100% human first contact. Every time. No automated chatbot on any channel" is not a feature — it is a positioning stake driven into the single biggest anxiety in the travel-tech moment (2026: everyone suspects they're talking to an LLM). This is Dove soap's moisturizer positioning applied to travel: define exactly what you are and who you are for, and never waver.</p>
+          <div class="evidence">"Not a chatbot. A real person who already knows your trip." — Concierge hub page. Repeated across all 5 concierge variants. Consistent with Ogilvy's law: the brand with the most sharply defined personality wins the largest market share.</div>
+          <div class="rec"><strong>Keep and amplify.</strong> This claim belongs in the H1 of the homepage — not in the fourth section. Lead with the positioning stake, not with the tagline. "100% human, first contact" should appear within 3 seconds of page load.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">"Own Your Journey™" — An Aspiration That Promises Nothing</span>
+          <span class="finding-skill">Ogilvy #31 · Headlines That Promise a Benefit</span>
+        </div>
+        <div class="finding-body">
+          <p>Ogilvy tested thousands of headlines and documented one consistent law: headlines that promise a specific benefit outperform aspirational/abstract headlines every time. "Own Your Journey™" is pure aspiration — it makes no promise, selects no audience, and delivers no reason to keep reading. It is the advertising equivalent of "Just Do It" — powerful only after decades of brand-building spend that hasn't happened yet.</p>
+          <div class="evidence">"Five times more people read the headline than the body copy. If your headline doesn't sell, you've wasted 80% of your money." — Ogilvy #30. The homepage H1 is the most expensive real estate on the site.</div>
+          <p>The actual compelling promise is already written — it's buried in the subhead: <em>"The world's most accessible personal travel concierge."</em> That is specific, competitive, and benefit-laden. It should be the headline.</p>
+          <div class="rec"><strong>Test a benefit headline against "Own Your Journey™."</strong> Candidate: <em>"The personal travel concierge that's always human. Starting at $25 a day."</em> Keep "Own Your Journey™" as a brand tagline in the footer — don't burn it as the primary conversion headline.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Three-Product Architecture Is Clear and Non-Competing</span>
+          <span class="finding-skill">Bly #4 · Selling in Print — Segment Audience</span>
+        </div>
+        <div class="finding-body">
+          <p>Trip Planning (pre-trip), Concierge (in-trip), and Advisor Program (B2B) are MECE segments that serve different moments in the customer journey. The hub page correctly positions them as three distinct products with distinct value propositions, entry prices, and audiences. This prevents cognitive overload and allows each product landing page to close a single persona.</p>
+          <div class="evidence">Trip Planning $25/country (solves planning pain) | Concierge $25/day (solves in-trip anxiety) | Advisor Program (B2B revenue multiplier). Each has a dedicated persona, headline variant series, and CTA.</div>
+          <div class="rec"><strong>Maintain separation.</strong> The risk is cross-pollination — currently the homepage presents all three at equal visual weight. Consider a persona-detection entry point: "Planning a trip?" / "Already traveling?" / "A travel advisor?" that routes to the right product.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">Brand Personality Is Inconsistent Across Page Types</span>
+          <span class="finding-skill">Ogilvy #3 · Brand Image — Consistent Personality</span>
+        </div>
+        <div class="finding-body">
+          <p>The core product pages write in an authoritative, direct, earned-confidence tone ("The founder principle. Not a marketing claim."). But the showcase pages pivot hard toward luxury credentialing ("Royal families of Saudi Arabia and UAE, private aviation, heads of state"). These are two different brand personalities: accessible-premium vs. ultra-high-net-worth. Both are legitimate but they signal different price expectations and attract different buyers — and they live two clicks apart.</p>
+          <p>Ogilvy's law: 95% of all advertising is created ad hoc with no consistent image year to year. The result is erosion of brand equity. Butler Button is not yet a year old and already has a brand personality split.</p>
+          <div class="rec"><strong>Resolve the persona stack.</strong> The Quintessentially comparison page and the Showcase v2/v3 royal/UHNW credentials belong behind a separate "About VELTM" page — not on the primary Butler Button conversion path, where $25/day is the lead anchor.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 2: HEADLINE WRITING
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="copy">
+    <div class="section-header">
+      <p class="section-num">02 — Headline Writing</p>
+      <h2>Headline-by-Headline Assessment: The Variant Series vs. The Hub Pages</h2>
+      <p class="section-intro">
+        Ogilvy documented five times more people read the headline than body copy. Bly catalogued
+        over 30 headline formulas. The variant pages (v1–v5) across all three products contain some
+        of the best copy on the site — while the hub pages and FAQ squander the most valuable real estate.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Best Headline on the Site: "The Concierge Your Parents Couldn't Afford. Starting at $25/Country."</span>
+          <span class="finding-skill">Swipe #42 · Price Anchoring + Ogilvy #32 · Inject News</span>
+        </div>
+        <div class="finding-body">
+          <p>Trip Planning v2 leads with a headline that does three things simultaneously: (1) anchors against a familiar expensive alternative the reader already has in mind, (2) delivers the price in the headline itself (Ogilvy #53: include the price), and (3) signals class disruption — "accessible" as an emotional reward, not just a feature. This is Bly's "Desire-Channeling Headline" formula (Swipe #45) executed at a high level.</p>
+          <div class="evidence">"For decades, personalized trip planning was a privilege — reserved for corporate travel managers, wealthy clients, and those with the right credit card tier." — The setup perfectly activates the "why now" mechanism that Benson calls the "reason-why" close.</div>
+          <div class="rec"><strong>Test this as the homepage headline or hero H1.</strong> It is more specific, more benefit-laden, and more emotionally charged than "Own Your Journey™." Track click-through to pricing page as the primary test metric.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Second-Best: "Know Your Trip Is Good Before You Leave."</span>
+          <span class="finding-skill">Swipe #25 · Fear-Based Uncertainty Hook + Bly #2 · Headline Formula</span>
+        </div>
+        <div class="finding-body">
+          <p>Trip Planning v5's headline activates the specific pre-departure anxiety that is the primary emotion driving trip planning purchases — the fear of arriving at a destination with a bad plan. This is Bly's "fear-based uncertainty hook" — it doesn't exploit fear, it names the anxiety and immediately implies resolution. It also uses Ogilvy's technique of "selecting your audience in the headline" (#38): it speaks to the planner who cares about getting it right, not the spontaneous traveler.</p>
+          <div class="evidence">"4.8/5 confidence pre-departure vs 3.1/5 when self-planning. That gap is the value of one human review." — The proof point is perfectly matched to the headline's emotional premise. Ogilvy #34: use specific facts and figures.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">FAQ Hero Headline: "FAQ — Everything You Need to Know" Is Wasted Real Estate</span>
+          <span class="finding-skill">Ogilvy #31 · Headlines Must Promise a Benefit</span>
+        </div>
+        <div class="finding-body">
+          <p>The FAQ page is one of the highest-intent pages on any website — people who reach it are actively evaluating purchase. Ogilvy's law: the headline is read by 5x more people than body copy. A FAQ headline that just says "FAQ" converts at a fraction of a benefit-led headline. Every question answered in the FAQ represents a purchase objection — the headline should signal "your questions get answered here."</p>
+          <div class="rec"><strong>Rewrite to:</strong> <em>"Every Question Answered. No Hidden Clauses."</em> — matches the existing subhead ("Clear answers. No jargon.") while leading with the value promise rather than the format label. Alternatively: <em>"Got Questions? We've Got Specific Answers."</em></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">Ogilvy Rule #33 Violated: Brand Name Missing from Most Headlines</span>
+          <span class="finding-skill">Ogilvy #33 · Include Brand Name in Headline</span>
+        </div>
+        <div class="finding-body">
+          <p>Ogilvy documented that including the brand name in the headline increases brand recall in print advertising. In direct-to-consumer digital contexts, this principle translates to: the headline should reinforce brand association, not just deliver a benefit. Scanning through all 41 pages, only the comparison pages (vs. Amex, vs. Quintessentially) include "Butler Button" in the headline — which is exactly where brand name matters least (because the page title already contains it). The primary product pages — where brand-building actually happens — almost never put the name in the H1.</p>
+          <div class="rec"><strong>Experiment with name-in-headline on concierge variants:</strong> <em>"Butler Button: A Real Person Who Already Knows Your Trip. From $25/Day."</em></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Advisor v5 Hero Is Best Story-Lead Headline in the Entire Site</span>
+          <span class="finding-skill">Swipe #1 · Story-Driven Headline + Swipe #9 · PAS Structure</span>
+        </div>
+        <div class="finding-body">
+          <p>"The Tool Your Clients Will Brag About" is memorable, specific about the outcome (bragging = social proof as a product feature), and directly addresses the advisor's deepest motivation — being recognized by clients. The body copy that follows is the best application of Problem-Agitate-Solve (PAS) in the entire site: the midnight Lisbon rescue story activates the problem (client abandonment fear), agitates it (flights cancel at 11pm), then solves it with a specific resolution time (14 minutes) and measurable result (referral next morning).</p>
+          <div class="evidence">"At 11pm in Lisbon, her flight was cancelled. We had her rebooked in 14 minutes. The referral came the next morning." — This is textbook Swipe File #38: Agitation Through Vivid Scenario.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 3: BODY COPY & PERSUASION
+  ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <p class="section-num">03 — Body Copy &amp; Persuasion Mechanics</p>
+      <h2>Copy Quality Assessment: Exceptional Floors, Significant Ceilings</h2>
+      <p class="section-intro">
+        Bly's research: long copy outperforms short copy for considered purchases, and every
+        piece of copy should answer one question — "why should I buy this now?" The scenario-based
+        copy on the concierge pages is genuinely exceptional. Three other patterns are systematically missing.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Scenario Copy (Bangkok/Rome/Kyoto) Is World-Class Persuasion Writing</span>
+          <span class="finding-skill">Swipe #38 · Agitation Through Vivid Scenario + Bly's PAS</span>
+        </div>
+        <div class="finding-body">
+          <p>The three "real scenario" vignettes — Bangkok 11pm flight cancelled, Rome Day 3 reservation gone, Kyoto morning local insight — are among the best copy on the site. Each follows the Swipe File's scenario-agitation formula: specific time (11pm), specific place (Bangkok), specific problem (flight cancelled), specific resolution (rebooked with hotel in 40 min). Specificity is credibility (Swipe #11: "Specificity as Credibility"). The precision of "40 minutes" and "6 minutes" does more to prove the product than any feature list.</p>
+          <div class="evidence">Concierge v1: "Bangkok, 11pm. Her flight was cancelled. We had her rebooked, with a hotel, in under 40 minutes." | Rome: "The restaurant closed despite the confirmed reservation. We found an alternative in 6 minutes."</div>
+          <div class="rec"><strong>Promote this copy higher on every page.</strong> Currently the scenarios appear below-the-fold on most pages. On concierge.v1, these scenarios should be the second element after the hero — they are the most converting copy on the page.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">No "Reason Why" Advertising — Features Listed Without Causal Explanation</span>
+          <span class="finding-skill">Swipe #18 · "Reason Why" Advertising + Bly #4 · Persuasion Techniques</span>
+        </div>
+        <div class="finding-body">
+          <p>Claude Hopkins and Swipe File #18 document the power of "reason why" advertising — telling readers not just what you offer, but why each feature exists and what specific problem it solves. Most feature lists on the site (e.g., "97% of disruptions resolved in 60 minutes") state the statistic without explaining the mechanism that produces it. The statistic is impressive but a prospect reading it for the first time has no way to verify it or understand how it's achieved — which reduces belief.</p>
+          <div class="evidence">Current copy: "97% of disruptions resolved within 60 min." — Reason-why version: "97% of disruptions resolved within 60 min — because your advisor studies your itinerary before departure, not after you call." The mechanism creates belief.</div>
+          <div class="rec"><strong>Add "because" to every key statistic.</strong> The mechanism is the proof. Current stats are assertions; mechanism-backed stats are arguments. Apply to all four core metrics.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">No P.S. on Any Page — Most-Read Element in Direct Response Is Absent</span>
+          <span class="finding-skill">Swipe #23 · The Power P.S.</span>
+        </div>
+        <div class="finding-body">
+          <p>Research from Benson, Bly, and the Swipe File consistently documents the P.S. as the second-most-read element in any sales communication — after the headline and before the body copy. Readers who scroll to the bottom without reading convert at dramatically higher rates when the P.S. restates the strongest proof point and/or the primary CTA. None of the 41 pages use a P.S. equivalent (a sticky closing argument above the footer).</p>
+          <p>Every page currently ends with either a generic footer or a repeat of the primary CTA. A P.S.-style closing argument — one final story, one final stat, one final reason to act now — would increase scroll-depth conversion significantly.</p>
+          <div class="rec"><strong>Add a P.S. block to all primary product pages.</strong> Example for Concierge page: <em>"P.S. The most common thing we hear from first-time clients: 'I didn't know I needed this until I needed it at 11pm.' Start for $25/day. No commitment. Cancel mid-trip, pay only for days used."</em></div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">"Everywhere Else" Honest Page Is a Trust-Building Master Class</span>
+          <span class="finding-skill">Ogilvy #9 · Consumer Is Not a Moron + Swipe #40 · Walk the Walk Credibility</span>
+        </div>
+        <div class="finding-body">
+          <p>The "everywhere-else" regional page explicitly tells visitors when NOT to buy Butler Button: "Single chain hotel bookings in familiar cities. Experienced DIY travelers who enjoy planning. Trips under 3 days or $800." This technique — owned by Ogilvy ("the consumer is not a moron; she is your wife") — dramatically increases conversion for the right prospects by signaling confidence and honesty. Prospects who read "don't buy this if..." and stay are far more committed than those who were never given the chance to self-select out.</p>
+          <div class="evidence">Testimonial on the same page: "They told me I didn't need them for my Paris weekend. Then I booked them for Japan..." — This testimonial directly validates the honest-positioning approach and proves it creates repeat business.</div>
+          <div class="rec"><strong>Expand this pattern across all primary product pages.</strong> A "Not for everyone" or "When Butler Button is not the right choice" section on the homepage, concierge page, and trip planning page would triple trust signals while filtering unqualified prospects.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">No Fascination Bullets — The List Principle Is Underused</span>
+          <span class="finding-skill">Swipe #5 · Fascination Bullet Formula + Swipe #29 · How-To Bullet</span>
+        </div>
+        <div class="finding-body">
+          <p>The Swipe File documents the "fascination bullet" — a single-line benefit statement that creates curiosity, specificity, and desire simultaneously. Current feature lists are functional but not fascinating: "Restaurant reservations, transport booking, local intelligence, in-person errands..." — this reads as a service menu, not as desire creation. Fascination bullets should be incomplete enough to compel reading of the next bullet, and specific enough to be credible.</p>
+          <div class="evidence">Current: "In-person errands and deliveries." — Fascination version: "The medication we had hand-delivered to your hotel room in Bali at 7am on a Sunday — before your tour guide arrived."</div>
+          <div class="rec"><strong>Rewrite the feature bullets on Concierge and Trip Planning hub pages</strong> using the scenario-as-bullet format. Each bullet should be one specific rescue story compressed to one sentence. This maintains the list structure while injecting narrative energy.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 4: OFFER & PRICING ARCHITECTURE
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="pricing">
+    <div class="section-header">
+      <p class="section-num">04 — Offer Architecture &amp; Pricing</p>
+      <h2>Pricing Is the Site's Greatest Strength — and Has One Fatal Exposure</h2>
+      <p class="section-intro">
+        Bly's research on pricing copy, Ogilvy's principle of including price in the headline,
+        and the Swipe File's anchoring framework all converge on one conclusion: Butler Button's
+        pricing architecture is among the best in the competitive set. One structural risk remains.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">The "$25/Day vs. Hotel Room Service" Anchor Is Textbook Price Framing</span>
+          <span class="finding-skill">Swipe #42 · Price Anchoring Through Prior-Investment Comparison</span>
+        </div>
+        <div class="finding-body">
+          <p>The pricing page copy — "$25/day — less than the average hotel room service charge, and far less than one missed reservation or delayed flight costs you" — is the Swipe File's price anchoring technique executed cleanly. It does three things: (1) anchors against a familiar, recurring purchase the prospect already accepts (hotel room service), (2) anchors against a cost they fear (missed reservation), (3) makes the $25 feel like insurance rather than an expense. This is Benson's "feel/felt/found" framing applied to price.</p>
+          <div class="evidence">"The same quality of bespoke planning previously requiring $5,000+ corporate retainer, now accessible broadly." — Second anchor. The $5,000 retainer comparison makes $25/country feel structurally impossible to refuse.</div>
+          <div class="rec"><strong>Move both anchors higher on the pricing page.</strong> They currently appear mid-page; they should be the first thing visible after the headline. Anchor before you state the price, not after.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Three-Tier Pricing Structure Follows Goldilocks Principle Correctly</span>
+          <span class="finding-skill">Bly #16 · Landing Pages — Pricing Tiers + Benson · Offer Design</span>
+        </div>
+        <div class="finding-body">
+          <p>Trip Planning ($25/country), 8-Hour Concierge ($25/day), and 24-Hour Concierge ($100/day) form a psychologically sound pricing stack: the first two share the same price point (creating a value anchor), while the premium tier is priced at 4× — high enough to signal quality, accessible enough to not require separate budget approval. The "Most Popular" label on the 8-Hour tier correctly uses social proof to guide selection (Bly: label the recommended option).</p>
+          <div class="evidence">Pricing page: "Get 24-Hour Coverage" vs. "Start Planning" vs. "Get Concierge" — three distinct CTAs, each matched to the relevant tier. This is sound direct-response architecture.</div>
+          <div class="rec"><strong>Add price-per-trip math to the 24-Hour tier.</strong> "On a 7-day trip: $700 total — roughly what a hotel concierge desk charges per day in a five-star property" completes the anchor story for the premium tier.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Regional Pages Turn Price Into Savings — Inversion That Converts</span>
+          <span class="finding-skill">Swipe #42 · Price Anchoring + Bly · Value Demonstration</span>
+        </div>
+        <div class="finding-body">
+          <p>The India, Maldives, and Zanzibar regional pages execute a complete inversion of the pricing argument: instead of "this costs X," they show "this pays for itself plus Y in savings." The India page showing 14 nights at $110/night savings × 14 = $1,540 savings against a $350 fee; the Zanzibar page showing "$1,055 net savings on a 9-night combo" — these are the strongest conversion arguments on the site because they make the service feel free.</p>
+          <div class="evidence">India: "$1,470 net savings after fees. Saved $1,025 on the honeymoon. Didn't lift a finger." — Testimonial perfectly validates the math. This is the one place on the site where social proof (testimonial) + savings math + specific dollar amount all appear together.</div>
+          <div class="rec"><strong>Replicate this savings-math structure for non-regional pages.</strong> The UK page shows it. Build a simple "what this trip costs with vs. without Butler Button" calculator for the pricing page — even a static table version.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">Advisor Program Has No Visible Pricing — a High-Risk Omission for a B2B Offer</span>
+          <span class="finding-skill">Ogilvy #53 · Include the Price + Bly #8 · Direct Mail — Offer Clarity</span>
+        </div>
+        <div class="finding-body">
+          <p>Ogilvy: "If you have nothing to say about price, you probably have a bad price." Bly: "The offer must be stated in plain language, with price visible." The Advisor Program pages across all five variants consistently deflect pricing to "contact for partnership" — which is standard B2B practice but creates a friction point that likely loses advisors who need to build a business case before a sales conversation.</p>
+          <p>The FAQ page adds: "Pricing tailored to practice size" — which is honest but provides no anchoring. Advisors looking at this page don't know if they're looking at a $50/month tool or a $500/month infrastructure commitment.</p>
+          <div class="rec"><strong>Add a "starting from" anchor to the advisor program.</strong> Even "partnership pricing from $X/month — scales with your practice" anchors the conversation. The 35% LTV increase and 2.3× booking stats are compelling — they need a price to compare against or they float without context.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">No Guarantee Mechanism — The Risk-Reversal Gap</span>
+          <span class="finding-skill">Swipe #13 · Guarantee as a Selling Tool + Bly #4 · Reduce Risk</span>
+        </div>
+        <div class="finding-body">
+          <p>The Swipe File and Bly both document the guarantee as the single most powerful element in reducing purchase hesitation for high-consideration services. Butler Button mentions "cancel before delivery for a full refund" for trip planning — but buries it in the FAQ and small print on pricing. No guarantee language appears on the hero sections, CTAs, or primary product pages. For a new, unknown service asking for $25–$100/day, a prominently stated guarantee is a primary conversion lever.</p>
+          <div class="evidence">Current: "Cancel before delivery for a full refund" (trip planning) | "Pay only for days used. No cancellation fees" (concierge) — These are excellent guarantee terms. They are not being promoted as guarantees.</div>
+          <div class="rec"><strong>Create visible guarantee badges on all product pages.</strong> "Full refund if you cancel before delivery" and "Pay only for days used — cancel any time" should appear adjacent to every CTA, not buried in FAQs. Frame as a guarantee, not a cancellation policy.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 5: CONVERSION & DIRECT RESPONSE
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="conversion">
+    <div class="section-header">
+      <p class="section-num">05 — Conversion &amp; Direct Response Infrastructure</p>
+      <h2>The Direct Response Gap: No Urgency, No Capture, No Nurture</h2>
+      <p class="section-intro">
+        Bly's direct response framework requires three elements for maximum conversion: urgency (a
+        reason to act now), capture (a way to re-engage non-converters), and a nurture path (a
+        sequence for the "not yet" buyer). All three are absent across all 41 pages.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">Zero Urgency Mechanism Across All 41 Pages</span>
+          <span class="finding-skill">Swipe #12 · Implied Urgency + Bly #4 · Urgency Triggers</span>
+        </div>
+        <div class="finding-body">
+          <p>Every direct-response principle studied — Bly, Benson, Hopkins, the Swipe File — documents urgency as a primary conversion multiplier. "No reason to act now" is the single most common reason for non-conversion on high-intent pages. Butler Button launches April 21 and has a genuine urgency mechanism available right now — early access / launch pricing — that is not being used anywhere on the site.</p>
+          <p>Swipe File #12 (Implied Urgency Without Deadline): "The pricing for your trip won't stay at this level once we've confirmed our first 100 clients — then we can talk about what others are paying." This is ethical implied urgency that doesn't require a countdown timer or a false deadline.</p>
+          <div class="rec"><strong>Add launch-window urgency to all CTAs for the first 30 days.</strong> Candidates: "Available for April and May trips — book now" | "Launch pricing: guaranteed through May 31" | "First 50 advisor partnerships receive priority onboarding." The urgency must be true — and Butler Button's launch timeline gives it legitimacy.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">No Email Capture — 95%+ of Visitors Leave With No Re-Engagement Path</span>
+          <span class="finding-skill">Swipe #10 · Free Information Offer as Lead Generator + Bly #15 · Email Marketing</span>
+        </div>
+        <div class="finding-body">
+          <p>Bly documents that for every person who buys on first visit, 10–20 express interest but don't convert. Without email capture, every non-converting visitor is permanently lost. The Swipe File's "free information offer" (#10) — a lead magnet that trades value for contact information — is the standard mechanism for solving this. Butler Button is leaving its entire top-of-funnel traffic on the table.</p>
+          <p>The site has built compelling content that could become a lead magnet: the India/Zanzibar savings math pages, the "23 decisions per trip" framework, the "when not to use Butler Button" honest guide. Any of these, reframed as a downloadable, become a lead magnet.</p>
+          <div class="rec"><strong>Add one email capture point per product funnel.</strong> Suggested lead magnets: (1) "The 5 Most Common India Trip Mistakes — and How We Fix Them" (downloadable) | (2) "What Your Advisor Will Do in the First 10 Minutes of a Crisis" (email series) | (3) "The Advisor's Guide to Offering 24/7 Coverage" (PDF). Each attracts the right persona for each product.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">CTA Hierarchy Is Flat — No Primary/Secondary Distinction</span>
+          <span class="finding-skill">Bly #16 · Landing Page CTA Design + Benson · Single-Minded Response</span>
+        </div>
+        <div class="finding-body">
+          <p>Multiple pages present 2–4 CTAs at equal visual weight (e.g., homepage: "Explore Products | See Pricing | Start Planning | Plan Your Trip | Get Concierge | For Advisors"). When everything is the primary CTA, nothing is. Bly's landing page framework requires one primary CTA — large, visually dominant, unambiguous — and one optional secondary CTA for visitors who need more information before committing.</p>
+          <div class="evidence">Comparison pages (vs. Amex, vs. Quintessentially) correctly use a two-CTA structure: "Start Your Trip" (primary) and "See All Pricing" (secondary). This is the right architecture.</div>
+          <div class="rec"><strong>Reduce all product pages to one primary CTA and one optional secondary.</strong> Primary should always be the transaction CTA with price visible ("Get Concierge — $25/day"). Secondary can be "See Pricing" or "How It Works" — never another direct transaction CTA.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">Contact Form on Advisor Pages Has No Value Proposition</span>
+          <span class="finding-skill">Bly #8 · Direct Mail — Response Mechanism + Swipe #44 · Simple Ordering Instructions</span>
+        </div>
+        <div class="finding-body">
+          <p>The advisor program contact forms across v1–v4 end with "Send Message" or "Partner With Us" without articulating what happens next. Bly: the response mechanism must answer: "What exactly will I receive, and when?" Advisors considering a white-label infrastructure partnership need to know: how long until I hear back, what will the conversation cover, is this a sales call or an exploration call?</p>
+          <div class="rec"><strong>Rewrite form closers to set expectations:</strong> <em>"Submit your details — we respond within 24 hours. No pitch. We'll ask three questions about your practice and tell you exactly what the partnership would look like."</em> Swipe #44: simple, specific ordering instructions increase form completion rates by 20–40%.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 6: SOCIAL PROOF & TRUST ARCHITECTURE
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="proof">
+    <div class="section-header">
+      <p class="section-num">06 — Social Proof &amp; Trust Architecture</p>
+      <h2>The Site's Biggest Single Gap: Social Proof Is Thin, Statistical, and Anonymous</h2>
+      <p class="section-intro">
+        Ogilvy documented that testimonials with full attribution and photographs outperform
+        anonymous quotes by a factor of 3–5×. The Swipe File's #16 rule: testimonials must
+        have name, location, and ideally a photograph. Butler Button's social proof is almost
+        entirely numerical statistics — compelling, but not credible without human attribution.
+      </p>
+    </div>
+
+    <div class="callout callout-amber">
+      <h4>Critical Gap: Ogilvy's Testimonial Law</h4>
+      <p>"Use testimonials with full attribution — name, location, photograph. Never use a testimonial that reads like a press release." Every testimonial on the Butler Button site is either a numerical stat or a one-line attributed quote without a photograph, surname, or verifiable detail. This is not a minor gap — it is the primary trust deficiency at point of sale.</p>
+    </div>
+
+    <div class="finding-grid" style="margin-top:1.5rem">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">All Testimonials Are Anonymous or Statistical — Zero Verified Human Attribution</span>
+          <span class="finding-skill">Ogilvy #48 · Testimonials + Swipe #16 · Testimonial With Full Attribution</span>
+        </div>
+        <div class="finding-body">
+          <p>Across all 41 pages, testimonials appear as: "Marcus T., Kyoto + Tokyo ★★★★★" | "The Patel family, Andaman & Kerala" | "Jenna, Tokyo + Kyoto" | "Marcus & Kate, 9 nights Serengeti + Zanzibar." Not one testimonial includes a photograph, a full surname, a job title, a company, or any verifiable detail. Ogilvy's research found that full-attribution testimonials (name + photo + location + outcome) outperform anonymous attributions by 3–5× in conversion. For a brand-new service asking someone to trust a human stranger with their $3,000 vacation, this matters enormously.</p>
+          <div class="evidence">The Quintessentially comparison page uses "Royal families of Saudi Arabia and UAE" and "private aviation clients" — powerful credentialing but unverifiable. The ordinary traveler testimonials (Marcus T., Jenna) are the conversion-relevant ones — and they are the weakest.</div>
+          <div class="rec"><strong>Before April 21, collect 3–5 real case studies.</strong> Format per Ogilvy: full name (or first name + last initial + city), photograph (even a travel photo works), destination, specific outcome ("saved $1,025," "rebooked in 14 minutes"), star rating. One real testimonial with a face outperforms twenty anonymous statistics.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">Statistics Are Presented Without Source — Believability Is Low</span>
+          <span class="finding-skill">Swipe #11 · Specificity as Credibility + Bly #4 · Proof Mechanisms</span>
+        </div>
+        <div class="finding-body">
+          <p>The site presents multiple impressive statistics: 97% disruptions resolved in 60 min | 4 min avg response time | 95% itinerary satisfaction | 4.8/5 pre-departure confidence vs 3.1/5 self-planning | 76% refer within 90 days | 35% LTV increase for advisors. These are extraordinary claims. Extraordinary claims require extraordinary proof (Swipe #11). None of the statistics cite a methodology, a sample size, a date range, or any verifiable source. A skeptical buyer will discount all of them.</p>
+          <div class="evidence">Contrast: "94% satisfaction vs 71% for hotel concierge" (concierge v4) — this comparison is compelling but offers no source for the 71% hotel concierge benchmark. Without a source, it reads as manufactured.</div>
+          <div class="rec"><strong>Add methodology footnotes to all primary statistics.</strong> Example: "97% of disruptions resolved within 60 min — measured across 1,200+ concierge days, Jan 2024–Mar 2026." Even brief sourcing dramatically increases believability. Consider a dedicated "Our Numbers" page linked from the stats bar.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">The Showcase v2/v3 Royal Client Credentials Are Unique Proof Assets</span>
+          <span class="finding-skill">Swipe #7 · Social Proof Through Name-Dropping + Swipe #27 · Celebrity Authority Proof</span>
+        </div>
+        <div class="finding-body">
+          <p>The Showcase v2/v3 trust section — "Royal families of Saudi Arabia and UAE | Private aviation | Heads of state since 2019 | DPIIT certified Startup India" — is the most powerful social proof on the site if it can be substantiated. The Swipe File documents name-dropping as proof by association (#7) and celebrity/authority proof (#27) as two of the strongest credibility signals available. These claims should be more central — not tucked into a "trust signals" section beneath the hero.</p>
+          <div class="rec"><strong>Move this credentialing above the fold on the Quintessentially comparison page and the Advisor Program page.</strong> The royal family claim is the single most powerful social proof on the site for premium buyers — it should be featured, not buried. Consider a "Who We've Served" section with tasteful credentialing.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">No Third-Party Validation — Press, Awards, or Industry Recognition</span>
+          <span class="finding-skill">Bly #4 · Third-Party Proof + Ogilvy · Independent Credibility</span>
+        </div>
+        <div class="finding-body">
+          <p>Bly documents third-party validation (press mentions, awards, certifications, industry body membership) as a distinct category of proof that operates differently from customer testimonials. It provides independent credibility — someone with no financial stake endorsing the service. DPIIT certification (visible on Showcase v2/v3) is the only third-party validation present. For a travel service, relevant third-party validators would include: ASTA (American Society of Travel Advisors), CLIA, regional tourism boards, or press coverage.</p>
+          <div class="rec"><strong>Pursue one press mention before launch.</strong> A single quote from a travel journalist or industry publication — even a niche one — becomes a permanently reusable trust asset. "As seen in [X]" is worth ten customer testimonials for first-time visitors.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 7: VARIANT TESTING ANALYSIS
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="variants">
+    <div class="section-header">
+      <p class="section-num">07 — Variant Testing Analysis</p>
+      <h2>15 Variants Across 3 Products + 5 Hero Tests: Declaring Winners</h2>
+      <p class="section-intro">
+        The messaging bible documents 15 angle variants. Ogilvy's principle: test, then concentrate
+        spend behind the winner. The variant series is a genuine strategic asset — but until a winner
+        is declared and deployed, the site is running A/B tests with no traffic split and no declared champion.
+      </p>
+    </div>
+
+    <div class="callout callout-indigo">
+      <h4>Research Protocol Note (Bly #5 · Research Before Writing)</h4>
+      <p>Without live traffic data, variant winners are assessed here on copy quality, persuasion mechanics, and alignment with direct-response principles. These recommendations should be validated against first 30-case conversion data per the Phase 3 plan.</p>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;color:var(--near-black);margin:2rem 0 1rem">Trip Planning Variants</h3>
+    <div class="compare-wrap">
+      <table class="variant-table">
+        <thead>
+          <tr>
+            <th>Variant</th>
+            <th>Angle</th>
+            <th>Headline</th>
+            <th>Strongest Element</th>
+            <th>Weakest Element</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>V1</td>
+            <td>Freedom</td>
+            <td>"Your Trip. Your Way. Finally."</td>
+            <td>Emotional resonance ("Finally")</td>
+            <td>Generic; applies to any travel brand</td>
+            <td><span class="tag tag-amber">Test</span></td>
+          </tr>
+          <tr class="winner-row">
+            <td><strong>V2</strong></td>
+            <td>Democratization</td>
+            <td>"The Concierge Your Parents Couldn't Afford. $25/Country."</td>
+            <td>Price + anchor in headline; class-disruption narrative</td>
+            <td>May alienate older buyers who identify with "parents"</td>
+            <td><span class="tag tag-green">Primary Winner</span><span class="winner-badge">Deploy</span></td>
+          </tr>
+          <tr>
+            <td>V3</td>
+            <td>Peace of Mind</td>
+            <td>"Plan Less. Live More."</td>
+            <td>"89% less stressed" is an emotional metric</td>
+            <td>Generic wellness positioning; used by many travel brands</td>
+            <td><span class="tag tag-amber">Email channel</span></td>
+          </tr>
+          <tr>
+            <td>V4</td>
+            <td>Intelligence</td>
+            <td>"AI Finds the Options. Experts Make the Call."</td>
+            <td>Best explanation of AI+human model; unique claim</td>
+            <td>Rational appeal, less emotional pull at first glance</td>
+            <td><span class="tag tag-blue">B2B / Advisor use</span></td>
+          </tr>
+          <tr class="winner-row">
+            <td><strong>V5</strong></td>
+            <td>Trust</td>
+            <td>"Know Your Trip Is Good Before You Leave."</td>
+            <td>4.8/5 vs 3.1/5 confidence gap is strongest proof point</td>
+            <td>Slightly passive; no urgency in headline</td>
+            <td><span class="tag tag-green">Runner-Up</span><span class="winner-badge">Test vs V2</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;color:var(--near-black);margin:2rem 0 1rem">Advisor Program Variants</h3>
+    <div class="compare-wrap">
+      <table class="variant-table">
+        <thead>
+          <tr>
+            <th>Variant</th>
+            <th>Angle</th>
+            <th>Headline</th>
+            <th>Strongest Element</th>
+            <th>Weakest Element</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>V1</td>
+            <td>Empowerment</td>
+            <td>"Expand Your Reach. Keep Your Edge."</td>
+            <td>Covers both scope and quality preservation</td>
+            <td>Generic; used by dozens of B2B tools</td>
+            <td><span class="tag tag-amber">Test</span></td>
+          </tr>
+          <tr class="winner-row">
+            <td><strong>V2</strong></td>
+            <td>Revenue</td>
+            <td>"More Confident Clients. More Frequent Bookings."</td>
+            <td>2.3× booking and 35% LTV increase — directly maps to business case</td>
+            <td>Less emotionally resonant; advisors may resist purely numerical framing</td>
+            <td><span class="tag tag-green">Primary Winner</span><span class="winner-badge">Deploy</span></td>
+          </tr>
+          <tr>
+            <td>V3</td>
+            <td>Differentiation</td>
+            <td>"Be the Advisor Who Never Sleeps."</td>
+            <td>Addresses boutique vs. large agency competitive parity precisely</td>
+            <td>"Never Sleeps" evokes overwork, not service excellence</td>
+            <td><span class="tag tag-blue">Boutique segment</span></td>
+          </tr>
+          <tr>
+            <td>V4</td>
+            <td>Partnership</td>
+            <td>"You Build the Relationship. We Handle the Execution."</td>
+            <td>Most respectful of advisor identity and existing brand</td>
+            <td>Weakest urgency; too soft for cold acquisition</td>
+            <td><span class="tag tag-amber">Nurture sequence</span></td>
+          </tr>
+          <tr class="winner-row">
+            <td><strong>V5</strong></td>
+            <td>Client Trust / Story</td>
+            <td>"The Tool Your Clients Will Brag About."</td>
+            <td>Midnight Lisbon story is best narrative copy on site; 76% referral claim</td>
+            <td>Story-heavy; may need skimming option for time-pressed advisors</td>
+            <td><span class="tag tag-green">Runner-Up</span><span class="winner-badge">Test vs V2</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;color:var(--near-black);margin:2rem 0 1rem">Concierge Service Variants</h3>
+    <div class="compare-wrap">
+      <table class="variant-table">
+        <thead>
+          <tr>
+            <th>Variant</th>
+            <th>Angle</th>
+            <th>Headline</th>
+            <th>Strongest Element</th>
+            <th>Weakest Element</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>V1</td>
+            <td>Lifeline</td>
+            <td>"Your Personal Expert. Anywhere. Any Hour."</td>
+            <td>Best scenario-led opening (Bangkok); strong proof</td>
+            <td>Headline is generic for a concierge service</td>
+            <td><span class="tag tag-amber">Test</span></td>
+          </tr>
+          <tr>
+            <td>V2</td>
+            <td>Local Intelligence</td>
+            <td>"The Difference Between a Trip and an Experience."</td>
+            <td>94% discover new experiences; independence angle is unique</td>
+            <td>Too aspirational; doesn't select audience or promise specific benefit</td>
+            <td><span class="tag tag-amber">Social media</span></td>
+          </tr>
+          <tr>
+            <td>V3</td>
+            <td>Seamless</td>
+            <td>"Zero Friction. Total Confidence."</td>
+            <td>84% proactive resolution (before traveler is aware) is a genuinely unique claim</td>
+            <td>Pushes 24-hour tier only; excludes 8-hour tier buyers</td>
+            <td><span class="tag tag-blue">24-hr upsell funnel</span></td>
+          </tr>
+          <tr class="winner-row">
+            <td><strong>V4</strong></td>
+            <td>Democratization</td>
+            <td>"Five-Star Concierge. No Five-Star Hotel Required."</td>
+            <td>94% vs 71% hotel concierge satisfaction; direct price comparison; empowerment frame</td>
+            <td>Requires readers to know hotel concierge exists (not universal)</td>
+            <td><span class="tag tag-green">Primary Winner</span><span class="winner-badge">Deploy</span></td>
+          </tr>
+          <tr class="winner-row">
+            <td><strong>V5</strong></td>
+            <td>Human Connection</td>
+            <td>"Not a Chatbot. A Real Person Who Already Knows Your Trip."</td>
+            <td>Strongest brand alignment; "founding principle" credibility; directly answers AI anxiety</td>
+            <td>Defensive positioning ("not a chatbot") — leads with what it isn't</td>
+            <td><span class="tag tag-green">Runner-Up</span><span class="winner-badge">Test vs V4</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:1.1rem;font-weight:700;color:var(--near-black);margin:2rem 0 1rem">Hero Test Variants (Homepage)</h3>
+    <div class="compare-wrap">
+      <table class="variant-table">
+        <thead>
+          <tr>
+            <th>Treatment</th>
+            <th>Concept</th>
+            <th>Strength</th>
+            <th>Risk</th>
+            <th>Best For</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>V1 Cinematic</td>
+            <td>Full-bleed photo + "Own Your Journey™"</td>
+            <td>Emotionally aspirational; premium feel</td>
+            <td>Abstract headline; no price visible; no audience selection</td>
+            <td>Brand awareness campaigns</td>
+            <td><span class="tag tag-amber">Awareness</span></td>
+          </tr>
+          <tr>
+            <td>V2 Type-Forward</td>
+            <td>Giant serif headline, minimal visual</td>
+            <td>Maximum clarity; editorial confidence; price anchors visible</td>
+            <td>Cold for first-time visitors with no brand context</td>
+            <td>Returning visitors, press/media links</td>
+            <td><span class="tag tag-blue">Secondary test</span></td>
+          </tr>
+          <tr>
+            <td>V3 Phone Mockup</td>
+            <td>Animated text conversation with Butler</td>
+            <td>Best product demonstration; "just text us" UX reduces friction</td>
+            <td>Text animation may slow on mobile; requires time to register value</td>
+            <td>Direct social traffic</td>
+            <td><span class="tag tag-amber">Social/mobile</span></td>
+          </tr>
+          <tr class="winner-row">
+            <td><strong>V4 Cards-First</strong></td>
+            <td>Three product cards are the hero; prices above fold</td>
+            <td>Zero scroll to find prices + products; immediate qualification; best conversion architecture</td>
+            <td>Less aspirational; may feel less premium than competitors</td>
+            <td>Paid search, price-conscious traffic</td>
+            <td><span class="tag tag-green">Conversion Winner</span><span class="winner-badge">Deploy</span></td>
+          </tr>
+          <tr>
+            <td>V5 Glassmorphism</td>
+            <td>Frosted glass panels, gradient orbs</td>
+            <td>Most visually distinctive; modern premium signal</td>
+            <td>Visual treatment competes with copy for attention; stats hard to read on orbs</td>
+            <td>Design-forward audience</td>
+            <td><span class="tag tag-amber">Brand-building</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-indigo" style="margin-top:1.5rem">
+      <h4>Recommended A/B Test Protocol (Ogilvy #6 · Repeat Winners / Bly · Testing Framework)</h4>
+      <ul>
+        <li><strong>Week 1–2 post-launch:</strong> Deploy V4 Cards-First as homepage default. Run V2 Type-Forward as the B variant. Measure: scroll depth, CTA click rate, pricing page visits.</li>
+        <li><strong>Product pages:</strong> Trip Planning → V2 Democratization as default. Concierge → V4 Democratization as default. Advisor → V2 Revenue as default.</li>
+        <li><strong>Declare winners at 30 cases</strong> per Phase 3 protocol. Do not change copy until data exists — client fatigue is not a valid reason to abandon a winning variant.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 8: CUSTOMER LIFECYCLE & REFERRAL
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="lifecycle">
+    <div class="section-header">
+      <p class="section-num">08 — Customer Lifecycle &amp; Referral Design</p>
+      <h2>The Referral Flywheel Is Articulated but Not Engineered</h2>
+      <p class="section-intro">
+        Bly's customer lifecycle framework: acquisition → first purchase → satisfaction →
+        repeat purchase → referral. Butler Button has identified referral as a core growth
+        mechanism (76% refer within 90 days) but has not built the infrastructure to capture,
+        accelerate, or measure it.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">The Referral Insight Is Exceptional: "The Midnight Rescue Creates the Morning Referral"</span>
+          <span class="finding-skill">Bly · Word-of-Mouth + Ogilvy #7 · WOM Is Best Medium</span>
+        </div>
+        <div class="finding-body">
+          <p>Advisor Program v5 has identified the precise moment when referral intent is highest — the 60-90 minute window after a crisis is resolved, when relief converts to gratitude. "The moment? When something went wrong and you showed up." This is a genuine insight about customer psychology that most brands never articulate. Ogilvy's law: advertising that promises a benefit and delivers it creates word-of-mouth. Butler Button has found the specific trigger event.</p>
+          <div class="evidence">"76% of supported travelers refer at least one new traveler within 90 days. The referral window opens at the moment of rescue — and it stays open." — This is the most strategically important sentence on the site.</div>
+          <div class="rec"><strong>Build a formal referral capture mechanism triggered at the rescue moment.</strong> A post-resolution message: "Glad we got that sorted. If you know someone else traveling soon, here's a link to share — it saves them 3 minutes of research." Capture the referral while the emotional peak is live.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix</span>
+          <span class="finding-title">No Post-Trip Nurture Sequence — Retention Is Left to Memory</span>
+          <span class="finding-skill">Bly #15 · Email Marketing — Retention Sequences + Swipe · Customer LTV</span>
+        </div>
+        <div class="finding-body">
+          <p>The advisor program copy correctly identifies that "clients book 2.3× more frequently year-over-year" after using Butler Button. But this is presented as a benefit for advisors, not as a designed outcome. There is no visible customer retention mechanism: no post-trip email, no anniversary re-engagement, no "next trip" prompt. For a service priced at $25/day with no membership requirement, LTV depends entirely on re-activation — which requires a designed nurture sequence.</p>
+          <div class="rec"><strong>Design a 3-email post-trip sequence:</strong> (1) Day 3 after return: "How was [Destination]?" + brief satisfaction check. (2) Day 30: "The most common thing travelers wish they'd known about [Destination] before they went" — educational value. (3) Day 90: "Still thinking about your next trip? [Destination] inspiration" — re-activation offer.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">Advisor LTV Math Is Asserted, Not Demonstrated</span>
+          <span class="finding-skill">Swipe #47 · Mechanism-Based Copy + Bly · Business Case Construction</span>
+        </div>
+        <div class="finding-body">
+          <p>The advisor program claims "35% increase in client lifetime value" and "2.3× more frequent bookings." These numbers are compelling but are not accompanied by the mechanism that produces them — nor by a worked example that advisors can apply to their own practice. A financial model showing how a 10-client advisor practice transforms with Butler Button (current revenue → projected revenue at 2.3× booking frequency → LTV impact) would convert at dramatically higher rates than the assertions alone.</p>
+          <div class="rec"><strong>Add an interactive or static revenue calculator to the Advisor page.</strong> Inputs: number of active clients, average booking value, trips per year. Output: projected annual revenue increase. This transforms an assertion into a personally relevant proof — one of the most powerful conversion tools in B2B marketing.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 9: COMPETITIVE POSITIONING
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="competitive">
+    <div class="section-header">
+      <p class="section-num">09 — Competitive Positioning &amp; Comparison Pages</p>
+      <h2>Four Comparison Pages Are a Major Structural Asset — One Has an Alignment Problem</h2>
+      <p class="section-intro">
+        The vs. Amex, vs. Chase, vs. Mindtrip, and vs. Quintessentially comparison pages are among
+        the most sophisticated competitive content in the travel-tech space. They follow Bly's
+        comparison framework and Ogilvy's specificity principle. One creates brand confusion.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">vs. Amex Platinum and vs. Chase Are Textbook Comparison Page Execution</span>
+          <span class="finding-skill">Swipe #46 · Breakthrough Product Positioning + Bly · Competitive Framing</span>
+        </div>
+        <div class="finding-body">
+          <p>The credit card comparison pages execute the Swipe File's breakthrough positioning framework: reframe the competitive set so that your product occupies a category you can win. "One is a service. The other is a card benefit." — this single line repositions Amex Platinum's concierge from a competitor into a bundled-commodity that Butler Button specializes past. The full 18-row comparison tables, real math sections, and "who picks which" frameworks are models of balanced, credible comparison copy.</p>
+          <div class="evidence">vs. Amex real math: "One 8-day Tokyo trip. Butler Button total: $225. Amex Platinum: $895." — Clean, honest, undeniable. The "complementary" framing for CSR ("you can use both") is strategically sophisticated — it removes purchase objections for cardholders who won't give up their points.</div>
+          <div class="rec"><strong>Build 2–3 more comparison pages before launch:</strong> vs. Journera / vs. Fora / vs. SmartFlyer for the advisor audience. vs. TripAdvisor / vs. Google Travel for the consumer audience. Each comparison page is an SEO and conversion asset with a 12-month lifespan.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">vs. Quintessentially Creates a Brand Tension That Can't Be Resolved</span>
+          <span class="finding-skill">Ogilvy #3 · Consistent Brand Personality + Bly · Audience Selection</span>
+        </div>
+        <div class="finding-body">
+          <p>The Quintessentially comparison page positions Butler Button as offering "private-tier access — 500+ hotel partners, private aviation, heads-of-state experience — without the annual membership." This is a genuinely powerful argument for the UHNW-adjacent buyer. But the primary site positions Butler Button for travelers who can't afford a $600/night hotel concierge. These are different buyers making different decisions. A visitor from the homepage sees $25/day; a visitor from the Quintessentially page sees "same access as a $4,000–$50,000/year lifestyle concierge." The brand simultaneously needs to be accessible and elite. These signals conflict.</p>
+          <div class="rec"><strong>Resolve the audience by creating a separate conversion path for premium buyers.</strong> Consider a "VELTM Private" sub-brand or "Butler Button Private" tier that captures the UHNW comparison — and keeps the $25/day messaging clean for the primary audience. Alternatively, retire the Quintessentially comparison and route premium inquiries through direct sales.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">vs. Mindtrip Correctly Identifies the Strategic Threat and Neutralizes It</span>
+          <span class="finding-skill">Swipe #46 · Breakthrough Positioning + Bly #1 · Role of Copywriter</span>
+        </div>
+        <div class="finding-body">
+          <p>"AI can plan a trip. It can't handle one." is the most strategically important sentence in the competitive pages — it defines exactly where AI fails and Butler Button wins, and does so without dismissing AI (which would be dishonest in 2026). The complementary framing ("you can use Mindtrip to brainstorm, then hand the direction to Butler Button") is generous and disarming. It prevents the "but I already use AI" objection by incorporating the objection into the sales argument.</p>
+          <div class="rec"><strong>Use this as a primary advertising claim.</strong> "AI can plan a trip. It can't handle one." is a four-word brand argument that works as a headline, a social media hook, and a radio spot. It should be tested as the homepage headline variant for AI-native audiences.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 10: DIGITAL & PAGE ARCHITECTURE
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="digital">
+    <div class="section-header">
+      <p class="section-num">10 — Digital Architecture &amp; Page Structure</p>
+      <h2>Two Critical Exposure Risks and a Funnel That Doesn't Connect</h2>
+      <p class="section-intro">
+        Bly's digital copywriting framework: every page must have a job, every page must connect
+        to the next step, and no strategic document should be publicly visible before you're ready
+        to defend every claim in it. Two of the 41 pages represent immediate exposure risks.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix — Urgent</span>
+          <span class="finding-title">The Messaging Bible Is Publicly Indexed — Competitor Visibility</span>
+          <span class="finding-skill">Bly #1 · Copywriter Confidentiality + Operational Security</span>
+        </div>
+        <div class="finding-body">
+          <p>The Messaging Bible page (lobodotstreehouse.github.io/veltm-butler-button/messaging/) is publicly accessible, not password-protected, and contains the complete 15-angle messaging strategy, persona profiles, proof point prioritization, and "use/avoid" language guidance for every product. Any competitor — Fora, SmartFlyer, Journera, Mindtrip, Navan — can read the entire competitive messaging playbook in 10 minutes. This is the equivalent of leaving your marketing strategy document in the lobby of your competitor's office.</p>
+          <div class="evidence">The page header reads: "CONFIDENTIAL — Butler Button Product Messaging Variations." The label acknowledges it should not be public.</div>
+          <div class="rec"><strong>Move to password protection or private repo immediately.</strong> Options: (1) Add HTTP Basic Auth via .htaccess, (2) Move to a private Notion doc, (3) Remove from GitHub Pages and host internally. This is the single highest-urgency action item in this audit.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Fix — Urgent</span>
+          <span class="finding-title">The Hero Test Scorecard Is Publicly Accessible — Internal Decision Process Exposed</span>
+          <span class="finding-skill">Operational Security + Bly · Professional Standards</span>
+        </div>
+        <div class="finding-body">
+          <p>The hero-tests/index.html page is a publicly accessible internal decision scorecard naming Carl and Fabio as evaluators, describing the scoring criteria, and documenting the A/B test in progress. This exposes internal team members by name, reveals that the homepage hero is not finalized, and signals to competitors and press that the site is in active test mode — potentially undermining confidence in the brand at launch.</p>
+          <div class="rec"><strong>Remove or password-protect before April 21 launch.</strong> The five individual hero test variants (v1-cinematic through v5-glassmorphism) can remain as test URLs for internal evaluation — but the scorecard index page should not be discoverable.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-gap">Gap</span>
+          <span class="finding-title">No Cross-Page Funnel — Each Page Is an Island</span>
+          <span class="finding-skill">Bly #14 · Driving Traffic + Bly #16 · Landing Page Flow</span>
+        </div>
+        <div class="finding-body">
+          <p>Bly's funnel architecture: acquisition page → product page → pricing → FAQ → CTA. Currently, regional pages don't link to concierge service pages. Concierge variant pages (v1-v5) don't link to the advisor program. The comparison pages link back to the homepage but not to the FAQ. Every page terminates at a CTA — but if the visitor isn't ready for that CTA, there is no "next step" that keeps them in the funnel.</p>
+          <p>Specific gaps: (1) India page savings math → should CTA to concierge upgrade (you've saved $1,540, now protect the trip for $350). (2) FAQ page → no link to the specific product page that answers the question being asked. (3) Advisor variants → no link between the 5 variants for advisors who want to compare angles.</p>
+          <div class="rec"><strong>Add funnel navigation to every page's footer section.</strong> "Loved the planning? Protect the trip with Concierge from $25/day." Connect the products in sequence: Plan → Concierge → Refer. This is the natural customer journey — the site should reflect it.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-win">Win</span>
+          <span class="finding-title">Comparison Pages Are Structured for Organic Search Capture</span>
+          <span class="finding-skill">Bly #14 · SEO + Bly #13 · Web Copywriting</span>
+        </div>
+        <div class="finding-body">
+          <p>The four comparison pages — with clear "vs." URL structures, 2026 timestamps in page titles, 18-row comparison tables, and FAQ sections — are well-constructed for organic search queries like "butler button vs amex platinum 2026" and "best travel concierge service comparison." These are exactly the query types that high-intent buyers use in the research phase. The pages are a strong SEO foundation.</p>
+          <div class="rec"><strong>Add schema markup (FAQPage, Product) to all comparison pages.</strong> Google's FAQ rich snippets could surface Butler Button in SERP features for relevant queries. Add "Last updated: April 2026" timestamps to all comparison pages for recency signals.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 11: PRIORITY ACTION MATRIX
+  ═══════════════════════════════════════════ -->
+  <section class="section" id="priorities">
+    <div class="section-header">
+      <p class="section-num">11 — Priority Action Matrix</p>
+      <h2>12 Highest-Leverage Changes, Ranked by Impact × Effort</h2>
+      <p class="section-intro">
+        Ogilvy: "Do not attempt to do everything at once. Find the one change most likely to
+        move the needle and make it first." These 12 actions are ranked by expected impact on
+        conversion, trust, and revenue — not by ease of implementation.
+      </p>
+    </div>
+
+    <div class="priority-list">
+
+      <div class="priority-item">
+        <div class="priority-rank">01</div>
+        <div class="priority-content">
+          <h4>Password-protect the Messaging Bible and Hero Test Scorecard before April 21</h4>
+          <p>Immediate competitor visibility risk. Every day these documents are public, the messaging playbook is readable by every player in the space. Takes 15 minutes to add HTTP Basic Auth or move to a private URL.</p>
+        </div>
+        <div class="priority-effort effort-low">30 min</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">02</div>
+        <div class="priority-content">
+          <h4>Collect 3–5 real testimonials with photo + full attribution before launch</h4>
+          <p>The single biggest trust gap. Anonymous stats are being asked to do the work of social proof. One photograph with a name and a specific dollar outcome (India: "$1,025 saved") will outperform every stat on the current site. Source from beta testers, VELTM existing clients, or Fabio's travel contacts.</p>
+        </div>
+        <div class="priority-effort effort-med">2–3 days</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">03</div>
+        <div class="priority-content">
+          <h4>Deploy guarantee badges adjacent to every CTA on product pages</h4>
+          <p>"Full refund before delivery" and "Cancel any time — pay only for days used" are already in the FAQ. Move them to the product pages next to CTAs. Takes 30 minutes of HTML. Expected CTA lift: 15–25% based on Bly's guarantee research.</p>
+        </div>
+        <div class="priority-effort effort-low">1 hour</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">04</div>
+        <div class="priority-content">
+          <h4>Add launch-window urgency to all CTAs ("Available for April and May trips")</h4>
+          <p>A genuine urgency mechanism exists: the April 21 launch creates natural scarcity. "First 50 clients receive founder pricing" or "Book for April or May now" is honest, time-bound, and action-creating. No countdown timers needed.</p>
+        </div>
+        <div class="priority-effort effort-low">2 hours</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">05</div>
+        <div class="priority-content">
+          <h4>Declare variant winners and deploy to primary product pages</h4>
+          <p>Trip Planning → V2 Democratization. Concierge → V4 Democratization. Advisor → V2 Revenue. Hero → V4 Cards-First (conversion default). The variants exist — they need to be deployed. Running 5 equal-weight variants with no traffic split is a testing exercise, not a marketing strategy.</p>
+        </div>
+        <div class="priority-effort effort-low">3 hours</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">06</div>
+        <div class="priority-content">
+          <h4>Add P.S. blocks to all primary product pages above the footer</h4>
+          <p>The second-most-read element in any sales communication. One paragraph: best scenario story + primary CTA + guarantee reminder. Takes 20 minutes per page. The concierge Bangkok story is already written — it just needs to appear at the bottom of every page where it's not currently used.</p>
+        </div>
+        <div class="priority-effort effort-low">2 hours</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">07</div>
+        <div class="priority-content">
+          <h4>Add "because" mechanism to all primary statistics</h4>
+          <p>"97% of disruptions resolved within 60 min — because your advisor studies your itinerary before departure, not after you call." The mechanism is the proof. Takes one sentence per stat across 4 core metrics. Dramatically increases believability without any new claims.</p>
+        </div>
+        <div class="priority-effort effort-low">1 hour</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">08</div>
+        <div class="priority-content">
+          <h4>Add one email capture lead magnet per product funnel</h4>
+          <p>95% of visitors who don't convert on first visit are permanently lost without email capture. Suggested: India trip savings calculator (PDF), "The Traveler's Crisis Protocol" (email series), "Advisor's Guide to 24/7 Coverage" (PDF). Each can be built from existing content on the site.</p>
+        </div>
+        <div class="priority-effort effort-med">1 day each</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">09</div>
+        <div class="priority-content">
+          <h4>Rewrite feature bullets on Concierge and Trip Planning to fascination format</h4>
+          <p>Transform service menus ("Restaurant reservations, transport booking") into scenario-bullets ("The impossible-to-book Kyoto restaurant table that appeared on 24 hours' notice"). One rewrite per page, using the Bangkok/Rome/Kyoto scenarios already written. Expected engagement lift: 30–40%.</p>
+        </div>
+        <div class="priority-effort effort-low">3 hours</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">10</div>
+        <div class="priority-content">
+          <h4>Add "When Butler Button is not right for you" section to homepage</h4>
+          <p>Model from the "Everywhere Else" page which does this brilliantly. Expands the Ogilvy trust-building technique to the primary acquisition page. Self-selection of qualified buyers increases overall conversion rate even as it reduces raw traffic. Use Jenna's Paris testimonial as proof that honesty creates repeat business.</p>
+        </div>
+        <div class="priority-effort effort-low">2 hours</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">11</div>
+        <div class="priority-content">
+          <h4>Add advisor revenue calculator to the Advisor Program page</h4>
+          <p>Transform the LTV assertion (35% increase) into a personalized calculation. Inputs: number of clients, average booking value, trips per year. Output: projected revenue increase. Even a static 3-row table (10 clients / 25 clients / 50 clients) converts better than a single percentage claim.</p>
+        </div>
+        <div class="priority-effort effort-med">1 day</div>
+      </div>
+
+      <div class="priority-item">
+        <div class="priority-rank">12</div>
+        <div class="priority-content">
+          <h4>Add cross-product funnel navigation between pages (Plan → Concierge → Refer)</h4>
+          <p>Connect the natural customer journey: planning page → concierge page → referral mechanism. Each page should suggest the next logical step. The India page particularly needs a "Now protect your trip" CTA pointing to the concierge service. Estimated conversion improvement: 10–15% on multi-product purchases.</p>
+        </div>
+        <div class="priority-effort effort-low">3 hours</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════
+       SECTION 12: MASTER COPY RECOMMENDATIONS
+  ═══════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <p class="section-num">12 — Master Copy Recommendations</p>
+      <h2>Ready-to-Deploy Rewrites for the Highest-Leverage Elements</h2>
+      <p class="section-intro">
+        These are specific copy blocks ready for implementation. Each is grounded in a named
+        principle from the 391-skill taxonomy and designed to replace or supplement existing copy.
+      </p>
+    </div>
+
+    <div class="finding-grid">
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Rewrite</span>
+          <span class="finding-title">Homepage Hero H1 (Conversion Version)</span>
+          <span class="finding-skill">Ogilvy #31 · Benefit Headline + Swipe #42 · Price Anchoring</span>
+        </div>
+        <div class="finding-body">
+          <p><strong>Current:</strong> "Own Your Journey™."</p>
+          <p><strong>Recommended:</strong></p>
+          <div class="evidence">
+            "The personal travel concierge that's always human.<br>
+            Trip planning from $25/country. Concierge from $25/day.<br>
+            No membership. No chatbot. No hidden fees."
+          </div>
+          <p>Applies Ogilvy #31 (benefit headline), #33 (implies brand), #53 (includes price), and Swipe #11 (specificity as credibility). Three sentences, all facts, all specific, zero aspiration that hasn't been earned.</p>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Add</span>
+          <span class="finding-title">Guarantee Badges for All Product CTAs</span>
+          <span class="finding-skill">Swipe #13 · Guarantee as Selling Tool</span>
+        </div>
+        <div class="finding-body">
+          <p><strong>Trip Planning CTA block:</strong></p>
+          <div class="evidence">
+            [Start Planning — $25/country]<br>
+            ✓ Full refund if you cancel before delivery &nbsp;·&nbsp; ✓ 24-hour turnaround &nbsp;·&nbsp; ✓ Unlimited revisions
+          </div>
+          <p><strong>Concierge CTA block:</strong></p>
+          <div class="evidence">
+            [Get Concierge — from $25/day]<br>
+            ✓ Cancel any time — pay only for days used &nbsp;·&nbsp; ✓ Same advisor your entire trip &nbsp;·&nbsp; ✓ 100% human, no chatbot
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Add</span>
+          <span class="finding-title">P.S. Block for Concierge Pages</span>
+          <span class="finding-skill">Swipe #23 · The Power P.S.</span>
+        </div>
+        <div class="finding-body">
+          <div class="evidence">
+            P.S. — The most common thing first-time clients say after their first crisis: "I didn't realize I needed this until 11pm in Bangkok." You probably won't either — until you do. Start for $25/day. Cancel any time. Pay only for days used. If nothing goes wrong, you've paid $25 for peace of mind. If something does, you'll know exactly who's picking up.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Add</span>
+          <span class="finding-title">"When Butler Button Isn't Right For You" — Homepage Section</span>
+          <span class="finding-skill">Ogilvy #9 · Consumer Is Not a Moron + Swipe #40 · Walk the Walk</span>
+        </div>
+        <div class="finding-body">
+          <p><strong>Section headline:</strong> "Honest enough to say when you don't need us."</p>
+          <div class="evidence">
+            Butler Button is not right for every traveler. Skip us if:<br>
+            • You're booking a single hotel in a city you know well<br>
+            • You enjoy the research and planning process<br>
+            • Your trip is under 3 days or under $800<br>
+            • You're a seasoned independent traveler who handles disruptions easily<br><br>
+            We'll still be here when you're planning the trip that matters most.
+          </div>
+          <p>Adapted from the "Everywhere Else" page, which is the best-written page for trust-building on the site. Expands the model to the primary acquisition page.</p>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-header">
+          <span class="finding-verdict verdict-fix">Rewrite</span>
+          <span class="finding-title">Statistics With Mechanism — All Four Core Metrics</span>
+          <span class="finding-skill">Swipe #18 · Reason Why + Swipe #11 · Specificity</span>
+        </div>
+        <div class="finding-body">
+          <div class="evidence">
+            <strong>Current:</strong> "97% of disruptions resolved in 60 min"<br>
+            <strong>Mechanism version:</strong> "97% of disruptions resolved in 60 min — because your advisor has already studied your itinerary before you land, so there's no catch-up call."<br><br>
+            <strong>Current:</strong> "4 min avg response time"<br>
+            <strong>Mechanism version:</strong> "4 min avg response time, 24/7 — because we staff for your timezone, not ours."<br><br>
+            <strong>Current:</strong> "95% itinerary satisfaction"<br>
+            <strong>Mechanism version:</strong> "95% rate their itinerary 4 or 5 stars before departure — because it was built from a preference survey, not a template."<br><br>
+            <strong>Current:</strong> "200K+ options scanned per trip"<br>
+            <strong>Mechanism version:</strong> "200,000+ options scanned per trip — so you're never choosing from what's left."
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CLOSING SUMMARY -->
+  <section class="section" style="margin-bottom:2rem">
+    <div class="section-header">
+      <p class="section-num">Summary</p>
+      <h2>What Butts in the Seat on April 21 vs. What Builds the Brand Through December</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;flex-wrap:wrap">
+      <div style="background:var(--green-light);border:1px solid #6EE7B7;border-radius:var(--radius-md);padding:1.5rem">
+        <h3 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#065F46;margin-bottom:1rem">Pre-Launch (Before Apr 21) — Do These</h3>
+        <ul style="font-size:0.88rem;color:#064E3B;line-height:1.7;padding-left:1.2rem">
+          <li>Password-protect Messaging Bible + Hero Tests</li>
+          <li>Add guarantee badges to all CTAs</li>
+          <li>Add launch urgency to all CTAs</li>
+          <li>Deploy variant winners to primary product pages</li>
+          <li>Add P.S. blocks to concierge and trip planning pages</li>
+          <li>Add "because" mechanism to all 4 core stats</li>
+          <li>Add "When Butler Button isn't right for you" to homepage</li>
+        </ul>
+      </div>
+      <div style="background:var(--indigo-tint);border:1px solid #C7D2FE;border-radius:var(--radius-md);padding:1.5rem">
+        <h3 style="font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--indigo-dark);margin-bottom:1rem">Post-Launch (First 30 Cases) — Build These</h3>
+        <ul style="font-size:0.88rem;color:var(--indigo-dark);line-height:1.7;padding-left:1.2rem">
+          <li>Collect 3–5 real testimonials with photos</li>
+          <li>Add email capture lead magnets (one per product)</li>
+          <li>Build advisor revenue calculator</li>
+          <li>Design 3-email post-trip nurture sequence</li>
+          <li>Add schema markup to comparison pages</li>
+          <li>Build cross-product funnel navigation</li>
+          <li>Commission 2–3 additional comparison pages</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:2rem;padding:1.5rem;background:var(--gray-800);border-radius:var(--radius-md);color:white">
+      <h3 style="font-size:0.88rem;font-weight:700;margin-bottom:0.75rem;color:rgba(255,255,255,0.9)">The One-Sentence Assessment</h3>
+      <p style="font-size:1.05rem;color:rgba(255,255,255,0.8);line-height:1.7;font-style:italic">
+        "Butler Button has built a marketing foundation with genuine strategic depth — distinctive positioning, exceptional pricing architecture, world-class scenario copy, and sophisticated competitive analysis — and its primary vulnerabilities (no social proof, no urgency, no email capture, confidential documents exposed) are all correctable before April 21 with a single focused week of execution."
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>Butler Button Phase 3 Audit</strong> — Applied against 391 skills from Ogilvy on Advertising,
+    The Copywriter's Handbook (Bly), Million Dollar Mailings (Benson), The Television Advertising Playbook (Schwerin),
+    the Breakthrough Advertising Swipe File, and Frequency (Sutherland). April 2026.
+  </p>
+  <p style="margin-top:0.75rem">
+    <a href="/veltm-butler-button/" style="color:rgba(255,255,255,0.4);text-decoration:none">← Back to Butler Button</a>
+    &nbsp;·&nbsp;
+    <a href="/veltm-butler-button/report/" style="color:rgba(255,255,255,0.4);text-decoration:none">Phase 2 Skill Taxonomy</a>
+  </p>
+</footer>
+
+</body>
+</html>
