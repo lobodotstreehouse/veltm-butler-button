@@ -812,6 +812,89 @@
       margin-top: 1.5rem; letter-spacing: -0.01em;
     }
 
+    /* ─── MOBILE STICKY CTA ──────────────────────────────────────── */
+    .sticky-cta {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 400;
+      padding: 12px 5vw;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    }
+    .sticky-cta.visible { transform: none; }
+    .sticky-cta__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; max-width: 600px; margin: 0 auto;
+    }
+    .sticky-cta__text {
+      font-size: 0.82rem; font-weight: 600; color: #f5f5f7;
+      letter-spacing: -0.01em; white-space: nowrap;
+    }
+    .sticky-cta__text span { color: var(--indigo-lt); }
+    .sticky-cta .btn { flex-shrink: 0; }
+    @media (max-width: 820px) {
+      .sticky-cta { display: block; }
+    }
+
+    /* ─── TRUST SIGNALS SECTION ────────────────────────────────── */
+    .section-trust {
+      background: #000;
+      padding: clamp(3rem, 6vw, 5rem) 5vw;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .trust-inner {
+      max-width: 1080px; margin: 0 auto;
+      text-align: center;
+    }
+    .trust-headline {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 2.5rem;
+    }
+    .trust-logos {
+      display: flex; align-items: center; justify-content: center;
+      gap: clamp(2rem, 5vw, 4.5rem); flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .trust-logo {
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    }
+    .trust-logo__icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .trust-logo__label {
+      font-size: 0.68rem; color: rgba(255,255,255,0.35);
+      letter-spacing: -0.01em; max-width: 100px; line-height: 1.4;
+    }
+    .trust-logo__label strong {
+      color: rgba(255,255,255,0.6); font-weight: 600;
+      display: block;
+    }
+    .trust-divider {
+      width: 1px; height: 40px;
+      background: rgba(255,255,255,0.06);
+    }
+    @media (max-width: 700px) {
+      .trust-divider { display: none; }
+      .trust-logos { gap: 1.5rem; }
+    }
+    .trust-badges {
+      display: flex; align-items: center; justify-content: center;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: rgba(255,255,255,0.3);
+      letter-spacing: -0.01em;
+    }
+    .trust-badge svg { flex-shrink: 0; }
+
     /* ─── FOOTER ─────────────────────────────────────────────────── */
     .footer {
       background: #000;
@@ -1111,6 +1194,66 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════════
+     TRUST SIGNALS
+═══════════════════════════════════════════════════════════════ -->
+<section class="section-trust">
+  <div class="trust-inner">
+    <div class="trust-headline">Trusted by discerning travelers and industry leaders</div>
+
+    <div class="trust-logos" data-reveal>
+      <div class="trust-logo">
+        <div class="trust-logo__icon">🏨</div>
+        <div class="trust-logo__label"><strong>500+</strong>hotel partners worldwide</div>
+      </div>
+
+      <div class="trust-divider"></div>
+
+      <div class="trust-logo">
+        <div class="trust-logo__icon">✈</div>
+        <div class="trust-logo__label"><strong>Private aviation</strong>charter &amp; luxury air</div>
+      </div>
+
+      <div class="trust-divider"></div>
+
+      <div class="trust-logo">
+        <div class="trust-logo__icon">👑</div>
+        <div class="trust-logo__label"><strong>Royal families</strong>Saudi Arabia &amp; UAE</div>
+      </div>
+
+      <div class="trust-divider"></div>
+
+      <div class="trust-logo">
+        <div class="trust-logo__icon">🌟</div>
+        <div class="trust-logo__label"><strong>Private clientele</strong>by referral only</div>
+      </div>
+
+      <div class="trust-divider"></div>
+
+      <div class="trust-logo">
+        <div class="trust-logo__icon">🇮🇳</div>
+        <div class="trust-logo__label"><strong>DPIIT certified</strong>Startup India</div>
+      </div>
+    </div>
+
+    <div class="trust-badges" data-reveal style="--delay:.15s">
+      <div class="trust-badge">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.76 3.57L13 5.24l-3 2.92.71 4.12L7 10.27 3.29 12.28 4 8.16 1 5.24l4.24-.67L7 1z" fill="#fbbf24"/></svg>
+        Serving heads of state since 2019
+      </div>
+      <div class="trust-badge">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.76 3.57L13 5.24l-3 2.92.71 4.12L7 10.27 3.29 12.28 4 8.16 1 5.24l4.24-.67L7 1z" fill="#fbbf24"/></svg>
+        100% independent — no affiliate agreements
+      </div>
+      <div class="trust-badge">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.76 3.57L13 5.24l-3 2.92.71 4.12L7 10.27 3.29 12.28 4 8.16 1 5.24l4.24-.67L7 1z" fill="#fbbf24"/></svg>
+        Exclusive celebrity &amp; UHNW travel management
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
      SECTION 3 — HOW IT WORKS (simple grid, clickable cards)
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-how" id="how">
@@ -1372,6 +1515,14 @@
 </section>
 
 
+<!-- ─── MOBILE STICKY CTA ──────────────────────────────────── -->
+<div class="sticky-cta" id="sticky-cta">
+  <div class="sticky-cta__inner">
+    <div class="sticky-cta__text">From <span>$25/day</span></div>
+    <a href="#" class="btn btn-indigo btn-sm" data-butler-button>Start Your Trip</a>
+  </div>
+</div>
+
 <!-- ─── FOOTER ──────────────────────────────────────────────── -->
 <footer class="footer">
   <span class="footer-brand">Butler<em>Button</em> by VELTM</span>
@@ -1451,6 +1602,18 @@
   });
 
   startTimer();
+
+  /* ── MOBILE STICKY CTA — show after hero CTA scrolls out ── */
+  const stickyCta = document.getElementById('sticky-cta');
+  const heroActions = document.querySelector('.hero-actions');
+  if (stickyCta && heroActions) {
+    const stickyObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        stickyCta.classList.toggle('visible', !e.isIntersecting);
+      });
+    }, { threshold: 0 });
+    stickyObs.observe(heroActions);
+  }
 
   /* ── REVEAL + COUNTERS ─────────────────────────── */
   if (!noMotion) {
