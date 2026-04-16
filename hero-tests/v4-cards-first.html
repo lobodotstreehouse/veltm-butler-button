@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero V4 — Cards-First | Butler Button by VELTM</title>
+  <link rel="icon" type="image/png" href="../img/logos/VELTM-icon-indigo.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* V4: CARDS-FIRST — products ARE the hero, skip the intro */
+    .hero-v4 {
+      padding: var(--s16) 0 var(--s20);
+      background: var(--white);
+      position: relative;
+    }
+    .hero-v4__intro {
+      text-align: center;
+      margin-bottom: var(--s16);
+    }
+    .hero-v4__intro .eyebrow {
+      margin-bottom: var(--s3);
+    }
+    .hero-v4__intro h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      color: var(--near-black);
+      margin-bottom: var(--s4);
+    }
+    .hero-v4__intro .lead {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .hero-v4__cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s6);
+      margin-bottom: var(--s12);
+    }
+    .hero-v4__card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--border-gray);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-v4__card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+    }
+    .hero-v4__card-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .hero-v4__card-accent {
+      height: 4px;
+      width: 100%;
+    }
+    .hero-v4__card-accent--trip { background: var(--trip-planning); }
+    .hero-v4__card-accent--concierge { background: var(--concierge); }
+    .hero-v4__card-accent--advisor { background: var(--advisor); }
+
+    .hero-v4__card-body {
+      padding: var(--s8) var(--s6) var(--s6);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-v4__card-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: var(--s2);
+    }
+    .hero-v4__card-label--trip { color: var(--trip-planning); }
+    .hero-v4__card-label--concierge { color: var(--concierge); }
+    .hero-v4__card-label--advisor { color: var(--advisor); }
+
+    .hero-v4__card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--near-black);
+      margin-bottom: var(--s3);
+      line-height: 1.2;
+    }
+    .hero-v4__card p {
+      font-size: 0.9rem;
+      color: var(--body-gray);
+      flex: 1;
+    }
+    .hero-v4__card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--s4) var(--s6) var(--s6);
+      border-top: 1px solid var(--gray-100);
+    }
+    .hero-v4__card-price {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--near-black);
+    }
+    .hero-v4__card-price small {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--gray-400);
+    }
+
+    .hero-v4__bottom {
+      text-align: center;
+    }
+    .hero-v4__bottom p {
+      font-size: 1rem;
+      color: var(--body-gray);
+      margin-bottom: var(--s6);
+    }
+    .hero-v4__bottom p strong {
+      color: var(--indigo);
+    }
+
+    .variant-label {
+      position: fixed; top: 12px; right: 12px; z-index: 999;
+      background: var(--indigo); color: white; padding: 0.4rem 1rem;
+      border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    @media (max-width: 900px) {
+      .hero-v4__cards { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="variant-label">V4 — Cards-First</div>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logos/VELTM-logo-black.png" alt="VELTM" height="36">
+      </a>
+      <nav class="nav-main">
+        <a href="../index.html">Home</a>
+        <a href="../trip-planning/">Trip Planning</a>
+        <a href="../concierge/">Concierge</a>
+        <a href="../advisor-program/">Advisors</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="../pricing.html" class="btn btn--gradient btn--sm">Start Your Journey</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </header>
+
+  <section class="hero-v4">
+    <div class="container">
+      <div class="hero-v4__intro">
+        <span class="eyebrow">Butler Button by VELTM</span>
+        <h1>Own Your Journey<span class="tm">&trade;</span>.</h1>
+        <p class="lead">AI plans it. A human handles it. You enjoy it.</p>
+      </div>
+
+      <div class="hero-v4__cards">
+
+        <div class="hero-v4__card">
+          <img src="../img/ads/veltm_travel_trending_01.png" alt="Trip Planning" class="hero-v4__card-img">
+          <div class="hero-v4__card-accent hero-v4__card-accent--trip"></div>
+          <div class="hero-v4__card-body">
+            <div class="hero-v4__card-label hero-v4__card-label--trip">Trip Planning</div>
+            <h3>Your Trip. Your Way. Finally.</h3>
+            <p>AI scans 200K+ options. Human experts curate the best for your dates, budget, and style.</p>
+          </div>
+          <div class="hero-v4__card-footer">
+            <div class="hero-v4__card-price">$25 <small>/country</small></div>
+            <a href="../trip-planning/" class="btn btn--trip btn--sm">Plan a Trip</a>
+          </div>
+        </div>
+
+        <div class="hero-v4__card">
+          <img src="../img/ads/veltm_travel_trending_02.png" alt="Concierge" class="hero-v4__card-img">
+          <div class="hero-v4__card-accent hero-v4__card-accent--concierge"></div>
+          <div class="hero-v4__card-body">
+            <div class="hero-v4__card-label hero-v4__card-label--concierge">Concierge Service</div>
+            <h3>Your Expert. Anywhere. Any Hour.</h3>
+            <p>In-trip, real-time support from someone who already knows your itinerary. Not a chatbot.</p>
+          </div>
+          <div class="hero-v4__card-footer">
+            <div class="hero-v4__card-price">$25 <small>/day</small></div>
+            <a href="../concierge/" class="btn btn--concierge btn--sm">Get Concierge</a>
+          </div>
+        </div>
+
+        <div class="hero-v4__card">
+          <img src="../img/ads/veltm_product_intro_01.png" alt="Advisor Program" class="hero-v4__card-img">
+          <div class="hero-v4__card-accent hero-v4__card-accent--advisor"></div>
+          <div class="hero-v4__card-body">
+            <div class="hero-v4__card-label hero-v4__card-label--advisor">Advisor Program</div>
+            <h3>Expand Your Reach. Keep Your Edge.</h3>
+            <p>White-label concierge infrastructure for travel advisors. Your clients get 24/7 coverage.</p>
+          </div>
+          <div class="hero-v4__card-footer">
+            <div class="hero-v4__card-price" style="font-size:1rem; color:var(--advisor);">Contact for partnership</div>
+            <a href="../advisor-program/" class="btn btn--advisor btn--sm">Learn More</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="hero-v4__bottom">
+        <p><strong>195+ countries</strong> &bull; <strong>150+ languages</strong> &bull; <strong>4 min</strong> avg response &bull; <strong>95%</strong> satisfaction</p>
+        <a href="../pricing.html" class="btn btn--gradient btn--lg">Compare All Plans</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--sm section--indigo">
+    <div class="container">
+      <div class="stats">
+        <div class="stat"><div class="stat__number">4 min</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">avg response time</div></div>
+        <div class="stat"><div class="stat__number">95%</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">itinerary satisfaction</div></div>
+        <div class="stat"><div class="stat__number">150+</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">countries covered</div></div>
+        <div class="stat"><div class="stat__number">200K+</div><div class="stat__label" style="color:rgba(255,255,255,0.6);">options scanned per trip</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2026 VELTM Tours. Hero test — V4 Cards-First.</span>
+        <span>Butler Button &mdash; Own Your Journey<span class="tm">&trade;</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

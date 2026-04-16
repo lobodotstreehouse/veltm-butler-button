@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Test — Score Sheet | Butler Button by VELTM</title>
+  <link rel="icon" type="image/png" href="../img/logos/VELTM-icon-indigo.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .score-page { padding: var(--s16) 0; }
+    .score-page h1 { text-align: center; margin-bottom: var(--s2); }
+    .score-page .lead { text-align: center; max-width: 560px; margin: 0 auto var(--s12); }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: var(--s6);
+      margin-bottom: var(--s12);
+    }
+    .score-card {
+      background: var(--white);
+      border: 2px solid var(--border-gray);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .score-card:hover {
+      border-color: var(--indigo);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .score-card__preview {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    .score-card__iframe {
+      width: 1440px;
+      height: 900px;
+      border: none;
+      transform: scale(0.236);
+      transform-origin: top left;
+      pointer-events: none;
+    }
+    .score-card__body { padding: var(--s6); }
+    .score-card__tag {
+      display: inline-block;
+      background: var(--indigo-tint);
+      color: var(--indigo);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--s3);
+    }
+    .score-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: var(--s2);
+    }
+    .score-card p {
+      font-size: 0.85rem;
+      color: var(--body-gray);
+      margin-bottom: var(--s4);
+    }
+    .score-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--indigo);
+    }
+    .score-card__link:hover { color: var(--indigo-dark); }
+
+    .score-instructions {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      padding: var(--s8);
+    }
+    .score-instructions h3 { margin-bottom: var(--s4); }
+    .score-instructions table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .score-instructions th, .score-instructions td {
+      padding: var(--s3) var(--s4);
+      border-bottom: 1px solid var(--gray-200);
+      text-align: left;
+    }
+    .score-instructions th {
+      font-weight: 600;
+      color: var(--near-black);
+      background: var(--white);
+    }
+    .score-instructions td:first-child { font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logos/VELTM-logo-black.png" alt="VELTM" height="36">
+      </a>
+    </div>
+  </header>
+
+  <section class="score-page">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center; display:block;">Hero Test &mdash; April 2026</span>
+      <h1>Pick the Hero</h1>
+      <p class="lead">5 different hero treatments for the Butler Button homepage. Carl + Fabio each score 1&ndash;10 on the criteria below, then we go with the winner.</p>
+
+      <div class="score-grid">
+
+        <div class="score-card">
+          <div class="score-card__preview">
+            <iframe src="v1-cinematic.html" class="score-card__iframe" loading="lazy"></iframe>
+          </div>
+          <div class="score-card__body">
+            <div class="score-card__tag">V1</div>
+            <h3>Cinematic</h3>
+            <p>Full-bleed destination photo with dark overlay. Centered headline. Immersive, emotional, aspirational.</p>
+            <a href="v1-cinematic.html" class="score-card__link">View Full Page &rarr;</a>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card__preview">
+            <iframe src="v2-type-forward.html" class="score-card__iframe" loading="lazy"></iframe>
+          </div>
+          <div class="score-card__body">
+            <div class="score-card__tag">V2</div>
+            <h3>Type-Forward</h3>
+            <p>Giant serif headline dominates the viewport. Minimal visual. Price anchors visible immediately. Clean, confident, editorial.</p>
+            <a href="v2-type-forward.html" class="score-card__link">View Full Page &rarr;</a>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card__preview">
+            <iframe src="v3-phone-mockup.html" class="score-card__iframe" loading="lazy"></iframe>
+          </div>
+          <div class="score-card__body">
+            <div class="score-card__tag">V3</div>
+            <h3>Phone Mockup</h3>
+            <p>Animated text conversation with Butler. Shows the "just text us" UX. Product demo as the hero.</p>
+            <a href="v3-phone-mockup.html" class="score-card__link">View Full Page &rarr;</a>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card__preview">
+            <iframe src="v4-cards-first.html" class="score-card__iframe" loading="lazy"></iframe>
+          </div>
+          <div class="score-card__body">
+            <div class="score-card__tag">V4</div>
+            <h3>Cards-First</h3>
+            <p>Three product cards ARE the hero. No scrolling to find the goods. Prices and CTAs above the fold.</p>
+            <a href="v4-cards-first.html" class="score-card__link">View Full Page &rarr;</a>
+          </div>
+        </div>
+
+        <div class="score-card">
+          <div class="score-card__preview">
+            <iframe src="v5-glassmorphism.html" class="score-card__iframe" loading="lazy"></iframe>
+          </div>
+          <div class="score-card__body">
+            <div class="score-card__tag">V5</div>
+            <h3>Glassmorphism</h3>
+            <p>Frosted glass panels over animated gradient orbs. Modern, techy, premium. Stats and pricing baked in.</p>
+            <a href="v5-glassmorphism.html" class="score-card__link">View Full Page &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="score-instructions">
+        <h3>Scoring Criteria (1&ndash;10 each)</h3>
+        <table>
+          <thead>
+            <tr><th>Criterion</th><th>What to judge</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>First Impression</td><td>Does it grab you in 3 seconds?</td></tr>
+            <tr><td>Brand Fit</td><td>Clean, modern, approachable &mdash; not stuffy luxury</td></tr>
+            <tr><td>Clarity</td><td>Do you instantly know what Butler Button is?</td></tr>
+            <tr><td>CTA Strength</td><td>Does it make you want to click?</td></tr>
+            <tr><td>Mobile Feel</td><td>Resize your browser &mdash; does it hold up?</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2026 VELTM Tours.</span>
+        <span>Butler Button &mdash; Own Your Journey<span class="tm">&trade;</span></span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

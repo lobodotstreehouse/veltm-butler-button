@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero V5 — Glassmorphism | Butler Button by VELTM</title>
+  <link rel="icon" type="image/png" href="../img/logos/VELTM-icon-indigo.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* V5: GLASSMORPHISM — frosted glass panels over animated gradient */
+    .hero-v5 {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--near-black);
+      padding: var(--s20) 0;
+    }
+    .hero-v5__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-v5__orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: orb-float 12s ease-in-out infinite alternate;
+    }
+    .hero-v5__orb--1 {
+      width: 500px; height: 500px;
+      background: var(--indigo);
+      opacity: 0.35;
+      top: -10%;
+      left: -5%;
+      animation-delay: 0s;
+    }
+    .hero-v5__orb--2 {
+      width: 400px; height: 400px;
+      background: var(--purple);
+      opacity: 0.25;
+      bottom: -15%;
+      right: -5%;
+      animation-delay: -4s;
+    }
+    .hero-v5__orb--3 {
+      width: 300px; height: 300px;
+      background: var(--teal);
+      opacity: 0.2;
+      top: 40%;
+      left: 50%;
+      animation-delay: -8s;
+    }
+    @keyframes orb-float {
+      0% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -40px) scale(1.05); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+      100% { transform: translate(10px, -10px) scale(1.02); }
+    }
+
+    .hero-v5__content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s10);
+      align-items: center;
+    }
+
+    .hero-v5__left .eyebrow {
+      color: rgba(255,255,255,0.45);
+      margin-bottom: var(--s4);
+    }
+    .hero-v5__left h1 {
+      color: var(--white);
+      font-size: clamp(2.5rem, 5vw, 3.75rem);
+      margin-bottom: var(--s6);
+      line-height: 1.1;
+    }
+    .hero-v5__left .lead {
+      color: rgba(255,255,255,0.65);
+      max-width: 460px;
+      margin-bottom: var(--s8);
+    }
+
+    /* Glass panels */
+    .glass-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s4);
+    }
+    .glass-panel {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      padding: var(--s6) var(--s8);
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .glass-panel:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateX(-4px);
+    }
+    .glass-panel__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--s2);
+    }
+    .glass-panel__label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .glass-panel__label--trip { color: var(--trip-planning); }
+    .glass-panel__label--concierge { color: var(--concierge); }
+    .glass-panel__label--advisor { color: #818CF8; }
+    .glass-panel__price {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .glass-panel__price small {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+    }
+    .glass-panel__desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    /* Stats row as glass */
+    .hero-v5__stats {
+      display: flex;
+      gap: var(--s6);
+      margin-top: var(--s12);
+      flex-wrap: wrap;
+    }
+    .hero-v5__stat {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: var(--s4) var(--s6);
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+    .hero-v5__stat-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .hero-v5__stat-label {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: var(--s1);
+    }
+
+    .variant-label {
+      position: fixed; top: 12px; right: 12px; z-index: 999;
+      background: var(--indigo); color: white; padding: 0.4rem 1rem;
+      border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    @media (max-width: 900px) {
+      .hero-v5__content { grid-template-columns: 1fr; }
+      .hero-v5__left { text-align: center; }
+      .hero-v5__left .lead { margin-left: auto; margin-right: auto; }
+      .hero-v5__left div[style] { justify-content: center; }
+      .hero-v5__stats { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="variant-label">V5 — Glassmorphism</div>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logos/VELTM-logo-black.png" alt="VELTM" height="36">
+      </a>
+      <nav class="nav-main">
+        <a href="../index.html">Home</a>
+        <a href="../trip-planning/">Trip Planning</a>
+        <a href="../concierge/">Concierge</a>
+        <a href="../advisor-program/">Advisors</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="../pricing.html" class="btn btn--gradient btn--sm">Start Your Journey</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </header>
+
+  <section class="hero-v5">
+    <div class="hero-v5__bg">
+      <div class="hero-v5__orb hero-v5__orb--1"></div>
+      <div class="hero-v5__orb hero-v5__orb--2"></div>
+      <div class="hero-v5__orb hero-v5__orb--3"></div>
+    </div>
+    <div class="container">
+      <div class="hero-v5__content">
+        <div class="hero-v5__left">
+          <span class="eyebrow">Butler Button by VELTM</span>
+          <h1>Own Your<br>Journey<span class="tm">&trade;</span>.</h1>
+          <p class="lead">The world's most accessible personal travel concierge. AI plans it. A human handles it. You enjoy it.</p>
+          <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+            <a href="../pricing.html" class="btn btn--gradient btn--lg">Start Your Journey</a>
+            <a href="../pricing.html" class="btn btn--ghost btn--lg">See Pricing</a>
+          </div>
+          <div class="hero-v5__stats">
+            <div class="hero-v5__stat">
+              <div class="hero-v5__stat-num">4 min</div>
+              <div class="hero-v5__stat-label">avg reply</div>
+            </div>
+            <div class="hero-v5__stat">
+              <div class="hero-v5__stat-num">95%</div>
+              <div class="hero-v5__stat-label">satisfaction</div>
+            </div>
+            <div class="hero-v5__stat">
+              <div class="hero-v5__stat-num">195+</div>
+              <div class="hero-v5__stat-label">countries</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-stack">
+          <div class="glass-panel">
+            <div class="glass-panel__top">
+              <div class="glass-panel__label glass-panel__label--trip">Trip Planning</div>
+              <div class="glass-panel__price">$25 <small>/country</small></div>
+            </div>
+            <p class="glass-panel__desc">AI scans 200K+ options. Human experts curate the best for your dates, budget, and style.</p>
+          </div>
+          <div class="glass-panel">
+            <div class="glass-panel__top">
+              <div class="glass-panel__label glass-panel__label--concierge">8-Hour Butler</div>
+              <div class="glass-panel__price">$25 <small>/day</small></div>
+            </div>
+            <p class="glass-panel__desc">Real-time concierge support from someone who already knows your itinerary. Not a chatbot.</p>
+          </div>
+          <div class="glass-panel">
+            <div class="glass-panel__top">
+              <div class="glass-panel__label glass-panel__label--concierge">24-Hour Butler</div>
+              <div class="glass-panel__price">$100 <small>/day</small></div>
+            </div>
+            <p class="glass-panel__desc">Round-the-clock personal concierge. Reservations, changes, emergencies &mdash; handled instantly.</p>
+          </div>
+          <div class="glass-panel">
+            <div class="glass-panel__top">
+              <div class="glass-panel__label glass-panel__label--advisor">Advisor Program</div>
+              <div class="glass-panel__price" style="font-size:1rem;">Contact Us</div>
+            </div>
+            <p class="glass-panel__desc">White-label concierge infrastructure for travel advisors. Your clients get 24/7 coverage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2026 VELTM Tours. Hero test — V5 Glassmorphism.</span>
+        <span>Butler Button &mdash; Own Your Journey<span class="tm">&trade;</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
