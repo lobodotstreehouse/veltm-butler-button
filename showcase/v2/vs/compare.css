@@ -678,15 +678,46 @@ a { text-decoration: none; color: inherit; }
 .price-footnote--light { color: var(--text-mute); }
 
 /* ═══════════════════════════════════════════════════════════════
+   HERO VS LOGOS (side-by-side brand marks in the hero)
+═══════════════════════════════════════════════════════════════ */
+.hero-vs-logos {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem; margin-bottom: 2.25rem;
+}
+.hvl-brand {
+  width: 60px; height: 60px; border-radius: 16px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.14);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.hvl-brand img {
+  width: 40px; height: 40px; object-fit: contain; border-radius: 6px;
+  background: transparent;
+}
+.hvl-them img {
+  background: #fff; border-radius: 5px; padding: 3px;
+}
+.hvl-vs {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.28);
+}
+
+/* ═══════════════════════════════════════════════════════════════
    COMPETITOR LOGO IN TABLE HEADER
 ═══════════════════════════════════════════════════════════════ */
 .comp-logo {
   margin: 0 0 0.6rem;
-  display: flex; justify-content: center;
+  display: flex; justify-content: center; align-items: center;
 }
-.comp-logo svg {
-  display: block;
-  height: 30px; width: auto; max-width: 100%;
+.comp-logo img {
+  display: block; height: 32px; width: auto; max-width: 100%;
+  object-fit: contain; border-radius: 5px;
+  background: #fff; padding: 3px;
+}
+.col-us .comp-logo img {
+  background: transparent; padding: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════
