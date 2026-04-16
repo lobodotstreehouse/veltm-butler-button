@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="../img/logos/VELTM-icon-indigo.png">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* V3: PHONE MOCKUP — simulated text conversation with Butler */
+    /* V3: PHONE MOCKUP — animated Butler Button signup + WhatsApp handoff */
     .hero-v3 {
       min-height: 100vh;
       display: flex;
@@ -29,128 +29,534 @@
       margin-bottom: var(--s6);
       line-height: 1.1;
     }
-    .hero-v3__text .lead {
-      max-width: 480px;
-      margin-bottom: var(--s8);
-    }
+    .hero-v3__text .lead { max-width: 480px; margin-bottom: var(--s6); }
     .hero-v3__tagline {
-      font-size: 1rem;
-      color: var(--indigo);
+      font-size: 1rem; color: var(--indigo); font-weight: 600;
+      font-style: italic; margin-bottom: var(--s8);
+    }
+    .hero-v3__step-list {
+      list-style: none; padding: 0; margin: 0 0 var(--s8);
+      display: grid; gap: var(--s2);
+      font-size: 0.85rem; color: var(--body-gray);
+    }
+    .hero-v3__step-list li {
+      display: flex; align-items: center; gap: var(--s3);
+      padding: 0.25rem 0;
+      transition: all 0.3s;
+    }
+    .hero-v3__step-list li[data-active="true"] {
+      color: var(--near-black);
       font-weight: 600;
-      font-style: italic;
-      margin-bottom: var(--s8);
+    }
+    .hero-v3__step-list li::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gray-300); flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    .hero-v3__step-list li[data-active="true"]::before {
+      background: var(--indigo); box-shadow: 0 0 0 4px rgba(79,70,229,0.15);
     }
 
-    /* Phone frame */
+    /* ── Phone frame ───────────────────────────────────────────── */
     .phone {
       width: 340px;
       background: var(--near-black);
-      border-radius: 40px;
-      padding: 12px;
+      border-radius: 44px;
+      padding: 10px;
       box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255,255,255,0.1);
       position: relative;
     }
     .phone__notch {
-      width: 120px;
-      height: 28px;
+      width: 120px; height: 28px;
       background: var(--near-black);
       border-radius: 0 0 16px 16px;
       position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
+      top: 10px; left: 50%; transform: translateX(-50%);
+      z-index: 10;
     }
     .phone__screen {
       background: var(--white);
-      border-radius: 30px;
+      border-radius: 34px;
       overflow: hidden;
-      min-height: 580px;
+      height: 640px;
+      position: relative;
+    }
+
+    /* Screen layering — each .screen is stacked; JS toggles active class */
+    .screen {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, transform 0.4s ease;
       display: flex;
       flex-direction: column;
+      pointer-events: none;
     }
-    .phone__header {
-      background: var(--indigo);
-      color: var(--white);
-      padding: 44px var(--s6) var(--s4);
+    .screen[data-active="true"] {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ── Screen 1: Landing page mini ─────────────────────────── */
+    .landing {
+      background: linear-gradient(180deg, #EEF2FF 0%, #F5F3FF 100%);
+      padding: 48px 20px 20px;
       text-align: center;
     }
-    .phone__header-name {
-      font-weight: 700;
-      font-size: 0.95rem;
+    .landing__brand {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--near-black); margin-bottom: 2rem;
     }
-    .phone__header-status {
+    .landing__brand em { color: var(--indigo); font-style: normal; }
+    .landing__eyebrow {
+      font-size: 0.55rem; letter-spacing: 0.14em;
+      font-weight: 700; color: var(--indigo); text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .landing__h1 {
+      font-family: var(--font-display);
+      font-size: 1.65rem; line-height: 1.1;
+      color: var(--near-black); margin-bottom: 0.75rem;
+    }
+    .landing__lead {
+      font-size: 0.78rem; color: var(--body-gray);
+      line-height: 1.5; margin-bottom: 1.5rem;
+      padding: 0 0.5rem;
+    }
+    .landing__cta {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      box-shadow: var(--shadow-indigo);
+      animation: cta-pulse 2s ease-in-out infinite;
+      position: relative;
+    }
+    @keyframes cta-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(79,70,229,0.3); }
+      50% { transform: scale(1.04); box-shadow: 0 4px 28px rgba(79,70,229,0.5); }
+    }
+    .tap-ripple {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(79,70,229,0.4);
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+    }
+    .screen[data-active="true"] .tap-ripple {
+      animation: tap-it 1.2s ease-out 0.8s;
+    }
+    @keyframes tap-it {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
+      100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+    }
+    .landing__products {
+      display: grid; gap: 0.5rem;
+      margin-top: 1.5rem; text-align: left;
+    }
+    .landing__product {
+      background: white;
+      border: 1px solid var(--border-gray);
+      border-radius: 12px;
+      padding: 0.5rem 0.75rem;
       font-size: 0.7rem;
-      opacity: 0.7;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .phone__chat {
+    .landing__product strong { color: var(--near-black); }
+    .landing__product span { color: var(--gray-400); }
+
+    /* ── Screen 2: Modal opens / plan selection ─────────────── */
+    .modal-screen {
+      background: rgba(0,0,0,0.5);
+      padding: 44px 16px 12px;
+      justify-content: flex-end;
+    }
+    .modal-card {
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 1.25rem 1.25rem 1rem;
+      animation: slide-up 0.5s ease;
+    }
+    @keyframes slide-up {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-card__header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .modal-card__title {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+    }
+    .modal-card__close {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--gray-100); color: var(--gray-500);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+    }
+    .plan-options {
+      display: grid; gap: 0.6rem;
+    }
+    .plan-option {
+      border: 2px solid var(--border-gray);
+      border-radius: 12px;
+      padding: 0.75rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.3s;
+    }
+    .plan-option.selected {
+      border-color: var(--indigo);
+      background: var(--indigo-tint);
+    }
+    .plan-option__name {
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--near-black);
+    }
+    .plan-option__desc {
+      font-size: 0.65rem; color: var(--gray-500);
+      margin-top: 0.1rem;
+    }
+    .plan-option__price {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+      color: var(--near-black);
+    }
+    .plan-option__price small {
+      font-size: 0.6rem; font-weight: 400;
+      color: var(--gray-400);
+    }
+
+    /* ── Screen 3: Form ─────────────────────────────────────── */
+    .form-screen {
+      background: white;
+      padding: 44px 18px 18px;
+    }
+    .form-header {
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
+    }
+    .form-back {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--gray-100); display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.8rem; color: var(--gray-500);
+    }
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-weight: 700;
+    }
+    .form-progress {
+      display: flex; gap: 0.25rem; margin-bottom: 1rem;
+    }
+    .form-progress__dot {
+      flex: 1; height: 3px; border-radius: 2px;
+      background: var(--gray-200);
+    }
+    .form-progress__dot.active { background: var(--indigo); }
+    .form-field {
+      margin-bottom: 0.75rem;
+    }
+    .form-field__label {
+      font-size: 0.65rem; font-weight: 600;
+      color: var(--gray-500); letter-spacing: 0.04em;
+      text-transform: uppercase; margin-bottom: 0.3rem;
+    }
+    .form-field__input {
+      width: 100%;
+      border: 1.5px solid var(--border-gray);
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.78rem;
+      color: var(--near-black);
+      background: white;
+      transition: all 0.3s;
+      font-family: var(--font-body);
+    }
+    .form-field__input.filled {
+      border-color: var(--indigo);
+      background: var(--indigo-tint);
+    }
+    .form-field__input.typing::after {
+      content: '|';
+      animation: blink 0.6s infinite;
+    }
+    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;
+    }
+
+    /* ── Screen 4: Coupon ─────────────────────────────────── */
+    .coupon-box {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border: 1.5px dashed var(--border-gray);
+      border-radius: 10px;
+      background: var(--gray-50);
+    }
+    .coupon-box.applied {
+      border: 1.5px solid var(--trip-planning);
+      background: var(--trip-planning-light);
+    }
+    .coupon-box__label {
+      font-size: 0.65rem; font-weight: 600;
+      color: var(--gray-500); letter-spacing: 0.04em;
+      text-transform: uppercase; margin-bottom: 0.3rem;
+    }
+    .coupon-box__input-wrap {
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .coupon-box__input {
       flex: 1;
-      padding: var(--s4) var(--s4);
-      display: flex;
-      flex-direction: column;
-      gap: var(--s3);
+      background: white;
+      border: 1px solid var(--border-gray);
+      border-radius: 8px;
+      padding: 0.5rem 0.6rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      font-family: ui-monospace, monospace;
+    }
+    .coupon-box__apply {
+      background: var(--near-black); color: white;
+      border: none; border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.7rem; font-weight: 600;
+    }
+    .coupon-box__msg {
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--trip-planning);
+      font-weight: 600;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .price-summary {
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-gray);
+      display: grid; gap: 0.3rem;
+      font-size: 0.75rem;
+    }
+    .price-summary__row {
+      display: flex; justify-content: space-between;
+      color: var(--gray-500);
+    }
+    .price-summary__row.total {
+      padding-top: 0.4rem;
+      margin-top: 0.2rem;
+      border-top: 1px solid var(--gray-200);
+      color: var(--near-black); font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .price-summary__row .strike {
+      text-decoration: line-through;
+      color: var(--gray-300);
+      margin-right: 0.3rem;
+    }
+    .price-summary__row .discount {
+      color: var(--trip-planning); font-weight: 600;
+    }
+
+    /* ── Screen 5: Processing ──────────────────────────────── */
+    .processing-screen {
+      background: white;
+      padding: 44px 18px 18px;
+      align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .spinner {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 3px solid var(--gray-200);
+      border-top-color: var(--indigo);
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .processing-title {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .processing-sub {
+      font-size: 0.75rem; color: var(--gray-500);
+    }
+
+    /* ── Screen 6: Confirmation ────────────────────────────── */
+    .confirm-screen {
+      background: linear-gradient(180deg, var(--trip-planning-light) 0%, white 100%);
+      padding: 44px 18px 18px;
+      align-items: center; justify-content: center;
+      text-align: center;
+    }
+    .confirm-check {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--trip-planning);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      color: white; font-size: 1.8rem;
+      animation: pop-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes pop-in {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    .confirm-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem; font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .confirm-sub {
+      font-size: 0.78rem; color: var(--body-gray);
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+      padding: 0 0.5rem;
+    }
+    .confirm-ref {
+      font-family: ui-monospace, monospace;
+      font-size: 0.7rem;
+      background: white;
+      border: 1px solid var(--border-gray);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    .confirm-next {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.3rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ── Screen 7: WhatsApp handoff ─────────────────────────── */
+    .whatsapp-screen {
+      background: #E5DDD5;
+      padding: 0;
+    }
+    .whatsapp-bg {
+      position: absolute; inset: 44px 0 0;
+      background-image:
+        radial-gradient(ellipse at top, rgba(0,0,0,0.03) 0%, transparent 40%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><circle cx='20' cy='20' r='0.5' fill='%23000' opacity='0.04'/></svg>");
+    }
+    .wa-header {
+      background: #128C7E;
+      color: white;
+      padding: 48px 14px 8px;
+      display: flex; align-items: center; gap: 0.6rem;
+      position: relative; z-index: 1;
+    }
+    .wa-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--indigo);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 0.85rem; font-weight: 700;
+      font-family: var(--font-display);
+    }
+    .wa-header__meta { flex: 1; }
+    .wa-header__name { font-size: 0.85rem; font-weight: 600; }
+    .wa-header__status { font-size: 0.65rem; opacity: 0.8; }
+    .wa-body {
+      flex: 1;
+      padding: 0.75rem 0.5rem;
+      display: flex; flex-direction: column;
+      gap: 0.4rem;
+      position: relative; z-index: 1;
       overflow: hidden;
     }
-    .msg {
-      max-width: 80%;
-      padding: 0.6rem 0.9rem;
-      border-radius: 18px;
-      font-size: 0.82rem;
-      line-height: 1.5;
-      animation: msg-in 0.5s ease both;
+    .wa-date {
+      text-align: center;
+      align-self: center;
+      background: rgba(225,245,254,0.9);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.58rem;
+      color: #667781;
+      margin-bottom: 0.4rem;
     }
-    .msg--user {
-      background: var(--indigo);
-      color: var(--white);
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
+    .wa-msg {
+      max-width: 85%;
+      padding: 0.45rem 0.6rem 0.35rem;
+      border-radius: 8px;
+      font-size: 0.73rem;
+      line-height: 1.4;
+      position: relative;
+      box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+      opacity: 0;
+      animation: wa-in 0.4s ease forwards;
     }
-    .msg--butler {
-      background: var(--gray-100);
-      color: var(--near-black);
+    .wa-msg--butler {
+      background: white;
       align-self: flex-start;
-      border-bottom-left-radius: 4px;
+      border-top-left-radius: 2px;
     }
-    .msg--butler strong { color: var(--indigo); }
-    .msg:nth-child(1) { animation-delay: 0.2s; }
-    .msg:nth-child(2) { animation-delay: 0.7s; }
-    .msg:nth-child(3) { animation-delay: 1.4s; }
-    .msg:nth-child(4) { animation-delay: 2.0s; }
-    .msg:nth-child(5) { animation-delay: 2.6s; }
-    .msg:nth-child(6) { animation-delay: 3.2s; }
-    .msg:nth-child(7) { animation-delay: 3.8s; }
-    @keyframes msg-in {
-      from { opacity: 0; transform: translateY(12px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    .wa-msg--user {
+      background: #DCF8C6;
+      align-self: flex-end;
+      border-top-right-radius: 2px;
     }
-    .phone__input {
-      border-top: 1px solid var(--gray-200);
-      padding: var(--s3) var(--s4);
-      display: flex;
-      align-items: center;
-      gap: var(--s2);
+    .wa-msg__time {
+      font-size: 0.55rem;
+      color: rgba(0,0,0,0.45);
+      margin-left: 0.4rem;
+      float: right;
+      margin-top: 0.15rem;
     }
-    .phone__input-field {
-      flex: 1;
-      background: var(--gray-100);
-      border-radius: 20px;
-      padding: 0.5rem 0.9rem;
-      font-size: 0.78rem;
-      color: var(--gray-400);
-      border: none;
+    .screen[data-active="true"] .wa-msg:nth-of-type(1) { animation-delay: 0.3s; }
+    .screen[data-active="true"] .wa-msg:nth-of-type(2) { animation-delay: 1.2s; }
+    .screen[data-active="true"] .wa-msg:nth-of-type(3) { animation-delay: 2.0s; }
+    .screen[data-active="true"] .wa-msg:nth-of-type(4) { animation-delay: 2.8s; }
+    @keyframes wa-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .phone__input-send {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--indigo);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      border: none;
+    .wa-input {
+      background: #F0F0F0;
+      padding: 0.45rem 0.6rem;
+      display: flex; align-items: center; gap: 0.4rem;
+      position: relative; z-index: 1;
     }
+    .wa-input-field {
+      flex: 1; background: white;
+      border-radius: 18px;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.68rem;
+      color: #999;
+    }
+    .wa-send {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: #128C7E; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    /* ── Replay button ─────────────────────────────────────── */
+    .replay-btn {
+      position: absolute;
+      bottom: -44px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.95);
+      border: 1px solid var(--border-gray);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.7rem; color: var(--indigo); font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+    }
+    .replay-btn:hover { background: var(--indigo-tint); }
+
     .variant-label {
       position: fixed; top: 12px; right: 12px; z-index: 999;
       background: var(--indigo); color: white; padding: 0.4rem 1rem;
@@ -161,6 +567,7 @@
       .hero-v3__grid { grid-template-columns: 1fr; justify-items: center; }
       .hero-v3__text { text-align: center; }
       .hero-v3__text .lead { margin-left: auto; margin-right: auto; }
+      .hero-v3__step-list { display: none; }
       .hero-v3__text div[style] { justify-content: center; }
     }
   </style>
@@ -191,35 +598,210 @@
       <div class="hero-v3__grid">
         <div class="hero-v3__text">
           <span class="eyebrow">Butler Button by VELTM</span>
-          <h1>Text Butler.<br>Get a trip.</h1>
+          <h1>Tap once.<br>Travel smarter.</h1>
           <p class="hero-v3__tagline">AI plans it. A human handles it. You enjoy it.</p>
-          <p class="lead">No apps. No accounts. No 47 open tabs. Just text your travel dates and let our team build the perfect trip &mdash; starting at $25.</p>
+          <p class="lead">One button. One modal. Then you're talking to your dedicated Butler on WhatsApp. Watch the whole flow &rarr;</p>
+          <ul class="hero-v3__step-list" id="stepList">
+            <li data-step="1">Open the site &mdash; one CTA</li>
+            <li data-step="2">Pick your plan</li>
+            <li data-step="3">Tell us where you're going</li>
+            <li data-step="4">Apply your code &mdash; real discount</li>
+            <li data-step="5">Pay securely</li>
+            <li data-step="6">You're booked</li>
+            <li data-step="7">Your Butler pings you on WhatsApp</li>
+          </ul>
           <div style="display:flex; gap:1rem; flex-wrap:wrap;">
             <a href="../pricing.html" class="btn btn--gradient btn--lg">Start Your Journey</a>
             <a href="../pricing.html" class="btn btn--outline btn--lg">See Pricing</a>
           </div>
         </div>
-        <div class="phone">
-          <div class="phone__notch"></div>
-          <div class="phone__screen">
-            <div class="phone__header">
-              <div class="phone__header-name">Butler Button</div>
-              <div class="phone__header-status">Online &bull; avg 4 min reply</div>
-            </div>
-            <div class="phone__chat">
-              <div class="msg msg--user">Hey! I need help planning 10 days in Japan for 2 &mdash; mid-October, ~$5k budget</div>
-              <div class="msg msg--butler">Hey! I'm on it. Quick q &mdash; are you into temples and nature, city nightlife, or a mix?</div>
-              <div class="msg msg--user">Mix of both! Definitely want to see Kyoto and eat our way through Osaka</div>
-              <div class="msg msg--butler">Love that combo. I'll build a <strong>Tokyo &rarr; Hakone &rarr; Kyoto &rarr; Osaka</strong> route. Flights, ryokans, trains, restaurant picks &mdash; all inside budget. Give me 20 min.</div>
-              <div class="msg msg--user">That was fast. This looks amazing</div>
-              <div class="msg msg--butler">Want me to book the ryokan in Hakone before it fills up? I'll handle everything.</div>
-              <div class="msg msg--user">Yes please!</div>
-            </div>
-            <div class="phone__input">
-              <div class="phone__input-field">Message Butler...</div>
-              <div class="phone__input-send">&uarr;</div>
+
+        <div style="position:relative;">
+          <div class="phone">
+            <div class="phone__notch"></div>
+            <div class="phone__screen" id="phoneScreen">
+
+              <!-- Screen 1: Landing -->
+              <div class="screen landing" data-screen="1">
+                <div class="landing__brand">Butler<em>Button</em></div>
+                <div class="landing__eyebrow">Own Your Journey&trade;</div>
+                <div class="landing__h1">Your trip, handled.</div>
+                <div class="landing__lead">AI plans it. A real human handles it. Starting at $25.</div>
+                <button class="landing__cta">
+                  Book Your Butler
+                  <span class="tap-ripple"></span>
+                </button>
+                <div class="landing__products">
+                  <div class="landing__product"><strong>Trip Planning</strong><span>$25/country</span></div>
+                  <div class="landing__product"><strong>8-Hour Butler</strong><span>$25/day</span></div>
+                  <div class="landing__product"><strong>24-Hour Butler</strong><span>$100/day</span></div>
+                </div>
+              </div>
+
+              <!-- Screen 2: Modal with plan selection -->
+              <div class="screen modal-screen" data-screen="2">
+                <div class="modal-card">
+                  <div class="modal-card__header">
+                    <div class="modal-card__title">Choose your plan</div>
+                    <div class="modal-card__close">&times;</div>
+                  </div>
+                  <div class="plan-options">
+                    <div class="plan-option">
+                      <div>
+                        <div class="plan-option__name">Trip Planning</div>
+                        <div class="plan-option__desc">Personalized itinerary</div>
+                      </div>
+                      <div class="plan-option__price">$25<small>/country</small></div>
+                    </div>
+                    <div class="plan-option selected">
+                      <div>
+                        <div class="plan-option__name">8-Hour Butler</div>
+                        <div class="plan-option__desc">Real-time concierge support</div>
+                      </div>
+                      <div class="plan-option__price">$25<small>/day</small></div>
+                    </div>
+                    <div class="plan-option">
+                      <div>
+                        <div class="plan-option__name">24-Hour Butler</div>
+                        <div class="plan-option__desc">Round-the-clock coverage</div>
+                      </div>
+                      <div class="plan-option__price">$100<small>/day</small></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Screen 3: Trip details form -->
+              <div class="screen form-screen" data-screen="3">
+                <div class="form-header">
+                  <div class="form-back">&larr;</div>
+                  <div class="form-title">Trip details</div>
+                </div>
+                <div class="form-progress">
+                  <div class="form-progress__dot active"></div>
+                  <div class="form-progress__dot active"></div>
+                  <div class="form-progress__dot"></div>
+                  <div class="form-progress__dot"></div>
+                </div>
+                <div class="form-field">
+                  <div class="form-field__label">Destination</div>
+                  <div class="form-field__input filled" id="field-destination">Kyoto, Japan</div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <div class="form-field__label">Check-in</div>
+                    <div class="form-field__input filled">Oct 14</div>
+                  </div>
+                  <div class="form-field">
+                    <div class="form-field__label">Check-out</div>
+                    <div class="form-field__input filled">Oct 21</div>
+                  </div>
+                </div>
+                <div class="form-field">
+                  <div class="form-field__label">Travelers</div>
+                  <div class="form-field__input filled">2 adults</div>
+                </div>
+                <div class="form-field">
+                  <div class="form-field__label">Email</div>
+                  <div class="form-field__input filled" id="field-email">carlremi@gmail.com</div>
+                </div>
+              </div>
+
+              <!-- Screen 4: Coupon + price summary -->
+              <div class="screen form-screen" data-screen="4">
+                <div class="form-header">
+                  <div class="form-back">&larr;</div>
+                  <div class="form-title">Review &amp; apply code</div>
+                </div>
+                <div class="form-progress">
+                  <div class="form-progress__dot active"></div>
+                  <div class="form-progress__dot active"></div>
+                  <div class="form-progress__dot active"></div>
+                  <div class="form-progress__dot"></div>
+                </div>
+                <div class="coupon-box applied" id="couponBox">
+                  <div class="coupon-box__label">Promo Code</div>
+                  <div class="coupon-box__input-wrap">
+                    <div class="coupon-box__input" id="couponInput">SEVENSPRINGS</div>
+                    <button class="coupon-box__apply" style="background:var(--trip-planning);">&#10003;</button>
+                  </div>
+                  <div class="coupon-box__msg" id="couponMsg">
+                    &#10003; Partner discount applied &mdash; 20% off
+                  </div>
+                </div>
+                <div class="price-summary">
+                  <div class="price-summary__row"><span>8-Hour Butler &times; 7 days</span><span>$175.00</span></div>
+                  <div class="price-summary__row"><span>Discount (SEVENSPRINGS)</span><span class="discount">&minus; $35.00</span></div>
+                  <div class="price-summary__row"><span>Service fee</span><span>$0.00</span></div>
+                  <div class="price-summary__row total">
+                    <span>Total</span>
+                    <span><span class="strike">$175.00</span>$140.00</span>
+                  </div>
+                </div>
+                <button class="landing__cta" style="width:100%; margin-top:1rem; animation:none;">
+                  Confirm &amp; Pay &rarr;
+                </button>
+              </div>
+
+              <!-- Screen 5: Processing payment -->
+              <div class="screen processing-screen" data-screen="5">
+                <div class="spinner"></div>
+                <div class="processing-title">Securing your Butler...</div>
+                <div class="processing-sub">Confirming payment &bull; Assigning advisor</div>
+              </div>
+
+              <!-- Screen 6: Confirmation -->
+              <div class="screen confirm-screen" data-screen="6">
+                <div class="confirm-check">&#10003;</div>
+                <div class="confirm-title">You're booked!</div>
+                <div class="confirm-sub">Your Butler, <strong>Priya</strong>, is on the way. We'll ping you on WhatsApp in the next 4 minutes.</div>
+                <div class="confirm-ref">Ref: BB-2026-KY8H42</div>
+                <button class="confirm-next">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  Open WhatsApp
+                </button>
+              </div>
+
+              <!-- Screen 7: WhatsApp handoff -->
+              <div class="screen whatsapp-screen" data-screen="7">
+                <div class="wa-bg"></div>
+                <div class="wa-header">
+                  <div style="font-size:0.75rem; margin-right:0.2rem;">&larr;</div>
+                  <div class="wa-avatar">P</div>
+                  <div class="wa-header__meta">
+                    <div class="wa-header__name">Butler Priya &bull; VELTM</div>
+                    <div class="wa-header__status">online</div>
+                  </div>
+                  <div style="font-size:1rem;">&#9742;</div>
+                </div>
+                <div class="wa-body">
+                  <div class="wa-date">Today</div>
+                  <div class="wa-msg wa-msg--butler">
+                    Hi Carl! I'm Priya, your Butler for Kyoto. I've pulled up your trip &mdash; Oct 14&ndash;21, 2 travelers.
+                    <span class="wa-msg__time">9:42 AM &#10003;&#10003;</span>
+                  </div>
+                  <div class="wa-msg wa-msg--butler">
+                    Nice pick on the SEVENSPRINGS code &#128521; <br>Quick q: temples + tea ceremony vibe, or more food &amp; nightlife?
+                    <span class="wa-msg__time">9:42 AM &#10003;&#10003;</span>
+                  </div>
+                  <div class="wa-msg wa-msg--user">
+                    Mix of both! Definitely want to eat our way through
+                    <span class="wa-msg__time">9:44 AM &#10003;&#10003;</span>
+                  </div>
+                  <div class="wa-msg wa-msg--butler">
+                    Love it. I'll have a full itinerary + restaurant list in your inbox by tonight. Anything on the no-go list (allergies, won't-eat, budget ceiling)?
+                    <span class="wa-msg__time">9:45 AM &#10003;&#10003;</span>
+                  </div>
+                </div>
+                <div class="wa-input">
+                  <div class="wa-input-field">Type a message...</div>
+                  <div class="wa-send">&uarr;</div>
+                </div>
+              </div>
+
             </div>
           </div>
+          <button class="replay-btn" id="replayBtn">&#8634; Replay demo</button>
         </div>
       </div>
     </div>
@@ -250,12 +832,73 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>&copy; 2026 VELTM Tours. Hero test — V3 Phone Mockup.</span>
+        <span>&copy; 2026 VELTM Tours. Hero test &mdash; V3 Phone Mockup (live signup flow).</span>
         <span>Butler Button &mdash; Own Your Journey<span class="tm">&trade;</span></span>
       </div>
     </div>
   </footer>
 
+  <script>
+    // ── Animated signup flow driver ──────────────────────────
+    (function(){
+      var screens = document.querySelectorAll('.screen');
+      var stepItems = document.querySelectorAll('#stepList li');
+      var replayBtn = document.getElementById('replayBtn');
+
+      // Timings (ms) for each screen — total ~26s then loop
+      var timeline = [
+        { screen: 1, duration: 3200 },  // Landing with pulsing CTA + tap
+        { screen: 2, duration: 3400 },  // Modal slides up with plan selection
+        { screen: 3, duration: 3800 },  // Form fills with trip details + gmail
+        { screen: 4, duration: 4200 },  // Coupon SEVENSPRINGS applied, 20% off
+        { screen: 5, duration: 2200 },  // Processing payment
+        { screen: 6, duration: 3400 },  // Booked! Open WhatsApp
+        { screen: 7, duration: 5800 }   // WhatsApp chat with Priya
+      ];
+
+      var currentIndex = 0;
+      var timer = null;
+
+      function show(idx){
+        screens.forEach(function(s){ s.removeAttribute('data-active'); });
+        stepItems.forEach(function(li){ li.removeAttribute('data-active'); });
+        var step = timeline[idx];
+        var scr = document.querySelector('[data-screen="'+step.screen+'"]');
+        if (scr) scr.setAttribute('data-active','true');
+        var li = document.querySelector('#stepList li[data-step="'+step.screen+'"]');
+        if (li) li.setAttribute('data-active','true');
+      }
+
+      function advance(){
+        show(currentIndex);
+        timer = setTimeout(function(){
+          currentIndex = (currentIndex + 1) % timeline.length;
+          advance();
+        }, timeline[currentIndex].duration);
+      }
+
+      replayBtn.addEventListener('click', function(){
+        clearTimeout(timer);
+        currentIndex = 0;
+        advance();
+      });
+
+      // Start when phone is visible
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if (e.isIntersecting && !timer) {
+              advance();
+              obs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.3 });
+        obs.observe(document.getElementById('phoneScreen'));
+      } else {
+        advance();
+      }
+    })();
+  </script>
   <script src="../js/main.js"></script>
 </body>
 </html>

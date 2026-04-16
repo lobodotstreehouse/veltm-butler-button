@@ -919,36 +919,77 @@
       letter-spacing: 0.16em; text-transform: uppercase;
       color: rgba(255,255,255,0.25); margin-bottom: 2.5rem;
     }
-    .trust-logos {
-      display: flex; align-items: center; justify-content: center;
-      gap: clamp(2rem, 5vw, 4.5rem); flex-wrap: wrap;
-      margin-bottom: 2.5rem;
+    /* Looping marquee of luxury partner logos */
+    .trust-marquee {
+      position: relative;
+      overflow: hidden;
+      margin: 0 -5vw 2.5rem;
+      padding: 0.5rem 0;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    }
+    .trust-marquee__track {
+      display: flex;
+      gap: clamp(2.5rem, 5vw, 4rem);
+      align-items: center;
+      width: max-content;
+      animation: trust-scroll 45s linear infinite;
+    }
+    .trust-marquee:hover .trust-marquee__track { animation-play-state: paused; }
+    @keyframes trust-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
     .trust-logo {
-      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.55rem; flex-shrink: 0;
+      min-width: 130px;
     }
-    .trust-logo__icon {
-      width: 48px; height: 48px; border-radius: 14px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
+    .trust-logo__mark {
+      width: 70px; height: 70px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.07);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
+      color: rgba(255,255,255,0.85);
+      transition: all 0.3s;
     }
+    .trust-logo:hover .trust-logo__mark {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.14);
+      transform: translateY(-2px);
+    }
+    .trust-logo__mark--letter {
+      font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem; font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .trust-logo__mark--letter.sm { font-size: 1.15rem; letter-spacing: 0.04em; }
+    .trust-logo__mark svg { width: 46px; height: 46px; }
     .trust-logo__label {
-      font-size: 0.68rem; color: rgba(255,255,255,0.35);
-      letter-spacing: -0.01em; max-width: 100px; line-height: 1.4;
+      font-size: 0.62rem; color: rgba(255,255,255,0.38);
+      letter-spacing: 0.02em; max-width: 140px; line-height: 1.35;
+      text-align: center;
     }
     .trust-logo__label strong {
-      color: rgba(255,255,255,0.6); font-weight: 600;
-      display: block;
+      color: rgba(255,255,255,0.65); font-weight: 600;
+      display: block; font-size: 0.68rem; margin-bottom: 0.15rem;
+      letter-spacing: -0.01em;
     }
-    .trust-divider {
-      width: 1px; height: 40px;
-      background: rgba(255,255,255,0.06);
+    .trust-logo--royal .trust-logo__mark {
+      background: rgba(212, 175, 55, 0.06);
+      border-color: rgba(212, 175, 55, 0.22);
+    }
+    .trust-logo--royal:hover .trust-logo__mark {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: rgba(212, 175, 55, 0.35);
+    }
+    .trust-logo--royal .trust-logo__label strong {
+      color: rgba(212, 175, 55, 0.9);
     }
     @media (max-width: 700px) {
-      .trust-divider { display: none; }
-      .trust-logos { gap: 1.5rem; }
+      .trust-logo { min-width: 110px; }
+      .trust-logo__mark { width: 60px; height: 60px; }
     }
     .trust-badges {
       display: flex; align-items: center; justify-content: center;
@@ -1266,38 +1307,174 @@
   <div class="trust-inner">
     <div class="trust-headline">Named supplier contracts. Preferred rates you can verify.</div>
 
-    <div class="trust-logos" data-reveal>
-      <div class="trust-logo">
-        <div class="trust-logo__icon">🏨</div>
-        <div class="trust-logo__label"><strong>Sterling Holiday</strong>60+ resorts, India</div>
-      </div>
+    <div class="trust-marquee" data-reveal aria-label="Preferred luxury partners">
+      <div class="trust-marquee__track">
 
-      <div class="trust-divider"></div>
+        <!-- Pass 1 (visible) -->
 
-      <div class="trust-logo">
-        <div class="trust-logo__icon">🏝</div>
-        <div class="trust-logo__label"><strong>Eight Continents</strong>supplier partner</div>
-      </div>
+        <!-- Luxury Property 1: Taychreggan Hotel (Loch Awe, Scotland) -->
+        <div class="trust-logo" id="logo-taychreggan" data-partner="taychreggan">
+          <div class="trust-logo__mark trust-logo__mark--letter">Tᴄ</div>
+          <div class="trust-logo__label"><strong>Taychreggan Hotel</strong>Loch Awe, Scotland</div>
+        </div>
 
-      <div class="trust-divider"></div>
+        <!-- Luxury Property 2: La Barbarie Hotel (Guernsey) -->
+        <div class="trust-logo" id="logo-labarbarie" data-partner="labarbarie">
+          <div class="trust-logo__mark trust-logo__mark--letter">LB</div>
+          <div class="trust-logo__label"><strong>La Barbarie Hotel</strong>Guernsey, CI</div>
+        </div>
 
-      <div class="trust-logo">
-        <div class="trust-logo__icon">🛎</div>
-        <div class="trust-logo__label"><strong>Bergamont &amp; TSG</strong>boutique chains</div>
-      </div>
+        <!-- Luxury Property 3: Ocho Homes Lux Belfast (Eight Continents) -->
+        <div class="trust-logo" id="logo-ochohomes" data-partner="ochohomes">
+          <div class="trust-logo__mark trust-logo__mark--letter sm">8&deg;</div>
+          <div class="trust-logo__label"><strong>Ocho Homes Lux</strong>Belfast &mdash; Eight Continents</div>
+        </div>
 
-      <div class="trust-divider"></div>
+        <!-- Luxury Property 4: Kingscourt Hotel -->
+        <div class="trust-logo" id="logo-kingscourt" data-partner="kingscourt">
+          <div class="trust-logo__mark trust-logo__mark--letter">Kc</div>
+          <div class="trust-logo__label"><strong>Kingscourt Hotel</strong>United Kingdom</div>
+        </div>
 
-      <div class="trust-logo">
-        <div class="trust-logo__icon">⛰</div>
-        <div class="trust-logo__label"><strong>Snow Valley</strong>Himachal specialists</div>
-      </div>
+        <!-- Luxury Property 5: Episode Hotels -->
+        <div class="trust-logo" id="logo-episode" data-partner="episode">
+          <div class="trust-logo__mark trust-logo__mark--letter sm">EP</div>
+          <div class="trust-logo__label"><strong>Episode Hotels</strong>United Kingdom</div>
+        </div>
 
-      <div class="trust-divider"></div>
+        <!-- Royal Family of Saudi Arabia (House of Saud crest) -->
+        <div class="trust-logo trust-logo--royal" id="logo-house-of-saud" data-partner="house-of-saud" aria-label="House of Saud">
+          <div class="trust-logo__mark">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="House of Saud crest">
+              <!-- Crossed swords -->
+              <g stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round" fill="none">
+                <line x1="14" y1="54" x2="46" y2="18"/>
+                <line x1="50" y1="54" x2="18" y2="18"/>
+                <!-- Hilts -->
+                <circle cx="13" cy="55" r="1.6" fill="#D4AF37"/>
+                <circle cx="51" cy="55" r="1.6" fill="#D4AF37"/>
+                <!-- Sword tips/guards -->
+                <path d="M44 14 L48 18 L44 22" stroke-linejoin="round"/>
+                <path d="M20 14 L16 18 L20 22" stroke-linejoin="round"/>
+              </g>
+              <!-- Palm tree -->
+              <g fill="#D4AF37">
+                <!-- Trunk -->
+                <rect x="31" y="24" width="2" height="18" rx="0.6"/>
+                <!-- Fronds -->
+                <path d="M32 22 C 22 18, 18 10, 22 6 C 24 12, 28 16, 32 20 Z" opacity="0.9"/>
+                <path d="M32 22 C 42 18, 46 10, 42 6 C 40 12, 36 16, 32 20 Z" opacity="0.9"/>
+                <path d="M32 22 C 24 14, 24 6, 30 4 C 30 10, 32 16, 32 20 Z" opacity="0.75"/>
+                <path d="M32 22 C 40 14, 40 6, 34 4 C 34 10, 32 16, 32 20 Z" opacity="0.75"/>
+                <path d="M32 22 C 22 22, 16 18, 18 14 C 22 18, 28 20, 32 20 Z" opacity="0.6"/>
+                <path d="M32 22 C 42 22, 48 18, 46 14 C 42 18, 36 20, 32 20 Z" opacity="0.6"/>
+              </g>
+            </svg>
+          </div>
+          <div class="trust-logo__label"><strong>Royal Family of Saudi Arabia</strong>House of Saud</div>
+        </div>
 
-      <div class="trust-logo">
-        <div class="trust-logo__icon">⛴</div>
-        <div class="trust-logo__label"><strong>Makruzz</strong>Andaman ferries</div>
+        <!-- Royal Family of Dubai (Al Maktoum falcon crest) -->
+        <div class="trust-logo trust-logo--royal" id="logo-royal-family-dubai" data-partner="royal-family-dubai" aria-label="Royal Family of Dubai">
+          <div class="trust-logo__mark">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Royal Family of Dubai crest">
+              <!-- Falcon stylized -->
+              <g fill="#D4AF37">
+                <!-- Head -->
+                <path d="M32 12 C 27 12, 24 16, 24 20 C 24 22, 25 23, 26 24 L 28 26 L 24 30 L 30 29 L 32 32 L 34 29 L 40 30 L 36 26 L 38 24 C 39 23, 40 22, 40 20 C 40 16, 37 12, 32 12 Z" opacity="0.95"/>
+                <!-- Beak -->
+                <path d="M30 22 L 28 24 L 30 25 Z" fill="#0a0a0c"/>
+                <!-- Eye detail -->
+                <circle cx="29" cy="19" r="0.9" fill="#0a0a0c"/>
+                <circle cx="35" cy="19" r="0.9" fill="#0a0a0c"/>
+                <!-- Left wing (outstretched) -->
+                <path d="M28 30 C 18 30, 10 36, 8 44 C 14 40, 20 38, 26 38 L 28 36 Z" opacity="0.85"/>
+                <path d="M26 34 C 18 36, 12 42, 10 48 C 16 44, 22 42, 26 40 Z" opacity="0.7"/>
+                <!-- Right wing (outstretched) -->
+                <path d="M36 30 C 46 30, 54 36, 56 44 C 50 40, 44 38, 38 38 L 36 36 Z" opacity="0.85"/>
+                <path d="M38 34 C 46 36, 52 42, 54 48 C 48 44, 42 42, 38 40 Z" opacity="0.7"/>
+                <!-- Tail feathers -->
+                <path d="M29 38 L 26 54 L 32 48 L 38 54 L 35 38 Z" opacity="0.8"/>
+              </g>
+              <!-- Crown above -->
+              <g fill="#D4AF37" opacity="0.95">
+                <path d="M24 10 L 26 6 L 28 9 L 32 4 L 36 9 L 38 6 L 40 10 Z"/>
+                <rect x="24" y="10" width="16" height="1.2"/>
+              </g>
+            </svg>
+          </div>
+          <div class="trust-logo__label"><strong>Royal Family of Dubai</strong>Al Maktoum</div>
+        </div>
+
+        <!-- Pass 2 (duplicate for seamless loop) aria-hidden -->
+
+        <div class="trust-logo" aria-hidden="true">
+          <div class="trust-logo__mark trust-logo__mark--letter">Tᴄ</div>
+          <div class="trust-logo__label"><strong>Taychreggan Hotel</strong>Loch Awe, Scotland</div>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <div class="trust-logo__mark trust-logo__mark--letter">LB</div>
+          <div class="trust-logo__label"><strong>La Barbarie Hotel</strong>Guernsey, CI</div>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <div class="trust-logo__mark trust-logo__mark--letter sm">8&deg;</div>
+          <div class="trust-logo__label"><strong>Ocho Homes Lux</strong>Belfast &mdash; Eight Continents</div>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <div class="trust-logo__mark trust-logo__mark--letter">Kc</div>
+          <div class="trust-logo__label"><strong>Kingscourt Hotel</strong>United Kingdom</div>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <div class="trust-logo__mark trust-logo__mark--letter sm">EP</div>
+          <div class="trust-logo__label"><strong>Episode Hotels</strong>United Kingdom</div>
+        </div>
+        <div class="trust-logo trust-logo--royal" aria-hidden="true">
+          <div class="trust-logo__mark">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round" fill="none">
+                <line x1="14" y1="54" x2="46" y2="18"/>
+                <line x1="50" y1="54" x2="18" y2="18"/>
+                <circle cx="13" cy="55" r="1.6" fill="#D4AF37"/>
+                <circle cx="51" cy="55" r="1.6" fill="#D4AF37"/>
+                <path d="M44 14 L48 18 L44 22" stroke-linejoin="round"/>
+                <path d="M20 14 L16 18 L20 22" stroke-linejoin="round"/>
+              </g>
+              <g fill="#D4AF37">
+                <rect x="31" y="24" width="2" height="18" rx="0.6"/>
+                <path d="M32 22 C 22 18, 18 10, 22 6 C 24 12, 28 16, 32 20 Z" opacity="0.9"/>
+                <path d="M32 22 C 42 18, 46 10, 42 6 C 40 12, 36 16, 32 20 Z" opacity="0.9"/>
+                <path d="M32 22 C 24 14, 24 6, 30 4 C 30 10, 32 16, 32 20 Z" opacity="0.75"/>
+                <path d="M32 22 C 40 14, 40 6, 34 4 C 34 10, 32 16, 32 20 Z" opacity="0.75"/>
+                <path d="M32 22 C 22 22, 16 18, 18 14 C 22 18, 28 20, 32 20 Z" opacity="0.6"/>
+                <path d="M32 22 C 42 22, 48 18, 46 14 C 42 18, 36 20, 32 20 Z" opacity="0.6"/>
+              </g>
+            </svg>
+          </div>
+          <div class="trust-logo__label"><strong>Royal Family of Saudi Arabia</strong>House of Saud</div>
+        </div>
+        <div class="trust-logo trust-logo--royal" aria-hidden="true">
+          <div class="trust-logo__mark">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#D4AF37">
+                <path d="M32 12 C 27 12, 24 16, 24 20 C 24 22, 25 23, 26 24 L 28 26 L 24 30 L 30 29 L 32 32 L 34 29 L 40 30 L 36 26 L 38 24 C 39 23, 40 22, 40 20 C 40 16, 37 12, 32 12 Z" opacity="0.95"/>
+                <path d="M30 22 L 28 24 L 30 25 Z" fill="#0a0a0c"/>
+                <circle cx="29" cy="19" r="0.9" fill="#0a0a0c"/>
+                <circle cx="35" cy="19" r="0.9" fill="#0a0a0c"/>
+                <path d="M28 30 C 18 30, 10 36, 8 44 C 14 40, 20 38, 26 38 L 28 36 Z" opacity="0.85"/>
+                <path d="M26 34 C 18 36, 12 42, 10 48 C 16 44, 22 42, 26 40 Z" opacity="0.7"/>
+                <path d="M36 30 C 46 30, 54 36, 56 44 C 50 40, 44 38, 38 38 L 36 36 Z" opacity="0.85"/>
+                <path d="M38 34 C 46 36, 52 42, 54 48 C 48 44, 42 42, 38 40 Z" opacity="0.7"/>
+                <path d="M29 38 L 26 54 L 32 48 L 38 54 L 35 38 Z" opacity="0.8"/>
+              </g>
+              <g fill="#D4AF37" opacity="0.95">
+                <path d="M24 10 L 26 6 L 28 9 L 32 4 L 36 9 L 38 6 L 40 10 Z"/>
+                <rect x="24" y="10" width="16" height="1.2"/>
+              </g>
+            </svg>
+          </div>
+          <div class="trust-logo__label"><strong>Royal Family of Dubai</strong>Al Maktoum</div>
+        </div>
+
       </div>
     </div>
 
