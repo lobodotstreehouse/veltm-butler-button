@@ -285,8 +285,33 @@
     .callout-amber { background: var(--amber-light); border: 1px solid #FDE68A; }
     .callout-amber h4 { color: #92400E; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
     .callout-amber p, .callout-amber li { font-size: 0.88rem; color: #78350F; line-height: 1.65; }
+    .callout-green { background: var(--green-light); border: 1px solid #A7F3D0; }
+    .callout-green h4 { color: #065F46; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .callout-green p, .callout-green li { font-size: 0.88rem; color: #064E3B; line-height: 1.65; }
     .callout ul { padding-left: 1.25rem; margin-top: 0.5rem; }
     .callout li { margin-bottom: 0.3rem; }
+
+    /* Showcase v2 mini scorecard (co-primary winner) */
+    .v2-score-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem; margin: 0.75rem 0 1rem;
+    }
+    .v2-score {
+      background: rgba(255,255,255,0.55); border: 1px solid #A7F3D0;
+      border-radius: 8px; padding: 0.55rem 0.7rem;
+    }
+    .v2-score-lbl {
+      font-size: 0.65rem; font-weight: 600; color: #065F46;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      line-height: 1.35;
+    }
+    .v2-score-val {
+      font-size: 1.05rem; font-weight: 700; color: #064E3B;
+      margin-top: 0.15rem;
+    }
+    .v2-score-val span { font-size: 0.72rem; opacity: 0.55; font-weight: 500; }
+    .v2-score-delta { font-size: 0.62rem; color: #047857; margin-top: 0.1rem; }
+    @media (max-width: 768px) { .v2-score-grid { grid-template-columns: repeat(2, 1fr); } }
 
     /* FOOTER */
     footer {
@@ -937,11 +962,13 @@
   <section class="section" id="variants">
     <div class="section-header">
       <p class="section-num">07 — Variant Testing Analysis</p>
-      <h2>15 Variants Across 3 Products + 5 Hero Tests: Declaring Winners</h2>
+      <h2>15 Variants + 5 Hero Tests + Showcase v2 Full-Site: Declaring Winners</h2>
       <p class="section-intro">
-        The messaging bible documents 15 angle variants. Ogilvy's principle: test, then concentrate
-        spend behind the winner. The variant series is a genuine strategic asset — but until a winner
-        is declared and deployed, the site is running A/B tests with no traffic split and no declared champion.
+        The messaging bible documents 15 angle variants, 5 homepage hero treatments, and one
+        full-site showcase experience (<code>/showcase/v2/</code>). Ogilvy's principle: test, then
+        concentrate spend behind the winner — but allow the test plane to be wider than the hero
+        when two treatments win for different traffic. This section declares winners for each of
+        the four tracks and names Showcase v2 as a co-primary homepage winner alongside V4 Cards-First.
       </p>
     </div>
 
@@ -1178,16 +1205,110 @@
             <td>Design-forward audience</td>
             <td><span class="tag tag-amber">Brand-building</span></td>
           </tr>
+          <tr class="winner-row">
+            <td><strong>Showcase v2 — Full-Site</strong></td>
+            <td>Tab-switched hero with four live product panels (itinerary builder, crisis-resolved chat, trip report card, receipt); scroll-pinned "How it works"; dark Apple-style language</td>
+            <td>Demonstrates the product instead of describing it; four distinct proof panels delivered in one visit; highest brand-asset quality on the site; carries value math, scenarios, and pricing inside a single narrative arc</td>
+            <td>Heaviest treatment on the site; JS-dependent panels; more engineering work to port to product pages; first paint heavier than V4</td>
+            <td>Brand-led or referred traffic (press, partner, warm email); organic brand searches; paid brand campaigns</td>
+            <td><span class="tag tag-green">Experience Winner</span><span class="winner-badge">Deploy — Co-Primary</span></td>
+          </tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────
+         Showcase v2 — Co-Primary Winner Audit (equally scored)
+         ───────────────────────────────────────────────────────── -->
+    <div class="callout callout-green" style="margin-top:1.75rem">
+      <h4>Showcase v2 — Co-Primary Homepage Winner (Audited Against the Full 12-Discipline Rubric)</h4>
+      <p>
+        Applying the same audit methodology used for the other 41 pages, <code>/showcase/v2/</code> is
+        scored as an <strong>equally-weighted Deploy winner alongside V4 Cards-First</strong>. The two win
+        for different traffic: V4 converts paid / price-conscious visitors faster; Showcase v2 converts
+        brand-led / referred visitors at a higher caliber. Both are site-caliber improvements over the
+        current hub. Composite <strong>78/100</strong> (+7 vs. site baseline of 71).
+      </p>
+
+      <div class="v2-score-grid">
+        <div class="v2-score">
+          <div class="v2-score-lbl">Brand &amp; Positioning</div>
+          <div class="v2-score-val">92<span>/100</span></div>
+          <div class="v2-score-delta">+14 vs. site · strongest single brand asset</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Offer &amp; Pricing Arch.</div>
+          <div class="v2-score-val">90<span>/100</span></div>
+          <div class="v2-score-delta">+5 · featured indigo card executes Goldilocks well</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Body Copy &amp; Persuasion</div>
+          <div class="v2-score-val">88<span>/100</span></div>
+          <div class="v2-score-delta">+6 · demonstration beats assertion throughout</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Competitive Positioning</div>
+          <div class="v2-score-val">84<span>/100</span></div>
+          <div class="v2-score-delta">+4 · "AI plans, humans handle" baked into panel flow</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Digital &amp; Page Arch.</div>
+          <div class="v2-score-val">82<span>/100</span></div>
+          <div class="v2-score-delta">+21 · scroll-progress, reveal, sticky parallax, tabs</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Regional &amp; Niche Depth</div>
+          <div class="v2-score-val">79<span>/100</span></div>
+          <div class="v2-score-delta">Parity with site; scenario panel covers niches</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Headline Writing</div>
+          <div class="v2-score-val">78<span>/100</span></div>
+          <div class="v2-score-delta">+10 · tab-based hero headlines carry variant logic</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Frequency &amp; Media</div>
+          <div class="v2-score-val">78<span>/100</span></div>
+          <div class="v2-score-delta">+4 · hero panels reusable as ad creative</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Variant Testing Design</div>
+          <div class="v2-score-val">75<span>/100</span></div>
+          <div class="v2-score-delta">+3 · most refined full-page test we have</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Conversion &amp; Direct Resp.</div>
+          <div class="v2-score-val">68<span>/100</span></div>
+          <div class="v2-score-delta">+16 · price + demo + CTA all above fold · still no urgency/capture</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Customer Lifecycle</div>
+          <div class="v2-score-val">65<span>/100</span></div>
+          <div class="v2-score-delta">+2 · no nurture added; P.S. still missing</div>
+        </div>
+        <div class="v2-score">
+          <div class="v2-score-lbl">Social Proof &amp; Trust</div>
+          <div class="v2-score-val">58<span>/100</span></div>
+          <div class="v2-score-delta">+14 · Trip Report adds quote+stats · still unnamed, un-photo'd</div>
+        </div>
+      </div>
+
+      <p><strong>Why it ties V4 Cards-First instead of replacing it (Ogilvy #6 · Repeat Winners · Bly · Channel Fit):</strong></p>
+      <ul>
+        <li><strong>V4 wins for price-led intent</strong> — three product cards visible in the first viewport, zero scroll to qualify, strongest performance for paid search and price-conscious traffic.</li>
+        <li><strong>Showcase v2 wins for brand-led intent</strong> — panel 0 (Itinerary Builder) demonstrates Trip Planning, panel 1 (Crisis Chat) demonstrates Concierge, panel 2 (Trip Report) delivers proof, panel 3 (Receipt) delivers pricing in-context. Four products demonstrated without a single bullet list.</li>
+        <li><strong>Neither fixes the two red disciplines outright</strong> — Social Proof (44→58) and Conversion (52→68) are materially improved by Showcase v2 but still not green. Pre-launch items 02 (named testimonials), 03 (guarantee badges), 04 (launch-window urgency), and 06 (P.S. blocks) apply to both treatments.</li>
+      </ul>
+
+      <p><strong>Deployment verdict:</strong> Route traffic by source. Paid search / retargeting / pricing-page referrals → V4 Cards-First. Press / partner / referral / organic brand / warm email → Showcase v2. Both carry the same footer, pricing, and CTA guarantees — the split is at the hero only. Measure at 30 cases: if one treatment wins by &gt;20% on CTA click-through within its cohort, consolidate. If the gap is &lt;20%, keep both — they serve different buyer moments.</p>
     </div>
 
     <div class="callout callout-indigo" style="margin-top:1.5rem">
       <h4>Recommended A/B Test Protocol (Ogilvy #6 · Repeat Winners / Bly · Testing Framework)</h4>
       <ul>
-        <li><strong>Week 1–2 post-launch:</strong> Deploy V4 Cards-First as homepage default. Run V2 Type-Forward as the B variant. Measure: scroll depth, CTA click rate, pricing page visits.</li>
+        <li><strong>Week 1–2 post-launch — homepage by traffic source:</strong> V4 Cards-First as default for paid search, retargeting, and pricing-page referrals. Showcase v2 for press, partner, referral, organic brand, and warm email. V2 Type-Forward as the tertiary B-test. Measure: scroll depth, CTA click rate, pricing page visits, time-on-hero.</li>
         <li><strong>Product pages:</strong> Trip Planning → V2 Democratization as default. Concierge → V4 Democratization as default. Advisor → V2 Revenue as default.</li>
-        <li><strong>Declare winners at 30 cases</strong> per Phase 3 protocol. Do not change copy until data exists — client fatigue is not a valid reason to abandon a winning variant.</li>
+        <li><strong>Declare winners at 30 cases</strong> per Phase 3 protocol. Do not change copy until data exists — client fatigue is not a valid reason to abandon a winning variant. For the V4 vs. Showcase v2 split: consolidate only if one beats the other by &gt;20% CTA click-through <em>within its own traffic cohort</em>.</li>
       </ul>
     </div>
   </section>
