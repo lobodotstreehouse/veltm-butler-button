@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Butler Button — V4 Parallax Remix</title>
+  <title>Butler Button — V4: Phone Demo</title>
   <meta name="description" content="AI plans it. A human handles it. You enjoy it. Personal travel concierge from $25/day.">
   <link rel="icon" type="image/png" href="../../img/logos/VELTM-icon-indigo.png">
   <script src="https://veltmtours.com/butler-widget.js"></script>
@@ -78,6 +78,20 @@
       --text-mid:  #6e6e73;
       --text-mute: #86868b;
       --text-dim:  #3a3a3c;
+      /* ── phone mockup component tokens ── */
+      --near-black: #09090B;
+      --body-gray:  #4B5563;
+      --border-gray:#E5E7EB;
+      --gray-400:   #9CA3AF;
+      --gray-500:   #6B7280;
+      --gray-600:   #4B5563;
+      --indigo-tint:#EEF2FF;
+      --gradient:   linear-gradient(135deg,#4F46E5,#7C3AED);
+      --gradient-subtle: linear-gradient(135deg,#EEF2FF 0%,#F5F3FF 50%,#FDF2F8 100%);
+      --font-display: Georgia,'Times New Roman',serif;
+      --shadow-sm:  0 1px 3px rgba(0,0,0,0.06);
+      --shadow-xl:  0 20px 60px rgba(0,0,0,0.12);
+      --s4:1rem; --s6:1.5rem; --s8:2rem; --s16:4rem; --s20:5rem;
     }
 
     /* ─── NAV ───────────────────────────────────────────────────── */
@@ -156,35 +170,28 @@
     }
     .hero-grid {
       position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(99,102,241,0.26) 1.2px, transparent 1.2px);
-      background-size: 34px 34px;
-      mask-image: radial-gradient(ellipse 80% 70% at 50% 60%, black 20%, transparent 75%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 60%, black 20%, transparent 75%);
+      background-image: radial-gradient(circle, rgba(99,102,241,0.18) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 60%, black 30%, transparent 80%);
     }
     .hero-orb {
-      position: absolute; width: 820px; height: 820px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(79,70,229,0.22) 0%, rgba(124,58,237,0.08) 45%, transparent 68%);
+      position: absolute; width: 640px; height: 640px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,70,229,0.18) 0%, transparent 65%);
       top: 50%; left: 50%; transform: translate(-50%, -48%);
       animation: orb-pulse 5s ease-in-out infinite;
     }
-    .hero-orb-2 {
-      position: absolute; width: 460px; height: 460px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 60%);
-      top: 38%; left: 62%; transform: translate(-50%, -50%);
-      animation: orb-pulse 7s ease-in-out infinite reverse;
-    }
     @keyframes orb-pulse {
       0%, 100% { opacity: 0.5; transform: translate(-50%,-48%) scale(1); }
-      50%       { opacity: 1;   transform: translate(-50%,-48%) scale(1.15); }
+      50%       { opacity: 1;   transform: translate(-50%,-48%) scale(1.12); }
     }
     .hero-ring {
-      position: absolute; width: 440px; height: 440px; border-radius: 50%;
-      border: 1px solid rgba(99,102,241,0.16);
+      position: absolute; width: 420px; height: 420px; border-radius: 50%;
+      border: 1px solid rgba(99,102,241,0.12);
       top: 50%; left: 50%; transform: translate(-50%, -50%);
       animation: ring-spin 20s linear infinite;
     }
-    .hero-ring-2 { width: 680px; height: 680px; border-color: rgba(99,102,241,0.09); animation-duration: 32s; animation-direction: reverse; }
-    .hero-ring-3 { width: 960px; height: 960px; border-color: rgba(99,102,241,0.04); animation-duration: 50s; }
+    .hero-ring-2 { width: 620px; height: 620px; border-color: rgba(99,102,241,0.06); animation-duration: 30s; animation-direction: reverse; }
     @keyframes ring-spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
 
     .hero-content {
@@ -539,46 +546,12 @@
       position: relative;
       height: 500vh;
       background: var(--dark-2);
-      overflow: clip;
     }
     .how-pin {
       position: sticky; top: 0; height: 100vh;
       overflow: clip;
       display: flex; align-items: center;
     }
-
-    /* ── How It Works — hero-parallax bg layer ─────────────────── */
-    .how-bg-layer {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 90% 70% at 50% 50%, #120830 0%, var(--dark-2) 68%);
-      pointer-events: none; z-index: 0;
-    }
-    .how-grid-layer {
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(99,102,241,0.18) 1.2px, transparent 1.2px);
-      background-size: 36px 36px;
-      mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 15%, transparent 72%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 15%, transparent 72%);
-      pointer-events: none; z-index: 0;
-    }
-    .how-orb {
-      position: absolute; width: 680px; height: 680px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(79,70,229,0.16) 0%, transparent 65%);
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      animation: orb-pulse 7s ease-in-out infinite;
-      pointer-events: none; z-index: 0;
-    }
-    .how-ring {
-      position: absolute; border-radius: 50%;
-      border: 1px solid rgba(99,102,241,0.10);
-      top: 50%; left: 50%;
-      animation: ring-spin 28s linear infinite;
-      pointer-events: none; z-index: 0;
-    }
-    .how-ring--sm  { width: 340px; height: 340px; transform: translate(-50%,-50%); animation-duration: 24s; }
-    .how-ring--md  { width: 560px; height: 560px; transform: translate(-50%,-50%); border-color: rgba(99,102,241,0.06); animation-duration: 36s; animation-direction: reverse; }
-    .how-ring--lg  { width: 780px; height: 780px; transform: translate(-50%,-50%); border-color: rgba(99,102,241,0.03); animation-duration: 52s; }
-    .how-inner { position: relative; z-index: 1; }
     .section-head { text-align: center; margin-bottom: 4.5rem; }
     .section-title-light {
       font-size: clamp(2.2rem, 5vw, 4rem);
@@ -960,77 +933,36 @@
       letter-spacing: 0.16em; text-transform: uppercase;
       color: rgba(255,255,255,0.25); margin-bottom: 2.5rem;
     }
-    /* Looping marquee of luxury partner logos */
-    .trust-marquee {
-      position: relative;
-      overflow: hidden;
-      margin: 0 -5vw 2.5rem;
-      padding: 0.5rem 0;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
-              mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
-    }
-    .trust-marquee__track {
-      display: flex;
-      gap: clamp(2.5rem, 5vw, 4rem);
-      align-items: center;
-      width: max-content;
-      animation: trust-scroll 45s linear infinite;
-    }
-    .trust-marquee:hover .trust-marquee__track { animation-play-state: paused; }
-    @keyframes trust-scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    .trust-logos {
+      display: flex; align-items: center; justify-content: center;
+      gap: clamp(2rem, 5vw, 4.5rem); flex-wrap: wrap;
+      margin-bottom: 2.5rem;
     }
     .trust-logo {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 0.55rem; flex-shrink: 0;
-      min-width: 130px;
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
     }
-    .trust-logo__mark {
-      width: 70px; height: 70px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid rgba(255,255,255,0.07);
+    .trust-logo__icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
       display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.85);
-      transition: all 0.3s;
+      font-size: 1.2rem;
     }
-    .trust-logo:hover .trust-logo__mark {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.14);
-      transform: translateY(-2px);
-    }
-    .trust-logo__mark--letter {
-      font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.6rem; font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-    .trust-logo__mark--letter.sm { font-size: 1.15rem; letter-spacing: 0.04em; }
-    .trust-logo__mark svg { width: 46px; height: 46px; }
     .trust-logo__label {
-      font-size: 0.62rem; color: rgba(255,255,255,0.38);
-      letter-spacing: 0.02em; max-width: 140px; line-height: 1.35;
-      text-align: center;
+      font-size: 0.68rem; color: rgba(255,255,255,0.35);
+      letter-spacing: -0.01em; max-width: 100px; line-height: 1.4;
     }
     .trust-logo__label strong {
-      color: rgba(255,255,255,0.65); font-weight: 600;
-      display: block; font-size: 0.68rem; margin-bottom: 0.15rem;
-      letter-spacing: -0.01em;
+      color: rgba(255,255,255,0.6); font-weight: 600;
+      display: block;
     }
-    .trust-logo--royal .trust-logo__mark {
-      background: rgba(212, 175, 55, 0.06);
-      border-color: rgba(212, 175, 55, 0.22);
-    }
-    .trust-logo--royal:hover .trust-logo__mark {
-      background: rgba(212, 175, 55, 0.1);
-      border-color: rgba(212, 175, 55, 0.35);
-    }
-    .trust-logo--royal .trust-logo__label strong {
-      color: rgba(212, 175, 55, 0.9);
+    .trust-divider {
+      width: 1px; height: 40px;
+      background: rgba(255,255,255,0.06);
     }
     @media (max-width: 700px) {
-      .trust-logo { min-width: 110px; }
-      .trust-logo__mark { width: 60px; height: 60px; }
+      .trust-divider { display: none; }
+      .trust-logos { gap: 1.5rem; }
     }
     .trust-badges {
       display: flex; align-items: center; justify-content: center;
@@ -1057,6 +989,256 @@
     .footer-links a { font-size: 0.75rem; color: var(--text-dim); transition: color 0.2s; }
     .footer-links a:hover { color: #86868b; }
     .footer-legal { font-size: 0.72rem; color: var(--text-dim); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PHONE DEMO SECTION — replaces How It Works (v4)
+       Dark wrapper styled to match v2; phone component from hero-v3
+    ═══════════════════════════════════════════════════════════════ */
+    .phone-demo-section {
+      background: var(--dark-2);
+      padding: clamp(5rem,9vw,9rem) 5vw clamp(6rem,10vw,10rem);
+      position: relative;
+      overflow: clip;
+    }
+    .phone-demo-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 360px;
+      gap: 5rem; align-items: center;
+    }
+    /* Left copy — inverted for dark bg */
+    .phone-demo-copy .how-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--indigo-lt);
+      margin-bottom: 2.5rem; display: block;
+    }
+    .phone-demo-copy h2 {
+      font-size: clamp(2rem,4vw,3.2rem);
+      font-weight: 700; letter-spacing: -0.035em; line-height: 1.1;
+      color: #f5f5f7; margin-bottom: 1rem;
+    }
+    .phone-demo-copy h2 span { color: var(--indigo-lt); }
+    .phone-demo-copy .phone-demo-sub {
+      font-size: 1rem; color: rgba(255,255,255,0.5);
+      line-height: 1.65; letter-spacing: -0.01em;
+      max-width: 420px; margin-bottom: 2.5rem;
+    }
+    /* Step list — dark version of hero-v3__step-list */
+    .phone-step-list {
+      list-style: none; padding: 0; margin: 0 0 2.5rem;
+      display: grid; gap: 0; font-size: 0.85rem;
+    }
+    .phone-step-list li {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.55rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.3);
+      font-size: 0.82rem; letter-spacing: -0.01em;
+      transition: all 0.35s;
+    }
+    .phone-step-list li[data-active="true"] {
+      color: rgba(255,255,255,0.88); font-weight: 600;
+    }
+    .phone-step-list li::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.12); flex-shrink: 0;
+      transition: all 0.35s;
+    }
+    .phone-step-list li[data-active="true"]::before {
+      background: var(--indigo-lt);
+      box-shadow: 0 0 0 4px rgba(129,140,248,0.2);
+    }
+    /* Phone frame ─────────────────────────────────────────────── */
+    .phone {
+      width: 340px;
+      background: var(--near-black);
+      border-radius: 44px;
+      padding: 10px;
+      box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255,255,255,0.1);
+      position: relative;
+    }
+    .phone__notch {
+      width: 120px; height: 28px;
+      background: var(--near-black);
+      border-radius: 0 0 16px 16px;
+      position: absolute;
+      top: 10px; left: 50%; transform: translateX(-50%);
+      z-index: 10;
+    }
+    .phone__screen {
+      background: #EEF2FF;
+      border-radius: 34px;
+      overflow: hidden;
+      height: 640px;
+      position: relative;
+    }
+    /* Screen layering */
+    .screen {
+      position: absolute; inset: 0;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.45s ease;
+      display: flex; flex-direction: column;
+      pointer-events: none; overflow: hidden;
+    }
+    .screen[data-active="true"] { opacity: 1; visibility: visible; }
+    /* Screen 1 */
+    .s1-nav { background:white; border-bottom:1px solid #E5E7EB; padding:36px 14px 8px; display:flex; align-items:center; justify-content:space-between; }
+    .s1-logo { font-family:var(--font-display); font-size:0.9rem; font-weight:700; color:var(--near-black); display:flex; align-items:center; gap:5px; }
+    .s1-logo-icon { width:20px; height:20px; background:var(--gradient); border-radius:4px; display:inline-block; }
+    .s1-nav-pills { display:flex; gap:4px; }
+    .s1-nav-pill { font-size:0.6rem; font-weight:600; padding:3px 8px; border-radius:999px; color:var(--body-gray); }
+    .s1-nav-pill.active { background:var(--indigo); color:white; }
+    .s1-hero { background:linear-gradient(160deg,#EEF2FF 0%,#F5F3FF 60%,#FDF2F8 100%); padding:18px 16px 14px; flex:1; display:flex; flex-direction:column; }
+    .s1-eyebrow { font-size:0.55rem; font-weight:700; letter-spacing:0.14em; color:#22C55E; text-transform:uppercase; display:flex; align-items:center; gap:4px; margin-bottom:8px; }
+    .s1-eyebrow::before { content:''; width:6px; height:6px; border-radius:50%; background:#22C55E; }
+    .s1-h1 { font-family:var(--font-display); font-size:1.35rem; line-height:1.15; color:var(--near-black); margin-bottom:6px; }
+    .s1-h1 span { color:var(--indigo); }
+    .s1-sub { font-size:0.65rem; color:var(--body-gray); line-height:1.5; margin-bottom:12px; }
+    .s1-badges { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:12px; }
+    .s1-badge { display:flex; align-items:center; gap:5px; font-size:0.6rem; color:var(--body-gray); }
+    .s1-badge-icon { width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; flex-shrink:0; }
+    .s1-badge-icon--globe{background:#EEF2FF;} .s1-badge-icon--clock{background:#FEF3C7;} .s1-badge-icon--shield{background:#DCFCE7;} .s1-badge-icon--map{background:#F3E8FF;}
+    .s1-trustline { display:flex; gap:10px; font-size:0.58rem; color:var(--body-gray); margin-bottom:10px; }
+    .s1-widget-preview { background:white; border-radius:12px; padding:10px 12px; box-shadow:0 2px 12px rgba(0,0,0,0.08); margin-top:auto; position:relative; }
+    .s1-widget-header { display:flex; align-items:center; gap:7px; margin-bottom:8px; }
+    .s1-widget-icon { width:24px; height:24px; border-radius:6px; background:var(--indigo); display:flex; align-items:center; justify-content:center; }
+    .s1-widget-title { font-size:0.75rem; font-weight:700; color:var(--near-black); }
+    .s1-widget-sub { font-size:0.58rem; color:var(--gray-400); }
+    .s1-service-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin-bottom:8px; }
+    .s1-card { border:1.5px solid #E5E7EB; border-radius:8px; padding:6px 4px; text-align:center; font-size:0.55rem; color:var(--gray-500); }
+    .s1-card.selected { border-color:var(--indigo); background:#EEF2FF; color:var(--indigo); }
+    .s1-card-name { font-weight:700; font-size:0.6rem; display:block; margin-bottom:1px; }
+    .s1-card-price { font-size:0.55rem; }
+    .s1-cta-btn { width:100%; background:var(--gradient); color:white; border:none; border-radius:8px; padding:8px; font-size:0.7rem; font-weight:700; display:flex; align-items:center; justify-content:center; gap:4px; animation:cta-pulse 2s ease-in-out infinite; position:relative; cursor:pointer; }
+    @keyframes cta-pulse { 0%,100%{box-shadow:0 3px 12px rgba(79,70,229,0.3)} 50%{box-shadow:0 3px 20px rgba(79,70,229,0.55)} }
+    .tap-ring { position:absolute; top:50%; left:50%; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.4); transform:translate(-50%,-50%) scale(0); pointer-events:none; }
+    .screen[data-active="true"] .tap-ring { animation:tap-ring 1.1s ease-out 1.4s; }
+    @keyframes tap-ring { 0%{transform:translate(-50%,-50%) scale(0);opacity:0.7} 100%{transform:translate(-50%,-50%) scale(3.5);opacity:0} }
+    /* Shared widget chrome */
+    .widget-chrome { background:white; display:flex; flex-direction:column; height:100%; padding-top:36px; }
+    .widget-topbar { padding:6px 12px 0; border-bottom:1px solid #F3F4F6; }
+    .widget-brand-row { display:flex; align-items:center; gap:6px; padding-bottom:6px; }
+    .widget-brand-icon { width:22px; height:22px; border-radius:6px; background:var(--indigo); display:flex; align-items:center; justify-content:center; color:white; font-size:0.65rem; }
+    .widget-brand-text strong { font-size:0.72rem; display:block; color:var(--near-black); line-height:1.1; }
+    .widget-brand-text small { font-size:0.55rem; color:var(--gray-400); }
+    .widget-steps { display:flex; align-items:center; padding:7px 0 8px; overflow:hidden; }
+    .wstep { display:flex; flex-direction:column; align-items:center; flex:1; font-size:0.48rem; color:#9CA3AF; gap:2px; }
+    .wstep-circle { width:18px; height:18px; border-radius:50%; background:#E5E7EB; display:flex; align-items:center; justify-content:center; font-size:0.55rem; font-weight:700; color:#9CA3AF; }
+    .wstep.done .wstep-circle { background:var(--indigo); color:white; }
+    .wstep.done .wstep-circle::after { content:'✓'; }
+    .wstep.active .wstep-circle { background:var(--indigo); color:white; }
+    .wstep.active { color:var(--indigo); font-weight:700; }
+    .wstep-line { flex:0.6; height:1.5px; background:#E5E7EB; margin-bottom:12px; }
+    .wstep-line.done { background:var(--indigo); }
+    .widget-body { flex:1; padding:10px 12px; overflow:hidden; display:flex; flex-direction:column; gap:8px; }
+    .widget-section-label { font-size:0.68rem; font-weight:700; color:var(--near-black); margin-bottom:4px; }
+    /* Screen 2 */
+    .svc-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; }
+    .svc-card { border:1.5px solid #E5E7EB; border-radius:8px; padding:7px 4px; text-align:center; cursor:pointer; transition:all 0.2s; }
+    .svc-card.selected { border-color:var(--indigo); background:#EEF2FF; }
+    .svc-card-icon { font-size:0.9rem; margin-bottom:2px; }
+    .svc-card-name { font-size:0.58rem; font-weight:700; color:var(--near-black); display:block; }
+    .svc-card.selected .svc-card-name,.svc-card.selected .svc-card-price { color:var(--indigo); }
+    .svc-card-price { font-size:0.55rem; color:#6B7280; display:block; margin-top:1px; }
+    .svc-card-sub { font-size:0.48rem; color:#9CA3AF; margin-top:1px; display:block; }
+    .dest-field { border:1.5px solid #E5E7EB; border-radius:8px; padding:7px 9px; display:flex; align-items:center; gap:5px; font-size:0.62rem; color:#9CA3AF; background:white; }
+    .dest-tag { display:inline-flex; align-items:center; gap:3px; background:#F3F4F6; border-radius:4px; padding:2px 6px; font-size:0.6rem; font-weight:600; color:var(--near-black); margin-right:4px; }
+    .dest-tag .x { color:#9CA3AF; font-size:0.55rem; }
+    .widget-cta { background:#D1D5DB; color:#6B7280; border:none; border-radius:8px; padding:9px; font-size:0.68rem; font-weight:600; text-align:center; width:100%; }
+    .widget-cta.active { background:var(--gradient); color:white; }
+    .hint-text { font-size:0.52rem; color:#9CA3AF; text-align:center; display:flex; align-items:center; justify-content:center; gap:3px; }
+    /* Screen 3 */
+    .travelers-row { display:flex; align-items:center; gap:6px; }
+    .qty-btn { width:22px; height:22px; border-radius:50%; border:1.5px solid #E5E7EB; display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:var(--near-black); font-weight:600; }
+    .qty-val { font-size:0.75rem; font-weight:700; color:var(--near-black); min-width:14px; text-align:center; }
+    .solo-pill { background:#F3F4F6; border-radius:999px; padding:3px 8px; font-size:0.55rem; font-weight:600; color:var(--gray-600); display:flex; align-items:center; gap:3px; }
+    .solo-hint { font-size:0.55rem; color:#9CA3AF; margin-top:2px; }
+    .date-toggle { display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:6px; }
+    .date-pill { border:1.5px solid #E5E7EB; border-radius:8px; padding:6px; text-align:center; }
+    .date-pill.selected { border-color:var(--indigo); background:#EEF2FF; }
+    .date-pill-label { font-size:0.6rem; font-weight:700; display:block; }
+    .date-pill.selected .date-pill-label { color:var(--indigo); }
+    .date-pill-sub { font-size:0.5rem; color:#9CA3AF; }
+    .date-row { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+    .date-input { border:1.5px solid #E5E7EB; border-radius:8px; padding:6px 7px; font-size:0.6rem; color:var(--near-black); display:flex; align-items:center; gap:4px; }
+    .mix-toggle-row { background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:6px 8px; display:flex; align-items:center; justify-content:space-between; }
+    .mix-toggle-text strong { font-size:0.6rem; color:#92400E; display:block; }
+    .mix-toggle-text small { font-size:0.52rem; color:#B45309; }
+    .toggle-switch { width:26px; height:14px; border-radius:999px; background:#D1D5DB; position:relative; }
+    .toggle-switch::after { content:''; width:10px; height:10px; border-radius:50%; background:white; position:absolute; top:2px; left:2px; box-shadow:0 1px 2px rgba(0,0,0,0.2); }
+    /* Screen 4 */
+    .form-input-row { border:1.5px solid #E5E7EB; border-radius:8px; padding:6px 8px; font-size:0.62rem; color:var(--near-black); background:white; display:flex; align-items:center; gap:5px; }
+    .form-input-row.filled { border-color:#C7D2FE; background:#F5F3FF; }
+    .phone-code { font-size:0.6rem; color:#6B7280; border-right:1px solid #E5E7EB; padding-right:5px; margin-right:2px; }
+    .wa-check-row { display:flex; align-items:center; gap:5px; }
+    .wa-check-circle { width:16px; height:16px; border-radius:50%; border:2px solid #E5E7EB; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .wa-check-circle.checked { background:#25D366; border-color:#25D366; color:white; font-size:0.55rem; }
+    .wa-check-label { font-size:0.6rem; color:var(--near-black); }
+    .promo-row { display:flex; align-items:center; gap:5px; }
+    .promo-input { flex:1; border:1.5px solid #E5E7EB; border-radius:8px; padding:6px 8px; font-size:0.62rem; color:var(--near-black); background:white; font-family:ui-monospace,monospace; letter-spacing:0.06em; display:flex; align-items:center; gap:4px; }
+    .promo-input.applied { border-color:#22C55E; background:#F0FDF4; color:#166534; }
+    .promo-icon { font-size:0.7rem; opacity:0.5; }
+    .promo-apply-btn { background:var(--indigo); color:white; border:none; border-radius:8px; padding:6px 9px; font-size:0.6rem; font-weight:700; flex-shrink:0; }
+    .promo-apply-btn.success { background:#22C55E; }
+    .promo-success-msg { font-size:0.57rem; color:#166534; font-weight:600; display:flex; align-items:center; gap:3px; margin-top:3px; }
+    .order-summary { background:#F9FAFB; border-radius:8px; padding:8px 10px; }
+    .order-summary-label { font-size:0.55rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#9CA3AF; margin-bottom:5px; }
+    .order-row { display:flex; justify-content:space-between; font-size:0.62rem; color:#6B7280; margin-bottom:2px; }
+    .order-row.total { color:var(--near-black); font-weight:700; font-size:0.72rem; border-top:1px solid #E5E7EB; padding-top:5px; margin-top:4px; }
+    .strike { text-decoration:line-through; color:#D1D5DB; margin-right:3px; }
+    .discount-badge { color:#22C55E; font-weight:700; }
+    /* Screen 5 */
+    .processing-screen { background:white; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 20px 20px; }
+    .spinner { width:52px; height:52px; border-radius:50%; border:3px solid #E5E7EB; border-top-color:var(--indigo); animation:spin 0.85s linear infinite; margin:0 auto 14px; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .proc-title { font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--near-black); margin-bottom:4px; }
+    .proc-sub { font-size:0.72rem; color:#6B7280; line-height:1.5; }
+    .proc-dots { display:flex; gap:5px; justify-content:center; margin-top:16px; }
+    .proc-dot { width:6px; height:6px; border-radius:50%; background:var(--indigo); animation:dot-bounce 1.2s ease-in-out infinite; }
+    .proc-dot:nth-child(2){animation-delay:0.2s} .proc-dot:nth-child(3){animation-delay:0.4s}
+    @keyframes dot-bounce { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+    /* Screen 6 */
+    .confirm-screen { background:linear-gradient(180deg,#F0FDF4 0%,white 50%); padding:36px 20px 20px; align-items:center; justify-content:center; text-align:center; }
+    .confirm-check { width:60px; height:60px; border-radius:50%; background:#22C55E; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:white; font-size:1.6rem; animation:pop-in 0.55s cubic-bezier(0.4,0,0.2,1); }
+    @keyframes pop-in { 0%{transform:scale(0);opacity:0} 60%{transform:scale(1.15);opacity:1} 100%{transform:scale(1)} }
+    .confirm-title { font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--near-black); margin-bottom:6px; }
+    .confirm-sub { font-size:0.72rem; color:var(--body-gray); line-height:1.55; margin-bottom:14px; padding:0 6px; }
+    .confirm-detail-box { background:white; border:1px solid #E5E7EB; border-radius:10px; padding:10px 14px; text-align:left; font-size:0.62rem; color:#6B7280; width:100%; margin-bottom:14px; }
+    .confirm-detail-row { display:flex; justify-content:space-between; margin-bottom:4px; }
+    .confirm-detail-row:last-child{margin-bottom:0}
+    .confirm-detail-row strong { color:var(--near-black); }
+    .confirm-ref { font-family:ui-monospace,monospace; font-size:0.6rem; color:#9CA3AF; margin-bottom:14px; }
+    .wa-cta-btn { background:#25D366; color:white; border:none; border-radius:999px; padding:10px 20px; font-size:0.75rem; font-weight:700; display:inline-flex; align-items:center; gap:6px; }
+    .wa-logo { width:14px; height:14px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    /* Screen 7 */
+    .wa-screen { background:#E5DDD5; display:flex; flex-direction:column; }
+    .wa-header { background:#075E54; color:white; padding:38px 12px 8px; display:flex; align-items:center; gap:8px; }
+    .wa-back{font-size:0.75rem;opacity:0.9}
+    .wa-avatar { width:32px; height:32px; border-radius:50%; background:var(--indigo); display:flex; align-items:center; justify-content:center; color:white; font-size:0.75rem; font-weight:700; font-family:var(--font-display); }
+    .wa-name{font-size:0.75rem;font-weight:600;line-height:1.2} .wa-status{font-size:0.55rem;opacity:0.8}
+    .wa-icons { margin-left:auto; display:flex; gap:10px; font-size:0.85rem; opacity:0.85; }
+    .wa-body { flex:1; padding:8px 8px 4px; display:flex; flex-direction:column; gap:5px; overflow:hidden; }
+    .wa-date-chip { align-self:center; background:rgba(225,245,254,0.92); padding:2px 8px; border-radius:6px; font-size:0.52rem; color:#4A5568; margin-bottom:2px; }
+    .wa-msg { max-width:86%; padding:6px 8px 5px; border-radius:8px; font-size:0.65rem; line-height:1.45; box-shadow:0 1px 1px rgba(0,0,0,0.1); opacity:0; animation:wa-pop 0.35s ease forwards; }
+    .wa-msg--butler { background:white; align-self:flex-start; border-top-left-radius:2px; }
+    .wa-msg--user { background:#D9FDD3; align-self:flex-end; border-top-right-radius:2px; }
+    .wa-time { font-size:0.5rem; color:rgba(0,0,0,0.4); float:right; margin-left:6px; margin-top:2px; }
+    .screen[data-active="true"] .wa-msg:nth-child(2){animation-delay:0.3s}
+    .screen[data-active="true"] .wa-msg:nth-child(3){animation-delay:1.4s}
+    .screen[data-active="true"] .wa-msg:nth-child(4){animation-delay:2.3s}
+    .screen[data-active="true"] .wa-msg:nth-child(5){animation-delay:3.2s}
+    @keyframes wa-pop { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .wa-input-bar { background:#F0F2F5; padding:5px 8px; display:flex; align-items:center; gap:5px; }
+    .wa-input-box { flex:1; background:white; border-radius:20px; padding:5px 10px; font-size:0.6rem; color:#9CA3AF; }
+    .wa-send-btn { width:28px; height:28px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; color:white; font-size:0.8rem; }
+    /* Replay */
+    .replay-btn { position:absolute; bottom:-44px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,0.95); border:1px solid var(--border-gray); border-radius:999px; padding:0.3rem 0.9rem; font-size:0.7rem; color:var(--indigo); font-weight:600; display:inline-flex; align-items:center; gap:0.3rem; box-shadow:var(--shadow-sm); cursor:pointer; }
+    .replay-btn:hover { background:var(--indigo-tint); }
+    @media(max-width:860px){
+      .phone-demo-inner { grid-template-columns:1fr; justify-items:center; }
+      .phone-demo-copy { text-align:center; }
+      .phone-demo-copy .phone-demo-sub { margin-left:auto; margin-right:auto; }
+      .phone-step-list { display:none; }
+    }
   </style>
 </head>
 <body>
@@ -1083,10 +1265,8 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-orb"></div>
-  <div class="hero-orb-2"></div>
   <div class="hero-ring"></div>
   <div class="hero-ring hero-ring-2"></div>
-  <div class="hero-ring hero-ring-3"></div>
 
   <div class="hero-content">
     <div class="hero-badge">
@@ -1095,9 +1275,9 @@
     </div>
 
     <h1 class="hero-h1">
-      Save $1,800+ per trip.<br><span>Pay your advisor $25 a day.</span>
+      Your personal<br><span>travel expert.</span>
     </h1>
-    <p class="hero-sub">AI plans it. A human handles it. Your hotel savings cover the fee. From $25/day.</p>
+    <p class="hero-sub">AI plans it. A human handles it. You enjoy it. From $25/day.</p>
 
     <!-- CLICKABLE TABS -->
     <div class="hero-tabs" id="hero-tabs">
@@ -1242,12 +1422,12 @@
               <div class="report-stat-lbl">surprise fees<br>or upsells</div>
             </div>
           </div>
-          <div class="report-quote vp-item" style="--d:0.3s">Saved $1,025 on the honeymoon. Didn't lift a finger.</div>
+          <div class="report-quote vp-item" style="--d:0.3s">I didn't think about logistics once. Not once.</div>
           <div class="report-attr vp-item" style="--d:0.36s">
-            <span>— The Patel family, Andaman &amp; Kerala, 14 nights</span>
+            <span>— Marcus T., Kyoto + Tokyo</span>
             <span class="report-stars">★★★★★</span>
           </div>
-          <div class="report-tag vp-item" style="--d:0.42s">Powered by Butler Button · $25/day · Preferred rates from 500+ suppliers</div>
+          <div class="report-tag vp-item" style="--d:0.42s">Powered by Butler Button · $25/day</div>
         </div>
       </a>
 
@@ -1348,392 +1528,55 @@
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-trust">
   <div class="trust-inner">
-    <div class="trust-headline">Named supplier contracts. Preferred rates you can verify.</div>
+    <div class="trust-headline">Trusted by discerning travelers and industry leaders</div>
 
-    <div class="trust-marquee" data-reveal aria-label="Preferred luxury partners">
-      <div class="trust-marquee__track">
+    <div class="trust-logos" data-reveal>
+      <div class="trust-logo">
+        <div class="trust-logo__icon">🏨</div>
+        <div class="trust-logo__label"><strong>500+</strong>hotel partners worldwide</div>
+      </div>
 
-        <!-- Pass 1 (visible) — verified partner list supplied 2026-04-16 -->
+      <div class="trust-divider"></div>
 
-        <!-- India · Kerala -->
-        <div class="trust-logo" id="logo-woodnote-thekkady" data-partner="woodnote-thekkady">
-          <div class="trust-logo__mark trust-logo__mark--letter">WN</div>
-          <div class="trust-logo__label"><strong>Woodnote Thekkady</strong>Kumily, Kerala · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-winternote-munnar" data-partner="winternote-munnar">
-          <div class="trust-logo__mark trust-logo__mark--letter">WM</div>
-          <div class="trust-logo__label"><strong>Winternote Resort Munnar</strong>Anachal, Kerala · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-olives-wayanad" data-partner="olives-wayanad">
-          <div class="trust-logo__mark trust-logo__mark--letter">OL</div>
-          <div class="trust-logo__label"><strong>Olives Home Stay &amp; Resort</strong>Kalpetta, Wayanad · ★★★★</div>
-        </div>
+      <div class="trust-logo">
+        <div class="trust-logo__icon">✈</div>
+        <div class="trust-logo__label"><strong>Private aviation</strong>charter &amp; luxury air</div>
+      </div>
 
-        <!-- India · Uttarakhand -->
-        <div class="trust-logo" id="logo-sterling-rudraprayag" data-partner="sterling-rudraprayag">
-          <div class="trust-logo__mark trust-logo__mark--letter sm">SKR</div>
-          <div class="trust-logo__label"><strong>Sterling Kastoori Rudraprayag</strong>Uttarakhand · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-sterling-dehradun" data-partner="sterling-dehradun">
-          <div class="trust-logo__mark trust-logo__mark--letter">GK</div>
-          <div class="trust-logo__label"><strong>Sterling GK Exotica Dehradun</strong>Uttarakhand · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-sterling-lansdowne" data-partner="sterling-lansdowne">
-          <div class="trust-logo__mark trust-logo__mark--letter">VP</div>
-          <div class="trust-logo__label"><strong>Sterling Valley of Pine</strong>Lansdowne, Uttarakhand · ★★★★</div>
-        </div>
+      <div class="trust-divider"></div>
 
-        <!-- India · Rajasthan / Odisha / UP -->
-        <div class="trust-logo" id="logo-sterling-jodhpur" data-partner="sterling-jodhpur">
-          <div class="trust-logo__mark trust-logo__mark--letter">AM</div>
-          <div class="trust-logo__label"><strong>Sterling Amargarh Jodhpur</strong>Rajasthan · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-sterling-puri" data-partner="sterling-puri">
-          <div class="trust-logo__mark trust-logo__mark--letter">AS</div>
-          <div class="trust-logo__label"><strong>Sterling Arka Suites Puri</strong>Odisha · ★★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-sterling-ayodhya" data-partner="sterling-ayodhya">
-          <div class="trust-logo__mark trust-logo__mark--letter">SY</div>
-          <div class="trust-logo__label"><strong>Sterling Saryu Ayodhya</strong>Uttar Pradesh · ★★★★</div>
-        </div>
+      <div class="trust-logo">
+        <div class="trust-logo__icon">👑</div>
+        <div class="trust-logo__label"><strong>Royal families</strong>Saudi Arabia &amp; UAE</div>
+      </div>
 
-        <!-- India · Andaman & Nicobar -->
-        <div class="trust-logo" id="logo-seashell-havelock" data-partner="seashell-havelock">
-          <div class="trust-logo__mark trust-logo__mark--letter">SH</div>
-          <div class="trust-logo__label"><strong>SeaShell Havelock</strong>Swaraj Dweep · ★★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-seashell-neil" data-partner="seashell-neil">
-          <div class="trust-logo__mark trust-logo__mark--letter">SN</div>
-          <div class="trust-logo__label"><strong>SeaShell Neil</strong>Shaheed Dweep · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-silver-sand-neil" data-partner="silver-sand-neil">
-          <div class="trust-logo__mark trust-logo__mark--letter">SS</div>
-          <div class="trust-logo__label"><strong>Silver Sand Beach Resort</strong>Neil Island · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-mansha-palace" data-partner="mansha-palace">
-          <div class="trust-logo__mark trust-logo__mark--letter">MP</div>
-          <div class="trust-logo__label"><strong>Mansha Palace</strong>Port Blair · ★★★★</div>
-        </div>
+      <div class="trust-divider"></div>
 
-        <!-- India · West Bengal / Himachal Pradesh -->
-        <div class="trust-logo" id="logo-summit-montana" data-partner="summit-montana">
-          <div class="trust-logo__mark trust-logo__mark--letter">SM</div>
-          <div class="trust-logo__label"><strong>Summit Montana Suites &amp; Spa</strong>Darjeeling · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-summit-swiss" data-partner="summit-swiss">
-          <div class="trust-logo__mark trust-logo__mark--letter">SW</div>
-          <div class="trust-logo__label"><strong>Summit Swiss Heritage Hotel &amp; Spa</strong>Darjeeling · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-dpolo-dharamshala" data-partner="dpolo-dharamshala">
-          <div class="trust-logo__mark trust-logo__mark--letter">DP</div>
-          <div class="trust-logo__label"><strong>D&rsquo;Polo Club &amp; Spa Resort</strong>Dharamshala · ★★★★</div>
-        </div>
-        <div class="trust-logo" id="logo-rosetum-kasauli" data-partner="rosetum-kasauli">
-          <div class="trust-logo__mark trust-logo__mark--letter">RK</div>
-          <div class="trust-logo__label"><strong>Rosetum Kasauli</strong>Himachal Pradesh · ★★★★</div>
-        </div>
+      <div class="trust-logo">
+        <div class="trust-logo__icon">🌟</div>
+        <div class="trust-logo__label"><strong>Private clientele</strong>by referral only</div>
+      </div>
 
-        <!-- United Kingdom -->
-        <div class="trust-logo" id="logo-ochohomes" data-partner="ochohomes">
-          <div class="trust-logo__mark trust-logo__mark--letter sm">8&deg;</div>
-          <div class="trust-logo__label"><strong>Ocho Homes Lux</strong>Belfast &mdash; Eight Continents</div>
-        </div>
-        <div class="trust-logo" id="logo-taychreggan" data-partner="taychreggan">
-          <div class="trust-logo__mark trust-logo__mark--letter">Tᴄ</div>
-          <div class="trust-logo__label"><strong>Taychreggan Hotel</strong>Loch Awe, Scotland</div>
-        </div>
-        <div class="trust-logo" id="logo-labarbarie" data-partner="labarbarie">
-          <div class="trust-logo__mark trust-logo__mark--letter">LB</div>
-          <div class="trust-logo__label"><strong>La Barbarie Hotel</strong>Guernsey &mdash; Eight Continents</div>
-        </div>
-        <div class="trust-logo" id="logo-kings-court" data-partner="kings-court">
-          <div class="trust-logo__mark trust-logo__mark--letter">KC</div>
-          <div class="trust-logo__label"><strong>Kings Court Hotel</strong>Alcester, Warwickshire</div>
-        </div>
+      <div class="trust-divider"></div>
 
-        <!-- Tanzania -->
-        <div class="trust-logo" id="logo-utende-seacliff" data-partner="utende-seacliff">
-          <div class="trust-logo__mark trust-logo__mark--letter">US</div>
-          <div class="trust-logo__label"><strong>Utende Seacliff Resort</strong>Mafia Island, Tanzania</div>
-        </div>
-        <div class="trust-logo" id="logo-treetop-zanzibar" data-partner="treetop-zanzibar">
-          <div class="trust-logo__mark trust-logo__mark--letter">TZ</div>
-          <div class="trust-logo__label"><strong>Treetop by Eight Continents</strong>Zanzibar</div>
-        </div>
-
-        <!-- Maldives -->
-        <div class="trust-logo" id="logo-himeyn-maldives" data-partner="himeyn-maldives">
-          <div class="trust-logo__mark trust-logo__mark--letter">HM</div>
-          <div class="trust-logo__label"><strong>Himeyn Beach Maldives</strong>Haa Dhaalu Atoll</div>
-        </div>
-
-        <!-- Royal Family of Saudi Arabia (House of Saud crest) -->
-        <div class="trust-logo trust-logo--royal" id="logo-house-of-saud" data-partner="house-of-saud" aria-label="House of Saud">
-          <div class="trust-logo__mark">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="House of Saud crest">
-              <!-- Crossed swords -->
-              <g stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round" fill="none">
-                <line x1="14" y1="54" x2="46" y2="18"/>
-                <line x1="50" y1="54" x2="18" y2="18"/>
-                <!-- Hilts -->
-                <circle cx="13" cy="55" r="1.6" fill="#D4AF37"/>
-                <circle cx="51" cy="55" r="1.6" fill="#D4AF37"/>
-                <!-- Sword tips/guards -->
-                <path d="M44 14 L48 18 L44 22" stroke-linejoin="round"/>
-                <path d="M20 14 L16 18 L20 22" stroke-linejoin="round"/>
-              </g>
-              <!-- Palm tree -->
-              <g fill="#D4AF37">
-                <!-- Trunk -->
-                <rect x="31" y="24" width="2" height="18" rx="0.6"/>
-                <!-- Fronds -->
-                <path d="M32 22 C 22 18, 18 10, 22 6 C 24 12, 28 16, 32 20 Z" opacity="0.9"/>
-                <path d="M32 22 C 42 18, 46 10, 42 6 C 40 12, 36 16, 32 20 Z" opacity="0.9"/>
-                <path d="M32 22 C 24 14, 24 6, 30 4 C 30 10, 32 16, 32 20 Z" opacity="0.75"/>
-                <path d="M32 22 C 40 14, 40 6, 34 4 C 34 10, 32 16, 32 20 Z" opacity="0.75"/>
-                <path d="M32 22 C 22 22, 16 18, 18 14 C 22 18, 28 20, 32 20 Z" opacity="0.6"/>
-                <path d="M32 22 C 42 22, 48 18, 46 14 C 42 18, 36 20, 32 20 Z" opacity="0.6"/>
-              </g>
-            </svg>
-          </div>
-          <div class="trust-logo__label"><strong>Royal Family of Saudi Arabia</strong>House of Saud</div>
-        </div>
-
-        <!-- Royal Family of Dubai (Al Maktoum falcon crest) -->
-        <div class="trust-logo trust-logo--royal" id="logo-royal-family-dubai" data-partner="royal-family-dubai" aria-label="Royal Family of Dubai">
-          <div class="trust-logo__mark">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Royal Family of Dubai crest">
-              <!-- Falcon stylized -->
-              <g fill="#D4AF37">
-                <!-- Head -->
-                <path d="M32 12 C 27 12, 24 16, 24 20 C 24 22, 25 23, 26 24 L 28 26 L 24 30 L 30 29 L 32 32 L 34 29 L 40 30 L 36 26 L 38 24 C 39 23, 40 22, 40 20 C 40 16, 37 12, 32 12 Z" opacity="0.95"/>
-                <!-- Beak -->
-                <path d="M30 22 L 28 24 L 30 25 Z" fill="#0a0a0c"/>
-                <!-- Eye detail -->
-                <circle cx="29" cy="19" r="0.9" fill="#0a0a0c"/>
-                <circle cx="35" cy="19" r="0.9" fill="#0a0a0c"/>
-                <!-- Left wing (outstretched) -->
-                <path d="M28 30 C 18 30, 10 36, 8 44 C 14 40, 20 38, 26 38 L 28 36 Z" opacity="0.85"/>
-                <path d="M26 34 C 18 36, 12 42, 10 48 C 16 44, 22 42, 26 40 Z" opacity="0.7"/>
-                <!-- Right wing (outstretched) -->
-                <path d="M36 30 C 46 30, 54 36, 56 44 C 50 40, 44 38, 38 38 L 36 36 Z" opacity="0.85"/>
-                <path d="M38 34 C 46 36, 52 42, 54 48 C 48 44, 42 42, 38 40 Z" opacity="0.7"/>
-                <!-- Tail feathers -->
-                <path d="M29 38 L 26 54 L 32 48 L 38 54 L 35 38 Z" opacity="0.8"/>
-              </g>
-              <!-- Crown above -->
-              <g fill="#D4AF37" opacity="0.95">
-                <path d="M24 10 L 26 6 L 28 9 L 32 4 L 36 9 L 38 6 L 40 10 Z"/>
-                <rect x="24" y="10" width="16" height="1.2"/>
-              </g>
-            </svg>
-          </div>
-          <div class="trust-logo__label"><strong>Royal Family of Dubai</strong>Al Maktoum</div>
-        </div>
-
-        <!-- Private aviation capability — supplier undisclosed -->
-        <div class="trust-logo" id="logo-aviation" data-partner="aviation">
-          <div class="trust-logo__mark trust-logo__mark--letter">✈</div>
-          <div class="trust-logo__label"><strong>Private Aviation</strong>Charter access · via supplier partners</div>
-        </div>
-
-        <!-- Palace on Wheels luxury train (Eight Continents Hotels) -->
-        <div class="trust-logo" id="logo-palace-on-wheels" data-partner="palace-on-wheels">
-          <div class="trust-logo__mark trust-logo__mark--letter sm">PoW</div>
-          <div class="trust-logo__label"><strong>Palace on Wheels</strong>Luxury train &mdash; Eight Continents Hotels</div>
-        </div>
-
-        <!-- Pass 2 (duplicate for seamless loop) aria-hidden — mirrors Pass 1 exactly -->
-
-        <!-- India · Kerala -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">WN</div>
-          <div class="trust-logo__label"><strong>Woodnote Thekkady</strong>Kumily, Kerala · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">WM</div>
-          <div class="trust-logo__label"><strong>Winternote Resort Munnar</strong>Anachal, Kerala · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">OL</div>
-          <div class="trust-logo__label"><strong>Olives Home Stay &amp; Resort</strong>Kalpetta, Wayanad · ★★★★</div>
-        </div>
-
-        <!-- India · Uttarakhand -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter sm">SKR</div>
-          <div class="trust-logo__label"><strong>Sterling Kastoori Rudraprayag</strong>Uttarakhand · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">GK</div>
-          <div class="trust-logo__label"><strong>Sterling GK Exotica Dehradun</strong>Uttarakhand · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">VP</div>
-          <div class="trust-logo__label"><strong>Sterling Valley of Pine</strong>Lansdowne, Uttarakhand · ★★★★</div>
-        </div>
-
-        <!-- India · Rajasthan / Odisha / UP -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">AM</div>
-          <div class="trust-logo__label"><strong>Sterling Amargarh Jodhpur</strong>Rajasthan · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">AS</div>
-          <div class="trust-logo__label"><strong>Sterling Arka Suites Puri</strong>Odisha · ★★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">SY</div>
-          <div class="trust-logo__label"><strong>Sterling Saryu Ayodhya</strong>Uttar Pradesh · ★★★★</div>
-        </div>
-
-        <!-- India · Andaman & Nicobar -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">SH</div>
-          <div class="trust-logo__label"><strong>SeaShell Havelock</strong>Swaraj Dweep · ★★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">SN</div>
-          <div class="trust-logo__label"><strong>SeaShell Neil</strong>Shaheed Dweep · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">SS</div>
-          <div class="trust-logo__label"><strong>Silver Sand Beach Resort</strong>Neil Island · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">MP</div>
-          <div class="trust-logo__label"><strong>Mansha Palace</strong>Port Blair · ★★★★</div>
-        </div>
-
-        <!-- India · West Bengal / Himachal Pradesh -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">SM</div>
-          <div class="trust-logo__label"><strong>Summit Montana Suites &amp; Spa</strong>Darjeeling · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">SW</div>
-          <div class="trust-logo__label"><strong>Summit Swiss Heritage Hotel &amp; Spa</strong>Darjeeling · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">DP</div>
-          <div class="trust-logo__label"><strong>D&rsquo;Polo Club &amp; Spa Resort</strong>Dharamshala · ★★★★</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">RK</div>
-          <div class="trust-logo__label"><strong>Rosetum Kasauli</strong>Himachal Pradesh · ★★★★</div>
-        </div>
-
-        <!-- United Kingdom -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter sm">8&deg;</div>
-          <div class="trust-logo__label"><strong>Ocho Homes Lux</strong>Belfast &mdash; Eight Continents</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">Tᴄ</div>
-          <div class="trust-logo__label"><strong>Taychreggan Hotel</strong>Loch Awe, Scotland</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">LB</div>
-          <div class="trust-logo__label"><strong>La Barbarie Hotel</strong>Guernsey &mdash; Eight Continents</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">KC</div>
-          <div class="trust-logo__label"><strong>Kings Court Hotel</strong>Alcester, Warwickshire</div>
-        </div>
-
-        <!-- Tanzania -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">US</div>
-          <div class="trust-logo__label"><strong>Utende Seacliff Resort</strong>Mafia Island, Tanzania</div>
-        </div>
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">TZ</div>
-          <div class="trust-logo__label"><strong>Treetop by Eight Continents</strong>Zanzibar</div>
-        </div>
-
-        <!-- Maldives -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">HM</div>
-          <div class="trust-logo__label"><strong>Himeyn Beach Maldives</strong>Haa Dhaalu Atoll</div>
-        </div>
-
-        <!-- Royal Family of Saudi Arabia -->
-        <div class="trust-logo trust-logo--royal" aria-hidden="true">
-          <div class="trust-logo__mark">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g stroke="#D4AF37" stroke-width="1.6" stroke-linecap="round" fill="none">
-                <line x1="14" y1="54" x2="46" y2="18"/>
-                <line x1="50" y1="54" x2="18" y2="18"/>
-                <circle cx="13" cy="55" r="1.6" fill="#D4AF37"/>
-                <circle cx="51" cy="55" r="1.6" fill="#D4AF37"/>
-                <path d="M44 14 L48 18 L44 22" stroke-linejoin="round"/>
-                <path d="M20 14 L16 18 L20 22" stroke-linejoin="round"/>
-              </g>
-              <g fill="#D4AF37">
-                <rect x="31" y="24" width="2" height="18" rx="0.6"/>
-                <path d="M32 22 C 22 18, 18 10, 22 6 C 24 12, 28 16, 32 20 Z" opacity="0.9"/>
-                <path d="M32 22 C 42 18, 46 10, 42 6 C 40 12, 36 16, 32 20 Z" opacity="0.9"/>
-                <path d="M32 22 C 24 14, 24 6, 30 4 C 30 10, 32 16, 32 20 Z" opacity="0.75"/>
-                <path d="M32 22 C 40 14, 40 6, 34 4 C 34 10, 32 16, 32 20 Z" opacity="0.75"/>
-                <path d="M32 22 C 22 22, 16 18, 18 14 C 22 18, 28 20, 32 20 Z" opacity="0.6"/>
-                <path d="M32 22 C 42 22, 48 18, 46 14 C 42 18, 36 20, 32 20 Z" opacity="0.6"/>
-              </g>
-            </svg>
-          </div>
-          <div class="trust-logo__label"><strong>Royal Family of Saudi Arabia</strong>House of Saud</div>
-        </div>
-
-        <!-- Royal Family of Dubai -->
-        <div class="trust-logo trust-logo--royal" aria-hidden="true">
-          <div class="trust-logo__mark">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g fill="#D4AF37">
-                <path d="M32 12 C 27 12, 24 16, 24 20 C 24 22, 25 23, 26 24 L 28 26 L 24 30 L 30 29 L 32 32 L 34 29 L 40 30 L 36 26 L 38 24 C 39 23, 40 22, 40 20 C 40 16, 37 12, 32 12 Z" opacity="0.95"/>
-                <path d="M30 22 L 28 24 L 30 25 Z" fill="#0a0a0c"/>
-                <circle cx="29" cy="19" r="0.9" fill="#0a0a0c"/>
-                <circle cx="35" cy="19" r="0.9" fill="#0a0a0c"/>
-                <path d="M28 30 C 18 30, 10 36, 8 44 C 14 40, 20 38, 26 38 L 28 36 Z" opacity="0.85"/>
-                <path d="M26 34 C 18 36, 12 42, 10 48 C 16 44, 22 42, 26 40 Z" opacity="0.7"/>
-                <path d="M36 30 C 46 30, 54 36, 56 44 C 50 40, 44 38, 38 38 L 36 36 Z" opacity="0.85"/>
-                <path d="M38 34 C 46 36, 52 42, 54 48 C 48 44, 42 42, 38 40 Z" opacity="0.7"/>
-                <path d="M29 38 L 26 54 L 32 48 L 38 54 L 35 38 Z" opacity="0.8"/>
-              </g>
-              <g fill="#D4AF37" opacity="0.95">
-                <path d="M24 10 L 26 6 L 28 9 L 32 4 L 36 9 L 38 6 L 40 10 Z"/>
-                <rect x="24" y="10" width="16" height="1.2"/>
-              </g>
-            </svg>
-          </div>
-          <div class="trust-logo__label"><strong>Royal Family of Dubai</strong>Al Maktoum</div>
-        </div>
-
-        <!-- Private aviation -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter">✈</div>
-          <div class="trust-logo__label"><strong>Private Aviation</strong>Charter access · via supplier partners</div>
-        </div>
-
-        <!-- Palace on Wheels -->
-        <div class="trust-logo" aria-hidden="true">
-          <div class="trust-logo__mark trust-logo__mark--letter sm">PoW</div>
-          <div class="trust-logo__label"><strong>Palace on Wheels</strong>Luxury train &mdash; Eight Continents Hotels</div>
-        </div>
-
+      <div class="trust-logo">
+        <div class="trust-logo__icon">🇮🇳</div>
+        <div class="trust-logo__label"><strong>DPIIT certified</strong>Startup India</div>
       </div>
     </div>
 
     <div class="trust-badges" data-reveal style="--delay:.15s">
       <div class="trust-badge">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.76 3.57L13 5.24l-3 2.92.71 4.12L7 10.27 3.29 12.28 4 8.16 1 5.24l4.24-.67L7 1z" fill="#fbbf24"/></svg>
-        500+ properties · 10–59% negotiated off published rates
+        Serving heads of state since 2019
       </div>
       <div class="trust-badge">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.76 3.57L13 5.24l-3 2.92.71 4.12L7 10.27 3.29 12.28 4 8.16 1 5.24l4.24-.67L7 1z" fill="#fbbf24"/></svg>
-        100% independent — no affiliate agreements, no upsells
+        100% independent — no affiliate agreements
       </div>
       <div class="trust-badge">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.76 3.57L13 5.24l-3 2.92.71 4.12L7 10.27 3.29 12.28 4 8.16 1 5.24l4.24-.67L7 1z" fill="#fbbf24"/></svg>
-        Same buying power retained by heads of state since 2019
+        Exclusive celebrity &amp; UHNW travel management
       </div>
     </div>
   </div>
@@ -1750,88 +1593,196 @@
     Finally possible.
   </h2>
   <p class="statement-sub" data-reveal style="--delay:.3s">
-    Five-star planning, the preferred rates of a global travel buyer, and real-time concierge support —
+    Five-star planning and real-time concierge support —
     without the five-star price tag.
   </p>
 </section>
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     HOW IT WORKS (sticky parallax + clickable steps + image slides)
+     HOW IT WORKS — Phone Demo (v4: replaces sticky-scroll parallax)
 ═══════════════════════════════════════════════════════════════ -->
-<section class="how-track" id="how">
-  <div class="how-pin">
-    <!-- animated parallax bg (mirrors hero treatment) -->
-    <div class="how-bg-layer"></div>
-    <div class="how-grid-layer"></div>
-    <div class="how-orb"></div>
-    <div class="how-ring how-ring--sm"></div>
-    <div class="how-ring how-ring--md"></div>
-    <div class="how-ring how-ring--lg"></div>
+<section class="phone-demo-section" id="how">
+  <div class="phone-demo-inner">
 
-    <div class="how-inner">
-
-      <!-- left: clickable steps -->
-      <div>
-        <p class="how-label">How It Works</p>
-
-        <div class="how-step active" data-step="0">
-          <div class="how-step-tag">01 — Tell Us</div>
-          <h3 class="how-step-title">Tell us the trip you want.</h3>
-          <p class="how-step-body">A 3-minute preference survey. Your travel style, budget, pace, must-haves, and deal-breakers. That's all we need to get started.</p>
-        </div>
-
-        <div class="how-step" data-step="1">
-          <div class="how-step-tag">02 — AI Scans</div>
-          <h3 class="how-step-title">AI scans 200,000+ options.</h3>
-          <p class="how-step-body">Every flight, stay, experience, and transfer filtered in real time against your exact preferences — with preferred rates from 500+ supplier partners applied automatically. No cookie-cutter packages.</p>
-        </div>
-
-        <div class="how-step" data-step="2">
-          <div class="how-step-tag">03 — Expert Reviews</div>
-          <h3 class="how-step-title">A human expert makes the call.</h3>
-          <p class="how-step-body">A certified advisor who's actually been to your destination reviews every recommendation. 9 years of on-ground expertise, on average.</p>
-        </div>
-
-        <div class="how-step" data-step="3">
-          <div class="how-step-tag">04 — You Enjoy</div>
-          <h3 class="how-step-title">You travel. We handle everything else.</h3>
-          <p class="how-step-body">Real-time concierge throughout your trip. Flight disruptions, reservations, local intelligence — whatever comes up, we're already on it.</p>
-        </div>
-
-        <div class="how-pips">
-          <div class="how-pip active" data-pip="0"></div>
-          <div class="how-pip" data-pip="1"></div>
-          <div class="how-pip" data-pip="2"></div>
-          <div class="how-pip" data-pip="3"></div>
-        </div>
+    <!-- Left: copy + live step tracker -->
+    <div class="phone-demo-copy">
+      <span class="how-label">How It Works</span>
+      <h2>Tap once.<br><span>Travel smarter.</span></h2>
+      <p class="phone-demo-sub">One widget. Five steps. Then your Butler is pinging you on WhatsApp. Watch the real signup flow &rarr;</p>
+      <ul class="phone-step-list" id="stepList">
+        <li data-step="1">Open the widget — choose your service</li>
+        <li data-step="2">Pick a service — 8-Hour Butler</li>
+        <li data-step="3">Set destination, travelers &amp; dates</li>
+        <li data-step="4">Your details &amp; SEVENSPRINGS code</li>
+        <li data-step="5">Securing payment&hellip;</li>
+        <li data-step="6">You&rsquo;re booked — open WhatsApp</li>
+        <li data-step="7">Your Butler checks in immediately</li>
+      </ul>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="#" class="btn btn-primary btn-lg" data-butler-button>Book from $25</a>
       </div>
-
-      <!-- right: image slides — full panel is clickable -->
-      <a href="#" class="how-visual" data-butler-button>
-        <div class="how-slide active">
-          <img src="../../img/ads/veltm_itinerary_01.png" alt="Trip preference survey">
-          <div class="how-slide-overlay"></div>
-          <div class="how-slide-caption">Tell us what you want</div>
-        </div>
-        <div class="how-slide">
-          <img src="../../img/ads/veltm_travel_trending_01.png" alt="AI scanning options">
-          <div class="how-slide-overlay"></div>
-          <div class="how-slide-caption">AI finds every option</div>
-        </div>
-        <div class="how-slide">
-          <img src="../../img/ads/veltm_itinerary_03.png" alt="Expert review">
-          <div class="how-slide-overlay"></div>
-          <div class="how-slide-caption">Human expert signs off</div>
-        </div>
-        <div class="how-slide">
-          <img src="../../img/ads/veltm_product_02.png" alt="Travel experience">
-          <div class="how-slide-overlay"></div>
-          <div class="how-slide-caption">You enjoy every moment</div>
-        </div>
-      </a>
-
     </div>
+
+    <!-- Right: Phone mockup -->
+    <div style="position:relative;">
+      <div class="phone">
+        <div class="phone__notch"></div>
+        <div class="phone__screen" id="phoneScreen">
+
+          <!-- Screen 1: VELTM site landing -->
+          <div class="screen" data-screen="1">
+            <div class="s1-nav">
+              <div class="s1-logo"><div class="s1-logo-icon"></div>Veltm</div>
+              <div class="s1-nav-pills">
+                <div class="s1-nav-pill">VELTM AI</div>
+                <div class="s1-nav-pill active">Butler Button</div>
+              </div>
+            </div>
+            <div class="s1-hero">
+              <div class="s1-eyebrow">Trusted by 1,000+ travelers worldwide</div>
+              <div class="s1-h1">Your Personal <span>Butler Button</span></div>
+              <div class="s1-sub">We plan your trip or assist while you're on one. From USD 25/day — just drop us a text.</div>
+              <div class="s1-badges">
+                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--globe">🌐</div><div><strong style="font-size:0.6rem;color:var(--near-black);">Global Coverage</strong><br><span>195+ countries</span></div></div>
+                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--clock">🕐</div><div><strong style="font-size:0.6rem;color:var(--near-black);">24/7 Support</strong><br><span>Always available</span></div></div>
+                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--map">🧳</div><div><strong style="font-size:0.6rem;color:var(--near-black);">Trip Planning</strong><br><span>Plan or assist on-trip</span></div></div>
+                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--shield">🛡️</div><div><strong style="font-size:0.6rem;color:var(--near-black);">Secure &amp; Reliable</strong><br><span>Professional team</span></div></div>
+              </div>
+              <div class="s1-trustline"><span>✓ Instant setup</span><span>✓ No hidden fees</span><span>✓ Cancel anytime</span></div>
+              <div class="s1-widget-preview">
+                <div class="s1-widget-header">
+                  <div class="s1-widget-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg></div>
+                  <div><div class="s1-widget-title">Book Your Butler</div><div class="s1-widget-sub">Your personal trip assistant</div></div>
+                </div>
+                <div class="s1-service-cards">
+                  <div class="s1-card"><span class="s1-card-name">Trip Planning</span><span class="s1-card-price">$25/country</span></div>
+                  <div class="s1-card selected"><span class="s1-card-name">8-Hour</span><span class="s1-card-price">$25/day</span></div>
+                  <div class="s1-card"><span class="s1-card-name">24-Hour</span><span class="s1-card-price">$100/day</span></div>
+                </div>
+                <button class="s1-cta-btn">Start Your Journey →<span class="tap-ring"></span></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 2: Widget — Service selection -->
+          <div class="screen" data-screen="2">
+            <div class="widget-chrome">
+              <div class="widget-topbar">
+                <div class="widget-brand-row"><div class="widget-brand-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg></div><div class="widget-brand-text"><strong>Book Your Butler</strong><small>Your personal trip assistant</small></div></div>
+                <div class="widget-steps"><div class="wstep active"><div class="wstep-circle">1</div>Service</div><div class="wstep-line"></div><div class="wstep"><div class="wstep-circle">2</div>Destination</div><div class="wstep-line"></div><div class="wstep"><div class="wstep-circle">3</div>Details</div><div class="wstep-line"></div><div class="wstep"><div class="wstep-circle">4</div>Contact</div><div class="wstep-line"></div><div class="wstep"><div class="wstep-circle">5</div>Review</div></div>
+              </div>
+              <div class="widget-body">
+                <div class="widget-section-label">Choose your service</div>
+                <div class="svc-cards">
+                  <div class="svc-card"><div class="svc-card-icon">⊙</div><span class="svc-card-name">Trip Planning</span><span class="svc-card-price">$25/country</span><span class="svc-card-sub">5 Revisions</span></div>
+                  <div class="svc-card selected"><div class="svc-card-icon" style="color:var(--indigo);">🕐</div><span class="svc-card-name">8-Hour</span><span class="svc-card-price">$25/day</span><span class="svc-card-sub">Remote Support</span></div>
+                  <div class="svc-card"><div class="svc-card-icon">🕐</div><span class="svc-card-name">24-Hour</span><span class="svc-card-price">$100/day</span><span class="svc-card-sub">Full Day</span></div>
+                </div>
+                <div class="widget-section-label" style="margin-top:4px;">Where are you headed?</div>
+                <div class="dest-field"><span class="search-icon">🔍</span><span>Type a country name...</span></div>
+                <div class="widget-cta" style="margin-top:auto;">Select a Destination to continue</div>
+                <div class="hint-text">ⓘ Complete: destination, purpose, dates, name, email, phone</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 3: Destination + travelers + dates -->
+          <div class="screen" data-screen="3">
+            <div class="widget-chrome">
+              <div class="widget-topbar">
+                <div class="widget-brand-row"><div class="widget-brand-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg></div><div class="widget-brand-text"><strong>Book Your Butler</strong><small>Your personal trip assistant</small></div></div>
+                <div class="widget-steps"><div class="wstep done"><div class="wstep-circle"></div>Service</div><div class="wstep-line done"></div><div class="wstep done"><div class="wstep-circle"></div>Destination</div><div class="wstep-line"></div><div class="wstep active"><div class="wstep-circle">3</div>Details</div><div class="wstep-line"></div><div class="wstep"><div class="wstep-circle">4</div>Contact</div><div class="wstep-line"></div><div class="wstep"><div class="wstep-circle">5</div>Review</div></div>
+              </div>
+              <div class="widget-body">
+                <div style="display:flex;gap:4px;flex-wrap:wrap;"><div class="dest-tag" style="background:#EEF2FF;color:var(--indigo);">🕐 8-Hour · $25/day</div><div class="dest-tag">🇮🇹 Italy <span class="x">×</span></div></div>
+                <div class="widget-section-label">How many travelers?</div>
+                <div class="travelers-row"><div class="qty-btn">−</div><div class="qty-val">1</div><div class="qty-btn">+</div><div class="solo-pill">👤 Solo</div></div>
+                <div class="solo-hint">Solo travel — personalized just for you</div>
+                <div class="widget-section-label">When are you traveling?</div>
+                <div class="date-toggle"><div class="date-pill selected"><span class="date-pill-label">📅 Fixed Dates</span><span class="date-pill-sub">I know my exact dates</span></div><div class="date-pill"><span class="date-pill-label" style="color:#6B7280;">🕐 Tentative</span><span class="date-pill-sub">I'm flexible</span></div></div>
+                <div class="date-row"><div class="date-input"><span>📅</span> May 01, 2026</div><div class="date-input"><span>📅</span> May 08, 2026</div></div>
+                <div class="mix-toggle-row"><div class="mix-toggle-text"><strong>Mix service levels per day?</strong><small>Customize 8-hour vs 24-hour per day</small></div><div class="toggle-switch"></div></div>
+                <div class="widget-cta active" style="margin-top:auto;">Continue →</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 4: Contact form + promo -->
+          <div class="screen" data-screen="4">
+            <div class="widget-chrome">
+              <div class="widget-topbar">
+                <div class="widget-brand-row"><div class="widget-brand-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg></div><div class="widget-brand-text"><strong>Book Your Butler</strong><small>Your personal trip assistant</small></div></div>
+                <div class="widget-steps"><div class="wstep done"><div class="wstep-circle"></div>Service</div><div class="wstep-line done"></div><div class="wstep done"><div class="wstep-circle"></div>Destination</div><div class="wstep-line done"></div><div class="wstep done"><div class="wstep-circle"></div>Details</div><div class="wstep-line"></div><div class="wstep active"><div class="wstep-circle">4</div>Contact</div><div class="wstep-line"></div><div class="wstep"><div class="wstep-circle">5</div>Review</div></div>
+              </div>
+              <div class="widget-body">
+                <div class="widget-section-label">Your details</div>
+                <div class="form-input-row filled"><span style="font-size:0.7rem;">👤</span>Alex Pires</div>
+                <div class="form-input-row filled"><span style="font-size:0.7rem;">✉️</span>apires@gmail.com</div>
+                <div class="form-input-row filled"><span class="phone-flag">🇺🇸</span><span class="phone-code">+1</span>555 123 4567</div>
+                <div class="wa-check-row"><div class="wa-check-circle checked">✓</div><span class="wa-check-label">Add WhatsApp for trip updates</span></div>
+                <div class="widget-section-label" style="margin-top:4px;">🎁 Promo Code (Optional)</div>
+                <div class="promo-row"><div class="promo-input applied"><span class="promo-icon">🏷️</span>SEVENSPRINGS</div><button class="promo-apply-btn success">✓</button></div>
+                <div class="promo-success-msg">✓ Partner discount applied — 20% off</div>
+                <div class="order-summary" style="margin-top:4px;">
+                  <div class="order-summary-label">Order Summary</div>
+                  <div class="order-row"><span>8 days × 1 country</span><span>$200.00</span></div>
+                  <div class="order-row"><span>Discount (SEVENSPRINGS)</span><span class="discount-badge">−$40.00</span></div>
+                  <div class="order-row total"><span>Total</span><span><span class="strike">$200</span> $160.00</span></div>
+                </div>
+                <div class="widget-cta active" style="margin-top:auto;">Continue to checkout — $160.00 →</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 5: Processing -->
+          <div class="screen" data-screen="5">
+            <div class="processing-screen">
+              <div class="spinner"></div>
+              <div class="proc-title">Securing your Butler&hellip;</div>
+              <div class="proc-sub">Confirming payment<br>Matching your advisor</div>
+              <div class="proc-dots"><div class="proc-dot"></div><div class="proc-dot"></div><div class="proc-dot"></div></div>
+            </div>
+          </div>
+
+          <!-- Screen 6: Confirmation -->
+          <div class="screen confirm-screen" data-screen="6">
+            <div class="confirm-check">✓</div>
+            <div class="confirm-title">You're booked!</div>
+            <div class="confirm-sub">Your Butler has been assigned. Expect a WhatsApp message within 4 minutes.</div>
+            <div class="confirm-detail-box">
+              <div class="confirm-detail-row"><span>Service</span><strong>8-Hour Butler</strong></div>
+              <div class="confirm-detail-row"><span>Destination</span><strong>Italy</strong></div>
+              <div class="confirm-detail-row"><span>Dates</span><strong>May 1–8, 2026</strong></div>
+              <div class="confirm-detail-row"><span>Total paid</span><strong>$160.00</strong></div>
+            </div>
+            <div class="confirm-ref">Ref: BB-2026-IT-A42X</div>
+            <button class="wa-cta-btn"><div class="wa-logo"><svg width="9" height="9" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>Open WhatsApp →</button>
+          </div>
+
+          <!-- Screen 7: WhatsApp handoff -->
+          <div class="screen wa-screen" data-screen="7">
+            <div class="wa-header">
+              <div class="wa-back">←</div>
+              <div class="wa-avatar">B</div>
+              <div><div class="wa-name">Butler · VELTM</div><div class="wa-status">online</div></div>
+              <div class="wa-icons">📞 ⋮</div>
+            </div>
+            <div class="wa-body">
+              <div class="wa-date-chip">Today, May 1</div>
+              <div class="wa-msg wa-msg--butler">Hi Alex! 👋 I'm your VELTM Butler for Italy, May 1–8. Booking confirmed — ref BB-2026-IT-A42X.<span class="wa-time">Just now ✓✓</span></div>
+              <div class="wa-msg wa-msg--butler">Nice save with the SEVENSPRINGS code 😄 Are you heading to a specific city, or want me to plan a multi-city route?<span class="wa-time">Just now ✓✓</span></div>
+              <div class="wa-msg wa-msg--user">Rome + Amalfi coast please!<span class="wa-time">Just now ✓✓</span></div>
+              <div class="wa-msg wa-msg--butler">Perfect combo. I'll have your full day-by-day itinerary ready in ~4 hours. Any dietary needs or must-do experiences?<span class="wa-time">Just now ✓✓</span></div>
+            </div>
+            <div class="wa-input-bar"><div class="wa-input-box">Type a message...</div><div class="wa-send-btn">↑</div></div>
+          </div>
+
+        </div><!-- /phone__screen -->
+      </div><!-- /phone -->
+      <button class="replay-btn" id="replayBtn">↺ Replay demo</button>
+    </div>
+
   </div>
 </section>
 
@@ -1848,9 +1799,9 @@
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-products" id="products">
   <div class="section-head">
-    <span class="eyebrow eyebrow-indigo" data-reveal>Simple Pricing · Pays For Itself</span>
-    <h2 class="section-title-dark" data-reveal style="--delay:.1s">One flat fee.<br>Your hotel savings cover it.</h2>
-    <p class="section-sub-dark" data-reveal style="--delay:.2s">At 10–59% off published rates across 500+ partner properties, a single night's savings usually covers a week of the fee. Pay only for what you use. Cancel anytime.</p>
+    <span class="eyebrow eyebrow-indigo" data-reveal>Simple Pricing</span>
+    <h2 class="section-title-dark" data-reveal style="--delay:.1s">One flat fee.<br>No surprises.</h2>
+    <p class="section-sub-dark" data-reveal style="--delay:.2s">Pay only for what you use. Cancel anytime — no fees.</p>
   </div>
 
   <div class="products-grid">
@@ -1864,12 +1815,12 @@
       </div>
       <hr class="pcard__divider">
       <ul class="pcard__features">
-        <li>Built around your preferences, not packages</li>
-        <li>Flights, stays &amp; experiences — preferred rates applied</li>
-        <li>Every transfer &amp; logistic pre-booked</li>
-        <li>Unlimited revisions until you approve it</li>
-        <li>In your inbox within 24 hours</li>
-        <li>Signed off by a human advisor, not just AI</li>
+        <li>Preference-first research</li>
+        <li>Flights, stays &amp; experiences</li>
+        <li>Transfers &amp; logistics</li>
+        <li>Unlimited revisions</li>
+        <li>24-hour delivery</li>
+        <li>Advisor-reviewed &amp; signed off</li>
       </ul>
       <a href="#" class="btn btn-ghost-dark btn-md" data-butler-button>Start Planning</a>
     </div>
@@ -1885,12 +1836,12 @@
       </div>
       <hr class="pcard__divider">
       <ul class="pcard__features">
-        <li>One dedicated advisor — already read your itinerary</li>
-        <li>4-minute average response, 8 a.m.–midnight local</li>
-        <li>Restaurants, transport, tickets booked for you</li>
-        <li>Insider access from someone who lives the region</li>
-        <li>In-person errands &amp; hotel-desk escalations</li>
-        <li>Works in 150+ countries, 40+ languages</li>
+        <li>Dedicated advisor, knows your trip</li>
+        <li>4-minute average response time</li>
+        <li>Restaurant &amp; transport bookings</li>
+        <li>Local intelligence &amp; insider access</li>
+        <li>In-person errands &amp; deliveries</li>
+        <li>150+ countries, 40+ languages</li>
       </ul>
       <a href="#" class="btn btn-outline-light btn-md" data-butler-button>Get Concierge</a>
     </div>
@@ -1905,12 +1856,12 @@
       </div>
       <hr class="pcard__divider">
       <ul class="pcard__features">
-        <li>Everything in 8-Hour, plus:</li>
-        <li>Overnight &amp; emergency coverage while you sleep</li>
-        <li>We watch your flights, weather &amp; schedule live</li>
-        <li>Problems fixed before you know they happened</li>
-        <li>One advisor — start of trip to the last transfer home</li>
-        <li>97% of disruptions resolved in under 60 minutes</li>
+        <li>Everything in 8-Hour</li>
+        <li>Overnight &amp; emergency coverage</li>
+        <li>Real-time itinerary monitoring</li>
+        <li>Proactive disruption prevention</li>
+        <li>Same advisor start to finish</li>
+        <li>97% of disruptions resolved &lt;60 min</li>
       </ul>
       <a href="#" class="btn btn-ghost-dark btn-md" style="border-color:#7c3aed; color:#7c3aed" data-butler-button>Get 24-Hour</a>
     </div>
@@ -1923,23 +1874,23 @@
 ═══════════════════════════════════════════════════════════════ -->
 <section class="section-scenarios" id="scenarios">
   <div class="section-head">
-    <span class="eyebrow eyebrow-soft" data-reveal>Real Stories · Real Savings</span>
+    <span class="eyebrow eyebrow-soft" data-reveal>Real Stories</span>
     <h2 class="section-title-light" data-reveal style="--delay:.1s">The moments that<br>define a trip.</h2>
-    <p class="section-sub-light" data-reveal style="--delay:.2s">Things go wrong. That's a guarantee, not a risk. Our travelers keep the preferred rates <em>and</em> get someone in their corner when something breaks.</p>
+    <p class="section-sub-light" data-reveal style="--delay:.2s">Things go wrong. That's not a risk — it's a guarantee. The question is who's in your corner.</p>
   </div>
 
   <div class="scenarios-grid">
     <a href="#" class="scard" data-butler-button data-reveal>
-      <div class="scard__where">Day 1 · Port Blair</div>
-      <p class="scard__situation">"Ferry to Havelock cancelled. We've got a sunset dinner booked tonight."</p>
-      <p class="scard__outcome">Your advisor already has a Makruzz contact on speed dial. New booking, priority seats, a driver waiting at the jetty — and the dinner pushed an hour with no penalty. $0 extra.</p>
+      <div class="scard__where">11 pm · Bangkok</div>
+      <p class="scard__situation">"My flight just got cancelled. I have meetings first thing tomorrow."</p>
+      <p class="scard__outcome">Your advisor already has your next-day schedule loaded. You're rebooked, transported, and checked into a hotel within 40 minutes — without making a single call yourself.</p>
       <span class="scard__tag">⚡ Resolved in 40 min →</span>
     </a>
 
     <a href="#" class="scard" data-butler-button data-reveal style="--delay:.1s">
-      <div class="scard__where">Day 3 · Kerala</div>
-      <p class="scard__situation">"The backwater houseboat looks nothing like the photos."</p>
-      <p class="scard__outcome">Six minutes later you're booked into a Sterling resort at the preferred rate, full refund negotiated on the houseboat, and a better meal than the one you planned. You kept the savings.</p>
+      <div class="scard__where">Day 3 · Rome</div>
+      <p class="scard__situation">"The restaurant closed. Our confirmed reservation — gone."</p>
+      <p class="scard__outcome">Six minutes later you have a table at a place locals actually eat. One that never appears on any review site's first page. Better than the original.</p>
       <span class="scard__tag">⚡ Resolved in 6 min →</span>
     </a>
 
@@ -1969,7 +1920,7 @@
         Not a chatbot.<br>A real person who<br>already knows your trip.
       </h2>
       <p class="human-body" data-reveal style="--delay:.2s">
-        Every Butler Button advisor studies your full itinerary before you depart. When you reach out — a quick question or a full emergency — you're not starting from zero. You're talking to someone who already knows your destination, your schedule, and what matters to you. 100% human first contact, every time. No chatbot on any channel. And they have direct lines into our 500+ supplier network when something needs to move fast.
+        Every Butler Button advisor studies your full itinerary before you depart. When you reach out — whether it's a quick question or a full emergency — you're not starting from zero. You're talking to someone who already knows your destination, your schedule, and what matters to you. 100% human first contact, every time. No chatbot on any channel.
       </p>
 
       <div class="human-stats-grid" data-reveal style="--delay:.3s">
@@ -2043,14 +1994,14 @@
       Start your trip<br><span>from $25.</span>
     </h2>
     <p class="cta-sub" data-reveal style="--delay:.2s">
-      No membership. No annual fee. The hotel savings usually cover the fee. Cancel before delivery for a full refund.
+      No membership. No annual fee. Cancel before delivery for a full refund.
     </p>
     <div class="cta-actions" data-reveal style="--delay:.3s">
       <a href="#" class="btn btn-white btn-lg" data-butler-button>Book Your Butler</a>
       <a href="../../pricing.html" class="btn btn-ghost-light btn-lg">See All Pricing</a>
     </div>
     <p class="cta-fine" data-reveal style="--delay:.4s">
-      Available in 195+ countries &nbsp;·&nbsp; 150+ languages &nbsp;·&nbsp; Starting at $25/day &nbsp;·&nbsp; Local currency at checkout
+      Available in 195+ countries &nbsp;·&nbsp; 150+ languages &nbsp;·&nbsp; Starting at $25/day
     </p>
   </div>
 </section>
@@ -2140,53 +2091,60 @@
 
   startTimer();
 
-  /* ── HOW IT WORKS — sticky parallax + click-to-step ── */
-  const howTrack  = document.querySelector('.how-track');
-  const howSteps  = document.querySelectorAll('.how-step');
-  const howSlides = document.querySelectorAll('.how-slide');
-  const howPips   = document.querySelectorAll('.how-pip');
-  let   curStep   = 0;
-
-  function setStep(s) {
-    howSteps[curStep].classList.remove('active');
-    howSlides[curStep].classList.remove('active');
-    howPips[curStep].classList.remove('active');
-    curStep = s;
-    howSteps[curStep].classList.add('active');
-    howSlides[curStep].classList.add('active');
-    howPips[curStep].classList.add('active');
-  }
-
-  // Scroll-driven: map scroll position within the track to step 0–3
-  function onHowScroll() {
-    if (!howTrack) return;
-    const rect = howTrack.getBoundingClientRect();
-    const prog = Math.min(1, Math.max(0,
-      -rect.top / (howTrack.offsetHeight - window.innerHeight)
-    ));
-    const s = Math.min(howSteps.length - 1, Math.floor(prog * howSteps.length));
-    if (s !== curStep) setStep(s);
-  }
-
-  window.addEventListener('scroll', onHowScroll, { passive: true });
-  onHowScroll();
-
-  // Click-driven: scroll the page to the position that maps to the chosen step,
-  // so visual state and scroll state remain perfectly in sync
-  function scrollToStep(s) {
-    if (!howTrack) return;
-    const scrollable = howTrack.offsetHeight - window.innerHeight;
-    const target = howTrack.offsetTop + (s / howSteps.length) * scrollable;
-    window.scrollTo({ top: target, behavior: 'smooth' });
-  }
-
-  howSteps.forEach((step, i) => {
-    step.addEventListener('click', () => scrollToStep(i));
-  });
-
-  howPips.forEach((pip, i) => {
-    pip.addEventListener('click', () => scrollToStep(i));
-  });
+  /* ── PHONE DEMO — animated signup flow ── */
+  (function(){
+    var screens   = document.querySelectorAll('.screen');
+    var stepItems = document.querySelectorAll('#stepList li');
+    var replayBtn = document.getElementById('replayBtn');
+    var timeline = [
+      { screen: 1, duration: 3500 },
+      { screen: 2, duration: 3200 },
+      { screen: 3, duration: 3800 },
+      { screen: 4, duration: 4500 },
+      { screen: 5, duration: 2400 },
+      { screen: 6, duration: 4000 },
+      { screen: 7, duration: 6000 }
+    ];
+    var currentIndex = 0;
+    var timer = null;
+    function show(idx) {
+      screens.forEach(function(s) { s.removeAttribute('data-active'); });
+      stepItems.forEach(function(li) { li.removeAttribute('data-active'); });
+      var step = timeline[idx];
+      var scr  = document.querySelector('[data-screen="' + step.screen + '"]');
+      if (scr) scr.setAttribute('data-active', 'true');
+      var li   = document.querySelector('#stepList li[data-step="' + step.screen + '"]');
+      if (li) li.setAttribute('data-active', 'true');
+    }
+    function advance() {
+      show(currentIndex);
+      var dur = timeline[currentIndex].duration;
+      timer = setTimeout(function() {
+        currentIndex = (currentIndex + 1) % timeline.length;
+        advance();
+      }, dur);
+    }
+    if (replayBtn) {
+      replayBtn.addEventListener('click', function() {
+        clearTimeout(timer);
+        currentIndex = 0;
+        advance();
+      });
+    }
+    var phoneScreen = document.getElementById('phoneScreen');
+    if (phoneScreen) {
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting && !timer) { advance(); obs.unobserve(e.target); }
+          });
+        }, { threshold: 0.3 });
+        obs.observe(phoneScreen);
+      } else {
+        advance();
+      }
+    }
+  })();
 
   /* ── MOBILE STICKY CTA — show after hero CTA scrolls out ── */
   const stickyCta = document.getElementById('sticky-cta');
