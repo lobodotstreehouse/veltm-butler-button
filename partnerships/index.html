@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partner with Butler Button — VELTM</title>
+  <meta name="description" content="Join the Butler Button preferred supplier network. Exclusive preferred pricing, co-branded campaigns, and access to premium travelers in 195+ countries.">
+  <link rel="icon" type="image/png" href="../img/logos/VELTM-icon-indigo.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* ── Partnership page overrides ─── */
+    .partner-hero {
+      background: linear-gradient(135deg, #0f2621 0%, #1a3c34 50%, #0f2621 100%);
+      color: #fff;
+      padding: var(--s24) 0 var(--s20);
+      text-align: center;
+    }
+    .partner-hero h1 { color: #fff; font-size: clamp(2.2rem, 4.5vw, 3.5rem); }
+    .partner-hero .lead { color: rgba(255,255,255,0.82); max-width: 680px; margin: 1rem auto 0; }
+    .partner-hero .eyebrow { color: #c8a84b; }
+
+    .badge-row { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 2.5rem; }
+    .badge {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(200,168,75,0.35);
+      border-radius: var(--radius-full);
+      padding: 0.5rem 1.25rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #c8a84b;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── CTA strip ── */
+    .cta-strip {
+      background: #c8a84b;
+      padding: 1.25rem 0;
+      text-align: center;
+    }
+    .cta-strip p { font-weight: 700; color: #0f2621; font-size: 1rem; margin-bottom: 0.5rem; }
+    .btn--gold {
+      background: #1a3c34;
+      color: #c8a84b !important;
+      border: 2px solid #1a3c34;
+      font-weight: 700;
+    }
+    .btn--gold:hover { background: #0f2621; border-color: #0f2621; }
+    .btn--gold-outline {
+      background: transparent;
+      color: #1a3c34 !important;
+      border: 2px solid #1a3c34;
+      font-weight: 700;
+    }
+    .btn--gold-outline:hover { background: #1a3c34; color: #c8a84b !important; }
+
+    /* ── Section labels ── */
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c8a84b;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── Pillar cards ── */
+    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+    .pillar-card {
+      background: #fff;
+      border: 1px solid var(--border-gray);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .pillar-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .pillar-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .pillar-card h4 { font-size: 1rem; margin-bottom: 0.4rem; color: #1a3c34; }
+    .pillar-card p { font-size: 0.83rem; color: var(--body-gray); line-height: 1.5; }
+
+    /* ── Tier cards ── */
+    .tiers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .tier-card {
+      border-radius: var(--radius-md);
+      padding: 2rem 1.75rem;
+      border: 2px solid transparent;
+    }
+    .tier-card--preferred { background: #f7f9f8; border-color: #1a3c34; }
+    .tier-card--premier { background: #fffdf0; border-color: #c8a84b; }
+    .tier-card--signature {
+      background: linear-gradient(135deg, #0f2621, #1a3c34);
+      color: #fff;
+      border-color: #c8a84b;
+    }
+    .tier-card--signature h3 { color: #c8a84b; }
+    .tier-card--signature p, .tier-card--signature li { color: rgba(255,255,255,0.85); }
+    .tier-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .tier-card--preferred .tier-label { color: #1a3c34; }
+    .tier-card--premier .tier-label { color: #a07d20; }
+    .tier-card--signature .tier-label { color: #c8a84b; }
+    .tier-rate { font-size: 2rem; font-weight: 700; font-family: var(--font-display); margin: 0.5rem 0; }
+    .tier-card--preferred .tier-rate { color: #1a3c34; }
+    .tier-card--premier .tier-rate { color: #a07d20; }
+    .tier-card--signature .tier-rate { color: #c8a84b; }
+    .tier-card ul { list-style: none; margin-top: 1.25rem; }
+    .tier-card ul li { font-size: 0.9rem; padding: 0.35rem 0; padding-left: 1.4rem; position: relative; }
+    .tier-card ul li::before { content: "✓"; position: absolute; left: 0; font-weight: 700; }
+    .tier-card--preferred ul li::before { color: #1a3c34; }
+    .tier-card--premier ul li::before { color: #c8a84b; }
+    .tier-card--signature ul li::before { color: #c8a84b; }
+
+    /* ── Process steps ── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 2rem; position: relative; }
+    .step {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem;
+      color: #c8a84b;
+      font-weight: 700;
+      z-index: 1;
+    }
+    @media (max-width: 700px) { .step:not(:last-child)::after { display: none; } }
+    .step-num {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #1a3c34; color: #c8a84b;
+      font-weight: 800; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 0.75rem;
+    }
+    .step h4 { font-size: 0.95rem; color: #1a3c34; margin-bottom: 0.3rem; }
+    .step p { font-size: 0.82rem; color: var(--body-gray); }
+
+    /* ── Campaign cards ── */
+    .campaigns-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+    .campaign-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-gray);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s;
+    }
+    .campaign-card:hover { box-shadow: var(--shadow-md); }
+    .campaign-card__head {
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(135deg, #1a3c34, #0f2621);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .campaign-card__head .icon { font-size: 1.5rem; }
+    .campaign-card__head h4 { color: #c8a84b; font-size: 1rem; margin: 0; }
+    .campaign-card__body { padding: 1.25rem 1.5rem; }
+    .campaign-card__body p { font-size: 0.87rem; color: var(--body-gray); margin-bottom: 0.75rem; }
+    .campaign-card__body ul { list-style: none; }
+    .campaign-card__body ul li { font-size: 0.84rem; color: var(--body-gray); padding: 0.2rem 0 0.2rem 1.2rem; position: relative; }
+    .campaign-card__body ul li::before { content: "·"; position: absolute; left: 0.3rem; color: #c8a84b; font-weight: 700; font-size: 1.1rem; top: 0; }
+
+    /* ── Cadence timeline ── */
+    .cadence { margin-top: 2rem; }
+    .cadence-row {
+      display: grid; grid-template-columns: 90px 1fr;
+      gap: 1.25rem; align-items: start;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-gray);
+    }
+    .cadence-row:last-child { border-bottom: none; }
+    .cadence-touch {
+      background: #1a3c34; color: #c8a84b;
+      border-radius: var(--radius);
+      text-align: center; padding: 0.5rem 0.25rem;
+      font-size: 0.78rem; font-weight: 700;
+      line-height: 1.3;
+    }
+    .cadence-content h5 { font-size: 0.95rem; color: #1a3c34; margin-bottom: 0.2rem; }
+    .cadence-content p { font-size: 0.85rem; color: var(--body-gray); }
+
+    /* ── KPI table ── */
+    .kpi-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.9rem; }
+    .kpi-table th {
+      background: #1a3c34; color: #c8a84b;
+      padding: 0.75rem 1rem; text-align: left;
+      font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .kpi-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border-gray); }
+    .kpi-table tr:last-child td { border-bottom: none; }
+    .kpi-table tr:nth-child(even) td { background: #f7f9f8; }
+
+    /* ── Callout box ── */
+    .callout {
+      background: linear-gradient(135deg, #0f2621, #1a3c34);
+      border-radius: var(--radius-md);
+      padding: 2rem 2.5rem;
+      color: #fff;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    .callout h3 { color: #c8a84b; margin-bottom: 0.75rem; }
+    .callout p { color: rgba(255,255,255,0.82); max-width: 600px; margin: 0 auto 1.5rem; }
+    .callout .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Dark section ── */
+    .section--dark {
+      background: linear-gradient(135deg, #0f2621, #1a3c34);
+      color: #fff;
+    }
+    .section--dark h2 { color: #fff; }
+    .section--dark .section-label { color: #c8a84b; }
+    .section--dark .lead { color: rgba(255,255,255,0.75); }
+
+    /* ── Qualification gate ── */
+    .gate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .gate-card {
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(200,168,75,0.25);
+    }
+    .gate-card .gate-letter {
+      font-size: 1.5rem; font-weight: 800; color: #c8a84b;
+      font-family: var(--font-display);
+    }
+    .gate-card h5 { font-size: 0.9rem; color: #fff; margin: 0.3rem 0 0.4rem; }
+    .gate-card p { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+
+    /* ── Welcome launch timeline ── */
+    .launch-steps { margin-top: 1.5rem; }
+    .launch-phase {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(200,168,75,0.2);
+    }
+    .launch-phase:last-child { border-bottom: none; }
+    .phase-label {
+      background: rgba(200,168,75,0.15);
+      border: 1px solid rgba(200,168,75,0.4);
+      border-radius: var(--radius);
+      text-align: center;
+      padding: 0.6rem 0.5rem;
+      font-size: 0.78rem; font-weight: 700; color: #c8a84b;
+      align-self: start;
+    }
+    .phase-content h5 { font-size: 0.95rem; color: #fff; margin-bottom: 0.4rem; }
+    .phase-content p { font-size: 0.84rem; color: rgba(255,255,255,0.72); }
+
+    /* ── Seasonal grid ── */
+    .seasons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .season-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,168,75,0.2);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+    .season-card h5 { font-size: 0.85rem; color: #c8a84b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    .season-card ul { list-style: none; }
+    .season-card ul li { font-size: 0.82rem; color: rgba(255,255,255,0.72); padding: 0.2rem 0 0.2rem 1rem; position: relative; }
+    .season-card ul li::before { content: "·"; position: absolute; left: 0.2rem; color: #c8a84b; font-weight: 700; }
+
+    /* toc */
+    .toc {
+      background: #f7f9f8;
+      border: 1px solid var(--border-gray);
+      border-left: 4px solid #1a3c34;
+      border-radius: var(--radius-md);
+      padding: 1.5rem 2rem;
+      margin-bottom: 3rem;
+    }
+    .toc h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: #1a3c34; margin-bottom: 0.75rem; }
+    .toc ol { padding-left: 1.25rem; }
+    .toc ol li { font-size: 0.9rem; padding: 0.2rem 0; }
+    .toc ol li a { color: #1a3c34; font-weight: 500; }
+    .toc ol li a:hover { color: #c8a84b; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <img src="../img/logos/VELTM-logo-black.png" alt="VELTM" height="36">
+      </a>
+      <nav class="nav-main">
+        <a href="../index.html">Home</a>
+        <a href="../trip-planning/">Trip Planning</a>
+        <a href="../concierge/">Concierge</a>
+        <a href="../advisor-program/">Advisors</a>
+        <a href="../pricing.html">Pricing</a>
+        <a href="../faq.html">FAQ</a>
+        <a href="../pricing.html" class="btn btn--gradient btn--sm" data-butler-button>Start Your Journey</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="partner-hero">
+    <div class="container">
+      <span class="eyebrow">Butler Button — Supplier Partnerships</span>
+      <h1>Partner with Us.<br>Reach the World.</h1>
+      <p class="lead">Join the Butler Button preferred supplier network and put your property in front of premium travelers across 195+ countries — with zero marketing cost to you until we book.</p>
+      <div class="badge-row">
+        <span class="badge">575+ Active Suppliers</span>
+        <span class="badge">Preferred Pricing Guaranteed</span>
+        <span class="badge">Co-Branded Campaigns</span>
+        <span class="badge">Performance-Based Model</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA strip -->
+  <div class="cta-strip">
+    <p>Ready to join the network? Start your partnership application today.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="mailto:partnerships@veltmtours.com" class="btn btn--gold btn--sm">Apply to Partner</a>
+      <a href="#tiers" class="btn btn--gold-outline btn--sm">View Tier Benefits</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="container" style="padding-top: var(--s16); padding-bottom: var(--s24);">
+
+    <!-- Table of contents -->
+    <div class="toc">
+      <h3>In this document</h3>
+      <ol>
+        <li><a href="#strategy">Partnership Strategy Overview</a></li>
+        <li><a href="#partners">Who We're Looking For</a></li>
+        <li><a href="#outreach">Outreach & Qualification</a></li>
+        <li><a href="#tiers">Commercial Tiers & Onboarding</a></li>
+        <li><a href="#campaigns">Joint Marketing Campaigns</a></li>
+        <li><a href="#performance">Performance Tracking & Retention</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 — Strategy -->
+    <section id="strategy" style="margin-bottom: var(--s16);">
+      <span class="section-label">01 — Strategy</span>
+      <h2 style="color: #1a3c34; margin-bottom: 0.75rem;">Our Partnership Mission</h2>
+      <p class="lead" style="max-width:680px; margin-bottom:2rem;">Butler Button exists to make world-class travel experiences accessible. Our preferred supplier network is the unreplicable asset that makes this possible — contracted pricing that saves clients 10–59% on accommodation, which in turn pays for the Butler service itself.</p>
+
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">🏨</div>
+          <h4>Preferred Rates</h4>
+          <p>Contracted 10–59% below public rack rate, guaranteed per booking.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📣</div>
+          <h4>Co-Branded Marketing</h4>
+          <p>Welcome campaigns, seasonal pushes, and regional spotlights — we build them, you benefit.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🌍</div>
+          <h4>Global Reach</h4>
+          <p>English-speaking US, Canada, and UK clients traveling to your destination — warm, pre-qualified demand.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📊</div>
+          <h4>Transparent Reporting</h4>
+          <p>Quarterly business reviews with booking data, conversion rates, and campaign ROI.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🤝</div>
+          <h4>Long-Term Relationship</h4>
+          <p>Annual contract with rolling renewal, escalating benefits at each tier upgrade.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2 — Who we're looking for -->
+    <section id="partners" style="margin-bottom: var(--s16);">
+      <span class="section-label">02 — Target Partners</span>
+      <h2 style="color: #1a3c34; margin-bottom: 0.75rem;">Who We're Looking For</h2>
+      <p style="max-width:680px; color:var(--body-gray); margin-bottom:2rem;">We partner with suppliers across four categories. Priority is given to properties in destinations with strong demand from our Western English-speaking client base.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.25rem;">
+
+        <div style="background:#f7f9f8; border:1px solid var(--border-gray); border-top:4px solid #1a3c34; border-radius:var(--radius-md); padding:1.5rem;">
+          <h4 style="color:#1a3c34; margin-bottom:0.5rem;">🏩 Boutique & Heritage Hotels</h4>
+          <p style="font-size:0.85rem; color:var(--body-gray);">3–5 star properties with distinct character — palaces, eco-lodges, converted estates. Our clients are story-seekers, not chain-seekers.</p>
+        </div>
+
+        <div style="background:#f7f9f8; border:1px solid var(--border-gray); border-top:4px solid #1a3c34; border-radius:var(--radius-md); padding:1.5rem;">
+          <h4 style="color:#1a3c34; margin-bottom:0.5rem;">🌿 Resorts & Eco Properties</h4>
+          <p style="font-size:0.85rem; color:var(--body-gray);">Wilderness resorts, safari camps, wellness retreats, and overwater villas. High-value stays with strong photo potential for joint campaigns.</p>
+        </div>
+
+        <div style="background:#f7f9f8; border:1px solid var(--border-gray); border-top:4px solid #1a3c34; border-radius:var(--radius-md); padding:1.5rem;">
+          <h4 style="color:#1a3c34; margin-bottom:0.5rem;">🚢 Experiences & Transport</h4>
+          <p style="font-size:0.85rem; color:var(--body-gray);">Houseboat cruises, scenic rail, ferry operators, and licensed tour operators. Complete the itinerary, not just the room.</p>
+        </div>
+
+        <div style="background:#f7f9f8; border:1px solid var(--border-gray); border-top:4px solid #1a3c34; border-radius:var(--radius-md); padding:1.5rem;">
+          <h4 style="color:#1a3c34; margin-bottom:0.5rem;">🏙️ Hotel Groups & Chains</h4>
+          <p style="font-size:0.85rem; color:var(--body-gray);">Multi-property groups (e.g. Sterling, Eight Continents, Sayaji) that can offer network-wide preferred rates and unified campaign activation.</p>
+        </div>
+
+      </div>
+
+      <div style="margin-top:2.5rem;">
+        <h3 style="color:#1a3c34; font-size:1.2rem; margin-bottom:0.5rem;">Priority Destinations</h3>
+        <p style="font-size:0.87rem; color:var(--body-gray); margin-bottom:1rem;">Current supplier density and high client-demand destinations. Partners in these areas are fast-tracked for onboarding.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Kerala, India</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Rajasthan, India</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Himachal Pradesh, India</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Andaman & Nicobar</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Goa, India</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Zanzibar, Tanzania</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Maldives</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Scotland & N. Ireland</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Uttarakhand, India</span>
+          <span style="background:#1a3c34; color:#c8a84b; padding:0.35rem 0.9rem; border-radius:var(--radius-full); font-size:0.8rem; font-weight:600;">Sikkim, India</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Section 3 — Outreach (dark) -->
+  <section id="outreach" class="section--dark" style="padding: var(--s16) 0;">
+    <div class="container">
+      <span class="section-label">03 — Outreach & Qualification</span>
+      <h2 style="margin-bottom:0.75rem;">How We Sign New Partners</h2>
+      <p class="lead" style="max-width:640px; margin-bottom:2.5rem;">Every new partner goes through our 5-touch qualification process — disciplined enough to protect both sides, fast enough to close within two weeks.</p>
+
+      <!-- Cadence -->
+      <div class="cadence">
+        <div class="cadence-row">
+          <div class="cadence-touch">Touch 1<br>Day 1</div>
+          <div class="cadence-content">
+            <h5>Initial Outreach</h5>
+            <p>Personalised email or LinkedIn DM referencing the property's TripAdvisor score, a specific property attribute, and the preferred-rate value proposition. Subject: "A partnership that pays your guests back."</p>
+          </div>
+        </div>
+        <div class="cadence-row">
+          <div class="cadence-touch">Touch 2<br>Day 4</div>
+          <div class="cadence-content">
+            <h5>Follow-Up + One-Pager</h5>
+            <p>Attach the Butler Button Supplier Overview PDF. Highlight the ROI frame: "Our clients' hotel savings typically cover their Butler subscription cost — making you the reason the trip was affordable."</p>
+          </div>
+        </div>
+        <div class="cadence-row">
+          <div class="cadence-touch">Touch 3<br>Day 8</div>
+          <div class="cadence-content">
+            <h5>Discovery Call (30 min)</h5>
+            <p>Qualify using BANT-Plus (see below). Confirm: decision-maker, rate authority, minimum discount floor, blackout dates, and appetite for co-marketing. Record call notes in CRM same day.</p>
+          </div>
+        </div>
+        <div class="cadence-row">
+          <div class="cadence-touch">Touch 4<br>Day 10</div>
+          <div class="cadence-content">
+            <h5>Term Sheet</h5>
+            <p>Send a 1-page term sheet with proposed tier (Preferred/Premier/Signature), net rate commitment, campaign inclusions, and contract term. Aim for a 48-hour turnaround window.</p>
+          </div>
+        </div>
+        <div class="cadence-row">
+          <div class="cadence-touch">Touch 5<br>Day 14</div>
+          <div class="cadence-content">
+            <h5>Sign & Welcome</h5>
+            <p>DocuSign the Supplier Agreement. Trigger Welcome Launch campaign sequence within 72 hours of signature. Partner goes live in the Butler system within one week.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANT-Plus -->
+      <h3 style="color:#c8a84b; margin: 3rem 0 0.5rem; font-size:1.3rem;">BANT-Plus Qualification Gates</h3>
+      <p style="color:rgba(255,255,255,0.72); font-size:0.88rem; margin-bottom:0;">All five gates must clear before issuing a term sheet.</p>
+      <div class="gate-grid">
+        <div class="gate-card">
+          <div class="gate-letter">B</div>
+          <h5>Budget Authority</h5>
+          <p>Can the contact commit to net rates without GM or ownership sign-off? If not, identify and loop in the right person within Touch 2.</p>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">A</div>
+          <h5>Authority</h5>
+          <p>Is this a decision-maker or a gatekeeper? Gatekeepers are useful — work with them to book the right meeting, not around them.</p>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">N</div>
+          <h5>Network Fit</h5>
+          <p>Does the property or destination align with current demand patterns from our US/UK/Canada client base? Check the demand heat map before the call.</p>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">T</div>
+          <h5>Timeline</h5>
+          <p>Can they activate within 30 days? Partners that need 90+ days for internal approvals are logged as "future pipeline" and re-engaged at 60 days.</p>
+        </div>
+        <div class="gate-card">
+          <div class="gate-letter">+</div>
+          <h5>Rate Floor</h5>
+          <p>Will they commit to at least 10% below public rack rate on a net basis? This is the minimum for inclusion in the preferred-rate client pitch. No floor = no listing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4 — Tiers -->
+  <div class="container" style="padding-top: var(--s16); padding-bottom: var(--s16);">
+    <section id="tiers">
+      <span class="section-label">04 — Commercial Structure</span>
+      <h2 style="color:#1a3c34; margin-bottom:0.75rem;">Partnership Tiers</h2>
+      <p style="max-width:640px; color:var(--body-gray); margin-bottom:0.5rem;">Three tiers, matched to the depth of the commercial relationship. All tiers include Butler system listing and access to the booking engine. Partners can upgrade at any annual renewal.</p>
+
+      <div class="tiers-grid">
+        <div class="tier-card tier-card--preferred">
+          <div class="tier-label">Preferred</div>
+          <h3 style="color:#1a3c34;">Preferred Partner</h3>
+          <div class="tier-rate">10–19%</div>
+          <p style="font-size:0.82rem; color:var(--body-gray); margin-bottom:0.5rem;">net discount off public rack</p>
+          <ul>
+            <li>Listed in Butler recommendation engine</li>
+            <li>Booking via Butler portal</li>
+            <li>Welcome Launch campaign (social + email)</li>
+            <li>Semi-annual booking report</li>
+            <li>Butler website destination page feature</li>
+          </ul>
+        </div>
+
+        <div class="tier-card tier-card--premier">
+          <div class="tier-label">Premier</div>
+          <h3 style="color:#a07d20;">Premier Partner</h3>
+          <div class="tier-rate">20–39%</div>
+          <p style="font-size:0.82rem; color:#a07d20; margin-bottom:0.5rem;">net discount off public rack</p>
+          <ul style="color:var(--body-gray);">
+            <li>Everything in Preferred, plus:</li>
+            <li>Dedicated seasonal campaign slot</li>
+            <li>Client newsletter feature (2×/year)</li>
+            <li>Quarterly booking + conversion report</li>
+            <li>Co-branded social content package</li>
+            <li>Priority placement in Butler recommendations</li>
+          </ul>
+        </div>
+
+        <div class="tier-card tier-card--signature">
+          <div class="tier-label">Signature</div>
+          <h3>Signature Partner</h3>
+          <div class="tier-rate">40–59%</div>
+          <p style="font-size:0.82rem; color:rgba(255,255,255,0.6); margin-bottom:0.5rem;">net discount off public rack</p>
+          <ul>
+            <li>Everything in Premier, plus:</li>
+            <li>Dedicated destination spotlight page</li>
+            <li>Monthly campaign touchpoints</li>
+            <li>Exclusive "Butler Recommended" badge</li>
+            <li>Monthly QBR with Partnership Manager</li>
+            <li>Custom itinerary template co-creation</li>
+            <li>First refusal on new destination launches</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Onboarding checklist -->
+      <h3 style="color:#1a3c34; margin: 3rem 0 1rem; font-size:1.2rem;">3-Week Onboarding Checklist</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+        <div style="border:1px solid var(--border-gray); border-radius:var(--radius-md); padding:1.25rem;">
+          <h5 style="color:#1a3c34; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">Week 1 — Admin</h5>
+          <ul style="list-style:none; font-size:0.84rem; color:var(--body-gray);">
+            <li style="padding:0.2rem 0;">&#9744; DocuSign agreement executed</li>
+            <li style="padding:0.2rem 0;">&#9744; Net rate sheet submitted</li>
+            <li style="padding:0.2rem 0;">&#9744; Blackout dates logged</li>
+            <li style="padding:0.2rem 0;">&#9744; Property photos &amp; bio received</li>
+            <li style="padding:0.2rem 0;">&#9744; Billing details confirmed</li>
+          </ul>
+        </div>
+        <div style="border:1px solid var(--border-gray); border-radius:var(--radius-md); padding:1.25rem;">
+          <h5 style="color:#1a3c34; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">Week 2 — Setup</h5>
+          <ul style="list-style:none; font-size:0.84rem; color:var(--body-gray);">
+            <li style="padding:0.2rem 0;">&#9744; Butler system listing live</li>
+            <li style="padding:0.2rem 0;">&#9744; Welcome email drafted &amp; approved</li>
+            <li style="padding:0.2rem 0;">&#9744; Social assets created</li>
+            <li style="padding:0.2rem 0;">&#9744; Dedicated page built (Premier+)</li>
+            <li style="padding:0.2rem 0;">&#9744; Internal Butler team briefed</li>
+          </ul>
+        </div>
+        <div style="border:1px solid var(--border-gray); border-radius:var(--radius-md); padding:1.25rem;">
+          <h5 style="color:#1a3c34; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">Week 3 — Launch</h5>
+          <ul style="list-style:none; font-size:0.84rem; color:var(--body-gray);">
+            <li style="padding:0.2rem 0;">&#9744; Welcome Launch campaign fires</li>
+            <li style="padding:0.2rem 0;">&#9744; First booking tracked in CRM</li>
+            <li style="padding:0.2rem 0;">&#9744; Partner intro call with PM</li>
+            <li style="padding:0.2rem 0;">&#9744; Reporting access granted</li>
+            <li style="padding:0.2rem 0;">&#9744; 30-day check-in scheduled</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Section 5 — Campaigns (dark) -->
+  <section id="campaigns" class="section--dark" style="padding: var(--s16) 0;">
+    <div class="container">
+      <span class="section-label">05 — Joint Marketing</span>
+      <h2 style="margin-bottom:0.75rem;">Campaign Playbook</h2>
+      <p class="lead" style="max-width:640px; margin-bottom:2.5rem;">Every new partner gets a Welcome Launch. Premier and Signature partners get access to the full seasonal campaign calendar. We build the assets — you approve and go live.</p>
+
+      <!-- Campaign types -->
+      <div class="campaigns-grid">
+        <div class="campaign-card">
+          <div class="campaign-card__head">
+            <span class="icon">🎉</span>
+            <h4>Welcome Launch</h4>
+          </div>
+          <div class="campaign-card__body">
+            <p>Fires within 72 hours of contract signing. Announces the partnership to our full client and newsletter audience.</p>
+            <ul>
+              <li>Dedicated announcement email to subscriber list</li>
+              <li>Instagram + LinkedIn posts (co-branded)</li>
+              <li>Butler website news feature for 30 days</li>
+              <li>Internal Butler team spotlight (all advisors)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-card__head">
+            <span class="icon">🌸</span>
+            <h4>Seasonal Push</h4>
+          </div>
+          <div class="campaign-card__body">
+            <p>Quarterly destination spotlights tied to travel demand peaks — monsoon, festival, shoulder season.</p>
+            <ul>
+              <li>Email to segmented destination interest lists</li>
+              <li>3-post social series with property imagery</li>
+              <li>Butler homepage banner placement (1 week)</li>
+              <li>Seasonal itinerary template featuring property</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-card__head">
+            <span class="icon">📖</span>
+            <h4>Destination Story</h4>
+          </div>
+          <div class="campaign-card__body">
+            <p>Long-form editorial content centered on the partner's destination, with property as the natural anchor accommodation.</p>
+            <ul>
+              <li>1,200-word blog post with SEO optimization</li>
+              <li>Distributed via email + social</li>
+              <li>Evergreen — lives on Butler website permanently</li>
+              <li>Available for partner to republish / link to</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-card__head">
+            <span class="icon">🎁</span>
+            <h4>Exclusive Offer</h4>
+          </div>
+          <div class="campaign-card__body">
+            <p>Time-limited offers exclusively for Butler Button clients — creates urgency and demonstrates the preferred-rate advantage.</p>
+            <ul>
+              <li>Flash sale email (48-hour window)</li>
+              <li>Butler app push notification (when live)</li>
+              <li>Social countdown story series</li>
+              <li>Featured in Butler weekly digest</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-card__head">
+            <span class="icon">🤳</span>
+            <h4>Client Testimonial</h4>
+          </div>
+          <div class="campaign-card__body">
+            <p>Real client stories from Butler-booked stays. Authentic social proof for both Butler and the partner property.</p>
+            <ul>
+              <li>Client interview (text or video)</li>
+              <li>Co-branded graphics with property &amp; Butler branding</li>
+              <li>Shared across both parties' social channels</li>
+              <li>Added to Butler website reviews section</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-card__head">
+            <span class="icon">🏆</span>
+            <h4>Annual Spotlight</h4>
+          </div>
+          <div class="campaign-card__body">
+            <p>Signature partners receive a full annual spotlight — a comprehensive, multi-channel campaign celebrating the year of partnership.</p>
+            <ul>
+              <li>Dedicated microsite or landing page</li>
+              <li>3-email series to full subscriber base</li>
+              <li>Video reel (if partner provides footage)</li>
+              <li>Press release for partner to distribute locally</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Welcome Launch Deep Dive -->
+      <h3 style="color:#c8a84b; margin: 3.5rem 0 0.5rem; font-size:1.3rem;">Welcome Launch — Step by Step</h3>
+      <p style="color:rgba(255,255,255,0.72); font-size:0.88rem; margin-bottom:0;">The first campaign every partner gets. Runs over 4 phases from contract signing to 30-day review.</p>
+      <div class="launch-steps">
+        <div class="launch-phase">
+          <div class="phase-label">Phase 1<br>Days 1–3</div>
+          <div class="phase-content">
+            <h5>Asset Collection</h5>
+            <p>Request 8–12 high-res property photos, a 150-word property bio, key amenities list, unique selling points, and confirmation of the Butler-exclusive rate. Creative brief sent to partner for approval within 24 hours.</p>
+          </div>
+        </div>
+        <div class="launch-phase">
+          <div class="phase-label">Phase 2<br>Days 4–6</div>
+          <div class="phase-content">
+            <h5>Asset Creation</h5>
+            <p>Design team produces: 1× announcement email template, 3× social graphics (16:9 + 1:1 + story), 1× blog snippet, and internal Butler team briefing note. All assets sent to partner for sign-off — 48-hour approval window.</p>
+          </div>
+        </div>
+        <div class="launch-phase">
+          <div class="phase-label">Phase 3<br>Days 7–9</div>
+          <div class="phase-content">
+            <h5>Go Live</h5>
+            <p>Email announcement sent to full subscriber list (typically Thursday 10am local). Social posts scheduled across Instagram, LinkedIn, and Facebook. Butler website listing goes live. Internal Slack announcement to all advisors.</p>
+          </div>
+        </div>
+        <div class="launch-phase">
+          <div class="phase-label">Phase 4<br>Day 30</div>
+          <div class="phase-content">
+            <h5>30-Day Review</h5>
+            <p>Partner receives a campaign report: email open rate, click rate, social reach, direct enquiries generated, and any bookings attributed to the launch campaign. Sets the baseline for ongoing performance reporting.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seasonal calendar -->
+      <h3 style="color:#c8a84b; margin: 3.5rem 0 0.5rem; font-size:1.3rem;">Seasonal Campaign Calendar</h3>
+      <p style="color:rgba(255,255,255,0.72); font-size:0.88rem; margin-bottom:0;">Premier and Signature partners are eligible for one featured campaign slot per quarter.</p>
+      <div class="seasons-grid">
+        <div class="season-card">
+          <h5>Q1 — Jan–Mar</h5>
+          <ul>
+            <li>New Year, New Journey push</li>
+            <li>India wildlife season spotlight</li>
+            <li>Valentine's &amp; honeymoon offers</li>
+            <li>Rajasthan winter festival campaign</li>
+          </ul>
+        </div>
+        <div class="season-card">
+          <h5>Q2 — Apr–Jun</h5>
+          <ul>
+            <li>Pre-monsoon last-chance India</li>
+            <li>UK/Scotland spring launch</li>
+            <li>Maldives &amp; Zanzibar dry season</li>
+            <li>Summer family planning push</li>
+          </ul>
+        </div>
+        <div class="season-card">
+          <h5>Q3 — Jul–Sep</h5>
+          <ul>
+            <li>Monsoon Kerala &amp; Goa magic</li>
+            <li>Himalayan summer trekking</li>
+            <li>NRI summer homecoming campaign</li>
+            <li>Budget travel &amp; ROI messaging</li>
+          </ul>
+        </div>
+        <div class="season-card">
+          <h5>Q4 — Oct–Dec</h5>
+          <ul>
+            <li>Diwali travel spotlight</li>
+            <li>Year-end luxury &amp; bucket list</li>
+            <li>Christmas &amp; New Year escapes</li>
+            <li>2027 early booking incentives</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6 — Performance -->
+  <div class="container" style="padding-top: var(--s16); padding-bottom: var(--s16);">
+    <section id="performance">
+      <span class="section-label">06 — Performance & Retention</span>
+      <h2 style="color:#1a3c34; margin-bottom:0.75rem;">How We Measure Success</h2>
+      <p style="max-width:640px; color:var(--body-gray); margin-bottom:1.5rem;">Every partner relationship is tracked against clear KPIs. The numbers drive honest QBR conversations and tier upgrade decisions.</p>
+
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>What we track</th>
+            <th>Preferred target</th>
+            <th>Signature target</th>
+            <th>Cadence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Bookings generated</strong></td>
+            <td>Room-nights booked via Butler for this property</td>
+            <td>≥ 24 room-nights/year</td>
+            <td>≥ 100 room-nights/year</td>
+            <td>Monthly</td>
+          </tr>
+          <tr>
+            <td><strong>Revenue attributed</strong></td>
+            <td>Net booking value through Butler channel</td>
+            <td>USD 5,000+/year</td>
+            <td>USD 30,000+/year</td>
+            <td>Quarterly</td>
+          </tr>
+          <tr>
+            <td><strong>Email CTR</strong></td>
+            <td>Click-through on campaigns featuring partner</td>
+            <td>≥ 3.5%</td>
+            <td>≥ 5%</td>
+            <td>Per campaign</td>
+          </tr>
+          <tr>
+            <td><strong>Social reach</strong></td>
+            <td>Impressions on co-branded posts</td>
+            <td>≥ 2,500 per post</td>
+            <td>≥ 8,000 per post</td>
+            <td>Per post</td>
+          </tr>
+          <tr>
+            <td><strong>Enquiry conversion</strong></td>
+            <td>Enquiries that become confirmed bookings</td>
+            <td>≥ 20%</td>
+            <td>≥ 30%</td>
+            <td>Quarterly</td>
+          </tr>
+          <tr>
+            <td><strong>Rate compliance</strong></td>
+            <td>Agreed net rates honored without exceptions</td>
+            <td>100%</td>
+            <td>100%</td>
+            <td>Per booking</td>
+          </tr>
+          <tr>
+            <td><strong>Partner NPS</strong></td>
+            <td>Partner satisfaction survey score</td>
+            <td>≥ 7/10</td>
+            <td>≥ 9/10</td>
+            <td>Semi-annual</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:2.5rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+        <div style="background:#f7f9f8; border:1px solid var(--border-gray); border-radius:var(--radius-md); padding:1.5rem;">
+          <h4 style="color:#1a3c34; margin-bottom:0.75rem;">Quarterly Business Review Agenda</h4>
+          <ol style="font-size:0.85rem; color:var(--body-gray); padding-left:1.1rem;">
+            <li style="padding:0.2rem 0;">Booking &amp; revenue recap vs. target</li>
+            <li style="padding:0.2rem 0;">Campaign performance review</li>
+            <li style="padding:0.2rem 0;">Client feedback on the property</li>
+            <li style="padding:0.2rem 0;">Rate calendar review (blackouts, peaks)</li>
+            <li style="padding:0.2rem 0;">Upcoming campaign slots — partner input</li>
+            <li style="padding:0.2rem 0;">Tier review &amp; upgrade discussion</li>
+            <li style="padding:0.2rem 0;">Any issues &amp; action items</li>
+          </ol>
+        </div>
+        <div style="background:#f7f9f8; border:1px solid var(--border-gray); border-radius:var(--radius-md); padding:1.5rem;">
+          <h4 style="color:#1a3c34; margin-bottom:0.75rem;">Retention Mechanics</h4>
+          <ul style="font-size:0.85rem; color:var(--body-gray); list-style:none;">
+            <li style="padding:0.25rem 0 0.25rem 1.2rem; position:relative;">
+              <span style="position:absolute;left:0;color:#c8a84b;font-weight:700;">✓</span>
+              Annual contract with 90-day renewal notice
+            </li>
+            <li style="padding:0.25rem 0 0.25rem 1.2rem; position:relative;">
+              <span style="position:absolute;left:0;color:#c8a84b;font-weight:700;">✓</span>
+              Tier upgrade incentive: 2 free campaign slots at next tier
+            </li>
+            <li style="padding:0.25rem 0 0.25rem 1.2rem; position:relative;">
+              <span style="position:absolute;left:0;color:#c8a84b;font-weight:700;">✓</span>
+              Multi-year commitment discount on campaign package
+            </li>
+            <li style="padding:0.25rem 0 0.25rem 1.2rem; position:relative;">
+              <span style="position:absolute;left:0;color:#c8a84b;font-weight:700;">✓</span>
+              At-risk partners flagged at 60-day low-activity mark
+            </li>
+            <li style="padding:0.25rem 0 0.25rem 1.2rem; position:relative;">
+              <span style="position:absolute;left:0;color:#c8a84b;font-weight:700;">✓</span>
+              Save play: offer a featured campaign before non-renewal
+            </li>
+            <li style="padding:0.25rem 0 0.25rem 1.2rem; position:relative;">
+              <span style="position:absolute;left:0;color:#c8a84b;font-weight:700;">✓</span>
+              Annual partner dinner / summit (Signature tier)
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA callout -->
+    <div class="callout">
+      <h3>Ready to Put Your Property in Front of the World?</h3>
+      <p>Join 575+ preferred suppliers already inside the Butler Button network. Premium Western travelers, no upfront marketing cost, and a partnership team that works as hard as you do.</p>
+      <div class="btn-row">
+        <a href="mailto:partnerships@veltmtours.com" class="btn btn--gold btn--lg">Apply to Partner</a>
+        <a href="../pricing.html" class="btn btn--outline btn--lg" style="border-color:#c8a84b; color:#c8a84b;">See Client Pricing</a>
+      </div>
+      <p style="margin-top:1.25rem; font-size:0.82rem; color:rgba(255,255,255,0.55);">partnerships@veltmtours.com &nbsp;·&nbsp; Response within 1 business day</p>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img src="../img/logos/VELTM-logo-white.png" alt="VELTM" height="32" style="margin-bottom:0.75rem;">
+          <p style="font-size:0.82rem; color:rgba(255,255,255,0.5);">Butler Button by VELTM<br>Own Your Journey™</p>
+        </div>
+        <div>
+          <h5>Products</h5>
+          <ul>
+            <li><a href="../trip-planning/">Trip Planning</a></li>
+            <li><a href="../concierge/">Concierge</a></li>
+            <li><a href="../advisor-program/">Advisor Program</a></li>
+            <li><a href="../pricing.html">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <ul>
+            <li><a href="../faq.html">FAQ</a></li>
+            <li><a href="index.html">Partner with Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 VELTM Tours. Butler Button is a VELTM product. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
