@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner Pitch — Butler Button by VELTM · Travel Advisor Program</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  background: #000;
+  color: #f5f5f7;
+  overflow: hidden;
+  height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SLIDE ENGINE ─────────────────────────────────────────── */
+.deck {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(3rem, 7vw, 6rem) clamp(3rem, 8vw, 8rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1), transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(18px);
+  overflow: hidden;
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: none;
+}
+.slide.exit-up { opacity: 0; transform: translateY(-18px); }
+
+/* ── BACKGROUNDS ──────────────────────────────────────────── */
+.slide { background: #000; }
+.slide--cover { background: radial-gradient(ellipse 70% 70% at 65% 50%, #1e1b4b 0%, #000 80%); }
+.slide--dark2 { background: #070712; }
+.slide--indigo { background: linear-gradient(135deg, #1e1b4b 0%, #0f0d2a 100%); }
+.slide--gold { background: linear-gradient(135deg, #0d0b00 0%, #1a1500 100%); }
+.slide--deep { background: #05050f; }
+.slide--green { background: linear-gradient(135deg, #051209 0%, #0a1f0d 100%); }
+
+/* ── TOKENS ───────────────────────────────────────────────── */
+:root {
+  --indigo: #4f46e5;
+  --indigo-lt: #818cf8;
+  --gold: #d4a853;
+  --gold-lt: #f0c96b;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --muted: rgba(255,255,255,0.35);
+  --dimmed: rgba(255,255,255,0.12);
+}
+
+/* ── TYPOGRAPHY ───────────────────────────────────────────── */
+.eyebrow {
+  font-size: clamp(0.6rem, 1vw, 0.72rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--indigo-lt);
+  margin-bottom: 1rem;
+  display: block;
+}
+.eyebrow--gold { color: var(--gold-lt); }
+.eyebrow--green { color: var(--green); }
+.eyebrow--amber { color: var(--amber); }
+
+.slide-title {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+}
+.slide-title span { color: var(--indigo-lt); }
+.slide-title span.gold { color: var(--gold-lt); }
+.slide-title span.green { color: var(--green); }
+
+.slide-sub {
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+  max-width: 680px;
+  margin-bottom: 2.5rem;
+}
+.slide-sub strong { color: rgba(255,255,255,0.85); }
+
+.cover-brand {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 3rem;
+}
+.cover-brand em { color: var(--indigo-lt); font-style: normal; }
+.cover-tagline {
+  font-size: clamp(0.75rem, 1.1vw, 0.88rem);
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 3rem;
+}
+
+/* ── PILL ─────────────────────────────────────────────────── */
+.pill {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 980px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(79, 70, 229, 0.15);
+  border: 1px solid rgba(79, 70, 229, 0.35);
+  color: var(--indigo-lt);
+  flex-shrink: 0;
+}
+.pill--gold {
+  background: rgba(212, 168, 83, 0.12);
+  border-color: rgba(212, 168, 83, 0.3);
+  color: var(--gold-lt);
+}
+.pill--green {
+  background: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.25);
+  color: var(--green);
+}
+.pill--amber {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.25);
+  color: var(--amber);
+}
+
+/* ── DIVIDER ──────────────────────────────────────────────── */
+.rule {
+  width: 48px; height: 2px;
+  background: var(--indigo);
+  margin-bottom: 2rem;
+  border-radius: 2px;
+}
+.rule--gold { background: var(--gold); }
+.rule--green { background: var(--green); }
+
+/* ── PROPERTY GRID ────────────────────────────────────────── */
+.prop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1px;
+  width: 100%;
+  max-width: 1100px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+.prop-card {
+  background: rgba(255,255,255,0.025);
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-right: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s;
+}
+.prop-card:hover { background: rgba(255,255,255,0.045); }
+.prop-card__name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.prop-card__loc {
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+.prop-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+.stars {
+  font-size: 0.6rem;
+  color: var(--amber);
+  letter-spacing: 0.04em;
+}
+
+/* ── TRANSPORT CARDS ──────────────────────────────────────── */
+.transport-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 0.5rem;
+}
+.transport-card {
+  background: rgba(255,255,255,0.028);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.transport-card__icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+.transport-card__name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.transport-card__type {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.transport-card__detail {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+}
+.transport-card__route {
+  font-size: 0.72rem;
+  color: var(--indigo-lt);
+  font-weight: 500;
+}
+
+/* ── BENEFIT ROWS ─────────────────────────────────────────── */
+.benefit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 800px;
+  width: 100%;
+}
+.benefit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+.benefit-row__num {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--indigo-lt);
+  min-width: 2rem;
+  text-align: right;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+.benefit-row__body h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.01em;
+}
+.benefit-row__body p {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.42);
+  line-height: 1.55;
+}
+
+/* ── STAT ROW ─────────────────────────────────────────────── */
+.stat-row {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat__num {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+.stat__label {
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── TWO-COL LAYOUT ───────────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+}
+.two-col .prop-grid {
+  margin-top: 0;
+}
+
+/* ── REGION LABEL ─────────────────────────────────────────── */
+.region-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+/* ── VERTICAL MINI LIST ───────────────────────────────────── */
+.mini-prop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.mini-prop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02);
+  gap: 1rem;
+}
+.mini-prop-row:last-child { border-bottom: none; }
+.mini-prop-row__left { flex: 1; }
+.mini-prop-row__name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.82);
+  letter-spacing: -0.01em;
+}
+.mini-prop-row__loc {
+  font-size: 0.64rem;
+  color: var(--muted);
+}
+
+/* ── PARTNER TERMS TABLE ──────────────────────────────────── */
+.terms-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  max-width: 900px;
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.terms-cell {
+  background: rgba(255,255,255,0.02);
+  padding: 1.4rem 1.6rem;
+}
+.terms-cell h4 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--indigo-lt);
+  margin-bottom: 0.6rem;
+}
+.terms-cell p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.52);
+  line-height: 1.6;
+}
+.terms-cell p strong {
+  color: rgba(255,255,255,0.82);
+  font-weight: 600;
+}
+
+/* ── CTA BUTTON ───────────────────────────────────────────── */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 14px 32px;
+  background: var(--indigo);
+  color: #fff;
+  border-radius: 980px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btn-cta:hover { background: #4338ca; }
+
+/* ── PROGRESS / NAV ───────────────────────────────────────── */
+.nav-bar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  z-index: 1000;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 980px;
+  padding: 0.55rem 1.25rem;
+}
+.nav-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.nav-counter {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.04em;
+  min-width: 48px;
+  text-align: center;
+}
+.slide-dots {
+  display: flex;
+  gap: 0.4rem;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.dot.active { background: var(--indigo-lt); transform: scale(1.35); }
+
+/* ── LOGO BAR ─────────────────────────────────────────────── */
+.logo-bar {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+.logo-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+.logo-mark__box {
+  width: 56px; height: 56px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: -0.02em;
+}
+.logo-mark__label {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  max-width: 80px;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+/* ── SLIDE-SPECIFIC OVERRIDES ─────────────────────────────── */
+.slide--cover .slide-title {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+}
+
+/* ── DECORATIVE ACCENT ────────────────────────────────────── */
+.accent-bg {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.accent-bg--indigo {
+  background: rgba(79,70,229,0.12);
+  right: -100px; top: 50%;
+  transform: translateY(-50%);
+}
+.accent-bg--gold {
+  background: rgba(212,168,83,0.08);
+  right: -80px; bottom: -80px;
+}
+.accent-bg--green {
+  background: rgba(52,211,153,0.07);
+  right: -60px; top: 50%;
+  transform: translateY(-50%);
+}
+.slide > * { position: relative; z-index: 1; }
+
+/* ── SLIDE NUMBER ─────────────────────────────────────────── */
+.slide-num {
+  position: absolute;
+  top: 2.5rem;
+  right: 3rem;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+/* Global outside‑India prop grid compact */
+.global-section {
+  width: 100%; max-width: 1100px;
+}
+.global-region {
+  margin-bottom: 1.5rem;
+}
+.global-region:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ─── 01 COVER ──────────────────────────────────────────────────── -->
+  <div class="slide slide--cover active" data-slide="1">
+    <div class="accent-bg accent-bg--indigo"></div>
+    <div class="slide-num">01 / 13</div>
+    <div class="cover-brand">Butler<em>Button</em> by VELTM</div>
+    <span class="eyebrow">Travel Advisor Partner Program</span>
+    <h1 class="slide-title">The preferred-rate<br>network you didn't<br>know existed.</h1>
+    <p class="slide-sub">500+ contracted supplier properties. Three transportation verticals. One platform. Your clients get buying power that used to require a $50,000 retainer.</p>
+    <div class="cover-tagline">Confidential · For prospective advisor partners only</div>
+  </div>
+
+  <!-- ─── 02 WHAT WE ARE ────────────────────────────────────────────── -->
+  <div class="slide slide--dark2" data-slide="2">
+    <div class="accent-bg accent-bg--indigo"></div>
+    <div class="slide-num">02 / 13</div>
+    <span class="eyebrow">What Butler Button is</span>
+    <h2 class="slide-title">AI plans it.<br>A human handles it.<br><span>You get the credit.</span></h2>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat__num">500+</div>
+        <div class="stat__label">Contracted properties</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">10–59%</div>
+        <div class="stat__label">Off published rates</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">$25</div>
+        <div class="stat__label">Per client/day advisor fee</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">24 hr</div>
+        <div class="stat__label">Draft itinerary turnaround</div>
+      </div>
+    </div>
+    <p class="slide-sub">Butler Button is a travel planning and concierge service built on a preferred-rate supplier network — the same buying power retained by family offices and heads of state, offered at a flat $25/day fee. Advisors who partner with us extend this capability to their clients without running the back-office infrastructure.</p>
+  </div>
+
+  <!-- ─── 03 ADVISOR ADVANTAGE ──────────────────────────────────────── -->
+  <div class="slide slide--indigo" data-slide="3">
+    <div class="slide-num">03 / 13</div>
+    <span class="eyebrow">Why advisors partner with us</span>
+    <h2 class="slide-title">What the<br><span>partnership gives you.</span></h2>
+    <div class="benefit-list">
+      <div class="benefit-row">
+        <div class="benefit-row__num">01</div>
+        <div class="benefit-row__body">
+          <h4>Access to 500+ preferred-rate contracts — zero setup cost</h4>
+          <p>Your clients immediately benefit from negotiated rates at properties across India, UK, Zanzibar, Tanzania, and Maldives. No separate supplier negotiations required.</p>
+        </div>
+        <div class="pill">Instant access</div>
+      </div>
+      <div class="benefit-row">
+        <div class="benefit-row__num">02</div>
+        <div class="benefit-row__body">
+          <h4>AI-powered itinerary drafting in 24 hours</h4>
+          <p>Submit a client brief. Receive a fully-costed itinerary with named properties and real USD prices. You review and approve — we execute.</p>
+        </div>
+        <div class="pill">24-hr SLA</div>
+      </div>
+      <div class="benefit-row">
+        <div class="benefit-row__num">03</div>
+        <div class="benefit-row__body">
+          <h4>24/7 in-trip concierge for your clients — not you</h4>
+          <p>Your clients WhatsApp us at 2am. We handle the flight change, the restaurant rescue, the hotel problem. You get the review.</p>
+        </div>
+        <div class="pill">Always-on</div>
+      </div>
+      <div class="benefit-row">
+        <div class="benefit-row__num">04</div>
+        <div class="benefit-row__body">
+          <h4>Transportation network included — ferries, trains, private aviation</h4>
+          <p>Every Makruzz sailing, Palace on Wheels seat, and charter flight access is bundled in. Your clients move seamlessly. You take the credit.</p>
+        </div>
+        <div class="pill">Full logistics</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 04 TRANSPORTATION ──────────────────────────────────────────── -->
+  <div class="slide slide--dark2" data-slide="4">
+    <div class="accent-bg accent-bg--gold"></div>
+    <div class="slide-num">04 / 13</div>
+    <span class="eyebrow eyebrow--gold">Transportation partners</span>
+    <h2 class="slide-title">Three verticals.<br><span class="gold">Ground, rail, air.</span></h2>
+    <div class="rule rule--gold"></div>
+    <div class="transport-grid">
+      <div class="transport-card">
+        <div class="transport-card__icon">⛴</div>
+        <div class="transport-card__type">Inter-island ferry</div>
+        <div class="transport-card__name">Makruzz &amp; Makruzz Gold</div>
+        <div class="transport-card__detail">Operated by MAK Logistics. Super-fast air-conditioned catamaran service across the Andaman Islands. Priority seat access on our contracts — clients don't miss check-in when a sailing sells out.</div>
+        <div class="transport-card__route">Port Blair → Havelock → Neil Island · ₹1,150–₹1,950 per seat</div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-card__icon">🚂</div>
+        <div class="transport-card__type">Luxury heritage train · India</div>
+        <div class="transport-card__name">Palace on Wheels</div>
+        <div class="transport-card__detail">Rajasthan's most storied journey — a seven-night round circuit through the royal palaces and desert forts of the Golden Triangle and Rajasthan, in vintage-style private cabins. Operated via Eight Continents Hotels. Preferred-rate access included.</div>
+        <div class="transport-card__route">Delhi → Jaipur → Sawai Madhopur → Chittorgarh → Udaipur → Jaisalmer → Jodhpur → Bharatpur → Agra → Delhi</div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-card__icon">✈</div>
+        <div class="transport-card__type">Charter aviation · Global</div>
+        <div class="transport-card__name">Private Aviation Access</div>
+        <div class="transport-card__detail">Charter-class access via contracted supplier partners — 757-class wide-body VIP aircraft to regional turboprops. Structured for VIP Concierge tier clients: celebrity travel, heads of state, medical evacuation, grand-tour charters. Supplier details available under NDA during quoting.</div>
+        <div class="transport-card__route">Global routing · Client-specific · Quote on request</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 05 INDIA PREMIUM: RAJASTHAN ───────────────────────────────── -->
+  <div class="slide slide--deep" data-slide="5">
+    <div class="accent-bg accent-bg--gold"></div>
+    <div class="slide-num">05 / 13</div>
+    <span class="eyebrow eyebrow--gold">India · Rajasthan &amp; North</span>
+    <h2 class="slide-title">Desert palaces.<br><span class="gold">Preferred rates.</span></h2>
+    <p class="slide-sub" style="margin-bottom:1.25rem;">4–5 star Rajasthan properties under preferred-rate contract. These are the properties heritage-traveler clients have on their lists.</p>
+    <div class="prop-grid" style="max-width:1050px; grid-template-columns: repeat(5,1fr);">
+      <div class="prop-card">
+        <div class="prop-card__name">Astroport Sariska Treetop Resort &amp; Spa</div>
+        <div class="prop-card__loc">Sariska, Alwar</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill">Eight Continents</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">STAMPS by Eight Continents</div>
+        <div class="prop-card__loc">Jodhpur</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill">Eight Continents</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Amiras — A Luxury Villa</div>
+        <div class="prop-card__loc">Udaipur</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill pill--gold">Luxury villa</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Sterling Ratan Villas Jawai</div>
+        <div class="prop-card__loc">Jawai, Sumerpur</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">Sterling</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Sinclairs Udaipur</div>
+        <div class="prop-card__loc">Udaipur</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">Sinclairs</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Sariska Tiger Heaven</div>
+        <div class="prop-card__loc">Sariska, Alwar</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill pill--green">Wildlife</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Hotel Golden Lagoon</div>
+        <div class="prop-card__loc">Amritsar, Punjab</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Hanric by Eight Continents — Ikshana Luxe</div>
+        <div class="prop-card__loc">Nainital, Uttarakhand</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill">Eight Continents</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Maati Resort by the Lake Hill</div>
+        <div class="prop-card__loc">Nainital, Uttarakhand</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Kashi Anandam Spiritual Wellness Resort</div>
+        <div class="prop-card__loc">Varanasi, UP</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill pill--amber">Wellness</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 06 INDIA PREMIUM: KERALA ──────────────────────────────────── -->
+  <div class="slide slide--deep" data-slide="6">
+    <div class="accent-bg accent-bg--green"></div>
+    <div class="slide-num">06 / 13</div>
+    <span class="eyebrow eyebrow--green">India · Kerala &amp; South</span>
+    <h2 class="slide-title">Backwaters. Palaces.<br><span class="green">Kerala at preferred rates.</span></h2>
+    <p class="slide-sub" style="margin-bottom:1.25rem;">CGH Earth, KTDC, and independents — the properties that don't discount for walk-ins.</p>
+    <div class="prop-grid" style="max-width:1050px; grid-template-columns: repeat(5,1fr);">
+      <div class="prop-card">
+        <div class="prop-card__name">Chittoor Kottaram Heritage Palace</div>
+        <div class="prop-card__loc">Kochi, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill pill--green">CGH Earth</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Wayanad Wild</div>
+        <div class="prop-card__loc">Wayanad, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill pill--green">CGH Earth</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Casino Hotel Kochi</div>
+        <div class="prop-card__loc">Kochi, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill pill--green">CGH Earth</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Spice Coast Cruises</div>
+        <div class="prop-card__loc">Kerala Backwaters</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill pill--green">CGH Earth</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Bolgatty Palace &amp; Island Resort</div>
+        <div class="prop-card__loc">Kochi Island, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">KTDC</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Contour Island Resort &amp; Spa</div>
+        <div class="prop-card__loc">Wayanad, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Marari Village Beach Resort</div>
+        <div class="prop-card__loc">Alleppey, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">KTDC Golden Peak</div>
+        <div class="prop-card__loc">Ponmudi, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">KTDC</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Pappukutty Beach Resort</div>
+        <div class="prop-card__loc">Kovalam, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Eterno Camellia &amp; Elettaria Resort</div>
+        <div class="prop-card__loc">Munnar, Kerala</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 07 INDIA PREMIUM: MOUNTAINS & WILDLIFE ────────────────────── -->
+  <div class="slide slide--deep" data-slide="7">
+    <div class="slide-num">07 / 13</div>
+    <span class="eyebrow">India · Mountains, Wildlife &amp; Islands</span>
+    <h2 class="slide-title">Himachal. Sikkim.<br><span>Wildlife reserves. Andaman.</span></h2>
+    <div class="two-col" style="gap:3rem; align-items:start;">
+      <div>
+        <div class="region-label">Mountain North — Himachal Pradesh &amp; Beyond</div>
+        <div class="mini-prop-list">
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">The Pearl by DLS Hotels</div>
+              <div class="mini-prop-row__loc">Mussoorie, Uttarakhand</div>
+            </div>
+            <div class="pill">DLS Hotels</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">La Serene Valley by DLS Hotels</div>
+              <div class="mini-prop-row__loc">Manali, Himachal Pradesh</div>
+            </div>
+            <div class="pill">DLS Hotels</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Radisson Hotel Kufri</div>
+              <div class="mini-prop-row__loc">Kufri / Shimla, Himachal Pradesh</div>
+            </div>
+            <div class="pill pill--gold">★★★★★</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">7 Pines</div>
+              <div class="mini-prop-row__loc">Kausauli, Solan</div>
+            </div>
+            <div class="pill">Himachal</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Summit Gangchen Hotel</div>
+              <div class="mini-prop-row__loc">Lachen, Sikkim</div>
+            </div>
+            <div class="pill">★★★★</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Bliss Ladakh</div>
+              <div class="mini-prop-row__loc">Leh, Jammu &amp; Kashmir</div>
+            </div>
+            <div class="pill">Ladakh</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Woodrock Hotel Manali</div>
+              <div class="mini-prop-row__loc">Manali, Himachal Pradesh</div>
+            </div>
+            <div class="pill">DLS Network</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="region-label">Wildlife &amp; Andaman Islands</div>
+        <div class="mini-prop-list">
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Tusker Trail Corbett</div>
+              <div class="mini-prop-row__loc">Jim Corbett National Park, Uttarakhand</div>
+            </div>
+            <div class="pill pill--green">Wildlife</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Corbett White Flower</div>
+              <div class="mini-prop-row__loc">Jim Corbett (Marchula), Uttarakhand</div>
+            </div>
+            <div class="pill pill--green">Wildlife</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Wagharanya Resort</div>
+              <div class="mini-prop-row__loc">Tadoba Tiger Reserve, Maharashtra</div>
+            </div>
+            <div class="pill pill--green">Tiger Safari</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Blue Bird Resort</div>
+              <div class="mini-prop-row__loc">Andaman &amp; Nicobar Islands</div>
+            </div>
+            <div class="pill">Andaman</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Eastern Gate — A Bergamont Hotel</div>
+              <div class="mini-prop-row__loc">Port Blair, Andaman</div>
+            </div>
+            <div class="pill">Bergamont</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Value Andaman Luxury Stay</div>
+              <div class="mini-prop-row__loc">Andaman &amp; Nicobar Islands</div>
+            </div>
+            <div class="pill">★★★★</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Rosewood Villas</div>
+              <div class="mini-prop-row__loc">Pench National Park, MP</div>
+            </div>
+            <div class="pill pill--green">Wildlife</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 08 INDIA: CHAIN NETWORK ───────────────────────────────────── -->
+  <div class="slide slide--dark2" data-slide="8">
+    <div class="accent-bg accent-bg--indigo"></div>
+    <div class="slide-num">08 / 13</div>
+    <span class="eyebrow">India · Contracted chain network</span>
+    <h2 class="slide-title">The volume that<br><span>makes the math work.</span></h2>
+    <p class="slide-sub" style="margin-bottom:1.5rem;">These chains give India itineraries their depth and savings consistency — 400+ contracted properties between them.</p>
+    <div class="prop-grid" style="grid-template-columns:repeat(3,1fr); max-width:780px;">
+      <div class="prop-card">
+        <div class="prop-card__name">Sterling Holiday Resorts</div>
+        <div class="prop-card__loc">60+ resorts · Pan-India leisure</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Eight Continents Hotels &amp; Resorts</div>
+        <div class="prop-card__loc">Premium &amp; boutique · Pan-India + Zanzibar</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Bergamont Hotels</div>
+        <div class="prop-card__loc">Mid-market boutique · Karnataka, Andaman</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">TSG Group</div>
+        <div class="prop-card__loc">Andaman island resorts</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Snow Valley Resorts</div>
+        <div class="prop-card__loc">Himachal mountain chain</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">DLS Hotels</div>
+        <div class="prop-card__loc">11+ properties · North India mountains</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">CGH Earth</div>
+        <div class="prop-card__loc">Kerala boutique specialist</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">KTDC</div>
+        <div class="prop-card__loc">13+ Kerala state properties</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Sayaji Hotels</div>
+        <div class="prop-card__loc">5 properties · Indore, Pune, Kolhapur, Jamnagar, Raipur</div>
+        <div class="prop-card__meta"><div class="pill">Preferred rate</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 09 GLOBAL: UK & IRELAND ───────────────────────────────────── -->
+  <div class="slide slide--dark2" data-slide="9">
+    <div class="slide-num">09 / 13</div>
+    <span class="eyebrow">Global · UK &amp; Ireland</span>
+    <h2 class="slide-title">The hotels your<br><span>clients can't book online.</span></h2>
+    <p class="slide-sub" style="margin-bottom:1.25rem;">Independent country houses, Highland lodges, and Channel Island retreats with advisor rates — the 40% of any UK itinerary that Booking.com can't touch.</p>
+    <div class="prop-grid" style="max-width:960px; grid-template-columns:repeat(5,1fr);">
+      <div class="prop-card">
+        <div class="prop-card__name">Taychreggan Hotel</div>
+        <div class="prop-card__loc">Loch Awe, Scotland</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">Advisor rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">La Barbarie Hotel</div>
+        <div class="prop-card__loc">Guernsey, Channel Islands</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">Advisor rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Ocho Homes Lux Belfast</div>
+        <div class="prop-card__loc">Northern Ireland</div>
+        <div class="prop-card__meta"><span class="stars">★★★★★</span><div class="pill">Eight Continents</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Kingscourt Hotel</div>
+        <div class="prop-card__loc">United Kingdom</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">Advisor rate</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Episode Hotels</div>
+        <div class="prop-card__loc">United Kingdom</div>
+        <div class="prop-card__meta"><span class="stars">★★★★</span><div class="pill">Advisor rate</div></div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem; color:var(--muted); margin-top:1.5rem; max-width:700px; line-height:1.65;">
+      UK network also includes country house hotels (Cotswolds, Lake District, Yorkshire), Scottish Highland lodges (Skye, Mull, Inverness corridor), and Irish manor hotels (Connemara, Wild Atlantic Way, Dublin–Cork). Advisor rates 10–15% + room upgrade and breakfast where available.
+    </p>
+  </div>
+
+  <!-- ─── 10 GLOBAL: AFRICA & MALDIVES ──────────────────────────────── -->
+  <div class="slide slide--dark2" data-slide="10">
+    <div class="accent-bg accent-bg--gold"></div>
+    <div class="slide-num">10 / 13</div>
+    <span class="eyebrow eyebrow--gold">Global · East Africa &amp; Indian Ocean</span>
+    <h2 class="slide-title">Serengeti. Zanzibar.<br><span class="gold">Maldives.</span></h2>
+    <div class="two-col" style="align-items:start; gap:3rem;">
+      <div>
+        <div class="region-label">East Africa — Tanzania &amp; Zanzibar</div>
+        <div class="mini-prop-list">
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Utende Seacliff Resort</div>
+              <div class="mini-prop-row__loc">Mafia Island, Tanzania</div>
+            </div>
+            <div class="pill pill--gold">★★★★</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Treetop by Eight Continents</div>
+              <div class="mini-prop-row__loc">Zanzibar</div>
+            </div>
+            <div class="pill">Eight Continents</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">East &amp; North Coast Beach Portfolio</div>
+              <div class="mini-prop-row__loc">Pingwe, Paje, Kendwa, Nungwi — Zanzibar</div>
+            </div>
+            <div class="pill">Preferred rates</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Vetted Safari Operators</div>
+              <div class="mini-prop-row__loc">Serengeti · Ngorongoro · Tarangire · Masai Mara</div>
+            </div>
+            <div class="pill pill--green">Ground ops</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Coastal Aviation</div>
+              <div class="mini-prop-row__loc">Bush flights · Tanzania internal</div>
+            </div>
+            <div class="pill">Charter</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Auric Air</div>
+              <div class="mini-prop-row__loc">Bush flights · Tanzania internal</div>
+            </div>
+            <div class="pill">Charter</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="region-label">Maldives</div>
+        <div class="mini-prop-list">
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Himeyn Beach</div>
+              <div class="mini-prop-row__loc">Hanimadhoo Atoll, Maldives</div>
+            </div>
+            <div class="pill pill--gold">★★★★★</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Direct Resort DMC Portfolio</div>
+              <div class="mini-prop-row__loc">Mid-market &amp; premium 5★ — multiple atolls</div>
+            </div>
+            <div class="pill">Travel buyer rate</div>
+          </div>
+          <div class="mini-prop-row">
+            <div class="mini-prop-row__left">
+              <div class="mini-prop-row__name">Seaplane &amp; Speedboat Transfer Network</div>
+              <div class="mini-prop-row__loc">Male → resort · all atolls</div>
+            </div>
+            <div class="pill">Pre-booked</div>
+          </div>
+        </div>
+        <br>
+        <p style="font-size:0.75rem; color:var(--muted); line-height:1.6;">
+          Maldives honeymoon and anniversary packages: preferred-rate contracts on beach villas and overwater villas. Average savings $1,400–$3,600 on 5–10 night stays vs. published walk-up rate.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 11 PARTNER TERMS ───────────────────────────────────────────── -->
+  <div class="slide slide--indigo" data-slide="11">
+    <div class="slide-num">11 / 13</div>
+    <span class="eyebrow">How the partnership works</span>
+    <h2 class="slide-title">Simple structure.<br><span>No hidden mechanics.</span></h2>
+    <div class="rule"></div>
+    <div class="terms-grid">
+      <div class="terms-cell">
+        <h4>Client referrals</h4>
+        <p>You refer your client to Butler Button. We handle the planning, execution, and in-trip concierge. You maintain the relationship and collect the <strong>referral commission on each booking</strong>.</p>
+      </div>
+      <div class="terms-cell">
+        <h4>White-label option</h4>
+        <p>Your clients never see Butler Button. All communications go under your brand. You present the itinerary. We <strong>operate invisibly in the background</strong>.</p>
+      </div>
+      <div class="terms-cell">
+        <h4>Rate access</h4>
+        <p>Partner advisors can quote clients on preferred rates directly during the proposal stage. <strong>Pricing is disclosed under advisor NDA</strong> — not available on public rate sheets.</p>
+      </div>
+      <div class="terms-cell">
+        <h4>Client fee structure</h4>
+        <p>Clients pay $25/day advisory fee (min. $125) plus the net hotel rate. No markup on hotels — the preferred rate is the rate. Your commission is <strong>paid by Butler Button, not the client</strong>.</p>
+      </div>
+      <div class="terms-cell">
+        <h4>VIP concierge tier</h4>
+        <p>For UHNW clients — private aviation access, heads-of-state itineraries, charter packages. <strong>Commission rates and supplier access elevated</strong> at VIP tier. NDA required.</p>
+      </div>
+      <div class="terms-cell">
+        <h4>No minimum volume</h4>
+        <p>No monthly booking quotas. No retainer fee to join. You activate the partnership when you have a client trip that fits. <strong>Commission paid on completion of trip</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 12 THE MATH ────────────────────────────────────────────────── -->
+  <div class="slide slide--dark2" data-slide="12">
+    <div class="accent-bg accent-bg--green"></div>
+    <div class="slide-num">12 / 13</div>
+    <span class="eyebrow eyebrow--green">Why this converts</span>
+    <h2 class="slide-title">The savings pay<br><span class="green">the advisor fee.</span></h2>
+    <p class="slide-sub">On most India trips, the hotel savings alone exceed the advisory fee by night two or three. Your clients feel like they won. You get the referral.</p>
+    <div class="prop-grid" style="max-width:960px; grid-template-columns:repeat(4,1fr); margin-top:0.5rem;">
+      <div class="prop-card">
+        <div class="prop-card__name">Andaman + Kerala · 14 nights</div>
+        <div class="prop-card__loc">Avg. hotel savings vs. published</div>
+        <div style="font-size:1.6rem; font-weight:700; color:#34d399; letter-spacing:-0.04em; margin:0.5rem 0;">$1,820</div>
+        <div class="prop-card__meta"><div class="pill pill--green">Advisor fee: $350</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Maldives Overwater Villa · 7 nights</div>
+        <div class="prop-card__loc">Published rate vs. preferred</div>
+        <div style="font-size:1.6rem; font-weight:700; color:#34d399; letter-spacing:-0.04em; margin:0.5rem 0;">$2,450</div>
+        <div class="prop-card__meta"><div class="pill pill--green">Advisor fee: $175</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Zanzibar + Safari · 9 nights</div>
+        <div class="prop-card__loc">Combined beach + bush savings</div>
+        <div style="font-size:1.6rem; font-weight:700; color:#34d399; letter-spacing:-0.04em; margin:0.5rem 0;">$1,280</div>
+        <div class="prop-card__meta"><div class="pill pill--green">Advisor fee: $225</div></div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-card__name">Scotland Loop · 10 nights</div>
+        <div class="prop-card__loc">Country house + Highland lodges</div>
+        <div style="font-size:1.6rem; font-weight:700; color:#34d399; letter-spacing:-0.04em; margin:0.5rem 0;">$780</div>
+        <div class="prop-card__meta"><div class="pill pill--green">Advisor fee: $250</div></div>
+      </div>
+    </div>
+    <p style="font-size:0.78rem; color:var(--muted); margin-top:1.25rem; max-width:700px; line-height:1.65;">
+      Savings figures are illustrative averages across confirmed preferred-rate contracts. Your client's actual savings will vary by property selection, season, and room category. We provide a verified cost comparison with every draft itinerary.
+    </p>
+  </div>
+
+  <!-- ─── 13 CONTACT ────────────────────────────────────────────────── -->
+  <div class="slide slide--cover" data-slide="13">
+    <div class="accent-bg accent-bg--indigo"></div>
+    <div class="slide-num">13 / 13</div>
+    <div class="cover-brand">Butler<em>Button</em> by VELTM</div>
+    <span class="eyebrow">Ready to partner?</span>
+    <h2 class="slide-title">Start with one<br><span>client. One trip.</span></h2>
+    <p class="slide-sub">Send us a client brief. We'll return a full preferred-rate itinerary within 24 hours — no commitment required. If the client books, the partnership activates.</p>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:0.5rem;">
+      <a class="btn-cta" href="mailto:advisors@veltmtours.com">advisors@veltmtours.com</a>
+      <a class="btn-cta" href="https://veltmtours.com/butler-button/advisor-program/" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);">Advisor Program Page</a>
+    </div>
+    <div class="cover-tagline" style="margin-top:2.5rem;">
+      Confidential · Preferred rate details disclosed under advisor NDA · &copy; 2026 VELTM Tours
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- ── NAV BAR ──────────────────────────────────────────────────────── -->
+<nav class="nav-bar" id="navBar">
+  <button class="nav-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+  <div class="slide-dots" id="dotContainer"></div>
+  <div class="nav-counter" id="counter">1 / 13</div>
+  <button class="nav-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+</nav>
+
+<script>
+(function(){
+  const slides  = Array.from(document.querySelectorAll('.slide'));
+  const dotWrap = document.getElementById('dotContainer');
+  const counter = document.getElementById('counter');
+  const total   = slides.length;
+  let current   = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to slide ' + (i+1));
+    d.addEventListener('click', () => goTo(i));
+    dotWrap.appendChild(d);
+  });
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+    // Exit current
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit-up');
+    setTimeout(() => slides[current].classList.remove('exit-up'), 600);
+
+    current = idx;
+
+    // Enter new
+    slides[current].classList.add('active');
+
+    // Update dots + counter
+    document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === current));
+    counter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault(); goTo(current + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); goTo(current - 1);
+    }
+  });
+
+  // Touch/swipe
+  let touchX = 0;
+  document.addEventListener('touchstart', e => { touchX = e.changedTouches[0].screenX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 50) { dx < 0 ? goTo(current+1) : goTo(current-1); }
+  }, {passive:true});
+})();
+</script>
+
+</body>
+</html>
