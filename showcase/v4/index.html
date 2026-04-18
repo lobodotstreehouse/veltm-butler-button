@@ -528,12 +528,14 @@
     .section-statement::before {
       content: '';
       position: absolute; inset: 0;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(1px);
-      -webkit-backdrop-filter: blur(1px);
+      background: rgba(255,255,255,0.58);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
       z-index: 0;
     }
     .section-statement > * { position: relative; z-index: 1; }
+    .section-statement .mask-headline { color: #000; }
+    .section-statement .statement-sub { color: #111; }
     .mask-headline {
       font-size: clamp(2.8rem, 6.5vw, 5.8rem);
       font-weight: 700; letter-spacing: -0.035em; line-height: 1.07;
@@ -668,9 +670,24 @@
        SECTION 4 — PRODUCTS (light gray)
     ═══════════════════════════════════════════════════════════════ */
     .section-products {
-      background: var(--gray-bg);
+      position: relative;
       padding: clamp(6rem, 12vw, 10rem) 5vw;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
     }
+    .section-products::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.58);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+    .section-products .section-head,
+    .section-products .products-grid { position: relative; z-index: 1; }
+    .section-products .section-title-dark { color: #000; }
+    .section-products .section-sub-dark  { color: #111; }
     .section-title-dark {
       font-size: clamp(2.2rem, 5vw, 4rem);
       font-weight: 700; letter-spacing: -0.035em; line-height: 1.1;
@@ -791,9 +808,21 @@
        SECTION 6 — HUMAN FIRST (image + copy)
     ═══════════════════════════════════════════════════════════════ */
     .section-human {
-      background: #fff;
+      position: relative;
       padding: clamp(6rem, 12vw, 10rem) 5vw;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
     }
+    .section-human::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.58);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+    .section-human .human-inner { position: relative; z-index: 1; }
     .human-inner {
       max-width: 1120px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1fr;
@@ -2166,29 +2195,41 @@
 
 })();
 
-/* ── STATEMENT SECTION — random destination background ── */
+/* ── RANDOM DESTINATION BACKGROUNDS ── */
 (function () {
-  // Top 10 tourist destinations, curated Unsplash photo IDs
   var destinations = [
-    { place: 'Paris',       id: '1499856871958-5b9627545d1a' },  // Eiffel Tower
-    { place: 'Santorini',   id: '1570077188670-e3a8d69ac5ff' },  // Blue domes
-    { place: 'Tokyo',       id: '1540959733332-eab4deabeeaf' },  // City at night
-    { place: 'Bali',        id: '1537996194471-e657df975ab4' },  // Rice terraces
-    { place: 'Rome',        id: '1552832230-c0197dd311b5' },     // Colosseum
-    { place: 'Maldives',    id: '1514282401047-d79a71a590e8' },  // Overwater villas
-    { place: 'Machu Picchu',id: '1587595431973-160d0d94add1' },  // Ruins & peaks
-    { place: 'Barcelona',   id: '1539037116277-4db20889f2d4' },  // Sagrada Família
-    { place: 'Dubai',       id: '1512453979798-5ea266f8880c' },  // Skyline
-    { place: 'New York',    id: '1496442226666-8d4d0e62e6e9' },  // Manhattan
+    { place: 'Paris',        id: '1499856871958-5b9627545d1a' },
+    { place: 'Santorini',    id: '1570077188670-e3a8d69ac5ff' },
+    { place: 'Tokyo',        id: '1540959733332-eab4deabeeaf' },
+    { place: 'Bali',         id: '1537996194471-e657df975ab4' },
+    { place: 'Rome',         id: '1552832230-c0197dd311b5'    },
+    { place: 'Maldives',     id: '1514282401047-d79a71a590e8' },
+    { place: 'Machu Picchu', id: '1587595431973-160d0d94add1' },
+    { place: 'Barcelona',    id: '1539037116277-4db20889f2d4' },
+    { place: 'Dubai',        id: '1512453979798-5ea266f8880c' },
+    { place: 'New York',     id: '1496442226666-8d4d0e62e6e9' },
   ];
-  var pick = destinations[Math.floor(Math.random() * destinations.length)];
-  var el   = document.querySelector('.section-statement');
-  if (el) {
-    el.style.backgroundImage =
-      'url(https://images.unsplash.com/photo-' + pick.id +
-      '?auto=format&fit=crop&w=1800&q=80)';
-    el.setAttribute('data-destination', pick.place);
+
+  // Fisher-Yates shuffle, pick first 3 — guarantees no repeats across sections
+  var pool = destinations.slice();
+  for (var i = pool.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
   }
+
+  function setBg(selector, pick) {
+    var el = document.querySelector(selector);
+    if (el && pick) {
+      el.style.backgroundImage =
+        'url(https://images.unsplash.com/photo-' + pick.id +
+        '?auto=format&fit=crop&w=1800&q=80)';
+      el.setAttribute('data-destination', pick.place);
+    }
+  }
+
+  setBg('.section-statement', pool[0]);
+  setBg('.section-products',  pool[1]);
+  setBg('.section-human',     pool[2]);
 })();
 </script>
 </body>
