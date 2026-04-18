@@ -517,10 +517,23 @@
        SECTION — STATEMENT (light bg, mask-reveal headline)
     ═══════════════════════════════════════════════════════════════ */
     .section-statement {
-      background: var(--gray-bg);
+      position: relative;
       padding: clamp(6rem, 12vw, 12rem) 5vw;
       text-align: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
     }
+    .section-statement::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+      z-index: 0;
+    }
+    .section-statement > * { position: relative; z-index: 1; }
     .mask-headline {
       font-size: clamp(2.8rem, 6.5vw, 5.8rem);
       font-weight: 700; letter-spacing: -0.035em; line-height: 1.07;
@@ -2151,6 +2164,31 @@
     document.querySelectorAll('[data-counter]').forEach(el => ctrObs.observe(el));
   }
 
+})();
+
+/* ── STATEMENT SECTION — random destination background ── */
+(function () {
+  // Top 10 tourist destinations, curated Unsplash photo IDs
+  var destinations = [
+    { place: 'Paris',       id: '1499856871958-5b9627545d1a' },  // Eiffel Tower
+    { place: 'Santorini',   id: '1570077188670-e3a8d69ac5ff' },  // Blue domes
+    { place: 'Tokyo',       id: '1540959733332-eab4deabeeaf' },  // City at night
+    { place: 'Bali',        id: '1537996194471-e657df975ab4' },  // Rice terraces
+    { place: 'Rome',        id: '1552832230-c0197dd311b5' },     // Colosseum
+    { place: 'Maldives',    id: '1514282401047-d79a71a590e8' },  // Overwater villas
+    { place: 'Machu Picchu',id: '1587595431973-160d0d94add1' },  // Ruins & peaks
+    { place: 'Barcelona',   id: '1539037116277-4db20889f2d4' },  // Sagrada Família
+    { place: 'Dubai',       id: '1512453979798-5ea266f8880c' },  // Skyline
+    { place: 'New York',    id: '1496442226666-8d4d0e62e6e9' },  // Manhattan
+  ];
+  var pick = destinations[Math.floor(Math.random() * destinations.length)];
+  var el   = document.querySelector('.section-statement');
+  if (el) {
+    el.style.backgroundImage =
+      'url(https://images.unsplash.com/photo-' + pick.id +
+      '?auto=format&fit=crop&w=1800&q=80)';
+    el.setAttribute('data-destination', pick.place);
+  }
 })();
 </script>
 </body>
