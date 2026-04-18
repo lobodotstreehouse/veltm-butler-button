@@ -1615,11 +1615,6 @@
       <h2>Tap once.<br><span>Travel smarter.</span></h2>
       <p class="phone-demo-sub">One widget. Five steps. Then your Butler is pinging you on WhatsApp. Watch the real signup flow &rarr;</p>
       <ul class="phone-step-list" id="stepList">
-        <li data-step="1">
-          <div class="phone-step-tag">01 &mdash; Open</div>
-          <div class="phone-step-title">Tap the Butler Button widget.</div>
-          <div class="phone-step-body">One tap launches the booking flow directly on the page — no app, no redirect, no friction.</div>
-        </li>
         <li data-step="2">
           <div class="phone-step-tag">02 &mdash; Choose</div>
           <div class="phone-step-title">Pick your service level.</div>
@@ -1661,41 +1656,6 @@
       <div class="phone">
         <div class="phone__notch"></div>
         <div class="phone__screen" id="phoneScreen">
-
-          <!-- Screen 1: VELTM site landing -->
-          <div class="screen" data-screen="1">
-            <div class="s1-nav">
-              <div class="s1-logo"><div class="s1-logo-icon"></div>Veltm</div>
-              <div class="s1-nav-pills">
-                <div class="s1-nav-pill">VELTM AI</div>
-                <div class="s1-nav-pill active">Butler Button</div>
-              </div>
-            </div>
-            <div class="s1-hero">
-              <div class="s1-eyebrow">Trusted by 1,000+ travelers worldwide</div>
-              <div class="s1-h1">Your Personal <span>Butler Button</span></div>
-              <div class="s1-sub">We plan your trip or assist while you're on one. From USD 25/day — just drop us a text.</div>
-              <div class="s1-badges">
-                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--globe">🌐</div><div><strong style="font-size:0.6rem;color:var(--near-black);">Global Coverage</strong><br><span>195+ countries</span></div></div>
-                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--clock">🕐</div><div><strong style="font-size:0.6rem;color:var(--near-black);">24/7 Support</strong><br><span>Always available</span></div></div>
-                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--map">🧳</div><div><strong style="font-size:0.6rem;color:var(--near-black);">Trip Planning</strong><br><span>Plan or assist on-trip</span></div></div>
-                <div class="s1-badge"><div class="s1-badge-icon s1-badge-icon--shield">🛡️</div><div><strong style="font-size:0.6rem;color:var(--near-black);">Secure &amp; Reliable</strong><br><span>Professional team</span></div></div>
-              </div>
-              <div class="s1-trustline"><span>✓ Instant setup</span><span>✓ No hidden fees</span><span>✓ Cancel anytime</span></div>
-              <div class="s1-widget-preview">
-                <div class="s1-widget-header">
-                  <div class="s1-widget-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><path d="M9 15s1.5 2 3 2 3-2 3-2"/></svg></div>
-                  <div><div class="s1-widget-title">Book Your Butler</div><div class="s1-widget-sub">Your personal trip assistant</div></div>
-                </div>
-                <div class="s1-service-cards">
-                  <div class="s1-card"><span class="s1-card-name">Trip Planning</span><span class="s1-card-price">$25/country</span></div>
-                  <div class="s1-card selected"><span class="s1-card-name">8-Hour</span><span class="s1-card-price">$25/day</span></div>
-                  <div class="s1-card"><span class="s1-card-name">24-Hour</span><span class="s1-card-price">$100/day</span></div>
-                </div>
-                <button class="s1-cta-btn">Start Your Journey →<span class="tap-ring"></span></button>
-              </div>
-            </div>
-          </div>
 
           <!-- Screen 2: Widget — Service selection -->
           <div class="screen" data-screen="2">
@@ -2129,7 +2089,6 @@
     var stepItems = document.querySelectorAll('#stepList li');
     var replayBtn = document.getElementById('replayBtn');
     var timeline = [
-      { screen: 1, duration: 3500 },
       { screen: 2, duration: 3200 },
       { screen: 3, duration: 3800 },
       { screen: 4, duration: 4500 },
