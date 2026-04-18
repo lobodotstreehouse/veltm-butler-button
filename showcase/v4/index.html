@@ -830,14 +830,63 @@
     }
     .human-img-wrap {
       border-radius: 28px; overflow: clip;
-      background: linear-gradient(155deg, #e0e7ff, #c7d2fe);
+      background: #0d0d14;
       aspect-ratio: 4/5; position: relative; cursor: pointer;
+      display: flex; align-items: stretch;
+      text-decoration: none;
+      transition: box-shadow 0.3s ease;
     }
-    .human-img-wrap img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    .human-img-wrap:hover { box-shadow: 0 24px 64px rgba(79,70,229,0.18); }
+    /* Comparison card */
+    .cmp-card {
+      width: 100%; padding: 2.5rem 2.2rem;
+      display: flex; flex-direction: column; gap: 0;
+      font-family: inherit;
     }
-    .human-img-wrap:hover img { transform: scale(1.03); }
+    .cmp-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .cmp-label--without { color: rgba(255,255,255,0.3); }
+    .cmp-label--with    { color: var(--indigo-lt); }
+    .cmp-list {
+      list-style: none; padding: 0; margin: 0 0 1.6rem;
+      display: flex; flex-direction: column; gap: 0.55rem;
+    }
+    .cmp-list li {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: clamp(0.9rem, 1.4vw, 1.05rem); font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .cmp-list--without li { color: rgba(255,255,255,0.38); }
+    .cmp-list--without li::before {
+      content: ''; width: 12px; height: 12px; flex-shrink: 0;
+      border-radius: 3px; border: 1.5px solid rgba(255,255,255,0.2);
+    }
+    .cmp-list--with li { color: rgba(255,255,255,0.92); font-weight: 600; }
+    .cmp-list--with li::before {
+      content: '✓'; width: 18px; height: 18px; flex-shrink: 0;
+      background: var(--indigo); border-radius: 50%;
+      font-size: 0.6rem; color: #fff; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cmp-divider {
+      border: none; border-top: 1px solid rgba(255,255,255,0.08);
+      margin: 0.4rem 0 1.6rem;
+    }
+    .cmp-footer {
+      margin-top: auto;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .cmp-tagline {
+      font-size: 0.82rem; color: rgba(255,255,255,0.35);
+      letter-spacing: -0.01em; line-height: 1.4;
+    }
+    .cmp-wordmark {
+      font-size: 0.85rem; font-weight: 800; letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.9);
+    }
+    .cmp-wordmark em { color: var(--indigo-lt); font-style: normal; }
     .human-h2 {
       font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 700;
       letter-spacing: -0.035em; line-height: 1.1;
@@ -1924,7 +1973,27 @@
   <div class="human-inner">
 
     <a href="#" class="human-img-wrap" data-butler-button data-reveal-left>
-      <img src="../../img/ads/veltm_social_proof_01.png" alt="Butler Button concierge in action">
+      <div class="cmp-card">
+        <div class="cmp-label cmp-label--without">Without Butler Button</div>
+        <ul class="cmp-list cmp-list--without">
+          <li>47 browser tabs</li>
+          <li>6 booking sites</li>
+          <li>14 hours of research</li>
+          <li>3 spreadsheets</li>
+        </ul>
+        <hr class="cmp-divider">
+        <div class="cmp-label cmp-label--with">With Butler Button</div>
+        <ul class="cmp-list cmp-list--with">
+          <li>1 text to your Butler</li>
+          <li>1 expert travel advisor</li>
+          <li>1 complete itinerary</li>
+          <li>From $25 / day</li>
+        </ul>
+        <div class="cmp-footer">
+          <p class="cmp-tagline">Your travel expert,<br>one text away.</p>
+          <div class="cmp-wordmark">Butler<em>Button</em></div>
+        </div>
+      </div>
     </a>
 
     <div class="human-copy">
