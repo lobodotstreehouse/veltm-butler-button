@@ -1022,34 +1022,65 @@
       line-height: 1.65; letter-spacing: -0.01em;
       max-width: 420px; margin-bottom: 2.5rem;
     }
-    /* Step list — v2 how-step style, dark bg */
+    /* Step list — all steps legible, arrow indicator slides between them */
+    .phone-step-list-wrap {
+      position: relative;
+      padding-left: 1.6rem;
+      margin-bottom: 2.5rem;
+    }
+    #stepArrow {
+      position: absolute;
+      left: 0;
+      top: 1.25rem; /* starts aligned with first step's padding-top */
+      color: var(--indigo-lt);
+      font-size: 1.1rem;
+      font-weight: 900;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      transition: top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.18s ease;
+    }
+    #stepArrow.pulse {
+      transform: scale(1.4);
+    }
     .phone-step-list {
-      list-style: none; padding: 0; margin: 0 0 2.5rem;
+      list-style: none; padding: 0; margin: 0;
     }
     .phone-step-list li {
       padding: 1.25rem 0;
       border-top: 1px solid rgba(255,255,255,0.06);
-      opacity: 0.18;
-      transform: translateX(-6px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
       cursor: default;
+      transition: border-color 0.4s ease;
     }
     .phone-step-list li[data-active="true"] {
-      opacity: 1; transform: none;
+      border-color: rgba(129,140,248,0.3);
     }
     .phone-step-tag {
       font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--indigo-lt);
+      text-transform: uppercase; color: rgba(255,255,255,0.28);
       margin-bottom: 0.45rem;
+      transition: color 0.4s ease;
+    }
+    .phone-step-list li[data-active="true"] .phone-step-tag {
+      color: var(--indigo-lt);
     }
     .phone-step-title {
-      font-size: clamp(1rem, 1.8vw, 1.25rem); font-weight: 700;
-      letter-spacing: -0.025em; color: #f5f5f7;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem); font-weight: 700;
+      letter-spacing: -0.025em; color: rgba(255,255,255,0.45);
       margin-bottom: 0.4rem; line-height: 1.25;
+      transition: color 0.4s ease;
+    }
+    .phone-step-list li[data-active="true"] .phone-step-title {
+      color: #f5f5f7;
     }
     .phone-step-body {
-      font-size: 0.88rem; color: var(--text-mute);
+      font-size: 0.84rem; color: rgba(255,255,255,0.25);
       line-height: 1.6; letter-spacing: -0.01em;
+      transition: color 0.4s ease;
+    }
+    .phone-step-list li[data-active="true"] .phone-step-body {
+      color: var(--text-mute);
     }
     /* Phone frame ─────────────────────────────────────────────── */
     .phone {
@@ -1241,7 +1272,7 @@
       .phone-demo-inner { grid-template-columns:1fr; justify-items:center; }
       .phone-demo-copy { text-align:center; }
       .phone-demo-copy .phone-demo-sub { margin-left:auto; margin-right:auto; }
-      .phone-step-list { display:none; }
+      .phone-step-list-wrap { display:none; }
     }
   </style>
 </head>
@@ -1614,40 +1645,40 @@
       <span class="how-label">How It Works</span>
       <h2>Tap once.<br><span>Travel smarter.</span></h2>
       <p class="phone-demo-sub">One widget. Five steps. Then your Butler is pinging you on WhatsApp. Watch the real signup flow &rarr;</p>
-      <ul class="phone-step-list" id="stepList">
-        <li data-step="2">
-          <div class="phone-step-tag">02 &mdash; Choose</div>
-          <div class="phone-step-title">Pick your service level.</div>
-          <div class="phone-step-body">8-Hour Butler for day assistance, 24-Hour for round-the-clock coverage, or Trip Planning for a full itinerary.</div>
-        </li>
-        <li data-step="3">
-          <div class="phone-step-tag">03 &mdash; Destination</div>
-          <div class="phone-step-title">Set where and when.</div>
-          <div class="phone-step-body">Drop in your destination, travel dates, and number of travelers. Italy, solo, May 1&ndash;8 — done in seconds.</div>
-        </li>
-        <li data-step="4">
-          <div class="phone-step-tag">04 &mdash; Details</div>
-          <div class="phone-step-title">Your info + partner code.</div>
-          <div class="phone-step-body">Name, email, and phone — then add your promo code and watch 20% come off the total automatically.</div>
-        </li>
-        <li data-step="5">
-          <div class="phone-step-tag">05 &mdash; Confirm</div>
-          <div class="phone-step-title">Secure your Butler.</div>
-          <div class="phone-step-body">Checkout takes under a minute. Payment confirmed, advisor matched — all before the spinner stops.</div>
-        </li>
-        <li data-step="6">
-          <div class="phone-step-tag">06 &mdash; Booked</div>
-          <div class="phone-step-title">You're confirmed.</div>
-          <div class="phone-step-body">Booking reference issued. Your Butler is assigned and will ping you on WhatsApp within 4 minutes.</div>
-        </li>
-        <li data-step="7">
-          <div class="phone-step-tag">07 &mdash; Connected</div>
-          <div class="phone-step-title">Your Butler checks in.</div>
-          <div class="phone-step-body">Itinerary, restaurant recs, real-time support — it all starts the moment that first WhatsApp message lands.</div>
-        </li>
-      </ul>
-      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-        <a href="#" class="btn btn-primary btn-lg" data-butler-button>Book from $25</a>
+      <div class="phone-step-list-wrap">
+        <div id="stepArrow" aria-hidden="true">&#8594;</div>
+        <ul class="phone-step-list" id="stepList">
+          <li data-step="2">
+            <div class="phone-step-tag">01 &mdash; Choose</div>
+            <div class="phone-step-title">Pick your service level.</div>
+            <div class="phone-step-body">8-Hour Butler for day assistance, 24-Hour for round-the-clock coverage, or Trip Planning for a full itinerary.</div>
+          </li>
+          <li data-step="3">
+            <div class="phone-step-tag">02 &mdash; Destination</div>
+            <div class="phone-step-title">Set where and when.</div>
+            <div class="phone-step-body">Drop in your destination, travel dates, and number of travelers. Italy, solo, May 1&ndash;8 — done in seconds.</div>
+          </li>
+          <li data-step="4">
+            <div class="phone-step-tag">03 &mdash; Details</div>
+            <div class="phone-step-title">Your info + partner code.</div>
+            <div class="phone-step-body">Name, email, and phone — then add your promo code and watch 20% come off the total automatically.</div>
+          </li>
+          <li data-step="5">
+            <div class="phone-step-tag">04 &mdash; Confirm</div>
+            <div class="phone-step-title">Secure your Butler.</div>
+            <div class="phone-step-body">Checkout takes under a minute. Payment confirmed, advisor matched — all before the spinner stops.</div>
+          </li>
+          <li data-step="6">
+            <div class="phone-step-tag">05 &mdash; Booked</div>
+            <div class="phone-step-title">You're confirmed.</div>
+            <div class="phone-step-body">Booking reference issued. Your Butler is assigned and will ping you on WhatsApp within 4 minutes.</div>
+          </li>
+          <li data-step="7">
+            <div class="phone-step-tag">06 &mdash; Connected</div>
+            <div class="phone-step-title">Your Butler checks in.</div>
+            <div class="phone-step-body">Itinerary, restaurant recs, real-time support — it all starts the moment that first WhatsApp message lands.</div>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -2088,6 +2119,8 @@
     var screens   = document.querySelectorAll('.screen');
     var stepItems = document.querySelectorAll('#stepList li');
     var replayBtn = document.getElementById('replayBtn');
+    var stepArrow = document.getElementById('stepArrow');
+    var stepList  = document.getElementById('stepList');
     var timeline = [
       { screen: 2, duration: 3200 },
       { screen: 3, duration: 3800 },
@@ -2105,7 +2138,19 @@
       var scr  = document.querySelector('[data-screen="' + step.screen + '"]');
       if (scr) scr.setAttribute('data-active', 'true');
       var li   = document.querySelector('#stepList li[data-step="' + step.screen + '"]');
-      if (li) li.setAttribute('data-active', 'true');
+      if (li) {
+        li.setAttribute('data-active', 'true');
+        // Move arrow to align with this step's tag line
+        if (stepArrow && stepList) {
+          var arrowTop = li.offsetTop + 20; // 20px ≈ padding-top + half tag height
+          stepArrow.style.top = arrowTop + 'px';
+          // Brief pulse on transition
+          stepArrow.classList.remove('pulse');
+          void stepArrow.offsetWidth; // reflow to restart animation
+          stepArrow.classList.add('pulse');
+          setTimeout(function(){ stepArrow.classList.remove('pulse'); }, 200);
+        }
+      }
     }
     function advance() {
       show(currentIndex);
