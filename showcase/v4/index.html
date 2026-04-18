@@ -878,35 +878,45 @@
       border-radius: 18px; overflow: clip;
       position: relative; cursor: pointer;
       display: block; text-decoration: none;
+      aspect-ratio: 3/4;
     }
-    .gallery-item:nth-child(2) { margin-bottom: -3rem; }
-    .gallery-item img {
-      width: 100%; display: block;
-      aspect-ratio: 3/4; object-fit: cover;
+    .gallery-item:nth-child(2) { margin-bottom: -3rem; aspect-ratio: 2/3; }
+    .gallery-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
       transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
     }
-    .gallery-item:nth-child(2) img { aspect-ratio: 2/3; }
-    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item:hover .gallery-bg { transform: scale(1.04); }
     .gallery-item-overlay {
       position: absolute; inset: 0;
       background:
-        linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 35%),
-        linear-gradient(to top,    rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 45%);
+        linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.05) 40%),
+        linear-gradient(to top,    rgba(0,0,0,0.82) 0%, rgba(0,0,0,0) 55%);
       display: flex; flex-direction: column;
-      justify-content: space-between; padding: 1.1rem 1.2rem;
+      justify-content: space-between; padding: 1.2rem 1.3rem;
+    }
+    .gallery-trending-badge {
+      display: inline-block; align-self: flex-start;
+      background: var(--indigo); color: #fff;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
+    }
+    .gallery-item-bottom { display: flex; flex-direction: column; gap: 0.6rem; }
+    .gallery-item-headline {
+      font-size: clamp(0.92rem, 1.5vw, 1.05rem); font-weight: 700;
+      color: #fff; line-height: 1.35; letter-spacing: -0.02em;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
     }
     .gallery-item-brand {
-      font-size: 0.9rem; font-weight: 800; letter-spacing: -0.02em;
-      color: #fff;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+      font-size: 0.78rem; font-weight: 800; letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
     }
     .gallery-item-brand em { color: #a5b4fc; font-style: normal; }
     .gallery-item-cta {
-      font-size: 0.85rem; font-weight: 700; color: #fff;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
-      transition: letter-spacing 0.2s ease;
+      font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.7);
+      letter-spacing: 0.02em;
     }
-    .gallery-item:hover .gallery-item-cta { letter-spacing: 0.02em; }
     @media (max-width: 700px) {
       .gallery-grid { grid-template-columns: 1fr 1fr; }
       .gallery-item:nth-child(3) { display: none; }
@@ -1964,25 +1974,40 @@
     <p class="section-sub-light" data-reveal style="--delay:.2s">One flat fee per country. From weekend escapes to month-long grand tours.</p>
   </div>
   <div class="gallery-grid">
+    <!-- Bali -->
     <a href="#" class="gallery-item" data-butler-button>
-      <img src="../../img/ads/veltm_travel_trending_02.png" alt="Trending destination">
+      <div class="gallery-bg" style="background-image:url(https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80)"></div>
       <div class="gallery-item-overlay">
-        <div class="gallery-item-brand">Butler<em>Button</em></div>
-        <div class="gallery-item-cta">Plan this trip →</div>
+        <div class="gallery-trending-badge">Travel Trending</div>
+        <div class="gallery-item-bottom">
+          <p class="gallery-item-headline">3 out of 4 travelers overpay for flights. Butler Button clients don't.</p>
+          <div class="gallery-item-brand">Butler<em>Button</em></div>
+          <div class="gallery-item-cta">Plan this trip →</div>
+        </div>
       </div>
     </a>
+    <!-- Japan -->
     <a href="#" class="gallery-item" data-butler-button>
-      <img src="../../img/ads/veltm_travel_trending_03.png" alt="Trending destination">
+      <div class="gallery-bg" style="background-image:url(https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=800&q=80)"></div>
       <div class="gallery-item-overlay">
-        <div class="gallery-item-brand">Butler<em>Button</em></div>
-        <div class="gallery-item-cta">Plan this trip →</div>
+        <div class="gallery-trending-badge">Travel Trending</div>
+        <div class="gallery-item-bottom">
+          <p class="gallery-item-headline">Japan bookings are up 340%. Your Butler is already ahead of it.</p>
+          <div class="gallery-item-brand">Butler<em>Button</em></div>
+          <div class="gallery-item-cta">Plan this trip →</div>
+        </div>
       </div>
     </a>
+    <!-- Santorini -->
     <a href="#" class="gallery-item" data-butler-button>
-      <img src="../../img/ads/veltm_travel_trending_04.png" alt="Trending destination">
+      <div class="gallery-bg" style="background-image:url(https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80)"></div>
       <div class="gallery-item-overlay">
-        <div class="gallery-item-brand">Butler<em>Button</em></div>
-        <div class="gallery-item-cta">Plan this trip →</div>
+        <div class="gallery-trending-badge">Travel Trending</div>
+        <div class="gallery-item-bottom">
+          <p class="gallery-item-headline">The average honeymoon takes 47 hours to plan. Butler Button does it in 3 texts.</p>
+          <div class="gallery-item-brand">Butler<em>Button</em></div>
+          <div class="gallery-item-cta">Plan this trip →</div>
+        </div>
       </div>
     </a>
   </div>
