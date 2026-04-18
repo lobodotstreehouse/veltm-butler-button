@@ -1312,20 +1312,12 @@
     <h1 class="hero-h1">
       Your personal<br><span>travel expert.</span>
     </h1>
-    <p class="hero-sub">AI plans it. A human handles it. You enjoy it. From $25/day.</p>
+    <p class="hero-sub">100% human experts. 150+ countries. No membership required.</p>
 
-    <!-- CLICKABLE TABS -->
-    <div class="hero-tabs" id="hero-tabs">
-      <button class="hero-tab active" data-tab="0">AI Plans It</button>
-      <button class="hero-tab" data-tab="1">Human Handles It</button>
-      <button class="hero-tab" data-tab="2">You Enjoy It</button>
-      <button class="hero-tab" data-tab="3">From $25/day</button>
-    </div>
+    <!-- VISUAL PANELS -->
+    <div class="hero-visual-wrap" style="display:none;">
 
-    <!-- VISUAL PANELS (same content, now tab-controlled + clickable) -->
-    <div class="hero-visual-wrap">
-
-      <!-- Tab 0: AI plans it — Itinerary Builder -->
+      <!-- Tab 0: placeholder (hidden) -->
       <a class="hero-v-panel active" data-phase="0" href="#" data-butler-button>
         <div class="vp-card">
           <div class="itin-hdr">
@@ -2006,54 +1998,7 @@
     nav.classList.toggle('bg', window.scrollY > 60);
   }, { passive: true });
 
-  /* ── HERO TABS — click to switch, auto-advance ─── */
-  const tabs    = document.querySelectorAll('.hero-tab');
-  const panels  = document.querySelectorAll('.hero-v-panel');
-  let   current = 0;
-  let   timer   = null;
-  const INTERVAL = 6000;
-
-  function setTab(idx) {
-    tabs[current].classList.remove('active', 'paused');
-    panels[current].classList.remove('active');
-    current = idx;
-    tabs[current].classList.remove('paused');
-    tabs[current].classList.add('active');
-    panels[current].classList.add('active');
-  }
-
-  function advance() {
-    setTab((current + 1) % tabs.length);
-  }
-
-  function startTimer() {
-    clearInterval(timer);
-    tabs[current].classList.remove('active');
-    void tabs[current].offsetWidth;
-    tabs[current].classList.add('active');
-    timer = setInterval(advance, INTERVAL);
-  }
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => {
-      setTab(i);
-      startTimer();
-    });
-  });
-
-  const heroWrap = document.querySelector('.hero-visual-wrap');
-  const tabBar   = document.getElementById('hero-tabs');
-  [heroWrap, tabBar].forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      clearInterval(timer);
-      tabs[current].classList.add('paused');
-    });
-    el.addEventListener('mouseleave', () => {
-      startTimer();
-    });
-  });
-
-  startTimer();
+  /* hero tabs removed */
 
   /* ── PHONE DEMO — animated signup flow ── */
   (function(){
