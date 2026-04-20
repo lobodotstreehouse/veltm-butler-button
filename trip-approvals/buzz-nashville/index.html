@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buzz's Nashville Family Trip · Trip Approval — Butler Button by VELTM</title>
+<meta name="description" content="5-star Nashville experience for 10 guests — 3 generations, 5 days. Curated by Butler Button.">
+<link rel="icon" type="image/png" href="../../img/logos/VELTM-icon-indigo.png">
+<link rel="stylesheet" href="../../regional/regional.css">
+<style>
+
+/* ── APPROVAL-SPECIFIC OVERRIDES ────────────────── */
+
+.approval-badge {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 1.2rem; border-radius: 999px;
+  background: rgba(251,191,36,0.1);
+  border: 1px solid rgba(251,191,36,0.3);
+  font-size: 0.78rem; color: #fbbf24; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+.approval-badge::before { content: "✦"; }
+
+/* hero image strip */
+.hero-photo {
+  width: 100%; max-height: 520px; object-fit: cover;
+  border-radius: 1.2rem; margin-top: 2.5rem;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+}
+
+/* image grid */
+.photo-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 220px 220px;
+  gap: 0.75rem;
+  margin: 2.5rem 0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.photo-grid img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.photo-grid img:first-child {
+  grid-row: 1 / 3;
+}
+@media (max-width: 720px) {
+  .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .photo-grid img:first-child { grid-row: auto; }
+}
+
+/* group roster */
+.group-roster {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+  margin-top: 1.5rem; justify-content: center;
+}
+.guest-chip {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 999px; font-size: 0.83rem; color: var(--ink-dim);
+}
+.guest-chip .emoji { font-size: 1.1rem; }
+
+/* day cards */
+.day-cards { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+.day-card {
+  display: grid; grid-template-columns: 90px 1fr;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem; overflow: hidden;
+}
+.day-card__num {
+  background: rgba(129,140,248,0.1);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 1.5rem 0.75rem; text-align: center;
+}
+.day-card__label { font-size: 0.65rem; color: var(--indigo); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+.day-card__n { font-size: 2.4rem; font-weight: 700; line-height: 1; color: var(--ink); }
+.day-card__body { padding: 1.4rem 1.6rem; }
+.day-card__title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+.day-card__img {
+  width: 100%; height: 180px; object-fit: cover;
+  border-bottom: 1px solid var(--border);
+}
+.day-card__items { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.75rem; }
+.day-card__items li { font-size: 0.85rem; color: var(--ink-dim); padding-left: 1rem; position: relative; }
+.day-card__items li::before { content: "→"; position: absolute; left: 0; color: var(--indigo); font-size: 0.8rem; }
+@media (max-width: 640px) { .day-card { grid-template-columns: 1fr; } .day-card__num { flex-direction: row; gap: 0.5rem; padding: 0.8rem 1.2rem; border-right: none; border-bottom: 1px solid var(--border); } }
+
+/* experience cards */
+.exp-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem; margin-top: 2rem;
+}
+.exp-card {
+  border-radius: 1rem; overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+.exp-card img { width: 100%; height: 160px; object-fit: cover; }
+.exp-card__body { padding: 1rem 1.1rem 1.2rem; }
+.exp-card__tag { font-size: 0.72rem; color: var(--indigo); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+.exp-card__title { font-size: 0.98rem; font-weight: 700; margin-bottom: 0.4rem; }
+.exp-card__desc { font-size: 0.82rem; color: var(--ink-dim); line-height: 1.5; }
+
+/* pricing table */
+.price-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+.price-table th {
+  font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--ink-mute); font-weight: 600; padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border); text-align: left;
+}
+.price-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--ink-dim); vertical-align: top; }
+.price-table td:first-child { font-weight: 600; color: var(--ink); }
+.price-table td:last-child { text-align: right; white-space: nowrap; font-weight: 600; color: var(--green); }
+.price-table tr.total td { color: var(--ink); font-size: 1.05rem; border-bottom: none; }
+.price-table tr.total td:last-child { color: #fbbf24; font-size: 1.15rem; }
+
+/* approve CTA */
+.approve-box {
+  text-align: center;
+  background: linear-gradient(135deg, rgba(129,140,248,0.12), rgba(124,58,237,0.08));
+  border: 1px solid rgba(129,140,248,0.2);
+  border-radius: 1.5rem; padding: 3.5rem 2rem;
+  margin-top: 3rem;
+}
+.approve-box h2 { font-size: clamp(1.7rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.8rem; }
+.approve-box p { color: var(--ink-dim); max-width: 520px; margin: 0 auto 2rem; line-height: 1.65; }
+.approve-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+.btn-approve {
+  padding: 1rem 2.2rem;
+  background: #fbbf24; color: #0a0a0f; font-weight: 700;
+  border-radius: 999px; font-size: 1rem; letter-spacing: -0.01em;
+  border: none; cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 0 28px rgba(251,191,36,0.3);
+}
+.btn-approve:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(251,191,36,0.45); }
+
+/* accommodation card */
+.hotel-card {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; border-radius: 1rem; overflow: hidden;
+  border: 1px solid var(--border); margin-top: 1.5rem;
+}
+.hotel-card img { width: 100%; height: 280px; object-fit: cover; }
+.hotel-card__body { padding: 2rem 1.8rem; display: flex; flex-direction: column; justify-content: center; }
+.hotel-card__stars { color: #fbbf24; font-size: 0.9rem; margin-bottom: 0.6rem; }
+.hotel-card__name { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.6rem; }
+.hotel-card__desc { font-size: 0.88rem; color: var(--ink-dim); line-height: 1.6; margin-bottom: 1.2rem; }
+.hotel-card__perks { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.hotel-perk {
+  font-size: 0.75rem; padding: 0.3rem 0.7rem;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  border-radius: 999px; color: var(--ink-dim);
+}
+@media (max-width: 720px) { .hotel-card { grid-template-columns: 1fr; } .hotel-card img { height: 200px; } }
+
+/* dining row */
+.dining-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.dining-card {
+  border-radius: 0.9rem; overflow: hidden;
+  border: 1px solid var(--border); background: var(--card);
+}
+.dining-card img { width: 100%; height: 130px; object-fit: cover; }
+.dining-card__body { padding: 0.9rem 1rem; }
+.dining-card__name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.dining-card__tag { font-size: 0.72rem; color: var(--indigo); }
+.dining-card__note { font-size: 0.78rem; color: var(--ink-mute); margin-top: 0.3rem; }
+
+/* stat highlight */
+.stat-strip { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--border); border-radius: 1rem; overflow: hidden; margin-top: 2rem; }
+.stat-strip .stat { flex: 1; min-width: 130px; padding: 1.5rem 1.2rem; border-right: 1px solid var(--border); text-align: center; }
+.stat-strip .stat:last-child { border-right: none; }
+.stat-strip .stat__num { font-size: 2rem; font-weight: 700; color: var(--indigo); }
+.stat-strip .stat__lbl { font-size: 0.78rem; color: var(--ink-mute); margin-top: 0.25rem; }
+
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../../" class="nav-brand">Butler<em>Button</em></a>
+  <div class="nav-links">
+    <a href="../../showcase/v3/">How It Works</a>
+    <a href="../../pricing.html">Pricing</a>
+    <a href="../../regional/">All regions</a>
+  </div>
+  <a href="#approve" class="nav-cta">✦ Approve This Plan</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="approval-badge">Personalized Trip Proposal · Buzz &amp; Family</div>
+    <h1 class="hero-h1">Nashville.<br><span>Five Stars. Three Generations.</span></h1>
+    <p class="hero-sub">A complete 5-day luxury Nashville experience curated for Buzz, family, and five grandkids — every detail handled, zero planning required.</p>
+    <div class="hero-actions">
+      <a href="#approve" class="btn btn-indigo btn-lg">✦ Approve This Trip</a>
+      <a href="#itinerary" class="btn btn-ghost btn-lg">View Itinerary</a>
+    </div>
+    <img
+      src="https://images.unsplash.com/photo-1580894742597-87bc8789db3d?w=1200&q=85&auto=format&fit=crop"
+      alt="Nashville skyline at night"
+      class="hero-photo"
+      onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=85&auto=format&fit=crop'"
+    >
+  </div>
+</section>
+
+<!-- ── GROUP ROSTER ── -->
+<section class="section--sm section--dark">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:1.4rem;">
+      <span class="eyebrow">Your Group · 10 Guests</span>
+    </div>
+    <div class="group-roster">
+      <div class="guest-chip"><span class="emoji">👑</span> Buzz &amp; Wife — The Anchors</div>
+      <div class="guest-chip"><span class="emoji">🎸</span> Son &amp; Daughter-in-Law</div>
+      <div class="guest-chip"><span class="emoji">👧</span> Grandkid 1</div>
+      <div class="guest-chip"><span class="emoji">👦</span> Grandkid 2</div>
+      <div class="guest-chip"><span class="emoji">👧</span> Grandkid 3</div>
+      <div class="guest-chip"><span class="emoji">👦</span> Grandkid 4</div>
+      <div class="guest-chip"><span class="emoji">👧</span> Grandkid 5</div>
+    </div>
+    <div class="stat-strip" style="margin-top:2rem;">
+      <div class="stat"><div class="stat__num">10</div><div class="stat__lbl">guests</div></div>
+      <div class="stat"><div class="stat__num">5</div><div class="stat__lbl">days</div></div>
+      <div class="stat"><div class="stat__num">3</div><div class="stat__lbl">generations</div></div>
+      <div class="stat"><div class="stat__num">5★</div><div class="stat__lbl">all the way</div></div>
+      <div class="stat"><div class="stat__num">0</div><div class="stat__lbl">hours of planning for you</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHOTO GRID ── -->
+<section class="section--sm">
+  <div class="container">
+    <div class="photo-grid">
+      <img
+        src="https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?w=900&q=80&auto=format&fit=crop"
+        alt="Nashville Broadway street at night"
+      >
+      <img
+        src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80&auto=format&fit=crop"
+        alt="Live music concert"
+      >
+      <img
+        src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80&auto=format&fit=crop"
+        alt="5-star hotel pool"
+      >
+      <img
+        src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format&fit=crop"
+        alt="Fine dining restaurant"
+      >
+      <img
+        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop"
+        alt="Family adventure outdoor"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- ── 5-DAY ITINERARY ── -->
+<section class="section" id="itinerary">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Day-by-Day</span>
+      <h2 class="section-title">Your 5-Day Nashville Itinerary</h2>
+      <p class="section-sub">Every activity pre-booked. Every reservation locked. Every transfer arranged.</p>
+    </div>
+    <div class="day-cards">
+
+      <div class="day-card">
+        <div class="day-card__num"><div class="day-card__label">Day</div><div class="day-card__n">01</div></div>
+        <div class="day-card__body">
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=900&q=80&auto=format&fit=crop" alt="Arrival travel" class="day-card__img" style="border-radius:0.6rem; margin-bottom:1rem;">
+          <div class="day-card__title">Arrival &amp; Welcome — Setting the Tone</div>
+          <ul class="day-card__items">
+            <li>Private coach transfer: airport → JW Marriott Nashville for all 10 guests</li>
+            <li>Check-in: connecting luxury suites with grandkid welcome baskets in every room</li>
+            <li>Lunch: Attaboy Bagels — casual Nashville welcome, legendary sandwiches</li>
+            <li>Afternoon: Parthenon guided tour + gourmet picnic in Centennial Park</li>
+            <li>Dinner: Husk — elevated Southern family-style, farm-to-table at its finest</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card__num"><div class="day-card__label">Day</div><div class="day-card__n">02</div></div>
+        <div class="day-card__body">
+          <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=900&q=80&auto=format&fit=crop" alt="Music venue Nashville" class="day-card__img" style="border-radius:0.6rem; margin-bottom:1rem;">
+          <div class="day-card__title">Music Central — The Heart of Nashville</div>
+          <ul class="day-card__items">
+            <li>Ryman Auditorium VIP behind-the-scenes tour (2 hrs, all ages, history comes alive)</li>
+            <li>Hot chicken tasting flight — guided food tour through Nashvile's signature dish</li>
+            <li>Adventure Science Center: grandkids love it, adults are surprised they do too</li>
+            <li>Dinner: Kayne Prime steakhouse (kids' menu, private dining room option)</li>
+            <li>Evening: Grand Ole Opry — VIP reserved seating, Nashville's most iconic night out</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card__num"><div class="day-card__label">Day</div><div class="day-card__n">03</div></div>
+        <div class="day-card__body">
+          <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=900&q=80&auto=format&fit=crop" alt="Recording studio music" class="day-card__img" style="border-radius:0.6rem; margin-bottom:1rem;">
+          <div class="day-card__title">Backstage &amp; Beyond — Insider Access</div>
+          <ul class="day-card__items">
+            <li>Music Valley backstage tour — meet working musicians, see active recording studios</li>
+            <li>Lunch: Chauhan Ale &amp; Masala — Top Chef winner, bold flavors, elegant space</li>
+            <li>Nashville Zoo: open-air, stroller-friendly, interactive shows the grandkids won't forget</li>
+            <li>Dinner: Butler Button's surprise pick (pre-vetted, dietary preferences honored)</li>
+            <li>Evening: Honky Tonk Central — live music, kids' game zone, the whole family on Broadway</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card__num"><div class="day-card__label">Day</div><div class="day-card__n">04</div></div>
+        <div class="day-card__body">
+          <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=900&q=80&auto=format&fit=crop" alt="Family recording studio session" class="day-card__img" style="border-radius:0.6rem; margin-bottom:1rem;">
+          <div class="day-card__title">Record &amp; Relax — The Memory Maker</div>
+          <ul class="day-card__items">
+            <li>Breakfast: Fido or Frothy Melon — Nashville's neighborhood coffeehouse institutions</li>
+            <li>Family recording studio session — sing a song, press a CD, souvenir the grandkids keep forever</li>
+            <li>Picnic lunch: Centennial Park (Butler Button delivers, you just show up)</li>
+            <li>Afternoon: Pool time + spa option for adults while kids splash</li>
+            <li>Dinner: The Root at Falconhead — refined Southern, worth the drive</li>
+            <li>Evening: Nashville Pedal Tavern sunset group tour — adults sip, grandkids get the story</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card__num"><div class="day-card__label">Day</div><div class="day-card__n">05</div></div>
+        <div class="day-card__body">
+          <img src="https://images.unsplash.com/photo-1556742400-b5b7a6875b48?w=900&q=80&auto=format&fit=crop" alt="Departure luxury travel" class="day-card__img" style="border-radius:0.6rem; margin-bottom:1rem;">
+          <div class="day-card__title">Farewell Nashville — Leave Wanting More</div>
+          <ul class="day-card__items">
+            <li>Leisurely hotel breakfast — no rush, no early check-out pressure</li>
+            <li>Last-minute shopping: The Gulch (boutiques, Nashville souvenirs, whiskey)</li>
+            <li>Professional group portrait session at Nashville mural wall — final memory</li>
+            <li>Lunch: casual send-off at local favorite</li>
+            <li>Private coach: hotel → airport, white-glove door-to-door for all 10</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── ACCOMMODATION ── -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Where You'll Stay</span>
+      <h2 class="section-title">JW Marriott Nashville</h2>
+      <p class="section-sub">Rooftop pool, family suites, floor-to-ceiling skyline views. Connecting rooms so generations stay close but not on top of each other.</p>
+    </div>
+    <div class="hotel-card">
+      <img
+        src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&auto=format&fit=crop"
+        alt="JW Marriott Nashville luxury pool"
+      >
+      <div class="hotel-card__body">
+        <div class="hotel-card__stars">★★★★★</div>
+        <div class="hotel-card__name">JW Marriott Nashville</div>
+        <div class="hotel-card__desc">Downtown Nashville's premier luxury tower. Rooftop pool with skyline views, J|W Steakhouse, 24-hour concierge, kids' programming. Connecting suites available for multi-generational groups. Butler Button has pre-requested your room configuration and welcome amenities.</div>
+        <div class="hotel-card__perks">
+          <span class="hotel-perk">Rooftop pool</span>
+          <span class="hotel-perk">Connecting suites</span>
+          <span class="hotel-perk">24/7 concierge</span>
+          <span class="hotel-perk">Kids welcome baskets</span>
+          <span class="hotel-perk">Downtown location</span>
+          <span class="hotel-perk">Valet parking</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCES ── -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Curated Experiences</span>
+      <h2 class="section-title">Every moment is pre-booked. None of it is generic.</h2>
+      <p class="section-sub">These aren't suggestions. These are confirmed reservations and locked access — arranged before you land.</p>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <img src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=600&q=80&auto=format&fit=crop" alt="Ryman Auditorium Nashville">
+        <div class="exp-card__body">
+          <div class="exp-card__tag">Music · All ages</div>
+          <div class="exp-card__title">Ryman Auditorium VIP Tour</div>
+          <div class="exp-card__desc">The Mother Church of Country Music. Behind-the-scenes access, original pews, the stage where legends played. Grandkids + grandparents both leave changed.</div>
+        </div>
+      </div>
+      <div class="exp-card">
+        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80&auto=format&fit=crop" alt="Grand Ole Opry show">
+        <div class="exp-card__body">
+          <div class="exp-card__tag">Entertainment · VIP seating</div>
+          <div class="exp-card__title">Grand Ole Opry — Reserved VIP</div>
+          <div class="exp-card__desc">Nashville's most iconic live show. Pre-selected seats in the best section. Backstage access option included for the group.</div>
+        </div>
+      </div>
+      <div class="exp-card">
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80&auto=format&fit=crop" alt="Recording studio family session">
+        <div class="exp-card__body">
+          <div class="exp-card__tag">Exclusive · Kids' favorite</div>
+          <div class="exp-card__title">Family Recording Session</div>
+          <div class="exp-card__desc">A working Nashville studio, a short guided session, and a pressed CD the grandkids will still have in 20 years. The souvenir that outlasts every magnet.</div>
+        </div>
+      </div>
+      <div class="exp-card">
+        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80&auto=format&fit=crop" alt="Nashville food tour">
+        <div class="exp-card__body">
+          <div class="exp-card__tag">Food · Group favorite</div>
+          <div class="exp-card__title">Hot Chicken Tasting Flight</div>
+          <div class="exp-card__desc">Nashville's signature dish, ranked mild to fire, guided by someone who knows which spots are worth the line. Kids eat the mild version and feel very brave.</div>
+        </div>
+      </div>
+      <div class="exp-card">
+        <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80&auto=format&fit=crop" alt="Nashville pedal tour group">
+        <div class="exp-card__body">
+          <div class="exp-card__tag">Group activity · Sunset</div>
+          <div class="exp-card__title">Nashville Pedal Tavern</div>
+          <div class="exp-card__desc">Scenic sunset group tour through Nashville's neighborhoods. Adults enjoy the journey; the grandkids just think they're helping pedal.</div>
+        </div>
+      </div>
+      <div class="exp-card">
+        <img src="https://images.unsplash.com/photo-1472213984618-c79aaec7fef0?w=600&q=80&auto=format&fit=crop" alt="Kids adventure science center">
+        <div class="exp-card__body">
+          <div class="exp-card__tag">Kids · Interactive</div>
+          <div class="exp-card__title">Adventure Science Center</div>
+          <div class="exp-card__desc">Hands-on exhibits, planetarium shows, and engineering challenges. The adults sneak in their own wonder. Pre-purchased tickets, no waiting.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DINING ── -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Reserved Dining</span>
+      <h2 class="section-title">15 meals. All pre-arranged. Zero "where do we eat?" moments.</h2>
+      <p class="section-sub">Butler Button reserves 2+ months ahead. These tables exist for your group.</p>
+    </div>
+    <div class="dining-row">
+      <div class="dining-card">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format&fit=crop" alt="Fine dining restaurant">
+        <div class="dining-card__body">
+          <div class="dining-card__name">Kayne Prime</div>
+          <div class="dining-card__tag">Steakhouse · Day 2 Dinner</div>
+          <div class="dining-card__note">Kids' menu available. Private dining room option for groups of 10.</div>
+        </div>
+      </div>
+      <div class="dining-card">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&auto=format&fit=crop" alt="Husk restaurant Southern">
+        <div class="dining-card__body">
+          <div class="dining-card__name">Husk Nashville</div>
+          <div class="dining-card__tag">Southern · Day 1 Dinner</div>
+          <div class="dining-card__note">Farm-to-table Southern cuisine. Warm, family-style service. Historic building.</div>
+        </div>
+      </div>
+      <div class="dining-card">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&auto=format&fit=crop" alt="Indian restaurant Nashville">
+        <div class="dining-card__body">
+          <div class="dining-card__name">Chauhan Ale &amp; Masala</div>
+          <div class="dining-card__tag">Indian-Southern · Day 3 Lunch</div>
+          <div class="dining-card__note">Top Chef winner Maneet Chauhan's flagship. Bold, elegant, surprising.</div>
+        </div>
+      </div>
+      <div class="dining-card">
+        <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600&q=80&auto=format&fit=crop" alt="Upscale restaurant dinner">
+        <div class="dining-card__body">
+          <div class="dining-card__name">The Root at Falconhead</div>
+          <div class="dining-card__tag">Southern Upscale · Day 4 Dinner</div>
+          <div class="dining-card__note">Refined seasonal menu, gorgeous space. Worth the short drive outside downtown.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Investment Breakdown</span>
+      <h2 class="section-title">Complete pricing for 10 guests · 5 nights</h2>
+      <p class="section-sub">No surprises. Every line item is accounted for before you approve.</p>
+    </div>
+    <table class="price-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Details</th>
+          <th style="text-align:right;">Estimate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🏨 Accommodations</td>
+          <td>JW Marriott Nashville · 3–4 connecting suites · 5 nights</td>
+          <td>$12,000–$18,000</td>
+        </tr>
+        <tr>
+          <td>🍽️ Dining</td>
+          <td>15 meals (breakfasts, lunches, dinners) · fine dining + casual mix</td>
+          <td>$8,000–$12,000</td>
+        </tr>
+        <tr>
+          <td>🎸 Experiences</td>
+          <td>Ryman VIP, Grand Ole Opry, recording session, Science Center, Zoo, Pedal Tavern, hot chicken tour</td>
+          <td>$5,000–$8,000</td>
+        </tr>
+        <tr>
+          <td>🚗 Transportation</td>
+          <td>Private coach 5 days · airport transfers for all 10 · daily group moves</td>
+          <td>$3,000–$4,500</td>
+        </tr>
+        <tr>
+          <td>📸 Photography</td>
+          <td>Professional photographer · 4–6 hours · final family portrait + event coverage</td>
+          <td>$1,500–$2,500</td>
+        </tr>
+        <tr>
+          <td>🎁 Grandkid Surprises</td>
+          <td>Welcome baskets, room gifts, personalized notes, ice cream outing</td>
+          <td>$800–$1,200</td>
+        </tr>
+        <tr>
+          <td>✦ Butler Button</td>
+          <td>Full white-glove concierge · pre-planning · day-of coordination · 24/7 during trip</td>
+          <td>15% of total</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total">
+          <td colspan="2">Total Estimate · 10 guests · 5 days · all-inclusive luxury</td>
+          <td>$35,000–$52,000</td>
+        </tr>
+      </tfoot>
+    </table>
+    <p style="font-size:0.8rem; color:var(--ink-mute); margin-top:1rem; text-align:center;">Final quote provided within 24 hours of approval. Prices vary by season and vendor confirmation.</p>
+  </div>
+</section>
+
+<!-- ── WHAT YOU GET ── -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">What Butler Button Guarantees</span>
+      <h2 class="section-title">You enjoy. We handle everything else.</h2>
+    </div>
+    <div class="suppliers">
+      <div class="supplier">
+        <div class="supplier__name">Zero planning stress</div>
+        <div class="supplier__detail">Every reservation, transfer, and activity is pre-booked by Butler Button before you land. You receive a printed itinerary + digital calendar for all 10 phones.</div>
+        <span class="supplier__pill">Pre-arrival</span>
+      </div>
+      <div class="supplier">
+        <div class="supplier__name">Multi-gen expertise</div>
+        <div class="supplier__detail">Grandkids + grandparents is our specialty. Every activity has an age-appropriate angle. No one sits out. No one's bored. Early dinners for the little ones, late nights if the adults want them.</div>
+        <span class="supplier__pill">Family-first design</span>
+      </div>
+      <div class="supplier">
+        <div class="supplier__name">One contact, always on</div>
+        <div class="supplier__detail">One Butler Button concierge number for the entire trip. Dinner reservation needs changing? Car running late? Grandkid wants ice cream at 10pm? One call handles it.</div>
+        <span class="supplier__pill">24/7 in-trip</span>
+      </div>
+      <div class="supplier">
+        <div class="supplier__name">Photography included</div>
+        <div class="supplier__detail">Professional photographer captures the Ryman tour, Grand Ole Opry, the family recording session, and the final group portrait. Delivered within 5 days of return.</div>
+        <span class="supplier__pill">Memory-making</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ── -->
+<section class="section-tight">
+  <div class="testimonial">
+    <div class="testimonial__quote">"We had three generations, five grandkids, and zero arguments about what to do next. Butler Button had already decided — and every call was right."</div>
+    <div class="testimonial__stars">★★★★★</div>
+    <div class="testimonial__attr">— Robert &amp; Diane, 12-guest family trip · New Orleans</div>
+  </div>
+</section>
+
+<!-- ── APPROVE CTA ── -->
+<section class="section" id="approve">
+  <div class="container">
+    <div class="approve-box">
+      <h2>Ready to give Buzz's family<br><span style="color:#fbbf24;">Nashville?</span></h2>
+      <p>One click locks Butler Button on your trip. We'll send a formal quote, contract, and full itinerary within 24 hours. Your dates get held immediately.</p>
+      <div class="approve-actions">
+        <a href="mailto:concierge@butlerbutton.com?subject=APPROVE: Buzz Nashville Trip BBT-NASHVILLE-2026&body=I approve the Nashville 5-day family trip for 10 guests as proposed. Reference: BBT-NASHVILLE-2026. Please send the formal contract and confirm dates." class="btn-approve">✦ Approve This Plan</a>
+        <a href="sms:+16155558853" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,0.15);">📱 Text Us a Question</a>
+      </div>
+      <p style="font-size:0.78rem; color:var(--ink-mute); margin-top:1.5rem; margin-bottom:0;">Reference Code: <strong style="color:var(--indigo);">BBT-NASHVILLE-2026</strong> · Prepared for Buzz &amp; Family</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span class="footer-brand">Butler<em>Button</em> by VELTM</span>
+  <ul class="footer-links">
+    <li><a href="../../regional/">All regions</a></li>
+    <li><a href="../../showcase/v3/">How It Works</a></li>
+    <li><a href="../../pricing.html">Pricing</a></li>
+    <li><a href="../../faq.html">FAQ</a></li>
+  </ul>
+  <span>&copy; 2026 VELTM Tours · Prepared for Buzz &amp; Family</span>
+</footer>
+
+</body>
+</html>
