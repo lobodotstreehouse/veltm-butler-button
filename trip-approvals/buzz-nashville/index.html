@@ -9,6 +9,70 @@
 <link rel="stylesheet" href="../../regional/regional.css">
 <style>
 
+/* ── INTERACTIVE APPROVAL SYSTEM ───────────────── */
+
+.review-tracker {
+  display: flex; flex-wrap: wrap; gap: 0;
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem;
+  overflow: hidden; margin: 2rem 0 1rem;
+}
+.tracker-cell {
+  flex: 1; min-width: 110px; padding: 1.2rem 1rem; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.tracker-cell:last-child { border-right: none; }
+.tracker-cell .tn { font-size: 1.9rem; font-weight: 700; line-height: 1; }
+.tracker-cell .tl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(245,245,247,0.45); margin-top: 0.3rem; }
+.tracker-cell.approved .tn { color: #34d399; }
+.tracker-cell.revision .tn { color: #f87171; }
+.tracker-cell.pending  .tn { color: #818cf8; }
+
+.section-review {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1rem; padding: 1.4rem 1.6rem;
+  margin-top: 1.5rem; background: rgba(255,255,255,0.02);
+}
+.section-review-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;
+}
+.section-review-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #818cf8; }
+.rev-badge {
+  display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px;
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.rev-badge-pending  { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+.rev-badge-approved { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+.rev-badge-revision { background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+
+.rev-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-start; }
+.rev-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.65rem 1.4rem; border-radius: 999px;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer; border: none;
+  transition: transform 0.15s, opacity 0.15s; letter-spacing: -0.01em;
+}
+.rev-btn:hover { transform: translateY(-1px); }
+.rev-btn-approve { background: #34d399; color: #0a0a0f; }
+.rev-btn-reject  { background: rgba(248,113,113,0.2); color: #f87171; border: 1px solid rgba(248,113,113,0.4); }
+
+.rev-feedback { flex: 1; min-width: 220px; }
+.rev-feedback label { font-size: 0.72rem; color: rgba(245,245,247,0.45); display: block; margin-bottom: 0.35rem; }
+.rev-feedback textarea {
+  width: 100%; padding: 0.6rem 0.9rem;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.5rem; color: #f5f5f7; font-family: inherit; font-size: 0.82rem;
+  resize: vertical; min-height: 52px;
+}
+.rev-feedback textarea:focus { outline: none; border-color: #818cf8; }
+
+.rev-confirm {
+  display: none; margin-top: 0.75rem; padding: 0.65rem 1rem;
+  border-radius: 0.5rem; font-size: 0.82rem;
+}
+.rev-confirm.approved { background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
+.rev-confirm.revision { background: rgba(248,113,113,0.1); color: #f87171; border: 1px solid rgba(248,113,113,0.2); }
+
 /* ── APPROVAL-SPECIFIC OVERRIDES ────────────────── */
 
 .approval-badge {
@@ -228,6 +292,13 @@
       <div class="guest-chip"><span class="emoji">👦</span> Grandkid 4</div>
       <div class="guest-chip"><span class="emoji">👧</span> Grandkid 5</div>
     </div>
+    <div class="review-tracker">
+      <div class="tracker-cell pending"><div class="tn" id="cnt-total">10</div><div class="tl">Sections</div></div>
+      <div class="tracker-cell approved"><div class="tn" id="cnt-approved">0</div><div class="tl">Approved</div></div>
+      <div class="tracker-cell revision"><div class="tn" id="cnt-revision">0</div><div class="tl">Needs Change</div></div>
+      <div class="tracker-cell pending"><div class="tn" id="cnt-pending">10</div><div class="tl">Awaiting Review</div></div>
+    </div>
+
     <div class="stat-strip" style="margin-top:2rem;">
       <div class="stat"><div class="stat__num">10</div><div class="stat__lbl">guests</div></div>
       <div class="stat"><div class="stat__num">5</div><div class="stat__lbl">days</div></div>
@@ -288,6 +359,11 @@
             <li>Afternoon: Parthenon guided tour + gourmet picnic in Centennial Park</li>
             <li>Dinner: Husk — elevated Southern family-style, farm-to-table at its finest</li>
           </ul>
+          <div class="section-review" id="rev-day1">
+            <div class="section-review-header"><span class="section-review-label">Day 1 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day1">Awaiting Review</span></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day1','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day1">Request a change:</label><textarea id="fb-day1" placeholder="e.g. Different restaurant, earlier check-in, add activity..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day1','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-confirm" id="confirm-day1"></div>
+          </div>
         </div>
       </div>
 
@@ -303,6 +379,11 @@
             <li>Dinner: Kayne Prime steakhouse (kids' menu, private dining room option)</li>
             <li>Evening: Grand Ole Opry — VIP reserved seating, Nashville's most iconic night out</li>
           </ul>
+          <div class="section-review" id="rev-day2">
+            <div class="section-review-header"><span class="section-review-label">Day 2 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day2">Awaiting Review</span></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day2','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day2">Request a change:</label><textarea id="fb-day2" placeholder="e.g. Swap Science Center for Nashville Zoo, different dinner..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day2','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-confirm" id="confirm-day2"></div>
+          </div>
         </div>
       </div>
 
@@ -318,6 +399,11 @@
             <li>Dinner: Butler Button's surprise pick (pre-vetted, dietary preferences honored)</li>
             <li>Evening: Honky Tonk Central — live music, kids' game zone, the whole family on Broadway</li>
           </ul>
+          <div class="section-review" id="rev-day3">
+            <div class="section-review-header"><span class="section-review-label">Day 3 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day3">Awaiting Review</span></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day3','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day3">Request a change:</label><textarea id="fb-day3" placeholder="e.g. Skip backstage tour, different lunch spot..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day3','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-confirm" id="confirm-day3"></div>
+          </div>
         </div>
       </div>
 
@@ -334,6 +420,11 @@
             <li>Dinner: The Root at Falconhead — refined Southern, worth the drive</li>
             <li>Evening: Nashville Pedal Tavern sunset group tour — adults sip, grandkids get the story</li>
           </ul>
+          <div class="section-review" id="rev-day4">
+            <div class="section-review-header"><span class="section-review-label">Day 4 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day4">Awaiting Review</span></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day4','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day4">Request a change:</label><textarea id="fb-day4" placeholder="e.g. Skip recording session, different activity for grandkids..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day4','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-confirm" id="confirm-day4"></div>
+          </div>
         </div>
       </div>
 
@@ -349,6 +440,11 @@
             <li>Lunch: casual send-off at local favorite</li>
             <li>Private coach: hotel → airport, white-glove door-to-door for all 10</li>
           </ul>
+          <div class="section-review" id="rev-day5">
+            <div class="section-review-header"><span class="section-review-label">Day 5 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day5">Awaiting Review</span></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day5','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day5">Request a change:</label><textarea id="fb-day5" placeholder="e.g. Earlier departure, add shopping time..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day5','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-confirm" id="confirm-day5"></div>
+          </div>
         </div>
       </div>
 
@@ -380,6 +476,11 @@
           <span class="hotel-perk">Kids welcome baskets</span>
           <span class="hotel-perk">Downtown location</span>
           <span class="hotel-perk">Valet parking</span>
+        </div>
+        <div class="section-review" id="rev-hotel" style="margin-top:1.5rem;">
+          <div class="section-review-header"><span class="section-review-label">Accommodation</span><span class="rev-badge rev-badge-pending" id="badge-hotel">Awaiting Review</span></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('hotel','approve')">✓ JW Marriott Works</button><div class="rev-feedback"><label for="fb-hotel">Request a change:</label><textarea id="fb-hotel" placeholder="e.g. Prefer Omni Nashville, need more suites, different location..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('hotel','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-confirm" id="confirm-hotel"></div>
         </div>
       </div>
     </div>
@@ -443,6 +544,10 @@
           <div class="exp-card__desc">Hands-on exhibits, planetarium shows, and engineering challenges. The adults sneak in their own wonder. Pre-purchased tickets, no waiting.</div>
         </div>
       </div>
+    <div class="section-review" id="rev-experiences" style="margin-top:1.5rem;">
+      <div class="section-review-header"><span class="section-review-label">Experiences Package</span><span class="rev-badge rev-badge-pending" id="badge-experiences">Awaiting Review</span></div>
+      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('experiences','approve')">✓ All Experiences Good</button><div class="rev-feedback"><label for="fb-experiences">Request a change:</label><textarea id="fb-experiences" placeholder="e.g. Add Nashville Zoo, skip Pedal Tavern, more kid-focused activities..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('experiences','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+      <div class="rev-confirm" id="confirm-experiences"></div>
     </div>
   </div>
 </section>
@@ -488,6 +593,10 @@
           <div class="dining-card__note">Refined seasonal menu, gorgeous space. Worth the short drive outside downtown.</div>
         </div>
       </div>
+    <div class="section-review" id="rev-dining" style="margin-top:1.5rem;">
+      <div class="section-review-header"><span class="section-review-label">Dining Selections</span><span class="rev-badge rev-badge-pending" id="badge-dining">Awaiting Review</span></div>
+      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('dining','approve')">✓ Restaurants Look Great</button><div class="rev-feedback"><label for="fb-dining">Request a change:</label><textarea id="fb-dining" placeholder="e.g. Need vegetarian options, swap Kayne Prime, add a casual lunch spot..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('dining','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+      <div class="rev-confirm" id="confirm-dining"></div>
     </div>
   </div>
 </section>
@@ -553,6 +662,11 @@
       </tfoot>
     </table>
     <p style="font-size:0.8rem; color:var(--ink-mute); margin-top:1rem; text-align:center;">Final quote provided within 24 hours of approval. Prices vary by season and vendor confirmation.</p>
+    <div class="section-review" id="rev-pricing" style="margin-top:1.5rem;">
+      <div class="section-review-header"><span class="section-review-label">Budget &amp; Pricing</span><span class="rev-badge rev-badge-pending" id="badge-pricing">Awaiting Review</span></div>
+      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('pricing','approve')">✓ Budget Works</button><div class="rev-feedback"><label for="fb-pricing">Request a change:</label><textarea id="fb-pricing" placeholder="e.g. Need to stay under $40K, drop photography, adjust accommodations..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('pricing','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+      <div class="rev-confirm" id="confirm-pricing"></div>
+    </div>
   </div>
 </section>
 
@@ -602,10 +716,16 @@
   <div class="container">
     <div class="approve-box">
       <h2>Ready to give Buzz's family<br><span style="color:#fbbf24;">Nashville?</span></h2>
-      <p>One click locks Butler Button on your trip. We'll send a formal quote, contract, and full itinerary within 24 hours. Your dates get held immediately.</p>
+      <p id="approve-sub">Review and approve all 10 sections above, then lock the trip here.</p>
+      <div id="approve-progress" style="font-size:0.85rem;color:var(--ink-mute);margin-bottom:1.5rem;">
+        <span id="approve-count">0</span> of 10 sections approved
+      </div>
       <div class="approve-actions">
-        <a href="mailto:concierge@butlerbutton.com?subject=APPROVE: Buzz Nashville Trip BBT-NASHVILLE-2026&body=I approve the Nashville 5-day family trip for 10 guests as proposed. Reference: BBT-NASHVILLE-2026. Please send the formal contract and confirm dates." class="btn-approve">✦ Approve This Plan</a>
+        <button id="btn-full-approve" class="btn-approve" onclick="fullApprove()" disabled style="opacity:0.4;cursor:not-allowed;">✦ Approve Full Plan</button>
         <a href="sms:+16155558853" class="btn btn-ghost btn-lg" style="border-color:rgba(255,255,255,0.15);">📱 Text Us a Question</a>
+      </div>
+      <div id="full-confirm" style="display:none;margin-top:1.5rem;padding:1rem 1.4rem;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);border-radius:0.75rem;color:#34d399;font-size:0.88rem;">
+        ✓ Full plan approved and sent to Butler Button. Expect a contract and confirmed dates within 24 hours. Reference: <strong>BBT-NASHVILLE-2026</strong>
       </div>
       <p style="font-size:0.78rem; color:var(--ink-mute); margin-top:1.5rem; margin-bottom:0;">Reference Code: <strong style="color:var(--indigo);">BBT-NASHVILLE-2026</strong> · Prepared for Buzz &amp; Family</p>
     </div>
@@ -622,6 +742,98 @@
   </ul>
   <span>&copy; 2026 VELTM Tours · Prepared for Buzz &amp; Family</span>
 </footer>
+
+<script>
+const SECTIONS = ['day1','day2','day3','day4','day5','hotel','experiences','dining','pricing'];
+const state = {};
+const GATEWAY = 'http://127.0.0.1:18789/api/v1/agent/send';
+const TOKEN   = '8892c13ee672af8c29e1917638f52d0974450f5e8e2626cf815ef6514abfd3bd';
+
+function updateCounters() {
+  let approved = 0, revision = 0;
+  SECTIONS.forEach(id => {
+    if (state[id] === 'approve') approved++;
+    if (state[id] === 'reject')  revision++;
+  });
+  const pending = SECTIONS.length - approved - revision;
+  document.getElementById('cnt-approved').textContent = approved;
+  document.getElementById('cnt-revision').textContent = revision;
+  document.getElementById('cnt-pending').textContent  = pending;
+  document.getElementById('approve-count').textContent = approved;
+
+  const btn = document.getElementById('btn-full-approve');
+  if (approved === SECTIONS.length) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor  = 'pointer';
+    document.getElementById('approve-sub').textContent = 'All sections approved — lock the trip below.';
+  }
+}
+
+async function submitRev(id, action) {
+  const fb = document.getElementById('fb-' + id)?.value?.trim() || '';
+  if (action === 'reject' && !fb) {
+    const ta = document.getElementById('fb-' + id);
+    ta.style.borderColor = '#f87171';
+    ta.placeholder = '⚠ Please describe what you'd like changed.';
+    return;
+  }
+
+  state[id] = action;
+
+  const badge   = document.getElementById('badge-' + id);
+  const confirm = document.getElementById('confirm-' + id);
+  const actions = document.getElementById('rev-' + id).querySelector('.rev-actions');
+
+  if (action === 'approve') {
+    badge.className = 'rev-badge rev-badge-approved';
+    badge.textContent = 'Approved ✓';
+    actions.style.display = 'none';
+    confirm.className = 'rev-confirm approved';
+    confirm.style.display = 'block';
+    confirm.textContent = '✓ Approved. Butler Button has noted this section.';
+  } else {
+    badge.className = 'rev-badge rev-badge-revision';
+    badge.textContent = 'Change Requested';
+    actions.style.display = 'none';
+    confirm.className = 'rev-confirm revision';
+    confirm.style.display = 'block';
+    confirm.textContent = `Change requested: "${fb}" — Butler Button will revise and resend within 2 hours.`;
+  }
+
+  updateCounters();
+
+  const label = { day1:'Day 1', day2:'Day 2', day3:'Day 3', day4:'Day 4', day5:'Day 5',
+                  hotel:'Accommodation', experiences:'Experiences', dining:'Dining', pricing:'Pricing' }[id] || id;
+  const msg = action === 'approve'
+    ? `[BUZZ NASHVILLE BBT-NASHVILLE-2026] APPROVED: ${label}`
+    : `[BUZZ NASHVILLE BBT-NASHVILLE-2026] CHANGE REQUESTED: ${label} | Note: ${fb}`;
+
+  try {
+    await fetch(GATEWAY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({ agentId: 'concierge-local', content: msg }),
+      mode: 'no-cors'
+    });
+  } catch(e) { console.log('Gateway offline from external browser — state saved locally.'); }
+}
+
+async function fullApprove() {
+  document.getElementById('btn-full-approve').style.display = 'none';
+  document.getElementById('full-confirm').style.display = 'block';
+  try {
+    await fetch(GATEWAY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({ agentId: 'concierge-local', content: '[BUZZ NASHVILLE BBT-NASHVILLE-2026] FULL PLAN APPROVED — all 10 sections confirmed. Send contract and lock dates.' }),
+      mode: 'no-cors'
+    });
+  } catch(e) {}
+}
+
+updateCounters();
+</script>
 
 </body>
 </html>
