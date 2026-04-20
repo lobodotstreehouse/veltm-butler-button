@@ -45,24 +45,29 @@
 .rev-badge-approved { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
 .rev-badge-revision { background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
 
-.rev-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-start; }
+.rev-actions {
+  display: flex; flex-direction: column; gap: 0.85rem; align-items: flex-start;
+}
 .rev-btn {
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0.65rem 1.4rem; border-radius: 999px;
   font-size: 0.82rem; font-weight: 700; cursor: pointer; border: none;
   transition: transform 0.15s, opacity 0.15s; letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 .rev-btn:hover { transform: translateY(-1px); }
 .rev-btn-approve { background: #34d399; color: #0a0a0f; }
-.rev-btn-reject  { background: rgba(248,113,113,0.2); color: #f87171; border: 1px solid rgba(248,113,113,0.4); }
+.rev-btn-reject  { background: rgba(248,113,113,0.2); color: #f87171; border: 1px solid rgba(248,113,113,0.4); align-self: flex-start; }
 
-.rev-feedback { flex: 1; min-width: 220px; }
-.rev-feedback label { font-size: 0.72rem; color: rgba(245,245,247,0.45); display: block; margin-bottom: 0.35rem; }
+.rev-feedback {
+  width: 100%; display: flex; flex-direction: column; gap: 0.5rem;
+}
+.rev-feedback label { font-size: 0.72rem; color: rgba(245,245,247,0.45); display: block; }
 .rev-feedback textarea {
-  width: 100%; padding: 0.6rem 0.9rem;
+  width: 100%; padding: 0.6rem 0.9rem; box-sizing: border-box;
   background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
   border-radius: 0.5rem; color: #f5f5f7; font-family: inherit; font-size: 0.82rem;
-  resize: vertical; min-height: 52px;
+  resize: vertical; min-height: 60px;
 }
 .rev-feedback textarea:focus { outline: none; border-color: #818cf8; }
 
@@ -361,7 +366,7 @@
           </ul>
           <div class="section-review" id="rev-day1">
             <div class="section-review-header"><span class="section-review-label">Day 1 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day1">Awaiting Review</span></div>
-            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day1','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day1">Request a change:</label><textarea id="fb-day1" placeholder="e.g. Different restaurant, earlier check-in, add activity..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day1','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day1','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day1">Request a change:</label><textarea id="fb-day1" placeholder="e.g. Different restaurant, earlier check-in, add activity..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day1','reject')">✗ Request Change</button></div></div>
             <div class="rev-confirm" id="confirm-day1"></div>
           </div>
         </div>
@@ -381,7 +386,7 @@
           </ul>
           <div class="section-review" id="rev-day2">
             <div class="section-review-header"><span class="section-review-label">Day 2 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day2">Awaiting Review</span></div>
-            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day2','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day2">Request a change:</label><textarea id="fb-day2" placeholder="e.g. Swap Science Center for Nashville Zoo, different dinner..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day2','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day2','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day2">Request a change:</label><textarea id="fb-day2" placeholder="e.g. Swap Science Center for Nashville Zoo, different dinner..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day2','reject')">✗ Request Change</button></div></div>
             <div class="rev-confirm" id="confirm-day2"></div>
           </div>
         </div>
@@ -401,7 +406,7 @@
           </ul>
           <div class="section-review" id="rev-day3">
             <div class="section-review-header"><span class="section-review-label">Day 3 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day3">Awaiting Review</span></div>
-            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day3','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day3">Request a change:</label><textarea id="fb-day3" placeholder="e.g. Skip backstage tour, different lunch spot..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day3','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day3','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day3">Request a change:</label><textarea id="fb-day3" placeholder="e.g. Skip backstage tour, different lunch spot..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day3','reject')">✗ Request Change</button></div></div>
             <div class="rev-confirm" id="confirm-day3"></div>
           </div>
         </div>
@@ -422,7 +427,7 @@
           </ul>
           <div class="section-review" id="rev-day4">
             <div class="section-review-header"><span class="section-review-label">Day 4 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day4">Awaiting Review</span></div>
-            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day4','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day4">Request a change:</label><textarea id="fb-day4" placeholder="e.g. Skip recording session, different activity for grandkids..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day4','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day4','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day4">Request a change:</label><textarea id="fb-day4" placeholder="e.g. Skip recording session, different activity for grandkids..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day4','reject')">✗ Request Change</button></div></div>
             <div class="rev-confirm" id="confirm-day4"></div>
           </div>
         </div>
@@ -442,7 +447,7 @@
           </ul>
           <div class="section-review" id="rev-day5">
             <div class="section-review-header"><span class="section-review-label">Day 5 Itinerary</span><span class="rev-badge rev-badge-pending" id="badge-day5">Awaiting Review</span></div>
-            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day5','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day5">Request a change:</label><textarea id="fb-day5" placeholder="e.g. Earlier departure, add shopping time..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day5','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+            <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('day5','approve')">✓ Looks Good</button><div class="rev-feedback"><label for="fb-day5">Request a change:</label><textarea id="fb-day5" placeholder="e.g. Earlier departure, add shopping time..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('day5','reject')">✗ Request Change</button></div></div>
             <div class="rev-confirm" id="confirm-day5"></div>
           </div>
         </div>
@@ -479,7 +484,7 @@
         </div>
         <div class="section-review" id="rev-hotel" style="margin-top:1.5rem;">
           <div class="section-review-header"><span class="section-review-label">Accommodation</span><span class="rev-badge rev-badge-pending" id="badge-hotel">Awaiting Review</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('hotel','approve')">✓ JW Marriott Works</button><div class="rev-feedback"><label for="fb-hotel">Request a change:</label><textarea id="fb-hotel" placeholder="e.g. Prefer Omni Nashville, need more suites, different location..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('hotel','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('hotel','approve')">✓ JW Marriott Works</button><div class="rev-feedback"><label for="fb-hotel">Request a change:</label><textarea id="fb-hotel" placeholder="e.g. Prefer Omni Nashville, need more suites, different location..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('hotel','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-hotel"></div>
         </div>
       </div>
@@ -546,7 +551,7 @@
       </div>
     <div class="section-review" id="rev-experiences" style="margin-top:1.5rem;">
       <div class="section-review-header"><span class="section-review-label">Experiences Package</span><span class="rev-badge rev-badge-pending" id="badge-experiences">Awaiting Review</span></div>
-      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('experiences','approve')">✓ All Experiences Good</button><div class="rev-feedback"><label for="fb-experiences">Request a change:</label><textarea id="fb-experiences" placeholder="e.g. Add Nashville Zoo, skip Pedal Tavern, more kid-focused activities..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('experiences','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('experiences','approve')">✓ All Experiences Good</button><div class="rev-feedback"><label for="fb-experiences">Request a change:</label><textarea id="fb-experiences" placeholder="e.g. Add Nashville Zoo, skip Pedal Tavern, more kid-focused activities..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('experiences','reject')">✗ Request Change</button></div></div>
       <div class="rev-confirm" id="confirm-experiences"></div>
     </div>
   </div>
@@ -595,7 +600,7 @@
       </div>
     <div class="section-review" id="rev-dining" style="margin-top:1.5rem;">
       <div class="section-review-header"><span class="section-review-label">Dining Selections</span><span class="rev-badge rev-badge-pending" id="badge-dining">Awaiting Review</span></div>
-      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('dining','approve')">✓ Restaurants Look Great</button><div class="rev-feedback"><label for="fb-dining">Request a change:</label><textarea id="fb-dining" placeholder="e.g. Need vegetarian options, swap Kayne Prime, add a casual lunch spot..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('dining','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('dining','approve')">✓ Restaurants Look Great</button><div class="rev-feedback"><label for="fb-dining">Request a change:</label><textarea id="fb-dining" placeholder="e.g. Need vegetarian options, swap Kayne Prime, add a casual lunch spot..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('dining','reject')">✗ Request Change</button></div></div>
       <div class="rev-confirm" id="confirm-dining"></div>
     </div>
   </div>
@@ -664,7 +669,7 @@
     <p style="font-size:0.8rem; color:var(--ink-mute); margin-top:1rem; text-align:center;">Final quote provided within 24 hours of approval. Prices vary by season and vendor confirmation.</p>
     <div class="section-review" id="rev-pricing" style="margin-top:1.5rem;">
       <div class="section-review-header"><span class="section-review-label">Budget &amp; Pricing</span><span class="rev-badge rev-badge-pending" id="badge-pricing">Awaiting Review</span></div>
-      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('pricing','approve')">✓ Budget Works</button><div class="rev-feedback"><label for="fb-pricing">Request a change:</label><textarea id="fb-pricing" placeholder="e.g. Need to stay under $40K, drop photography, adjust accommodations..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('pricing','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+      <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('pricing','approve')">✓ Budget Works</button><div class="rev-feedback"><label for="fb-pricing">Request a change:</label><textarea id="fb-pricing" placeholder="e.g. Need to stay under $40K, drop photography, adjust accommodations..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('pricing','reject')">✗ Request Change</button></div></div>
       <div class="rev-confirm" id="confirm-pricing"></div>
     </div>
   </div>
@@ -749,7 +754,7 @@ Warm regards,
 The Butler Button Team</div>
         <div class="section-review" id="rev-email1" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">Email 1 Copy</span><span class="rev-badge rev-badge-pending" id="badge-email1-rev" style="display:none;"></span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email1">Request a change:</label><textarea id="fb-email1" placeholder="e.g. Tone too casual, shorten, different CTA..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email1','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email1">Request a change:</label><textarea id="fb-email1" placeholder="e.g. Tone too casual, shorten, different CTA..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email1','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-email1"></div>
         </div>
       </div>
@@ -790,7 +795,7 @@ That's what "one text" actually looks like.
 [Link: https://lobodotstreehouse.github.io/veltm-butler-button/trip-approvals/buzz-nashville/]</div>
         <div class="section-review" id="rev-email2" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">Email 2 Copy</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email2','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email2">Request a change:</label><textarea id="fb-email2" placeholder="e.g. Too long, reorder days, different tone..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email2','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email2','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email2">Request a change:</label><textarea id="fb-email2" placeholder="e.g. Too long, reorder days, different tone..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email2','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-email2"></div>
         </div>
       </div>
@@ -836,7 +841,7 @@ That's what the Butler fee covers. Not a markup. Time.
 [Link: https://lobodotstreehouse.github.io/veltm-butler-button/trip-approvals/buzz-nashville/]</div>
         <div class="section-review" id="rev-email3" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">Email 3 Copy</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email3','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email3">Request a change:</label><textarea id="fb-email3" placeholder="e.g. Tone down price, different framing..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email3','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email3','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email3">Request a change:</label><textarea id="fb-email3" placeholder="e.g. Tone down price, different framing..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email3','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-email3"></div>
         </div>
       </div>
@@ -872,7 +877,7 @@ That could be your family.
 [Link: https://lobodotstreehouse.github.io/veltm-butler-button/trip-approvals/buzz-nashville/]</div>
         <div class="section-review" id="rev-email4" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">Email 4 Copy</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email4','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email4">Request a change:</label><textarea id="fb-email4" placeholder="e.g. More urgency, different CTA options..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email4','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('email4','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-email4">Request a change:</label><textarea id="fb-email4" placeholder="e.g. More urgency, different CTA options..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('email4','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-email4"></div>
         </div>
       </div>
@@ -914,7 +919,7 @@ That's Butler Button. One text. We handle everything.
 #ButlerButton #FamilyTravel #NashvilleTravel #LuxuryFamilyTravel #VELTMTours #TravelStressFree #MultiGenerationalTravel</div>
         <div class="section-review" id="rev-nash-ig1" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">NASH-IG-1</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-ig1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-ig1">Request a change:</label><textarea id="fb-nash-ig1" placeholder="e.g. Different headline, adjust hashtags..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-ig1','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-ig1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-ig1">Request a change:</label><textarea id="fb-nash-ig1" placeholder="e.g. Different headline, adjust hashtags..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-ig1','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-nash-ig1"></div>
         </div>
       </div>
@@ -974,7 +979,7 @@ Day 5: Group portrait, The Gulch
 #ButlerButton #NashvilleTravel #FamilyTravel #LuxuryTravel #VELTMTours #GrandpaTravel #MultiGenerational</div>
         <div class="section-review" id="rev-nash-ig2" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">NASH-IG-2</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-ig2','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-ig2">Request a change:</label><textarea id="fb-nash-ig2" placeholder="e.g. Different slide order, change slide 5 CTA..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-ig2','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-ig2','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-ig2">Request a change:</label><textarea id="fb-nash-ig2" placeholder="e.g. Different slide order, change slide 5 CTA..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-ig2','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-nash-ig2"></div>
         </div>
       </div>
@@ -1017,7 +1022,7 @@ That gap is exactly what we built Butler Button to fill.
 #ButlerButton #LuxuryTravel #FamilyTravel #TravelTech #VELTMTours #MultiGenerational</div>
         <div class="section-review" id="rev-nash-li1" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">NASH-LI-1</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-li1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-li1">Request a change:</label><textarea id="fb-nash-li1" placeholder="e.g. Less detailed, different angle, change CTA..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-li1','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-li1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-li1">Request a change:</label><textarea id="fb-nash-li1" placeholder="e.g. Less detailed, different angle, change CTA..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-li1','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-nash-li1"></div>
         </div>
       </div>
@@ -1052,7 +1057,7 @@ If you're planning something similar, the full itinerary is publicly available h
 Happy to answer any questions about how we put it together.</div>
         <div class="section-review" id="rev-nash-fb1" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">NASH-FB-1</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-fb1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-fb1">Request a change:</label><textarea id="fb-nash-fb1" placeholder="e.g. Shorter, different hook, add price..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-fb1','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-fb1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-fb1">Request a change:</label><textarea id="fb-nash-fb1" placeholder="e.g. Shorter, different hook, add price..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-fb1','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-nash-fb1"></div>
         </div>
       </div>
@@ -1069,7 +1074,7 @@ Happy to answer any questions about how we put it together.</div>
         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-left:3px solid #818cf8;border-radius:0.5rem;padding:1rem 1.2rem;font-size:0.84rem;line-height:1.7;color:rgba(245,245,247,0.8);white-space:pre-wrap;">Quick one for anyone planning a family trip with grandkids involved: we just put together a complete 5-day Nashville plan for 10 people — 3 generations, grandparents to grandkids, all 5-star. One iMessage is all it took to start. Full itinerary is here if you want to see what's possible: https://lobodotstreehouse.github.io/veltm-butler-button/trip-approvals/buzz-nashville/ — happy to build one for your family too. 🎸</div>
         <div class="section-review" id="rev-nash-wa1" style="margin-top:1rem;">
           <div class="section-review-header"><span class="section-review-label">NASH-WA-1</span></div>
-          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-wa1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-wa1">Request a change:</label><textarea id="fb-nash-wa1" placeholder="e.g. Shorter, different tone..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-wa1','reject')" style="margin-top:0.4rem;">✗ Request Change</button></div></div>
+          <div class="rev-actions"><button class="rev-btn rev-btn-approve" onclick="submitRev('nash-wa1','approve')">✓ Approve</button><div class="rev-feedback"><label for="fb-nash-wa1">Request a change:</label><textarea id="fb-nash-wa1" placeholder="e.g. Shorter, different tone..."></textarea><button class="rev-btn rev-btn-reject" onclick="submitRev('nash-wa1','reject')">✗ Request Change</button></div></div>
           <div class="rev-confirm" id="confirm-nash-wa1"></div>
         </div>
       </div>
