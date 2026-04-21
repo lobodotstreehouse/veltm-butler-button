@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help Hub Preview | Butler Button by VELTM</title>
+  <link rel="icon" type="image/png" href="img/logos/VELTM-icon-indigo.png">
+  <style>
+    /* ---- Reset & Base ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --indigo:   #4B3FCC;
+      --indigo-dark: #3730a3;
+      --indigo-light: #EEF0FB;
+      --teal:     #0D9488;
+      --black:    #111118;
+      --body:     #374151;
+      --muted:    #6B7280;
+      --border:   #E5E7EB;
+      --bg:       #F9FAFB;
+      --white:    #FFFFFF;
+      --radius:   8px;
+      --font:     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--body); background: var(--white); font-size: 16px; line-height: 1.65; }
+    a { color: var(--indigo); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { font-weight: 600; }
+
+    /* ---- Header ---- */
+    .hh-header {
+      background: var(--indigo);
+      padding: 0 2rem;
+    }
+    .hh-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .hh-header .logo img { height: 28px; filter: brightness(0) invert(1); }
+    .hh-header nav a {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.85rem;
+      margin-left: 1.5rem;
+    }
+    .hh-header nav a:hover { color: #fff; text-decoration: none; }
+
+    /* ---- Hero ---- */
+    .hh-hero {
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 100%);
+      padding: 3.5rem 2rem 4rem;
+      text-align: center;
+      color: white;
+    }
+    .hh-hero .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 0.75rem;
+    }
+    .hh-hero h1 { font-size: clamp(1.6rem, 4vw, 2.25rem); font-weight: 700; margin-bottom: 0.75rem; }
+    .hh-hero p { font-size: 1.05rem; opacity: 0.85; max-width: 520px; margin: 0 auto 1.75rem; }
+    .hh-search {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .hh-search input {
+      flex: 1;
+      border: none;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      color: var(--black);
+      outline: none;
+    }
+    .hh-search button {
+      background: var(--teal);
+      border: none;
+      color: white;
+      padding: 0 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ---- Draft Banner ---- */
+    .draft-banner {
+      background: #FEF3C7;
+      border-bottom: 1px solid #F59E0B;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      color: #92400E;
+    }
+
+    /* ---- Layout ---- */
+    .hh-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .hh-body { grid-template-columns: 1fr; }
+      .hh-sidebar { display: none; }
+    }
+
+    /* ---- Sidebar ---- */
+    .hh-sidebar { position: sticky; top: 1.5rem; }
+    .hh-sidebar-section { margin-bottom: 1.75rem; }
+    .hh-sidebar-section h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hh-sidebar-section a {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--body);
+      padding: 0.3rem 0;
+      border-radius: 4px;
+    }
+    .hh-sidebar-section a:hover { color: var(--indigo); text-decoration: none; }
+    .hh-sidebar-section a.active { color: var(--indigo); font-weight: 600; }
+
+    /* ---- Main content ---- */
+    .hh-main {}
+
+    /* ---- Category header ---- */
+    .hh-category {
+      margin-bottom: 3rem;
+      padding-top: 1rem;
+    }
+    .hh-category-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--indigo-light);
+    }
+    .hh-category-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--indigo-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .hh-category-header h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .hh-category-header .count {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* ---- Article cards ---- */
+    .hh-article-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .hh-article-card {
+      border: 1px solid var(--border);
+      border-bottom: none;
+      background: var(--white);
+      cursor: pointer;
+    }
+    .hh-article-card:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+    .hh-article-card:last-child { border-radius: 0 0 var(--radius) var(--radius); border-bottom: 1px solid var(--border); }
+    .hh-article-card:only-child { border-radius: var(--radius); border-bottom: 1px solid var(--border); }
+
+    .hh-card-trigger {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      list-style: none;
+    }
+    .hh-card-trigger::-webkit-details-marker { display: none; }
+    .hh-card-trigger::marker { display: none; }
+    details[open] .hh-card-trigger .chevron { transform: rotate(180deg); }
+    .hh-card-trigger .chevron {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      transition: transform 0.2s;
+      margin-top: 3px;
+    }
+    .hh-card-label { flex: 1; }
+    .hh-card-label h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 0.2rem;
+    }
+    .hh-card-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ---- Article body ---- */
+    .hh-article-body {
+      padding: 0 1.25rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .hh-article-body h1 { display: none; } /* title already in card header */
+    .hh-article-body p { margin-bottom: 0.9rem; font-size: 0.925rem; color: var(--body); }
+    .hh-article-body h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--black);
+      margin: 1.2rem 0 0.5rem;
+    }
+    .hh-article-body ul {
+      padding-left: 1.2rem;
+      margin-bottom: 0.9rem;
+    }
+    .hh-article-body li {
+      font-size: 0.925rem;
+      margin-bottom: 0.3rem;
+      color: var(--body);
+    }
+    .hh-article-body blockquote {
+      background: var(--indigo-light);
+      border-left: 3px solid var(--indigo);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 0.75rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    .hh-article-body blockquote strong { color: var(--indigo); }
+    .hh-related {
+      margin-top: 1.25rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+    .hh-related p { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.4rem !important; }
+    .hh-related ul { padding-left: 0; list-style: none; }
+    .hh-related li { margin-bottom: 0.25rem; }
+    .hh-related li a { font-size: 0.875rem; color: var(--indigo); }
+
+    /* ---- CTA ---- */
+    .hh-cta {
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 100%);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      margin-top: 2.5rem;
+    }
+    .hh-cta h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .hh-cta p { font-size: 0.9rem; opacity: 0.85; margin-bottom: 1.25rem; }
+    .hh-cta a {
+      display: inline-block;
+      background: var(--teal);
+      color: white;
+      padding: 0.65rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .hh-cta a:hover { background: #0f766e; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="hh-header">
+    <div class="hh-header-inner">
+      <a href="index.html" class="logo">
+        <img src="img/logos/VELTM-logo-black.png" alt="VELTM" height="28">
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="faq-preview.html">FAQ</a>
+        <a href="help-hub-preview.html" style="color:white;font-weight:600;">Help Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Draft banner -->
+  <div class="draft-banner">
+    DRAFT PREVIEW &mdash; Review before publishing to Zoho Desk Help Center
+  </div>
+
+  <!-- Hero / Search -->
+  <div class="hh-hero">
+    <p class="eyebrow">Butler Button Help Hub</p>
+    <h1>How can we help?</h1>
+    <p>Answers to the most common questions about planning, pricing, and what your Butler does.</p>
+    <div class="hh-search">
+      <input type="text" placeholder="Search the Help Hub..." />
+      <button>Search</button>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="hh-body">
+
+    <!-- Sidebar -->
+    <aside class="hh-sidebar">
+      <div class="hh-sidebar-section">
+        <h3>How Butler Button Works</h3>
+        <a href="#how-it-works">Where Does Butler Button Work?</a>
+        <a href="#how-it-works">What Kind of Budget Do I Need?</a>
+        <a href="#how-it-works">How Much Does It Cost?</a>
+        <a href="#how-it-works">Do I Have to Buy the Full Package?</a>
+        <a href="#how-it-works">Hotels, Flights, and Activities</a>
+        <a href="#how-it-works">How Involved Do I Need to Be?</a>
+      </div>
+      <div class="hh-sidebar-section">
+        <h3>Concierge Basics</h3>
+        <a href="#concierge-basics">What Is a Concierge?</a>
+        <a href="#concierge-basics">Hotel Concierge vs. Butler Button</a>
+        <a href="#concierge-basics">Who Is Butler Button For?</a>
+        <a href="#concierge-basics">What Does Butler Button Do?</a>
+        <a href="#concierge-basics">Service Options</a>
+        <a href="#concierge-basics">AI vs. Human?</a>
+        <a href="#concierge-basics">Lifestyle Clubs Comparison</a>
+        <a href="#concierge-basics">What Will My Butler Do?</a>
+        <a href="#concierge-basics">Private Aviation</a>
+      </div>
+      <div class="hh-sidebar-section">
+        <h3>The Tech and the Experience</h3>
+        <a href="#tech-experience">What Is Butler Button?</a>
+        <a href="#tech-experience">How Does It Work?</a>
+        <a href="#tech-experience">Will It Save Me Money?</a>
+        <a href="#tech-experience">How Long Should My Trip Be?</a>
+        <a href="#tech-experience">Family Trips</a>
+        <a href="#tech-experience">Solo Travel</a>
+        <a href="#tech-experience">Couples and Honeymoons</a>
+        <a href="#tech-experience">Multi-City and Road Trips</a>
+        <a href="#tech-experience">vs. Travel Agents</a>
+        <a href="#tech-experience">What's in My Itinerary?</a>
+        <a href="#tech-experience">Is It Free?</a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="hh-main">
+
+      <!-- ======== CATEGORY 1 ======== -->
+      <section class="hh-category" id="how-it-works">
+        <div class="hh-category-header">
+          <div class="hh-category-icon">&#127760;</div>
+          <h2>How Butler Button Works</h2>
+          <span class="count">6 articles</span>
+        </div>
+        <div class="hh-article-grid">
+
+          <!-- A1-1 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Where Does Butler Button Work Around the World?</h3>
+                  <p class="hh-card-meta">Countries, languages, and local partner network coverage</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button works in 195 or more countries, with support in 150 or more languages. Whether you are heading somewhere popular or somewhere off the beaten path, there is a very good chance we have a local partner who knows the area well.</p>
+                <h2>Our Coverage</h2>
+                <p>We work with 500 or more hotels and local partners around the world. That network means we have real contacts on the ground, not just listings pulled from a search engine. Some of the regions where we have especially deep knowledge and strong partnerships include:</p>
+                <ul>
+                  <li>India</li>
+                  <li>The United Kingdom and Ireland</li>
+                  <li>Tanzania and Zanzibar</li>
+                  <li>The Maldives</li>
+                </ul>
+                <p>These are places where our team has built relationships over time, so you are not just getting generic recommendations. You are getting advice from people who have actually worked there.</p>
+                <h2>What "Local Partner" Means for You</h2>
+                <p>A local partner is someone in the destination who knows which hotel is worth the price, which neighborhood to avoid, and which restaurant actually lives up to its reviews. When your Butler builds your itinerary, they pull from this network to give you options that a general travel search would never surface.</p>
+                <p>This matters most in places that are harder to research on your own, where language barriers, limited English-language reviews, or unfamiliar geography make planning tricky. Our network fills that gap.</p>
+                <h2>Don't See Your Destination Listed?</h2>
+                <p>Our 195-country coverage is broad enough that we likely have you covered. If you are unsure, the fastest thing to do is start your trip survey and tell us where you are going. Your Butler will confirm coverage and let you know what local support looks like for your specific trip.</p>
+                <blockquote><strong>Tip:</strong> Even if your destination is not one of our specialty regions, our AI searches 200,000 or more travel options in real time, so you still get thorough, up-to-date results.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">How Butler Button Finds Hotels, Flights, and Activities</a></li>
+                    <li><a href="#">How Much It Costs to Use Butler Button</a></li>
+                    <li><a href="#">How Much You Need to Be Involved</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A1-2 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>What Kind of Budget Do I Need?</h3>
+                  <p class="hh-card-meta">How much it realistically costs to plan a trip and how it compares to travel agents</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button is designed to be affordable for everyday travelers, not just people with big budgets. Trip planning starts at $25 per country. Most people spend somewhere between $75 and $300 to plan a full vacation, and many find that the hotel deals we unlock more than cover that cost.</p>
+                <h2>How the Cost Compares to Other Options</h2>
+                <p>Traditional travel agents often charge a percentage of your total trip cost, which can add up to hundreds or thousands of dollars depending on what you are booking. Butler Button uses flat, transparent fees instead. You pay for planning and, if you want it, day-of support. No percentage cuts. No commissions baked into your hotel rate.</p>
+                <p>Because we have partner relationships with 500 or more hotels, we can get you rates that are 10 to 59 percent below what you would pay booking directly or through a standard travel site. For most trips, those savings are larger than the planning fee itself.</p>
+                <h2>A Realistic Budget Breakdown</h2>
+                <p>Here is what a typical trip might look like cost-wise on the Butler Button side:</p>
+                <ul>
+                  <li>One-country vacation, planning only: $25</li>
+                  <li>Two-country trip, planning only: $50</li>
+                  <li>Two-country trip with one Butler day added: $75 to $125</li>
+                  <li>Full multi-country trip with a mix of Butler days: $150 to $300</li>
+                </ul>
+                <p>These are the fees you pay Butler Button. Your actual travel costs (flights, hotels, activities) are separate and paid directly to those providers.</p>
+                <h2>You Only Pay for What You Use</h2>
+                <p>You are never required to buy a full package. If you only need a plan for one country, you pay $25. If you want Butler support for one busy travel day, you add that. The structure is modular, so your budget goes exactly where you want it.</p>
+                <blockquote><strong>Tip:</strong> If you are on a tight budget, start with just the $25 planning fee. See the options we find, check the hotel rates, and then decide if you want to add anything else.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">How Much It Costs to Use Butler Button</a></li>
+                    <li><a href="#">You Do Not Have to Buy a Full Package</a></li>
+                    <li><a href="#">How Butler Button Finds Hotels, Flights, and Activities</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A1-3 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>How Much Does It Cost to Use Butler Button?</h3>
+                  <p class="hh-card-meta">A clear breakdown of pricing: trip planning, 8-hour Butler, and 24-hour Butler</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button uses simple, flat-rate pricing. There are no percentage fees, no hidden charges, and no surprises when the bill comes. You know exactly what you are paying before you commit to anything.</p>
+                <h2>The Three Pricing Options</h2>
+                <ul>
+                  <li><strong>Trip Planning: $25 per country.</strong> Your Butler uses AI and human review to build a full itinerary, find hotel options including partner rates, and give you a plan ready to book.</li>
+                  <li><strong>Butler On Call (8 hours): $25 per day.</strong> A real person available to help during a set 8-hour window. Good for arrival days, busy sightseeing days, or any time you want backup on hand.</li>
+                  <li><strong>Butler On Call (24/7): $100 per day.</strong> Round-the-clock access to your Butler for full days when you want total coverage, like long travel days, international arrivals, or high-stakes itinerary items.</li>
+                </ul>
+                <h2>What "No Hidden Charges" Actually Means</h2>
+                <p>Some travel services advertise low fees but make money on the back end through hotel commissions or marked-up flight prices. Butler Button does not work that way. When you book a hotel through a partner rate we find for you, you pay the hotel directly at that discounted rate. We do not take a cut of your booking.</p>
+                <h2>Building Your Own Price</h2>
+                <p>Because the pricing is modular, you build your own total based on what you actually need:</p>
+                <ul>
+                  <li>Planning a one-week trip to one country, no Butler days: <strong>$25 total</strong></li>
+                  <li>Same trip, plus one 8-hour Butler day for your arrival: <strong>$50 total</strong></li>
+                  <li>A two-country trip with two full 24/7 Butler days: <strong>$250 total</strong></li>
+                </ul>
+                <blockquote><strong>Tip:</strong> The 24/7 option is most popular for international trips with long-haul flights, where things are more likely to shift at odd hours and you want someone reachable fast.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Kind of Budget Do I Need?</a></li>
+                    <li><a href="#">You Do Not Have to Buy the Full Package</a></li>
+                    <li><a href="#">How Butler Button Finds Hotels, Flights, and Activities</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A1-4 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>You Do Not Have to Buy the Full Package</h3>
+                  <p class="hh-card-meta">How Butler Button's modular service lets you pick only what you need</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button is not an all-or-nothing service. You pick what you need, pay for that, and leave the rest. Some people want a full trip planned from scratch. Others just want someone on call for one complicated day. Both are completely fine.</p>
+                <h2>What "Modular" Means in Practice</h2>
+                <p>Think of Butler Button like a menu, not a set meal. The base item is trip planning at $25 per country. From there, you can add Butler support days for specific parts of your trip or skip them entirely for stretches where you are comfortable on your own.</p>
+                <p>Some common ways people mix and match:</p>
+                <ul>
+                  <li>Planning only, no Butler days: You get the full itinerary and hotel options, then handle the trip yourself.</li>
+                  <li>Planning plus one Butler day: Good for arrival days or a packed sightseeing day in a new city.</li>
+                  <li>Planning plus 24/7 Butler on a long travel day: Useful when you have connecting flights, transfers, or anything that could go sideways.</li>
+                  <li>No planning, Butler day only: If you have already sorted your trip but want someone reachable during one specific day.</li>
+                </ul>
+                <h2>A Real-World Example</h2>
+                <p>Say you are spending two weeks in Italy. You have already booked your hotel in Rome. You are comfortable exploring on your own most days, but your first day involves two airports, a train, and a hotel check-in before 2pm. You could get the $25 planning package to fill in activities and find better rates on your Florence accommodation, then add a single $25 Butler day for that chaotic arrival day. Total Butler Button cost: $50.</p>
+                <blockquote><strong>Tip:</strong> Not sure which days might benefit from Butler support? Ask when you fill out your survey. Your Butler can flag the parts of your itinerary where things are most likely to get complicated.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">How Much Does It Cost?</a></li>
+                    <li><a href="#">What Kind of Budget Do I Need?</a></li>
+                    <li><a href="#">How Much Do I Need to Be Involved?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A1-5 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>How Butler Button Finds Hotels, Flights, and Activities</h3>
+                  <p class="hh-card-meta">How AI search and partner hotel rates give you options you won't find on your own</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Yes, Butler Button helps with all of it: hotels, flights, and things to do. The process uses AI to cast a wide net, then a real person to make sure what comes back is actually good for your trip.</p>
+                <h2>How the Search Works</h2>
+                <p>When you submit your trip survey, our AI searches more than 200,000 travel options in real time. That includes flights across carriers, hotels across booking platforms, and local experiences and tours at your destination. The AI narrows that down to a shortlist based on your preferences, dates, and budget.</p>
+                <p>Then a human Butler reviews that shortlist. This step matters because algorithms do not always catch things like a hotel that has great photos but terrible noise levels, or a tour that is technically available but fully booked in practice. Your Butler filters for quality, not just availability.</p>
+                <h2>Partner Hotel Rates</h2>
+                <p>One of the bigger advantages of using Butler Button is access to our partner hotel network. These are hotels we have direct relationships with, and those relationships mean we can offer rates between 10 and 59 percent below what you would find on standard booking sites. These rates are not available to the general public and are not listed on sites like Expedia or Booking.com.</p>
+                <h2>Already Have Something Booked?</h2>
+                <p>That is not a problem at all. Tell your Butler what you have already arranged when you fill out the survey. They will build the rest of the itinerary around your existing bookings, filling in the gaps and finding options for the parts you have not sorted yet.</p>
+                <blockquote><strong>Tip:</strong> Even if you think you have found the best hotel rate on your own, it is worth asking your Butler to check. The partner rates sometimes undercut deals that look like the lowest available.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">Where Does Butler Button Work?</a></li>
+                    <li><a href="#">How Much Does It Cost?</a></li>
+                    <li><a href="#">How Much Do I Need to Be Involved?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A1-6 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>How Much Do You Need to Be Involved?</h3>
+                  <p class="hh-card-meta">How hands-on or hands-off you can be, and how Butler Button adapts to your style</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button works around your schedule and your style. If you want to hand everything off and check back when the plan is ready, you can do that. If you want to be consulted on every decision, that works too. You are in control of how much you participate.</p>
+                <h2>The Minimal Path: 3 Minutes of Your Time</h2>
+                <p>The quickest way to use Butler Button is to fill out the trip survey, which takes about 3 minutes. You tell us where you are going, your dates, rough budget, and any preferences or requirements. Then your Butler takes it from there and comes back to you with a full plan.</p>
+                <p>You review the plan, give a thumbs up or ask for adjustments, and you are done until your trip starts. For people with busy schedules or no desire to spend hours researching, this is the whole value of the service.</p>
+                <h2>The Hands-On Path: You Stay In the Loop</h2>
+                <p>If you like being involved, your Butler can walk you through options at each step. Hotel choices, activity options, day-by-day scheduling. You approve things as they come rather than getting one big plan at the end. Either approach gets you the same quality of result.</p>
+                <h2>One Point of Contact Throughout</h2>
+                <p>However involved you choose to be, you have one person to talk to the whole time. Not a support ticket queue. Not a different agent every time you write in. The same Butler handles your trip from planning through the last day, so they already know your situation when you reach out.</p>
+                <blockquote><strong>Tip:</strong> If you are a first-time user and not sure how involved to be, start with the minimal path. Fill out the survey and see what comes back. You can always request more back-and-forth during the review stage.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">You Do Not Have to Buy the Full Package</a></li>
+                    <li><a href="#">How Much Does It Cost?</a></li>
+                    <li><a href="#">How Butler Button Finds Hotels, Flights, and Activities</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+        </div><!-- /grid -->
+      </section>
+
+      <!-- ======== CATEGORY 2 ======== -->
+      <section class="hh-category" id="concierge-basics">
+        <div class="hh-category-header">
+          <div class="hh-category-icon">&#127919;</div>
+          <h2>Concierge Basics</h2>
+          <span class="count">9 articles</span>
+        </div>
+        <div class="hh-article-grid">
+
+          <!-- A2-1 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>What Is a Concierge?</h3>
+                  <p class="hh-card-meta">What a travel concierge does and how Butler Button handles your trip from start to finish</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>A concierge is someone who handles the details of your trip so you don't have to. That means getting the hard-to-land dinner reservation, figuring out what to do when your flight gets cancelled, or tracking down a trusted local guide in a city you've never set foot in. A good concierge saves you time, stress, and the kind of mistakes that come from not knowing a place.</p>
+                <h2>What Kind of Things Does a Concierge Handle?</h2>
+                <ul>
+                  <li>Booking restaurants, tours, and experiences in advance</li>
+                  <li>Arranging drivers, transfers, and airport pickups</li>
+                  <li>Rebooking flights and hotels when plans change</li>
+                  <li>Finding local doctors, pharmacies, or emergency services when needed</li>
+                  <li>Chasing down lost luggage with the airline on your behalf</li>
+                  <li>Pulling off surprises for birthdays, anniversaries, or proposals</li>
+                </ul>
+                <h2>How Butler Button Works as Your Travel Concierge</h2>
+                <p>Butler Button is a travel concierge service from VELTM Tours. We handle your trip in three stages: planning it before you go, running it while you're there, and fixing problems as they come up. You get a real person, not just a chatbot, who is responsible for making sure your trip goes well.</p>
+                <p>Our service combines AI tools that can scan hundreds of thousands of options in seconds with human Butlers who make the judgment calls, pick up the phone, and deal with situations that don't fit a script.</p>
+                <blockquote><strong>Tip:</strong> If you're not sure whether something is Butler work, ask anyway. If it's travel-related and it could ruin your day, we want to know about it.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">Hotel Concierge vs. Butler Button</a></li>
+                    <li><a href="#">Who Is Butler Button For?</a></li>
+                    <li><a href="#">What Does Butler Button Actually Do for Me?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-2 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Isn't This Just a Hotel Concierge?</h3>
+                  <p class="hh-card-meta">How Butler Button differs from a hotel concierge and why having support for your whole trip matters</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>A hotel concierge is helpful, but their job ends at the front desk. Once you check out, you're on your own. Butler Button goes with you for the whole trip, airports, transfers, restaurants, tours, and everything in between. We don't clock out when you leave the lobby.</p>
+                <h2>What a Hotel Concierge Can and Can't Do</h2>
+                <p>Hotel concierges are good at a specific set of things:</p>
+                <ul>
+                  <li>Recommending nearby restaurants and attractions</li>
+                  <li>Calling a cab or arranging a hotel car service</li>
+                  <li>Holding your luggage after checkout</li>
+                  <li>Answering questions about the local area</li>
+                </ul>
+                <p>What they generally can't do:</p>
+                <ul>
+                  <li>Help you before you arrive at the hotel</li>
+                  <li>Rebook your flight when it gets cancelled at 11 p.m.</li>
+                  <li>Coordinate between multiple hotels on a multi-city trip</li>
+                  <li>Help you at the airport, during a transfer, or after you've checked out</li>
+                </ul>
+                <h2>Your Butler Stays With You</h2>
+                <p>With Butler Button, your assigned Butler is your single point of contact for the entire trip. It doesn't matter where you are in the itinerary. If you're on day one in one city and day seven in a completely different region, you call the same person. They already know your trip, your preferences, and what matters to you.</p>
+                <blockquote><strong>Tip:</strong> If your trip covers more than one hotel or more than one city, a hotel concierge can only help with the part of the trip they're responsible for. Butler Button handles the whole picture.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Is a Concierge?</a></li>
+                    <li><a href="#">What Does Butler Button Actually Do for Me?</a></li>
+                    <li><a href="#">What Kinds of Things Will My Butler Do?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-3 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Who Is Butler Button For?</h3>
+                  <p class="hh-card-meta">Whether Butler Button fits your travel style, schedule, and trip type</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button is for anyone who wants to enjoy their trip without spending half of it managing logistics. If you'd rather be at dinner than on hold with an airline, Butler Button is built for you.</p>
+                <h2>People Who Get the Most Out of Butler Button</h2>
+                <ul>
+                  <li><strong>Busy professionals:</strong> You have limited vacation days and zero patience for wasted time. You want the trip planned, booked, and handled so you can actually unwind.</li>
+                  <li><strong>Families traveling with kids and grandparents:</strong> Multi-generational trips have a lot of moving parts. A Butler helps hold all of it together.</li>
+                  <li><strong>Honeymooners:</strong> You want everything to feel special and nothing to go sideways. A Butler makes sure the surprises are the good kind.</li>
+                  <li><strong>First-time visitors to a country:</strong> You don't know the local rules, the good neighborhoods, or who to call if something goes wrong. Your Butler does.</li>
+                  <li><strong>Anyone who's had a bad experience with DIY travel:</strong> Bad Airbnb. Wrong hotel neighborhood. Missed connection. Tour that didn't show up. If any of that sounds familiar, you already know why this service exists.</li>
+                </ul>
+                <h2>You Don't Have to Be a Luxury Traveler</h2>
+                <p>Butler Button is not just for people staying at five-star hotels. Trip Planning starts at $25 per country. If your budget is tight and you just want to make sure you have a solid plan and someone to call in a crisis, that works too.</p>
+                <blockquote><strong>Tip:</strong> Not sure if Butler Button makes sense for your specific trip? Start with Trip Planning at $25. You'll get a full day-by-day itinerary and you can decide from there whether you want a Butler for the trip itself.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Is a Concierge?</a></li>
+                    <li><a href="#">What Are My Service Options?</a></li>
+                    <li><a href="#">What Does Butler Button Actually Do for Me?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-4 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>What Does Butler Button Actually Do for Me?</h3>
+                  <p class="hh-card-meta">Everything Butler Button handles, from planning your itinerary to fixing problems mid-trip</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button plans your trip, books it, and runs it while you're on it. You get a real person responsible for your experience from the first itinerary draft to the moment you get home.</p>
+                <h2>Before Your Trip: Planning and Booking</h2>
+                <ul>
+                  <li>Building a day-by-day itinerary based on your travel dates, interests, and budget</li>
+                  <li>Researching and recommending flights, hotels, and transportation options</li>
+                  <li>Making reservations at restaurants, tours, and experiences</li>
+                  <li>Setting up drivers, private transfers, and airport pickups</li>
+                  <li>Confirming all bookings and making sure nothing falls through the cracks</li>
+                </ul>
+                <h2>During Your Trip: Real-Time Support</h2>
+                <ul>
+                  <li>Last-minute changes to the plan</li>
+                  <li>Flight cancellations and rebooking</li>
+                  <li>Lost or delayed baggage follow-ups with the airline</li>
+                  <li>Finding a doctor, pharmacy, or urgent service when needed</li>
+                  <li>Communication with local vendors, drivers, or hotel staff on your behalf</li>
+                  <li>Anything unexpected that threatens to derail your day</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> The more your Butler knows about your trip upfront, the better they can anticipate problems before they happen.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Kinds of Things Will My Butler Do?</a></li>
+                    <li><a href="#">What Are My Service Options?</a></li>
+                    <li><a href="#">Is This an AI Thing or a Human Thing?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-5 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>What Are My Service Options?</h3>
+                  <p class="hh-card-meta">Butler Button's three service tiers and which one fits your trip</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button offers three ways to get help with your trip. You can use just one, or combine them depending on how much support you want.</p>
+                <h2>Trip Planning: $25 Per Country</h2>
+                <ul>
+                  <li>A complete daily plan covering activities, meals, and logistics</li>
+                  <li>AI-generated research checked and refined by a real person</li>
+                  <li>Delivered within 24 hours</li>
+                  <li>Tailored to your travel style, group size, and budget</li>
+                </ul>
+                <h2>8-Hour Butler: $25 Per Day</h2>
+                <p>A dedicated human Butler available during daytime hours. Great for shorter trips, city travel, or travelers who want a safety net during active hours without paying for round-the-clock coverage.</p>
+                <h2>24-Hour Butler: $100 Per Day</h2>
+                <p>Full around-the-clock coverage. Designed for bigger or more complex trips, family vacations, international travel with time zone differences, or trips where you simply can't afford for anything to go wrong.</p>
+                <blockquote><strong>Tip:</strong> If your trip crosses multiple countries or time zones, the 24-Hour Butler is worth it. Flight issues and hotel problems don't follow business hours.</blockquote>
+                <h2>Mixing Options</h2>
+                <p>You don't have to pick one tier for your whole trip. Some travelers use Trip Planning for the first leg, then upgrade to a 24-Hour Butler for a more complex section. Talk to us about your itinerary and we can suggest what makes sense.</p>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Does Butler Button Actually Do for Me?</a></li>
+                    <li><a href="#">Who Is Butler Button For?</a></li>
+                    <li><a href="#">What Kinds of Things Will My Butler Do?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-6 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Is This an AI Thing or a Human Thing?</h3>
+                  <p class="hh-card-meta">How Butler Button uses both AI and human concierges, and what each one does</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button uses both. The AI handles the fast, data-heavy work. The human Butler handles judgment, relationships, and anything that needs a real person on the other end of the phone. Together, they work better than either one would on its own.</p>
+                <h2>What the AI Does</h2>
+                <ul>
+                  <li>Scanning over 200,000 options in seconds</li>
+                  <li>Comparing live prices and availability across multiple sources at once</li>
+                  <li>Building a complete day-by-day itinerary quickly and accurately</li>
+                  <li>Flagging potential conflicts in your schedule before they become problems</li>
+                </ul>
+                <h2>What the Human Butler Does</h2>
+                <ul>
+                  <li>Calling a hotel directly to ask for a specific room or a favor</li>
+                  <li>Reading a situation and making a call that a rulebook wouldn't cover</li>
+                  <li>Negotiating when something goes wrong</li>
+                  <li>Knowing when a vendor is reliable and when to avoid them</li>
+                  <li>Being the calm, experienced voice when you're stressed at 2 a.m.</li>
+                </ul>
+                <h2>How They Work Together</h2>
+                <p>On a typical trip, the AI builds the initial plan and checks everything for accuracy. A real Butler then reviews it, adjusts it based on what they know about the destination, and takes ownership of it. Once you're traveling, the AI supports the Butler with real-time data, but the Butler is the one making decisions and taking action.</p>
+                <blockquote><strong>Tip:</strong> When you contact your Butler, you're talking to a human every time. The AI works in the background so your Butler can focus on the parts that actually require judgment.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Does Butler Button Actually Do for Me?</a></li>
+                    <li><a href="#">What Are My Service Options?</a></li>
+                    <li><a href="#">What Kinds of Things Will My Butler Do?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-7 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Is This One of Those Fancy Lifestyle Management Clubs?</h3>
+                  <p class="hh-card-meta">How Butler Button compares to high-end lifestyle concierge memberships</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button is not a membership club, and there is no annual fee. Those luxury lifestyle services charge tens of thousands of dollars a year. Butler Button starts at $25. You get the same quality of work without the velvet rope.</p>
+                <h2>What Luxury Lifestyle Clubs Typically Offer</h2>
+                <ul>
+                  <li>Access to exclusive reservations at hard-to-book restaurants and venues</li>
+                  <li>Private aviation and yacht charters</li>
+                  <li>VIP event tickets and experiences</li>
+                  <li>Dedicated lifestyle managers available around the clock</li>
+                </ul>
+                <p>The catch: you pay for all of that whether you use it or not, and the annual fees can run from $10,000 to over $100,000.</p>
+                <h2>What Butler Button Offers Instead</h2>
+                <p>Butler Button handles the travel side of what those clubs do. Hard-to-get reservations, private aviation through our partners, VIP arrangements, and a real person available round the clock on the 24-Hour Butler plan. The difference is that you pay for what you use. No membership. No retainer. No commitment beyond your trip.</p>
+                <blockquote><strong>Tip:</strong> If you've looked at those clubs and liked what they offer for travel but couldn't justify the annual fee, Butler Button is worth a look. The first step costs $25.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Are My Service Options?</a></li>
+                    <li><a href="#">Who Is Butler Button For?</a></li>
+                    <li><a href="#">Can Butler Button Book a Private Plane?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-8 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>What Kinds of Things Will My Butler Do?</h3>
+                  <p class="hh-card-meta">A real-world list of tasks your Butler handles before and during your trip</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Your Butler handles whatever the trip needs. The work ranges from planned bookings you set up in advance to unexpected problems that come up while you're on the road. If it's travel-related and it could ruin your day, that's Butler work.</p>
+                <h2>Before the Trip</h2>
+                <ul>
+                  <li>Building your day-by-day itinerary</li>
+                  <li>Booking flights, hotels, and ground transportation</li>
+                  <li>Securing restaurant reservations, especially harder-to-get ones</li>
+                  <li>Arranging private guides, drivers, and local experiences</li>
+                  <li>Confirming all bookings and checking for conflicts</li>
+                  <li>Setting up any special requests (dietary needs, accessibility, celebrations)</li>
+                </ul>
+                <h2>During the Trip</h2>
+                <ul>
+                  <li>Rebooking a flight you missed or that got cancelled</li>
+                  <li>Chasing down missing or delayed luggage with the airline</li>
+                  <li>Communicating with local drivers, hotels, or vendors on your behalf</li>
+                  <li>Translating or helping bridge a language gap in a stressful situation</li>
+                  <li>Making last-minute changes to your itinerary when plans fall apart</li>
+                  <li>Finding a doctor, urgent care clinic, or pharmacy in an unfamiliar city</li>
+                  <li>Pulling off a surprise for a birthday, anniversary, or proposal</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> The more specific you are with your Butler up front, the better they can prepare. Tell them what worries you about the trip, what matters most, and any non-negotiables.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Does Butler Button Actually Do for Me?</a></li>
+                    <li><a href="#">Is This an AI Thing or a Human Thing?</a></li>
+                    <li><a href="#">Can Butler Button Book a Private Plane?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A2-9 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Can Butler Button Book a Private Plane?</h3>
+                  <p class="hh-card-meta">How private aviation works through Butler Button for complex routing or remote destinations</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Yes. Butler Button can arrange private aviation through our travel partners. If your trip has routing or timing that regular airlines can't handle well, ask your Butler and we will get you a quote.</p>
+                <h2>When Private Aviation Makes Sense</h2>
+                <ul>
+                  <li><strong>Tricky routing:</strong> Getting to a remote destination that requires three connecting flights on a commercial airline, when a direct private charter would take a fraction of the time</li>
+                  <li><strong>Island or rural access:</strong> Reaching small airports or airstrips that major carriers don't serve</li>
+                  <li><strong>Schedule flexibility:</strong> Departing on your timeline instead of an airline's</li>
+                  <li><strong>Group travel:</strong> Sometimes chartering a small plane for a group is comparable in price to buying multiple last-minute commercial tickets</li>
+                </ul>
+                <h2>How It Works</h2>
+                <ul>
+                  <li>Tell your Butler where you need to go and when</li>
+                  <li>Your Butler reaches out to partners and gets options and pricing</li>
+                  <li>You review the quote and confirm if you want to proceed</li>
+                  <li>Your Butler coordinates all the details: timing, pickup, manifest, and any special requests</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> If you think you might need a private flight for part of your trip, mention it early in the planning process. Lead times for charters vary, and some routes book up quickly.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Does Butler Button Actually Do for Me?</a></li>
+                    <li><a href="#">What Kinds of Things Will My Butler Do?</a></li>
+                    <li><a href="#">What Are My Service Options?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+        </div><!-- /grid -->
+      </section>
+
+      <!-- ======== CATEGORY 3 ======== -->
+      <section class="hh-category" id="tech-experience">
+        <div class="hh-category-header">
+          <div class="hh-category-icon">&#10024;</div>
+          <h2>The Tech and the Experience</h2>
+          <span class="count">11 articles</span>
+        </div>
+        <div class="hh-article-grid">
+
+          <!-- A3-1 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>What Is Butler Button? A Plain-English Overview</h3>
+                  <p class="hh-card-meta">What Butler Button is and how it plans and manages your vacation</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button is a travel concierge service that combines AI-powered trip planning with a real human who manages your trip while you are actually on it. You get a full day-by-day plan built from live prices and availability, and then a dedicated Butler handles everything on the ground so you never have to touch a booking site on vacation.</p>
+                <h2>Two Parts Working Together</h2>
+                <ul>
+                  <li><strong>The plan:</strong> Our AI drafts a complete day-by-day itinerary covering flights, hotels, activities, meals, and ground transport. A human advisor then reviews it, swaps in partner-rate hotel deals, and delivers the finished plan within 24 hours of your survey.</li>
+                  <li><strong>The trip:</strong> Once you are traveling, your Butler is available around the clock. Missed connection, restaurant question, local emergency, change of plans. Your Butler handles it.</li>
+                </ul>
+                <h2>What Makes It Different From Other Planning Tools</h2>
+                <p>Free AI planners and booking aggregators make money by steering you toward paid placements. Butler Button charges a flat fee of $25 per country. That fee is the only way we earn, so our only incentive is building you the best possible trip. No ads, no affiliate kickbacks, no upsells buried in the itinerary.</p>
+                <blockquote><strong>Tip:</strong> The whole process starts with a 3-minute survey. You share your dates, destination, budget, and travel style, and we take it from there.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">How Does Butler Button Work? Step by Step</a></li>
+                    <li><a href="#">Will Butler Button Actually Save Me Money?</a></li>
+                    <li><a href="#">Is Butler Button Free?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-2 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>How Does Butler Button Work? Step by Step</h3>
+                  <p class="hh-card-meta">The Butler Button trip planning and concierge process from start to finish</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>The process has three straightforward stages: a short survey, a 24-hour planning window, and live support throughout your trip. You put in about three minutes of effort upfront, and Butler Button handles the rest.</p>
+                <h2>Step 1: The 3-Minute Survey</h2>
+                <ul>
+                  <li>Your travel dates and how flexible they are</li>
+                  <li>Where you want to go (or a general region if you are still deciding)</li>
+                  <li>Your budget per person or for the whole trip</li>
+                  <li>Your travel style: adventurous, relaxed, foodie, cultural, active, or a mix</li>
+                  <li>Who is coming: solo, couple, family with kids, group</li>
+                </ul>
+                <h2>Step 2: AI Draft Meets Human Review</h2>
+                <p>Our system pulls live prices and availability across flights, hotels, activities, and ground transport and builds a day-by-day draft. Then a human advisor steps in, checks the draft, replaces any generic hotel picks with options from our 500-plus partner hotel list, and makes sure the pacing fits your style.</p>
+                <blockquote><strong>Tip:</strong> The 24-hour turnaround is a real promise. Most plans land in your inbox faster than that.</blockquote>
+                <h2>Step 3: You Review and Approve</h2>
+                <p>You get the finished plan, look it over, and ask for any changes. Nothing gets booked without your sign-off.</p>
+                <h2>Step 4: Your Butler Takes Over During the Trip</h2>
+                <p>Once you are traveling, your Butler is reachable 24 hours a day. They can rebook a missed flight, find a last-minute dinner reservation, translate a local situation, or just answer a quick question about your next stop. You have one point of contact for anything that comes up.</p>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Is Butler Button? A Plain-English Overview</a></li>
+                    <li><a href="#">Will Butler Button Actually Save Me Money?</a></li>
+                    <li><a href="#">What Kind of Stuff Will Be in My Trip?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-3 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Will Butler Button Actually Save Me Money?</h3>
+                  <p class="hh-card-meta">How Butler Button compares prices and uses partner hotel rates to reduce your travel costs</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>For most travelers, yes. The combination of live price comparisons across 200,000-plus options and exclusive hotel rates from our partner network means the savings on a single booking often exceed the entire planning fee.</p>
+                <h2>Where the Savings Come From</h2>
+                <ul>
+                  <li><strong>Live price comparison:</strong> Our system checks flights, trains, hotels, and activities in real time and across hundreds of sources simultaneously.</li>
+                  <li><strong>Partner hotel rates:</strong> We have deals with more than 500 hotels worldwide. These rates run 10 to 59 percent below what you would pay on Expedia, Booking.com, or the hotel's own website.</li>
+                </ul>
+                <h2>A Simple Comparison</h2>
+                <p>Say you are booking a four-night stay at a partner hotel with a 30 percent discount. On a room that lists at $180 per night, that discount saves you $216 over four nights. The Butler Button planning fee for one country is $25. You come out $191 ahead before you account for any savings on flights or activities.</p>
+                <blockquote><strong>Tip:</strong> Free trip planners earn money by promoting hotels that pay for placement. Butler Button earns money only from your flat fee, so we have no reason to recommend anything other than the best option for you.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">Is Butler Button Free?</a></li>
+                    <li><a href="#">Is Butler Button Better Than a Regular Travel Agent?</a></li>
+                    <li><a href="#">How Does Butler Button Work? Step by Step</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-4 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>How Long Should My Trip Be?</h3>
+                  <p class="hh-card-meta">Trip length guidance for city breaks, multi-country travel, and road trips</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>The right trip length depends on your destination, your pace, and what you want to get out of the travel. As a general rule, three to five days works well for a single city, and seven to fourteen days gives you room to breathe on a multi-city or multi-country trip.</p>
+                <h2>City Breaks: 3 to 5 Days</h2>
+                <p>A long weekend or four to five days is usually enough to get a real feel for one city without burning out on sightseeing. Going shorter than three days often means you spend most of it jet-lagged or rushing.</p>
+                <h2>Multi-City or Country Trips: 7 to 14 Days</h2>
+                <p>When you are crossing borders or moving between major destinations, you need time to account for travel days. Fourteen days lets you move at a comfortable pace and actually settle into each place rather than just passing through.</p>
+                <h2>Matching Trip Length to Your Travel Style</h2>
+                <ul>
+                  <li><strong>Relaxed traveler:</strong> Add at least one buffer day per four days of travel.</li>
+                  <li><strong>Active traveler:</strong> You can pack more in, but recovery days matter on longer trips.</li>
+                  <li><strong>Traveling with kids or older adults:</strong> Build in more downtime than you think you need.</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> A common mistake is adding one more destination without adding enough time. Your Butler will be honest with you if the pacing feels off.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">Can You Plan Family Trips?</a></li>
+                    <li><a href="#">Can You Do Multi-City Trips and Road Trips?</a></li>
+                    <li><a href="#">What Kind of Stuff Will Be in My Trip?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-5 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Can Butler Button Plan Family Trips?</h3>
+                  <p class="hh-card-meta">Planning family vacations with kids, mixed ages, and different activity preferences</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Yes, and family trips are one of our most common requests. We build itineraries that work for the whole group, not just the adults, and we find hotels that genuinely work for kids rather than ones that just check a box on a booking site.</p>
+                <h2>What Makes a Family Trip Different</h2>
+                <ul>
+                  <li>Kids and adults want different things from the same afternoon</li>
+                  <li>"Family-friendly" hotel labels mean almost nothing without knowing the property</li>
+                  <li>Meal timing and food options matter a lot more than on adult-only trips</li>
+                  <li>Safety and neighborhood feel carry more weight when children are involved</li>
+                </ul>
+                <h2>Hotels That Actually Work for Families</h2>
+                <ul>
+                  <li>Room configurations that fit more than two people without paying for two separate rooms</li>
+                  <li>On-site pools, play areas, or outdoor space that gives kids somewhere to decompress</li>
+                  <li>Locations that do not require a taxi every time you want to grab breakfast</li>
+                  <li>Staff that are genuinely set up for families, not just tolerant of them</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> Tell us the ages of everyone in the group in your survey. A seven-year-old and a sixteen-year-old need completely different activity mixes.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">How Long Should My Trip Be?</a></li>
+                    <li><a href="#">What Is Butler Button? A Plain-English Overview</a></li>
+                    <li><a href="#">What Kind of Stuff Will Be in My Trip?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-6 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Butler Button for Solo Travelers</h3>
+                  <p class="hh-card-meta">How Butler Button supports safety, flexibility, and budget-conscious planning for solo trips</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button is a strong fit for solo travel. Having a Butler in your corner matters more when you are traveling alone, because there is no travel partner to split decisions with or help when something goes sideways.</p>
+                <h2>Why Solo Travel Pairs Well With a Butler</h2>
+                <p>Solo travelers face a specific situation: every decision, problem, and stressful moment falls entirely on one person. A Butler changes that dynamic entirely. You have a knowledgeable point of contact at any hour.</p>
+                <h2>Safety and Neighborhood Guidance</h2>
+                <ul>
+                  <li>Recommending accommodations in well-connected, walkable areas</li>
+                  <li>Flagging neighborhoods that feel different at night compared to daytime</li>
+                  <li>Routing evening activities through areas that are well-lit and active after dark</li>
+                  <li>Keeping your nightly base predictable so late arrivals are never complicated</li>
+                </ul>
+                <h2>Flexibility Built Into the Plan</h2>
+                <p>Solo travelers often want to change course mid-trip. Your Butler builds in flexibility by leaving certain time blocks open, identifying backup options for key activities, and staying reachable if you decide to extend a stay or skip a planned stop.</p>
+                <blockquote><strong>Tip:</strong> Let us know in your survey if you prefer structured days or open ones. Some solo travelers want every hour mapped out. Others want a solid base and loose afternoons. We build both.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Is Butler Button? A Plain-English Overview</a></li>
+                    <li><a href="#">Will Butler Button Actually Save Me Money?</a></li>
+                    <li><a href="#">How Does Butler Button Work? Step by Step</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-7 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Planning a Couples Trip or Romantic Getaway</h3>
+                  <p class="hh-card-meta">Honeymoons, anniversaries, and romantic vacations planned by Butler Button</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Yes. Honeymoons, anniversaries, and romantic getaways are a regular part of what we do. We plan the kind of trip that feels personal and thoughtful rather than generic, with hotels that have real character, meals worth dressing up for, and moments your Butler sets up without ruining the surprise.</p>
+                <h2>What We Look For in a Couples Trip</h2>
+                <ul>
+                  <li><strong>Hotel character:</strong> Small properties with history, design, or a unique setting tend to create stronger memories than large chain hotels.</li>
+                  <li><strong>Meal pacing:</strong> Dinners worth lingering over, mornings unhurried where the itinerary allows.</li>
+                  <li><strong>Shared experiences:</strong> Wine tastings, cooking classes, scenic day trips, sunset sails. Chosen based on what you actually enjoy, not a generic romance template.</li>
+                  <li><strong>Spa and rest:</strong> Built into the plan rather than treated as a last-minute add-on.</li>
+                </ul>
+                <h2>Surprises and Special Moments</h2>
+                <p>Your Butler can coordinate surprises without tipping you off in the itinerary. Anniversary dinner with a specific setup? A room detail arranged on arrival? Share the idea with your Butler during planning and they will handle the coordination quietly.</p>
+                <blockquote><strong>Tip:</strong> If you are planning a honeymoon, tell us in the survey. It changes how we frame the hotel outreach, the activity mix, and the pacing.</blockquote>
+                <h2>Planning Timeline for Special Trips</h2>
+                <p>For honeymoons or anniversary trips, earlier is better. We recommend starting the survey at least eight to twelve weeks before your travel dates to keep all the best options open.</p>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">What Kind of Stuff Will Be in My Trip?</a></li>
+                    <li><a href="#">Will Butler Button Actually Save Me Money?</a></li>
+                    <li><a href="#">How Does Butler Button Work? Step by Step</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-8 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Multi-City Trips and Road Trips: How Butler Button Handles Them</h3>
+                  <p class="hh-card-meta">Multi-city itineraries and road trips with flights, trains, and car rentals</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Multi-city trips and road trips are a core strength of Butler Button, not an edge case. We handle the full routing puzzle: flights, trains, rental cars, ferry crossings, and the stops between major cities that most itineraries skip over.</p>
+                <h2>How Multi-City Planning Works</h2>
+                <ul>
+                  <li>The best transport option between cities based on time, cost, and experience</li>
+                  <li>Whether an overnight train makes more sense than a separate hotel night</li>
+                  <li>How much travel time to realistically budget so arrival days are not wasted</li>
+                  <li>Which order to visit cities in based on seasonal weather, local events, and flight pricing</li>
+                </ul>
+                <h2>Road Trips: The Stops Between the Big Cities</h2>
+                <p>The best part of a road trip is usually not the destination. We build road trips with the in-between stops in mind. You get a route that hits the obvious anchors and fills in the gaps with things worth pulling over for.</p>
+                <blockquote><strong>Tip:</strong> Tell us if you want the road trip to have a loose vs. a tight schedule. Some travelers want every overnight booked in advance. Others prefer flexibility on where they land each night. We can build both.</blockquote>
+                <h2>The Butler's Role on the Road</h2>
+                <p>Multi-city travel creates more unpredictable moments: delayed connections, road closures, last-minute accommodation changes. Your Butler handles all of these as they come up, already knowing your full itinerary without you having to re-explain your situation from scratch.</p>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">How Long Should My Trip Be?</a></li>
+                    <li><a href="#">How Does Butler Button Work? Step by Step</a></li>
+                    <li><a href="#">What Kind of Stuff Will Be in My Trip?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-9 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Is Butler Button Better Than a Regular Travel Agent?</h3>
+                  <p class="hh-card-meta">An honest comparison of Butler Button and traditional travel agencies</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button and traditional travel agents solve the same core problem but in different ways. For most travelers, Butler Button is faster, more transparent, and significantly less expensive.</p>
+                <h2>How Traditional Travel Agents Work</h2>
+                <p>Traditional agents typically earn money through supplier commissions. When they book you a hotel, that hotel often pays the agent a percentage of the room rate. This creates a quiet incentive to favor suppliers with the best commission structures, which is not always the same as the best deal for you.</p>
+                <h2>How Butler Button Works</h2>
+                <p>Butler Button charges a flat $25 per country. That is the only revenue source. We earn the same amount whether we put you in a $90 guesthouse or a $400 hotel. Our partner hotel rates are negotiated deals we pass directly to you, not a markup.</p>
+                <h2>Speed and Availability</h2>
+                <ul>
+                  <li><strong>Traditional agent:</strong> Plan turnaround often runs several days to weeks. Generally business hours only.</li>
+                  <li><strong>Butler Button:</strong> Plan delivered within 24 hours. Butler support is 24/7, including while you are mid-trip.</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> Traditional agents can be excellent for very complex, luxury trips where long-standing supplier relationships matter. For the majority of leisure travelers, Butler Button provides comparable expertise at a fraction of the cost.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">Is Butler Button Free?</a></li>
+                    <li><a href="#">Will Butler Button Actually Save Me Money?</a></li>
+                    <li><a href="#">What Is Butler Button? A Plain-English Overview</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-10 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>What Kind of Activities and Experiences Will My Trip Include?</h3>
+                  <p class="hh-card-meta">The full range of activities, tours, and experiences Butler Button plans into your itinerary</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Your itinerary will include a mix of well-known highlights and off-the-beaten-path experiences chosen specifically for your travel style. We do not build cookie-cutter tours. The plan reflects what you told us you care about.</p>
+                <h2>The Full Range of What We Plan</h2>
+                <ul>
+                  <li><strong>Landmarks and major sites:</strong> The places that belong on your first visit, handled logistically so you spend your time experiencing them rather than standing in the wrong line.</li>
+                  <li><strong>Hidden neighborhoods:</strong> Areas locals actually go, not just the ones that were in a guidebook five years ago.</li>
+                  <li><strong>Food and drink:</strong> Food tours, market visits, cooking classes, specific restaurants chosen for quality and value, wine regions.</li>
+                  <li><strong>Private guides:</strong> For history, art, architecture, wildlife, or adventure.</li>
+                  <li><strong>Seasonal and local events:</strong> Festivals, markets, sporting events, regional traditions. We check what is happening during your specific dates.</li>
+                  <li><strong>Outdoor and active:</strong> Hiking routes, wildlife trips, water activities, cycling paths.</li>
+                  <li><strong>Relaxation and wellness:</strong> Spa days, thermal baths, beach time, slower pacing when that is what the trip calls for.</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> If there is a specific experience you have always wanted, mention it in the survey. We will find it or find something better nearby.</blockquote>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">How Does Butler Button Work? Step by Step</a></li>
+                    <li><a href="#">How Long Should My Trip Be?</a></li>
+                    <li><a href="#">Can Butler Button Plan Family Trips?</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- A3-11 -->
+          <div class="hh-article-card">
+            <details>
+              <summary class="hh-card-trigger">
+                <div class="hh-card-label">
+                  <h3>Is Butler Button Free?</h3>
+                  <p class="hh-card-meta">How much Butler Button costs and why a flat fee produces better results than free AI planners</p>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="hh-article-body">
+                <p>Butler Button is not free, and that is by design. The service costs $25 per country in your itinerary. That flat fee is the only way we earn revenue, which means we have no financial reason to push any specific hotel, airline, or activity on you.</p>
+                <h2>Why Free Trip Planners Are Not Actually Free</h2>
+                <ul>
+                  <li><strong>Affiliate commissions:</strong> The planner earns a cut when you book through their links. Hotels that pay higher commissions get pushed to the top.</li>
+                  <li><strong>Paid placements:</strong> Certain results appear first because the supplier paid for that position, not because the option is best for you.</li>
+                  <li><strong>Data monetization:</strong> Your travel preferences, search history, and booking behavior are packaged and sold to advertisers.</li>
+                </ul>
+                <h2>What $25 Per Country Covers</h2>
+                <ul>
+                  <li>A complete day-by-day itinerary covering flights, hotels, activities, meals, and transport</li>
+                  <li>Human advisor review with access to partner hotel rates (10 to 59 percent below public prices)</li>
+                  <li>Itinerary revisions until the plan fits your needs</li>
+                  <li>24/7 Butler support for the full duration of your trip</li>
+                </ul>
+                <blockquote><strong>Tip:</strong> For a two-country trip, the total planning fee is $50. If your Butler finds you a hotel at a 30 percent partner discount on even one night of that trip, you have almost certainly already come out ahead.</blockquote>
+                <h2>How the Fee Keeps Things Honest</h2>
+                <p>Because we earn a flat fee and nothing else, our advisors and Butlers have one job: build you the best trip they can. If a cheaper hotel is the better choice for your trip, we recommend it. The fee creates the right incentive structure.</p>
+                <div class="hh-related">
+                  <p>Related articles</p>
+                  <ul>
+                    <li><a href="#">Will Butler Button Actually Save Me Money?</a></li>
+                    <li><a href="#">Is Butler Button Better Than a Regular Travel Agent?</a></li>
+                    <li><a href="#">What Is Butler Button? A Plain-English Overview</a></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+        </div><!-- /grid -->
+      </section>
+
+      <!-- CTA -->
+      <div class="hh-cta">
+        <h2>Ready to plan your trip?</h2>
+        <p>$25 per country. 24-hour turnaround. A real person on call whenever you need one.</p>
+        <a href="pricing.html">Start Your Journey</a>
+      </div>
+
+    </main><!-- /hh-main -->
+  </div><!-- /hh-body -->
+
+</body>
+</html>
