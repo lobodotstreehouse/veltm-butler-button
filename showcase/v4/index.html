@@ -2560,10 +2560,10 @@
 (function () {
 
   // ── CONFIG ── swap these once your Zoho Form is created
-  var ZOHO_FORM_URL = 'https://forms.zohopublic.com/YOURACCOUNT/form/ButlerButtonFollowClaim/formperma/YOURHASH/htmlRecords/submit';
-  // Field names must match exactly what you set in Zoho Forms
-  // Expected fields: SingleLine (email), SingleLine1 (social_handle),
-  //                  SingleLine2 (platform), SingleLine3 (coupon_code)
+  var ZOHO_FORM_URL = 'https://forms.zohopublic.in/VELTM/form/ButlerButtonFollowClaim/formperma/8_wsLXDws5gBv2T4IsaHYjC0VrRQ39X8_0M6-TkYCbw/htmlRecords/submit';
+  // Field names match Zoho Forms field link_names:
+  // Email (email), SingleLine (social_handle),
+  // SingleLine1 (platform), SingleLine2 (coupon_code)
 
   // ── PLATFORM DEFINITIONS ──────────────────────────────────────
   var PLATFORMS = {
@@ -2735,10 +2735,10 @@
     // Build Zoho Forms payload
     // Field names must match your Zoho Form exactly
     var body = new URLSearchParams({
-      'SingleLine':  email,           // Email field
-      'SingleLine1': handle,          // Social handle
-      'SingleLine2': hiddenPlat.value,// Platform
-      'SingleLine3': hiddenCode.value,// Coupon code
+      'Email':        email,           // Email field
+      'SingleLine':   handle,          // Social handle
+      'SingleLine1':  hiddenPlat.value,// Platform
+      'SingleLine2':  hiddenCode.value,// Coupon code
     });
 
     fetch(ZOHO_FORM_URL, {
