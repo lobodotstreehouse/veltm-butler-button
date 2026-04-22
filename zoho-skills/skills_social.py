@@ -1,13 +1,15 @@
 """
-Butler Button — Zoho Social Skill Suite
-----------------------------------------
-Zoho Social has no public REST API.
-Posting routes through a Zoho Flow webhook you configure once.
-Everything else (content, calendar, analytics brief, repurposing) runs directly.
+Butler Button — Social Media Skill Suite
+-----------------------------------------
+Publishing via Ayrshare API (ayrshare.com) — covers Instagram, LinkedIn, X,
+Facebook, TikTok, YouTube from a single API key. Set AYRSHARE_API_KEY in .env.
+
+Zoho Social has no public API and is not available in Zoho Flow — do not attempt.
 
 SETUP (one-time):
-  In Zoho Flow → New Flow → Webhook trigger → Action: Zoho Social → Post.
-  Set ZOHO_SOCIAL_FLOW_WEBHOOK in .env to the webhook URL Flow gives you.
+  1. Sign up at ayrshare.com
+  2. Connect your social accounts in the Ayrshare dashboard
+  3. Copy your API key → add to .env as AYRSHARE_API_KEY
 
 Skills:
   generate_post            — Claude writes platform-native copy
@@ -16,12 +18,12 @@ Skills:
   generate_carousel_copy   — Slide-by-slide text for carousels / reels
   generate_story_copy      — Story format (hook + swipe-up CTA)
   generate_hashtag_set     — Research + curate hashtags by niche
-  schedule_post_via_flow   — Dispatch to Zoho Flow webhook → Zoho Social
-  create_content_calendar  — 30-day calendar saved as CRM Activities
+  publish_post             — Post directly to platforms via Ayrshare
+  create_content_calendar  — 30-day calendar saved as CRM Tasks
   get_calendar_week        — Pull this week's scheduled posts from CRM
   log_post_performance     — Record reach/engagement in CRM for benchmarking
-  generate_performance_brief — Weekly social performance summary via Claude
-  generate_reply           — Draft response to a comment or DM
+  generate_performance_brief — Weekly performance analysis via Claude
+  generate_reply           — Draft brand-voice reply to a comment or DM
   generate_campaign_burst  — Full launch campaign: 5 posts across 3 platforms
 """
 
@@ -39,8 +41,17 @@ def _ai():
         _client = anthropic.Anthropic()
     return _client
 
-FLOW_WEBHOOK = os.environ.get("ZOHO_SOCIAL_FLOW_WEBHOOK", "")
+AYRSHARE_KEY = os.environ.get("AYRSHARE_API_KEY", "")
+AYRSHARE_BASE = "https://app.ayrshare.com/api"
 CLIQ_MARKETING = "marketing"
+
+PLATFORM_MAP = {
+    "instagram": "instagram",
+    "linkedin":  "linkedin",
+    "x":         "twitter",
+    "twitter":   "twitter",
+    "facebook":  "facebook",
+}
 
 PLATFORM_VOICE = {
     "instagram": (
@@ -92,14 +103,23 @@ def _cliq(msg: str):
     )
 
 
-def _post_to_flow(platform: str, content: str, scheduled_time: str = None) -> dict:
-    if not FLOW_WEBHOOK:
-        return {"status": "no_webhook", "note": "Set ZOHO_SOCIAL_FLOW_WEBHOOK in .env"}
-    payload = {"platform": platform, "content": content}
+def _post_to_ayrshare(platforms: list, content: str, scheduled_time: str = None) -> dict:
+    """Post to one or more platforms via Ayrshare API. Requires AYRSHARE_API_KEY in .env."""
+    if not AYRSHARE_KEY:
+        return {"status": "no_key", "note": "Add AYRSHARE_API_KEY to .env — get one at ayrshare.com"}
+    mapped = [PLATFORM_MAP.get(p.lower(), p.lower()) for p in platforms]
+    payload = {"post": content, "platforms": mapped}
     if scheduled_time:
-        payload["scheduled_time"] = scheduled_time
-    r = requests.post(FLOW_WEBHOOK, json=payload, timeout=10)
-    return {"status": "dispatched", "http": r.status_code}
+        payload["scheduleDate"] = scheduled_time  # ISO 8601
+    r = requests.post(
+        f"{AYRSHARE_BASE}/post",
+        headers={"Authorization": f"Bearer {AYRSHARE_KEY}",
+                 "Content-Type": "application/json"},
+        json=payload, timeout=15,
+    )
+    data = r.json()
+    return {"status": "posted" if r.status_code == 200 else "error",
+            "http": r.status_code, "response": data}
 
 
 # ── Content Generation ─────────────────────────────────────────────────────────
@@ -269,25 +289,26 @@ Output ONLY valid JSON."""
 
 # ── Scheduling & Dispatch ──────────────────────────────────────────────────────
 
-def schedule_post_via_flow(platform: str, content: str, scheduled_time: str = None) -> dict:
-    """Dispatch a post to Zoho Social via a Zoho Flow webhook.
+def publish_post(platforms: list, content: str, scheduled_time: str = None) -> dict:
+    """Publish content to one or more social platforms via Ayrshare.
 
-    Requires ZOHO_SOCIAL_FLOW_WEBHOOK set in .env.
-    In Zoho Flow: Webhook trigger → Zoho Social: Create Post action.
+    Requires AYRSHARE_API_KEY in .env (get one at ayrshare.com — $29/mo).
+    Supports: instagram, linkedin, x, facebook, tiktok, youtube.
 
     Args:
-        platform: Target platform (instagram | linkedin | x | facebook)
+        platforms: List of platforms (e.g. ['instagram', 'linkedin', 'x'])
         content: Post copy
-        scheduled_time: ISO datetime string (e.g. '2026-04-25T10:00:00'); None = post now
+        scheduled_time: ISO 8601 datetime string to schedule; None = post immediately
     Returns:
-        dict with dispatch status
+        dict with status and per-platform results
     """
-    result = _post_to_flow(platform, content, scheduled_time)
-    if result.get("status") == "dispatched":
-        _cliq(f"POST DISPATCHED → {platform.upper()}\n"
-              f"Time: {scheduled_time or 'now'}\n"
-              f"{content[:200]}")
+    result = _post_to_ayrshare(platforms, content, scheduled_time)
     return result
+
+
+# Keep old name as alias for backwards compatibility in agent_social_content.py
+def schedule_post_via_flow(platform: str, content: str, scheduled_time: str = None) -> dict:
+    return publish_post([platform], content, scheduled_time)
 
 
 def create_content_calendar(theme: str, start_date: str = None, num_weeks: int = 4) -> dict:
