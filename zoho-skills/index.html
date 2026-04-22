@@ -3,474 +3,1316 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Butler Button — Zoho Marketing Agents</title>
+<title>Butler Button CSMO — Skill Library</title>
 <style>
-:root {
-  --gold: #C9A84C;
-  --gold-light: #E8C97A;
-  --dark: #080808;
-  --surface: #111;
-  --card: #161616;
-  --border: #222;
-  --text: #E8E8E8;
-  --muted: #666;
-  --green: #2ecc71;
-  --red: #e74c3c;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--dark); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-header {
-  border-bottom: 1px solid var(--gold);
-  padding: 64px 24px 52px;
-  text-align: center;
-  background: radial-gradient(ellipse at center top, #1a1200 0%, var(--dark) 70%);
-}
-.eyebrow { font-size: 11px; letter-spacing: 5px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; opacity: 0.8; }
-header h1 { font-size: clamp(32px, 6vw, 58px); font-weight: 200; color: #fff; letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
-header h1 em { color: var(--gold); font-style: normal; font-weight: 700; }
-header .deck { color: var(--muted); font-size: 15px; max-width: 520px; margin: 0 auto 36px; }
-.pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-.pill { background: #1a1500; border: 1px solid #3a3000; color: var(--gold-light); font-size: 11px; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.5px; }
+  :root {
+    --bg:       #0f0f0f;
+    --card:     #1a1a1a;
+    --card2:    #222222;
+    --border:   #2e2e2e;
+    --gold:     #c9a84c;
+    --gold-dim: #8a6e2e;
+    --text:     #f0f0f0;
+    --muted:    #888;
+    --pill-bg:  #252525;
+    --sidebar-w: 240px;
+  }
 
-main { max-width: 1080px; margin: 0 auto; padding: 56px 24px 100px; }
+  html { scroll-behavior: smooth; }
 
-/* Stats */
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 64px; }
-.stat { background: var(--surface); padding: 28px 16px; text-align: center; }
-.stat .n { font-size: 40px; font-weight: 200; color: var(--gold); line-height: 1; }
-.stat .l { font-size: 11px; color: var(--muted); margin-top: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
 
-/* Section */
-.label { font-size: 10px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; opacity: 0.7; }
-h2 { font-size: 20px; font-weight: 300; color: #fff; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: #111;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+    padding: 28px 0 40px;
+  }
 
-/* Agent cards */
-.agents { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 64px; }
-.agent { background: var(--surface); padding: 0; transition: background 0.15s; }
-.agent:hover { background: #141414; }
-.agent-head { display: flex; align-items: flex-start; gap: 16px; padding: 24px 24px 20px; cursor: pointer; }
-.agent-num { font-size: 11px; color: var(--gold); font-family: monospace; padding-top: 3px; flex-shrink: 0; letter-spacing: 1px; }
-.agent-icon { font-size: 22px; flex-shrink: 0; }
-.agent-meta { flex: 1; }
-.agent-title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 4px; }
-.agent-subtitle { font-size: 13px; color: var(--muted); }
-.trigger-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #0d1a0d; border: 1px solid #1a3a1a;
-  color: var(--green); font-size: 11px; padding: 3px 10px; border-radius: 4px;
-  margin-top: 8px; letter-spacing: 0.5px;
-}
-.trigger-badge.webhook { background: #0d0d1a; border-color: #1a1a3a; color: #7aa0ff; }
-.trigger-badge.cli { background: #1a1000; border-color: #3a2a00; color: var(--gold-light); }
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo .wordmark {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .sidebar-logo .tagline {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
 
-.agent-body { padding: 0 24px 24px 64px; }
-.agent-steps { display: flex; flex-direction: column; gap: 6px; }
-.step { font-size: 13px; color: var(--muted); display: flex; gap: 10px; }
-.step .arrow { color: var(--gold); flex-shrink: 0; }
-.step strong { color: var(--text); }
-.cmd { margin-top: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; font-family: 'Cascadia Code','Fira Code','SF Mono',monospace; font-size: 12px; color: var(--gold-light); overflow-x: auto; white-space: pre; }
+  .nav-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 20px 6px;
+    margin-top: 12px;
+  }
 
-/* Architecture */
-.arch { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 64px; }
-.arch-flow { display: flex; align-items: center; gap: 0; flex-wrap: wrap; margin-top: 24px; }
-.arch-node { flex: 1; min-width: 110px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 12px; text-align: center; }
-.arch-node .icon { font-size: 20px; margin-bottom: 6px; }
-.arch-node .title { font-size: 12px; font-weight: 600; color: var(--gold-light); }
-.arch-node .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.arch-arrow { color: var(--gold); font-size: 18px; padding: 0 6px; flex-shrink: 0; }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 20px;
+    font-size: 13px;
+    color: #bbb;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all .15s;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--gold);
+    border-left-color: var(--gold);
+    background: rgba(201,168,76,.07);
+  }
+  .nav-link .count {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--pill-bg);
+    padding: 1px 7px;
+    border-radius: 10px;
+  }
 
-/* Scope table */
-.scope-wrap { margin-bottom: 64px; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th { text-align: left; padding: 10px 14px; background: var(--surface); color: var(--gold); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--muted); }
-td:first-child { font-family: monospace; font-size: 12px; color: var(--text); }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--surface); }
+  /* Main */
+  .main {
+    margin-left: var(--sidebar-w);
+    padding: 0 0 80px;
+  }
 
-/* Setup */
-.setup { display: flex; flex-direction: column; gap: 12px; margin-bottom: 64px; }
-.setup-step { display: flex; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
-.setup-n { width: 28px; height: 28px; border-radius: 50%; background: #1a1500; border: 1px solid #3a3000; color: var(--gold); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.setup-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
-.setup-detail { font-size: 13px; color: var(--muted); }
-.setup-detail code { font-family: monospace; font-size: 11px; background: var(--card); border: 1px solid var(--border); padding: 1px 6px; border-radius: 3px; color: var(--gold-light); }
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #161408 0%, #1a1a0e 40%, #0f0f0f 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 48px 52px;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
 
-footer { border-top: 1px solid var(--border); padding: 28px 24px; text-align: center; color: var(--muted); font-size: 12px; }
-footer a { color: var(--gold); text-decoration: none; }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .stat-number {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .stat-divider {
+    width: 1px;
+    background: var(--border);
+    align-self: stretch;
+  }
+
+  /* Content area */
+  .content { padding: 48px 48px 0; }
+
+  /* Category section */
+  .category {
+    margin-bottom: 64px;
+    scroll-margin-top: 24px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cat-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .cat-meta { flex: 1; }
+  .cat-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .cat-module {
+    font-size: 12px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    color: var(--gold-dim);
+    background: rgba(201,168,76,.08);
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .cat-desc {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .cat-count-badge {
+    background: var(--gold);
+    color: #0f0f0f;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+
+  /* Tool grid */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .tool-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color .15s;
+  }
+  .tool-card:hover { border-color: var(--gold-dim); }
+
+  .tool-name {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 7px;
+    word-break: break-all;
+  }
+
+  .tool-desc {
+    font-size: 13px;
+    color: #ccc;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .params-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .params-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .param-row {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    font-size: 12px;
+  }
+  .param-name {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    color: #e0c070;
+    flex-shrink: 0;
+  }
+  .param-type {
+    color: var(--muted);
+    font-style: italic;
+    flex-shrink: 0;
+  }
+  .param-desc { color: #999; flex: 1; }
+  .param-optional {
+    font-size: 10px;
+    color: var(--muted);
+    background: var(--pill-bg);
+    padding: 0 5px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .return-row {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .return-row .rt {
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    color: #7aadcf;
+  }
+
+  .no-params {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .hero { padding: 36px 24px 32px; }
+    .content { padding: 32px 24px 0; }
+    footer { padding: 24px; }
+    .hero h1 { font-size: 26px; }
+    .stat-number { font-size: 32px; }
+  }
+
+  @media (max-width: 600px) {
+    .tool-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .stat-divider { display: none; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="eyebrow">Butler Button — butlerbutton.co</div>
-  <h1>Zoho <em>Marketing</em> Agents</h1>
-  <p class="deck">Autonomous agents that create campaigns, write personalized emails, generate landing pages, post to social, and fire without you touching them.</p>
-  <div class="pills">
-    <span class="pill">Zoho Campaigns</span>
-    <span class="pill">Zoho Social</span>
-    <span class="pill">Zoho CRM</span>
-    <span class="pill">Zoho Mail</span>
-    <span class="pill">Zoho Cliq</span>
-    <span class="pill">Zoho Flow</span>
-    <span class="pill">Claude Opus 4.7</span>
-    <span class="pill">GitHub Pages</span>
+<nav class="sidebar" aria-label="Skill categories">
+  <div class="sidebar-logo">
+    <div class="wordmark">Butler Button</div>
+    <div class="tagline">CSMO Skill Library</div>
   </div>
-</header>
+  <div class="nav-label">Modules</div>
+  <a href="#pipeline"   class="nav-link">&#128202; Pipeline &amp; Revenue   <span class="count">6</span></a>
+  <a href="#leads"      class="nav-link">&#128229; Lead Management          <span class="count">4</span></a>
+  <a href="#contacts"   class="nav-link">&#128101; Contact Management       <span class="count">5</span></a>
+  <a href="#activities" class="nav-link">&#9989; Activities &amp; Follow-up <span class="count">5</span></a>
+  <a href="#concierge"  class="nav-link">&#128273; Butler Button Concierge  <span class="count">5</span></a>
+  <a href="#mail"       class="nav-link">&#9993; Zoho Mail                  <span class="count">8</span></a>
+  <a href="#cliq"       class="nav-link">&#128172; Zoho Cliq                <span class="count">6</span></a>
+  <a href="#automation" class="nav-link">&#9889; Automation &amp; Flow      <span class="count">6</span></a>
+  <a href="#social"     class="nav-link">&#10024; Social Content AI         <span class="count">13</span></a>
+  <a href="#facebook"   class="nav-link">&#128241; Facebook Page            <span class="count">4</span></a>
+  <a href="#instagram"  class="nav-link">&#128248; Instagram                <span class="count">6</span></a>
+</nav>
 
-<main>
+<main class="main">
 
-  <div class="stats">
-    <div class="stat"><div class="n">11</div><div class="l">Autonomous Agents</div></div>
-    <div class="stat"><div class="n">2</div><div class="l">Webhook Triggers</div></div>
-    <div class="stat"><div class="n">6</div><div class="l">Zoho Products</div></div>
-    <div class="stat"><div class="n">&lt;90s</div><div class="l">Lead Response Time</div></div>
-    <div class="stat"><div class="n">0</div><div class="l">Manual Steps (most)</div></div>
-  </div>
-
-  <!-- Architecture -->
-  <div class="label">Architecture</div>
-  <h2>How the agents connect</h2>
-  <div class="arch">
-    <p style="font-size:13px;color:var(--muted);">Zoho Flow fires webhooks on CRM events → webhook server routes to the right agent → Claude generates content → Zoho APIs execute. Cron-triggered agents run on schedule. CLI agents run on-demand in seconds.</p>
-    <div class="arch-flow">
-      <div class="arch-node"><div class="icon">☁️</div><div class="title">Zoho Flow</div><div class="sub">CRM event trigger</div></div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node"><div class="icon">🔗</div><div class="title">Webhook Server</div><div class="sub">Routes to agent</div></div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node"><div class="icon">🤖</div><div class="title">Claude Opus 4.7</div><div class="sub">Writes all content</div></div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node"><div class="icon">⚡</div><div class="title">Zoho APIs</div><div class="sub">Executes actions</div></div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node"><div class="icon">💬</div><div class="title">Cliq Alert</div><div class="sub">You stay informed</div></div>
-    </div>
-  </div>
-
-  <!-- Agents -->
-  <div class="label">Agent Suite</div>
-  <h2>11 agents — all autonomous</h2>
-  <div class="agents">
-
-    <!-- Lead Intake -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">01</span>
-        <span class="agent-icon">⚡</span>
-        <div class="agent-meta">
-          <div class="agent-title">Lead Intake Agent</div>
-          <div class="agent-subtitle">New lead in CRM → scored, emailed, tasked, Cliq-alerted in under 90 seconds</div>
-          <span class="trigger-badge webhook">⚙ Zoho Flow webhook — fires on Lead Created</span>
-        </div>
+  <header class="hero">
+    <div class="hero-eyebrow">Butler Button &mdash; Zoho One Integration</div>
+    <h1>CSMO <span>Skill Library</span></h1>
+    <p class="hero-sub">Every MCP tool available in Claude Desktop, mapped to its Zoho API.</p>
+    <div class="hero-stats">
+      <div class="stat-block">
+        <div class="stat-number">79</div>
+        <div class="stat-label">MCP Tools</div>
       </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Scores lead: <strong>Hot / Warm / Cold</strong> based on source, budget signals, destination mentions</span></div>
-          <div class="step"><span class="arrow">→</span><span>Claude writes <strong>personalized first-response email</strong> referencing their specific inquiry</span></div>
-          <div class="step"><span class="arrow">→</span><span>Sends email via Zoho Mail + creates <strong>"Call within 1hr" CRM task</strong></span></div>
-          <div class="step"><span class="arrow">→</span><span>Posts hot-lead alert to <strong>Cliq #leads</strong> with score + notes</span></div>
-        </div>
-        <div class="cmd">POST /webhook/lead-intake  body: {"lead_id": "..."}</div>
+      <div class="stat-divider"></div>
+      <div class="stat-block">
+        <div class="stat-number">13</div>
+        <div class="stat-label">Modules</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-block">
+        <div class="stat-number" style="font-size:26px;padding-top:8px">Zoho One</div>
+        <div class="stat-label">Live Platform</div>
       </div>
     </div>
+  </header>
 
-    <!-- Pipeline Velocity -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">02</span>
-        <span class="agent-icon">📈</span>
-        <div class="agent-meta">
-          <div class="agent-title">Pipeline Velocity Agent</div>
-          <div class="agent-subtitle">Hunts stalled deals every morning — drafts re-engagement emails, auto-sends at 14 days</div>
-          <span class="trigger-badge">⏰ Cron — 06:30 EST daily</span>
-        </div>
-      </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Finds all open deals with <strong>no activity in 7+ days</strong></span></div>
-          <div class="step"><span class="arrow">→</span><span>Claude writes unique re-engagement email per deal (references the specific trip)</span></div>
-          <div class="step"><span class="arrow">→</span><span><strong>7-13 days:</strong> saves as draft in Zoho Mail for your review</span></div>
-          <div class="step"><span class="arrow">→</span><span><strong>14+ days:</strong> auto-sends — deal gets follow-up task, Cliq heat map fires</span></div>
-        </div>
-        <div class="cmd">python agents/agent_pipeline_velocity.py</div>
-      </div>
-    </div>
+  <div class="content">
 
-    <!-- Morning Brief -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">03</span>
-        <span class="agent-icon">☀️</span>
-        <div class="agent-meta">
-          <div class="agent-title">Morning Brief Agent</div>
-          <div class="agent-subtitle">Live CRM data → ranked priority list in your inbox and Cliq before you open your laptop</div>
-          <span class="trigger-badge">⏰ Cron — 07:00 EST weekdays</span>
+    <!-- 1. Pipeline & Revenue -->
+    <section class="category" id="pipeline">
+      <div class="category-header">
+        <div class="cat-icon">&#128202;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Pipeline &amp; Revenue</div>
+          <div class="cat-module">skills_pipeline.py</div>
+          <div class="cat-desc">Live deal data, stage-level forecasting, and pipeline mutations via Zoho CRM.</div>
         </div>
+        <div class="cat-count-badge">6 tools</div>
       </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Pulls pipeline snapshot, tasks due, overdue, new leads (24h), deals closing this week</span></div>
-          <div class="step"><span class="arrow">→</span><span>Claude synthesizes into <strong>numbered priority order</strong> with a single risk flag</span></div>
-          <div class="step"><span class="arrow">→</span><span>Sends brief to <strong>carlremi@gmail.com</strong> + posts to Cliq #csmo-daily</span></div>
-        </div>
-        <div class="cmd">python agents/agent_morning_brief.py</div>
-      </div>
-    </div>
+      <div class="tool-grid">
 
-    <!-- Campaign Builder -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">04</span>
-        <span class="agent-icon">📧</span>
-        <div class="agent-meta">
-          <div class="agent-title">Campaign Builder</div>
-          <div class="agent-subtitle">One brief → 3-email drip campaign written and live in Zoho Campaigns in minutes</div>
-          <span class="trigger-badge cli">▶ CLI — run when you have a new angle</span>
+        <div class="tool-card">
+          <div class="tool-name">get_pipeline_summary</div>
+          <div class="tool-desc">Return open deal count and total value grouped by pipeline stage, sorted by stage value descending.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
         </div>
-      </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Claude writes <strong>Hook (Day 0), Proof (Day 3), CTA (Day 7)</strong> — different voice per email</span></div>
-          <div class="step"><span class="arrow">→</span><span>Creates all 3 campaigns in Zoho Campaigns, attaches to your list</span></div>
-          <div class="step"><span class="arrow">→</span><span>Posts campaign copy summary to Cliq #marketing</span></div>
-        </div>
-        <div class="cmd">python agents/agent_campaign_builder.py \
-  --segment "Maldives inquiries" \
-  --goal "Book a discovery call" \
-  --angle "June peak season — 3 villas left" \
-  --list-id YOUR_LIST_ID</div>
-      </div>
-    </div>
 
-    <!-- Social Content -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">05</span>
-        <span class="agent-icon">📱</span>
-        <div class="agent-meta">
-          <div class="agent-title">Social Content Engine</div>
-          <div class="agent-subtitle">One topic → Instagram, LinkedIn, and X posts — platform-native voice, scheduled or drafted</div>
-          <span class="trigger-badge cli">▶ CLI — run when you have a topic</span>
+        <div class="tool-card">
+          <div class="tool-name">get_revenue_forecast</div>
+          <div class="tool-desc">Weighted revenue forecast for deals closing within N days — gross pipeline, weighted total, and top-5 deals.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">days</span><span class="param-type">int</span><span class="param-desc">Lookahead window in days</span><span class="param-optional">default 30</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
         </div>
-      </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Claude writes <strong>platform-native copy</strong>: Instagram (aspirational prose), LinkedIn (thought leadership), X (sharp take)</span></div>
-          <div class="step"><span class="arrow">→</span><span>Posts to Zoho Social as <strong>draft or scheduled</strong> (4-hour spacing between posts)</span></div>
-        </div>
-        <div class="cmd">python agents/agent_social_content.py \
-  --topic "Why most travel agencies are just booking agents" \
-  --platforms instagram linkedin x \
-  --schedule</div>
-      </div>
-    </div>
 
-    <!-- Landing Page -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">06</span>
-        <span class="agent-icon">🌐</span>
-        <div class="agent-meta">
-          <div class="agent-title">Landing Page Generator</div>
-          <div class="agent-subtitle">Brief → full HTML landing page written, committed, and live on GitHub Pages automatically</div>
-          <span class="trigger-badge cli">▶ CLI — run per campaign</span>
+        <div class="tool-card">
+          <div class="tool-name">get_deals_closing_soon</div>
+          <div class="tool-desc">List deals closing within N days that are not yet won or lost, sorted by closing date.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">days</span><span class="param-type">int</span><span class="param-desc">Days ahead to look</span><span class="param-optional">default 7</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
         </div>
-      </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Claude generates complete self-contained HTML: headline, social proof, 3 specifics, inquiry form</span></div>
-          <div class="step"><span class="arrow">→</span><span>Committed and pushed to GitHub → <strong>live in ~60 seconds</strong></span></div>
-          <div class="step"><span class="arrow">→</span><span>URL pattern: <code>butlerbutton.github.io/.../campaigns/{slug}/</code></span></div>
-        </div>
-        <div class="cmd">python agents/agent_landing_page.py \
-  --offer "Maldives Private Villa — June 2026" \
-  --audience "HNI couples, anniversary / honeymoon" \
-  --cta "Book a 20-minute discovery call" \
-  --slug "maldives-june"</div>
-      </div>
-    </div>
 
-    <!-- Personalization -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">07</span>
-        <span class="agent-icon">🎯</span>
-        <div class="agent-meta">
-          <div class="agent-title">Personalization Engine</div>
-          <div class="agent-subtitle">Every contact gets a unique email written from their actual CRM history — not mail-merge tokens</div>
-          <span class="trigger-badge cli">▶ CLI — per segment, per campaign</span>
+        <div class="tool-card">
+          <div class="tool-name">get_stalled_deals</div>
+          <div class="tool-desc">List open deals with no CRM activity in the past N days — the re-engagement hit list.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">inactive_days</span><span class="param-type">int</span><span class="param-desc">Inactivity threshold in days</span><span class="param-optional">default 14</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
         </div>
-      </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Pulls contacts by CRM tag (VIP, Maldives-2025, etc.)</span></div>
-          <div class="step"><span class="arrow">→</span><span>Fetches each contact's <strong>actual travel history, preferences, last booking</strong></span></div>
-          <div class="step"><span class="arrow">→</span><span>Claude writes a <strong>unique email per person</strong> referencing their specific file</span></div>
-          <div class="step"><span class="arrow">→</span><span>Saves as Zoho Mail drafts (review) or auto-sends with <code>--send</code></span></div>
-        </div>
-        <div class="cmd">python agents/agent_personalization.py \
-  --segment "VIP" \
-  --campaign-goal "Re-engage for summer 2026"</div>
-      </div>
-    </div>
 
-    <!-- Analytics -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">08</span>
-        <span class="agent-icon">📊</span>
-        <div class="agent-meta">
-          <div class="agent-title">Analytics &amp; Insight Engine</div>
-          <div class="agent-subtitle">Zoho Campaigns stats → plain-English verdict with 2 specific next actions</div>
-          <span class="trigger-badge cli">▶ CLI — per campaign or monthly</span>
+        <div class="tool-card">
+          <div class="tool-name">get_won_deals_mtd</div>
+          <div class="tool-desc">Return deals won month-to-date with total revenue, sorted by deal value descending.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
         </div>
-      </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Pulls open rate, click rate, bounces, unsubscribes from Zoho Campaigns</span></div>
-          <div class="step"><span class="arrow">→</span><span>Claude benchmarks against luxury travel industry (35% open, 4% click)</span></div>
-          <div class="step"><span class="arrow">→</span><span>5-point report: verdict, strongest signal, weakest signal, 2 concrete next actions</span></div>
-        </div>
-        <div class="cmd">python agents/agent_analytics.py --period mtd
-python agents/agent_analytics.py --campaign-key CAMPAIGN_KEY</div>
-      </div>
-    </div>
 
-    <!-- Automation Builder -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">09</span>
-        <span class="agent-icon">⚙️</span>
-        <div class="agent-meta">
-          <div class="agent-title">Automation Builder</div>
-          <div class="agent-subtitle">Describe a trigger + outcome → automation designed, emails written, campaigns created in Zoho</div>
-          <span class="trigger-badge cli">▶ CLI — run when setting up a new automation</span>
+        <div class="tool-card">
+          <div class="tool-name">update_deal_stage</div>
+          <div class="tool-desc">Move a CRM deal to a new pipeline stage. Stage name must match the Zoho CRM picklist exactly.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">deal_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Deal record ID</span></div>
+            <div class="param-row"><span class="param-name">new_stage</span><span class="param-type">str</span><span class="param-desc">Target stage name (exact picklist value)</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
         </div>
-      </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Claude designs the full automation sequence (trigger, delays, conditions, email roles)</span></div>
-          <div class="step"><span class="arrow">→</span><span>Writes and creates all campaign emails in Zoho Campaigns</span></div>
-          <div class="step"><span class="arrow">→</span><span>Outputs a <strong>2-minute Zoho Flow setup guide</strong> — you just click activate</span></div>
-        </div>
-        <div class="cmd">python agents/agent_automation_builder.py \
-  --trigger "Lead created with rating Hot" \
-  --outcome "3-email hot-lead sequence + instant Cliq alert" \
-  --list-id YOUR_LIST_ID</div>
-      </div>
-    </div>
 
-    <!-- Deal Won -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">10</span>
-        <span class="agent-icon">🏆</span>
-        <div class="agent-meta">
-          <div class="agent-title">Deal Won Sequence</div>
-          <div class="agent-subtitle">Deal closes → personalized win email + 5-task onboarding sequence + Cliq celebration, instantly</div>
-          <span class="trigger-badge webhook">⚙ Zoho Flow webhook — fires on Stage = Closed Won</span>
-        </div>
       </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Claude writes personalized booking-confirmation email referencing the specific trip</span></div>
-          <div class="step"><span class="arrow">→</span><span>Creates 5-step onboarding task sequence in CRM: confirmation → preferences → vendors → pre-trip brief → post-trip follow-up</span></div>
-          <div class="step"><span class="arrow">→</span><span>Cliq celebration posts to #sales-pipeline with deal value</span></div>
-        </div>
-        <div class="cmd">POST /webhook/deal-won  body: {"deal_id": "..."}</div>
-      </div>
-    </div>
+    </section>
 
-    <!-- Follow-up Drafter -->
-    <div class="agent">
-      <div class="agent-head">
-        <span class="agent-num">11</span>
-        <span class="agent-icon">📝</span>
-        <div class="agent-meta">
-          <div class="agent-title">Follow-up Drafter</div>
-          <div class="agent-subtitle">Hang up → run this → draft waiting in your inbox before you close your notes</div>
-          <span class="trigger-badge cli">▶ CLI — 30 seconds post-call</span>
+    <!-- 2. Lead Management -->
+    <section class="category" id="leads">
+      <div class="category-header">
+        <div class="cat-icon">&#128229;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Lead Management</div>
+          <div class="cat-module">skills_leads.py</div>
+          <div class="cat-desc">Qualify, convert, and analyse inbound leads from Zoho CRM.</div>
         </div>
+        <div class="cat-count-badge">4 tools</div>
       </div>
-      <div class="agent-body">
-        <div class="agent-steps">
-          <div class="step"><span class="arrow">→</span><span>Takes contact ID + your raw call notes</span></div>
-          <div class="step"><span class="arrow">→</span><span>Claude writes personalized follow-up referencing exact call details — not templated</span></div>
-          <div class="step"><span class="arrow">→</span><span>Saves draft in Zoho Mail, logs call in CRM, creates 3-day follow-up task</span></div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">get_new_leads</div>
+          <div class="tool-desc">Return leads created in the past N days, sorted newest-first with source and status.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">days</span><span class="param-type">int</span><span class="param-desc">Lookback window in days</span><span class="param-optional">default 7</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
         </div>
-        <div class="cmd">python agents/agent_followup_drafter.py \
-  CONTACT_ID "Spoke about Maldives villa, June dates, budget ~Rs15L. Wants private pool. Sending options."</div>
-      </div>
-    </div>
 
-  </div>
+        <div class="tool-card">
+          <div class="tool-name">get_lead_source_breakdown</div>
+          <div class="tool-desc">Return count of leads by source channel for the current month, with percentage share per source.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
 
-  <!-- OAuth Scopes -->
-  <div class="label">Setup</div>
-  <h2>OAuth scopes — single Self Client at api-console.zoho.in</h2>
-  <div class="scope-wrap">
-    <table>
-      <thead><tr><th>Scope</th><th>Used by</th></tr></thead>
-      <tbody>
-        <tr><td>ZohoCRM.modules.ALL</td><td>All agents — deals, leads, contacts, tasks, calls</td></tr>
-        <tr><td>ZohoMail.messages.ALL, ZohoMail.folders.ALL</td><td>Lead intake, deal won, pipeline velocity, follow-up drafter</td></tr>
-        <tr><td>ZohoCampaigns.campaigns.ALL, ZohoCampaigns.lists.ALL</td><td>Campaign builder, personalization, automation builder, analytics</td></tr>
-        <tr><td>ZohoSocial.profiles.ALL, ZohoSocial.content.ALL</td><td>Social content engine</td></tr>
-        <tr><td>ZohoCliq.channels.ALL, ZohoCliq.messages.ALL</td><td>All agents — Cliq alerts</td></tr>
-        <tr><td>ZohoFlow.flows.ALL</td><td>Automation builder, flow inspection</td></tr>
-      </tbody>
-    </table>
-  </div>
+        <div class="tool-card">
+          <div class="tool-name">convert_lead</div>
+          <div class="tool-desc">Convert a qualified lead into a Contact and Deal in Zoho CRM. Returns both new record IDs.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">lead_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Lead record ID</span></div>
+            <div class="param-row"><span class="param-name">account_name</span><span class="param-type">str</span><span class="param-desc">Optional company name for the new record</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
 
-  <!-- Setup steps -->
-  <h2>Get running in 5 steps</h2>
-  <div class="setup">
-    <div class="setup-step">
-      <div class="setup-n">1</div>
-      <div>
-        <div class="setup-title">Generate Zoho OAuth credentials</div>
-        <div class="setup-detail"><code>api-console.zoho.in</code> → Self Client → paste all scopes above → generate refresh token (~10 min)</div>
+        <div class="tool-card">
+          <div class="tool-name">qualify_lead</div>
+          <div class="tool-desc">Update lead qualification fields: rating (Hot/Warm/Cold), status picklist value, and optional notes.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">lead_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Lead record ID</span></div>
+            <div class="param-row"><span class="param-name">rating</span><span class="param-type">str</span><span class="param-desc">Hot, Warm, or Cold</span></div>
+            <div class="param-row"><span class="param-name">status</span><span class="param-type">str</span><span class="param-desc">Lead status picklist value</span></div>
+            <div class="param-row"><span class="param-name">notes</span><span class="param-type">str</span><span class="param-desc">Qualification notes appended to Description</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
       </div>
-    </div>
-    <div class="setup-step">
-      <div class="setup-n">2</div>
-      <div>
-        <div class="setup-title">Fill .env</div>
-        <div class="setup-detail"><code>cp zoho-skills/.env.example zoho-skills/.env</code> → add <code>ZOHO_CLIENT_ID</code>, <code>ZOHO_CLIENT_SECRET</code>, <code>ZOHO_REFRESH_TOKEN</code>, <code>ANTHROPIC_API_KEY</code>, <code>ZOHO_MAIL_FROM</code></div>
+    </section>
+
+    <!-- 3. Contact Management -->
+    <section class="category" id="contacts">
+      <div class="category-header">
+        <div class="cat-icon">&#128101;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Contact Management</div>
+          <div class="cat-module">skills_contacts.py</div>
+          <div class="cat-desc">Search, create, tag, and profile CRM contacts including VIP client segmentation.</div>
+        </div>
+        <div class="cat-count-badge">5 tools</div>
       </div>
-    </div>
-    <div class="setup-step">
-      <div class="setup-n">3</div>
-      <div>
-        <div class="setup-title">Install dependencies</div>
-        <div class="setup-detail"><code>pip install anthropic requests python-dotenv</code></div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">search_contacts</div>
+          <div class="tool-desc">Search CRM contacts by name, email, or company. Returns ID, name, email, and account for each match (up to 20).</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">query</span><span class="param-type">str</span><span class="param-desc">Name fragment, email, or company name</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_contact_history</div>
+          <div class="tool-desc">Return full activity history for a CRM contact: profile details plus last 20 activities.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">contact_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Contact record ID</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">create_contact</div>
+          <div class="tool-desc">Create a new CRM contact with full profile details. Returns the new Zoho CRM record ID.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">first_name</span><span class="param-type">str</span><span class="param-desc">First name</span></div>
+            <div class="param-row"><span class="param-name">last_name</span><span class="param-type">str</span><span class="param-desc">Last name</span></div>
+            <div class="param-row"><span class="param-name">email</span><span class="param-type">str</span><span class="param-desc">Email address</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">phone</span><span class="param-type">str</span><span class="param-desc">Phone number</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">account_name</span><span class="param-type">str</span><span class="param-desc">Company/account name</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">lead_source</span><span class="param-type">str</span><span class="param-desc">How they found Butler Button</span><span class="param-optional">default: BB Website</span></div>
+            <div class="param-row"><span class="param-name">description</span><span class="param-type">str</span><span class="param-desc">Notes about this contact</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_vip_clients</div>
+          <div class="tool-desc">Return all contacts tagged VIP in Zoho CRM — the Butler Button high-value client list.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">tag_contact</div>
+          <div class="tool-desc">Add a segmentation tag to a CRM contact for targeting and filtering.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">contact_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Contact record ID</span></div>
+            <div class="param-row"><span class="param-name">tag</span><span class="param-type">str</span><span class="param-desc">Tag label (e.g. VIP, Prospect, Referral)</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
       </div>
-    </div>
-    <div class="setup-step">
-      <div class="setup-n">4</div>
-      <div>
-        <div class="setup-title">Start webhook server + expose via ngrok</div>
-        <div class="setup-detail"><code>python zoho-skills/webhook_server.py</code> in one terminal. <code>ngrok http 8080</code> in another. Paste the ngrok URL into Zoho Flow webhook actions.</div>
+    </section>
+
+    <!-- 4. Activities & Follow-up -->
+    <section class="category" id="activities">
+      <div class="category-header">
+        <div class="cat-icon">&#9989;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Activities &amp; Follow-up</div>
+          <div class="cat-module">skills_activities.py</div>
+          <div class="cat-desc">Tasks, calls, and meetings in Zoho CRM — the daily execution layer.</div>
+        </div>
+        <div class="cat-count-badge">5 tools</div>
       </div>
-    </div>
-    <div class="setup-step">
-      <div class="setup-n">5</div>
-      <div>
-        <div class="setup-title">Run your first agent</div>
-        <div class="setup-detail"><code>python zoho-skills/agents/agent_morning_brief.py</code> — if you get a brief in Cliq and email, everything is wired.</div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">get_tasks_due_today</div>
+          <div class="tool-desc">Return all CRM tasks due today, sorted by priority. Excludes completed tasks.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_overdue_tasks</div>
+          <div class="tool-desc">Return all open CRM tasks whose due date has passed, sorted oldest-first.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">create_task</div>
+          <div class="tool-desc">Create a follow-up task in Zoho CRM, optionally linked to a Contact, Deal, or Lead record.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">subject</span><span class="param-type">str</span><span class="param-desc">Task title/subject</span></div>
+            <div class="param-row"><span class="param-name">due_date</span><span class="param-type">str</span><span class="param-desc">Due date in YYYY-MM-DD format</span></div>
+            <div class="param-row"><span class="param-name">related_to_id</span><span class="param-type">str</span><span class="param-desc">ID of the related record</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">related_to_type</span><span class="param-type">str</span><span class="param-desc">Contacts | Deals | Leads</span><span class="param-optional">default: Contacts</span></div>
+            <div class="param-row"><span class="param-name">priority</span><span class="param-type">str</span><span class="param-desc">High | Medium | Low</span><span class="param-optional">default: High</span></div>
+            <div class="param-row"><span class="param-name">description</span><span class="param-type">str</span><span class="param-desc">Additional notes</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">log_call</div>
+          <div class="tool-desc">Log a completed outbound call to a CRM contact with duration, result, and call notes.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">subject</span><span class="param-type">str</span><span class="param-desc">Call subject (e.g. 'Discovery call — Ritz inquiry')</span></div>
+            <div class="param-row"><span class="param-name">contact_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Contact record ID</span></div>
+            <div class="param-row"><span class="param-name">duration_minutes</span><span class="param-type">int</span><span class="param-desc">Duration in minutes</span></div>
+            <div class="param-row"><span class="param-name">call_result</span><span class="param-type">str</span><span class="param-desc">Interested | Callback | Not Interested</span></div>
+            <div class="param-row"><span class="param-name">description</span><span class="param-type">str</span><span class="param-desc">Call notes/summary</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">schedule_meeting</div>
+          <div class="tool-desc">Schedule a meeting with a CRM contact and create it as a Zoho CRM Event.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">subject</span><span class="param-type">str</span><span class="param-desc">Meeting title</span></div>
+            <div class="param-row"><span class="param-name">contact_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Contact record ID</span></div>
+            <div class="param-row"><span class="param-name">meeting_date</span><span class="param-type">str</span><span class="param-desc">Date in YYYY-MM-DD format</span></div>
+            <div class="param-row"><span class="param-name">duration_minutes</span><span class="param-type">int</span><span class="param-desc">Duration in minutes</span><span class="param-optional">default 60</span></div>
+            <div class="param-row"><span class="param-name">agenda</span><span class="param-type">str</span><span class="param-desc">Meeting agenda/notes</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
       </div>
+    </section>
+
+    <!-- 5. Butler Button Concierge -->
+    <section class="category" id="concierge">
+      <div class="category-header">
+        <div class="cat-icon">&#128273;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Butler Button Concierge</div>
+          <div class="cat-module">skills_butler_button.py</div>
+          <div class="cat-desc">Concierge-specific CRM skills: service requests, trip management, client preferences, and the CSMO morning brief.</div>
+        </div>
+        <div class="cat-count-badge">5 tools</div>
+      </div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">get_active_requests</div>
+          <div class="tool-desc">Return all open Butler Button concierge service requests from Zoho CRM (BB-tagged Deals).</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">create_service_request</div>
+          <div class="tool-desc">Create a new concierge service request as a CRM Deal. Intake from conversation or web form.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">client_name</span><span class="param-type">str</span><span class="param-desc">Full name of the client</span></div>
+            <div class="param-row"><span class="param-name">service_type</span><span class="param-type">str</span><span class="param-desc">Hotel | Villa | Flight | Experience | Itinerary</span></div>
+            <div class="param-row"><span class="param-name">destination</span><span class="param-type">str</span><span class="param-desc">Destination city or region</span></div>
+            <div class="param-row"><span class="param-name">travel_date</span><span class="param-type">str</span><span class="param-desc">Approximate travel date YYYY-MM-DD</span></div>
+            <div class="param-row"><span class="param-name">budget_usd</span><span class="param-type">float</span><span class="param-desc">Client's stated budget in USD</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">notes</span><span class="param-type">str</span><span class="param-desc">Intake notes from conversation or form</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_upcoming_trips</div>
+          <div class="tool-desc">Return confirmed (Closed Won) trips departing in the next N days, sorted by departure date.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">days</span><span class="param-type">int</span><span class="param-desc">Lookahead window in days</span><span class="param-optional">default 90</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_client_preferences</div>
+          <div class="tool-desc">Return a client's stored concierge preferences (room type, dietary, loyalty programs, travel style) and past booking history.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">contact_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Contact record ID</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_daily_csmo_brief</div>
+          <div class="tool-desc">Full CSMO morning brief: tasks due today, overdue tasks, new leads (7d), and stalled deals (14d).</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. Zoho Mail -->
+    <section class="category" id="mail">
+      <div class="category-header">
+        <div class="cat-icon">&#9993;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Zoho Mail</div>
+          <div class="cat-module">skills_mail.py</div>
+          <div class="cat-desc">Send, draft, search, and organise email via Zoho Mail REST API (India DC). Includes CRM activity logging on send.</div>
+        </div>
+        <div class="cat-count-badge">8 tools</div>
+      </div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">send_email</div>
+          <div class="tool-desc">Send an email from the Butler Button Zoho Mail account. Supports CC, BCC, and HTML body.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">to</span><span class="param-type">str</span><span class="param-desc">Recipient email or comma-separated list</span></div>
+            <div class="param-row"><span class="param-name">subject</span><span class="param-type">str</span><span class="param-desc">Email subject line</span></div>
+            <div class="param-row"><span class="param-name">body</span><span class="param-type">str</span><span class="param-desc">Email body (plain text or HTML)</span></div>
+            <div class="param-row"><span class="param-name">cc</span><span class="param-type">str</span><span class="param-desc">CC recipients, comma-separated</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">bcc</span><span class="param-type">str</span><span class="param-desc">BCC recipients, comma-separated</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">is_html</span><span class="param-type">bool</span><span class="param-desc">True if body is HTML</span><span class="param-optional">default False</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">create_draft</div>
+          <div class="tool-desc">Save an email as a Zoho Mail draft for review before sending. Returns the draft message ID.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">to</span><span class="param-type">str</span><span class="param-desc">Intended recipient email</span></div>
+            <div class="param-row"><span class="param-name">subject</span><span class="param-type">str</span><span class="param-desc">Email subject</span></div>
+            <div class="param-row"><span class="param-name">body</span><span class="param-type">str</span><span class="param-desc">Email body (plain text)</span></div>
+            <div class="param-row"><span class="param-name">cc</span><span class="param-type">str</span><span class="param-desc">CC recipients</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">send_email_and_log_to_crm</div>
+          <div class="tool-desc">Send an email AND automatically create a 3-day follow-up task in Zoho CRM linked to the contact record.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">contact_id</span><span class="param-type">str</span><span class="param-desc">Zoho CRM Contact record ID</span></div>
+            <div class="param-row"><span class="param-name">to_email</span><span class="param-type">str</span><span class="param-desc">Recipient email address</span></div>
+            <div class="param-row"><span class="param-name">subject</span><span class="param-type">str</span><span class="param-desc">Email subject</span></div>
+            <div class="param-row"><span class="param-name">body</span><span class="param-type">str</span><span class="param-desc">Email body (plain text)</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_recent_emails</div>
+          <div class="tool-desc">Return the most recent emails from a Zoho Mail folder, with unread indicators and sender info.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">count</span><span class="param-type">int</span><span class="param-desc">Number of emails to return (max 50)</span><span class="param-optional">default 10</span></div>
+            <div class="param-row"><span class="param-name">folder</span><span class="param-type">str</span><span class="param-desc">Folder name</span><span class="param-optional">default Inbox</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">search_emails</div>
+          <div class="tool-desc">Search Zoho Mail for emails matching a keyword, sender address, or subject fragment across any folder.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">query</span><span class="param-type">str</span><span class="param-desc">Search term</span></div>
+            <div class="param-row"><span class="param-name">folder</span><span class="param-type">str</span><span class="param-desc">Folder to search (use 'All' for all folders)</span><span class="param-optional">default Inbox</span></div>
+            <div class="param-row"><span class="param-name">limit</span><span class="param-type">int</span><span class="param-desc">Max results</span><span class="param-optional">default 10</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_unread_count</div>
+          <div class="tool-desc">Return unread email count across all Zoho Mail folders — inbox zero check with per-folder breakdown.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">create_folder</div>
+          <div class="tool-desc">Create a new mail folder in Zoho Mail, optionally nested under a parent folder.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">folder_name</span><span class="param-type">str</span><span class="param-desc">Name of the new folder</span></div>
+            <div class="param-row"><span class="param-name">parent_folder</span><span class="param-type">str</span><span class="param-desc">Parent folder for nesting</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">create_label</div>
+          <div class="tool-desc">Create a new label in Zoho Mail for email tagging. Default colour is Butler Button gold (#C9A84C).</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">label_name</span><span class="param-type">str</span><span class="param-desc">Label display name</span></div>
+            <div class="param-row"><span class="param-name">color</span><span class="param-type">str</span><span class="param-desc">Hex colour code</span><span class="param-optional">default #C9A84C</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. Zoho Cliq -->
+    <section class="category" id="cliq">
+      <div class="category-header">
+        <div class="cat-icon">&#128172;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Zoho Cliq</div>
+          <div class="cat-module">skills_cliq.py</div>
+          <div class="cat-desc">Team alerts, deal notifications, and pipeline broadcasts via Zoho Cliq channels and bots.</div>
+        </div>
+        <div class="cat-count-badge">6 tools</div>
+      </div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">send_cliq_channel_message</div>
+          <div class="tool-desc">Send a message to any Zoho Cliq channel, optionally posting as a named bot.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">channel_name</span><span class="param-type">str</span><span class="param-desc">Cliq channel unique name (e.g. 'sales-pipeline')</span></div>
+            <div class="param-row"><span class="param-name">message</span><span class="param-type">str</span><span class="param-desc">Message text</span></div>
+            <div class="param-row"><span class="param-name">as_bot</span><span class="param-type">bool</span><span class="param-desc">Send as bot if True</span><span class="param-optional">default False</span></div>
+            <div class="param-row"><span class="param-name">bot_name</span><span class="param-type">str</span><span class="param-desc">Bot display name</span><span class="param-optional">default Butler Bot</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">send_cliq_direct_message</div>
+          <div class="tool-desc">Send a direct message to a specific Zoho Cliq user identified by email address.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">recipient_email</span><span class="param-type">str</span><span class="param-desc">Zoho Cliq user's email address</span></div>
+            <div class="param-row"><span class="param-name">message</span><span class="param-type">str</span><span class="param-desc">Message text</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">broadcast_bot_message</div>
+          <div class="tool-desc">Broadcast a message to all subscribers of a Zoho Cliq bot by its unique name.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">bot_unique_name</span><span class="param-type">str</span><span class="param-desc">The bot's unique name in Cliq</span></div>
+            <div class="param-row"><span class="param-name">message</span><span class="param-type">str</span><span class="param-desc">Broadcast message text</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">alert_deal_won</div>
+          <div class="tool-desc">Post a deal-won celebration alert to the Cliq sales channel with deal name, USD value, and client name.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">deal_name</span><span class="param-type">str</span><span class="param-desc">Name of the won deal</span></div>
+            <div class="param-row"><span class="param-name">amount_usd</span><span class="param-type">float</span><span class="param-desc">Deal value in USD</span></div>
+            <div class="param-row"><span class="param-name">client_name</span><span class="param-type">str</span><span class="param-desc">Client/account name</span></div>
+            <div class="param-row"><span class="param-name">channel_name</span><span class="param-type">str</span><span class="param-desc">Target Cliq channel</span><span class="param-optional">default sales-pipeline</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">alert_new_hot_lead</div>
+          <div class="tool-desc">Post a hot-lead alert to the Cliq leads channel. Prompts 2-hour response SLA.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">lead_name</span><span class="param-type">str</span><span class="param-desc">Full name of the lead</span></div>
+            <div class="param-row"><span class="param-name">source</span><span class="param-type">str</span><span class="param-desc">Lead source (Website, Referral, Instagram…)</span></div>
+            <div class="param-row"><span class="param-name">contact_email</span><span class="param-type">str</span><span class="param-desc">Lead's email address</span></div>
+            <div class="param-row"><span class="param-name">channel_name</span><span class="param-type">str</span><span class="param-desc">Target Cliq channel</span><span class="param-optional">default leads</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">post_daily_pipeline_to_cliq</div>
+          <div class="tool-desc">Pull pipeline summary and stalled deals from Zoho CRM and post the compiled brief to a Cliq channel.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">channel_name</span><span class="param-type">str</span><span class="param-desc">Target Cliq channel</span><span class="param-optional">default csmo-daily</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 8. Automation & Flow -->
+    <section class="category" id="automation">
+      <div class="category-header">
+        <div class="cat-icon">&#9889;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Automation &amp; Flow</div>
+          <div class="cat-module">skills_automation.py</div>
+          <div class="cat-desc">Zoho Flow webhook triggers, CRM workflow inspection, and compound end-of-day reporting.</div>
+        </div>
+        <div class="cat-count-badge">6 tools</div>
+      </div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">trigger_flow_webhook</div>
+          <div class="tool-desc">Trigger a Zoho Flow automation via its webhook URL with a custom JSON payload. Use for onboarding, PDF generation, or external syncs.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">webhook_url</span><span class="param-type">str</span><span class="param-desc">Zoho Flow webhook URL</span></div>
+            <div class="param-row"><span class="param-name">payload</span><span class="param-type">dict</span><span class="param-desc">Data to send as JSON body</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">list_active_flows</div>
+          <div class="tool-desc">List all active Zoho Flow automations in this Zoho One account with trigger type and status.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_flow_execution_history</div>
+          <div class="tool-desc">Return recent execution history for a specific Zoho Flow — useful for debugging automation failures.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">flow_id</span><span class="param-type">str</span><span class="param-desc">Numeric Flow ID (from list_active_flows)</span></div>
+            <div class="param-row"><span class="param-name">limit</span><span class="param-type">int</span><span class="param-desc">Number of executions to return</span><span class="param-optional">default 10</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">list_crm_workflow_rules</div>
+          <div class="tool-desc">List all active workflow rules configured in Zoho CRM for the Deals module.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">run_end_of_day_report</div>
+          <div class="tool-desc">Compile and post a full end-of-day CSMO report to Cliq: MTD revenue, pipeline snapshot, new leads, overdue tasks.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">cliq_channel</span><span class="param-type">str</span><span class="param-desc">Cliq channel for the report</span><span class="param-optional">default csmo-daily</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">auto_follow_up_stalled_deals</div>
+          <div class="tool-desc">One command: find stalled deals, create re-engagement tasks for each, then post an alert summary to Cliq.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">inactive_days</span><span class="param-type">int</span><span class="param-desc">Inactivity threshold in days</span><span class="param-optional">default 14</span></div>
+            <div class="param-row"><span class="param-name">cliq_channel</span><span class="param-type">str</span><span class="param-desc">Cliq channel for alert</span><span class="param-optional">default sales-pipeline</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 9. Social Content AI -->
+    <section class="category" id="social">
+      <div class="category-header">
+        <div class="cat-icon">&#10024;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Social Content AI</div>
+          <div class="cat-module">skills_social.py</div>
+          <div class="cat-desc">Claude-powered content generation, platform-native copy, carousels, campaigns, and performance analytics. Routes to Facebook Graph API, Instagram Graph API, LinkedIn UGC Posts API, or Ayrshare.</div>
+        </div>
+        <div class="cat-count-badge">13 tools</div>
+      </div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">generate_post</div>
+          <div class="tool-desc">Generate a single platform-native post via Claude using Butler Button brand voice and platform-specific tone.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">platform</span><span class="param-type">str</span><span class="param-desc">instagram | linkedin | x | facebook</span></div>
+            <div class="param-row"><span class="param-name">topic</span><span class="param-type">str</span><span class="param-desc">Post angle, hook, or story</span></div>
+            <div class="param-row"><span class="param-name">cta</span><span class="param-type">str</span><span class="param-desc">Call-to-action (e.g. 'DM us to start planning')</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; platform, content, char_count</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">generate_multi_platform</div>
+          <div class="tool-desc">Generate native posts for multiple platforms from one topic in a single Claude call. Posts batch to Cliq marketing channel.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">topic</span><span class="param-type">str</span><span class="param-desc">The angle or story to communicate</span></div>
+            <div class="param-row"><span class="param-name">platforms</span><span class="param-type">list</span><span class="param-desc">Target platforms</span><span class="param-optional">default: ig/li/x</span></div>
+            <div class="param-row"><span class="param-name">cta</span><span class="param-type">str</span><span class="param-desc">CTA for all platforms</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; keyed by platform</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">repurpose_content</div>
+          <div class="tool-desc">Turn a blog post, email, or long-form piece into platform-native posts. Claude finds the best angle per platform, not a summary.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">source_content</span><span class="param-type">str</span><span class="param-desc">Full text to repurpose (article, newsletter, etc.)</span></div>
+            <div class="param-row"><span class="param-name">target_platforms</span><span class="param-type">list</span><span class="param-desc">Platforms to create for</span><span class="param-optional">default: ig/li/x</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; keyed by platform</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">generate_carousel_copy</div>
+          <div class="tool-desc">Generate slide-by-slide copy for an Instagram carousel or LinkedIn document post. Cover slide + content slides + CTA slide.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">topic</span><span class="param-type">str</span><span class="param-desc">Theme or subject of the carousel</span></div>
+            <div class="param-row"><span class="param-name">num_slides</span><span class="param-type">int</span><span class="param-desc">Number of slides</span><span class="param-optional">default 6</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; slides list with headline and body per slide</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">generate_story_copy</div>
+          <div class="tool-desc">Generate Instagram/Facebook Story copy: hook frame + tension + payoff + swipe-up CTA. Returns 4 frames.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">topic</span><span class="param-type">str</span><span class="param-desc">Story angle or behind-the-scenes topic</span></div>
+            <div class="param-row"><span class="param-name">has_link</span><span class="param-type">bool</span><span class="param-desc">Include swipe-up / link sticker CTA</span><span class="param-optional">default True</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; frames list</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">generate_hashtag_set</div>
+          <div class="tool-desc">3-tier Instagram hashtag strategy: broad (1M+ posts), niche (50k-500k), branded tags, plus a recommended usage mix.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">niche</span><span class="param-type">str</span><span class="param-desc">Core niche (e.g. 'luxury travel India')</span></div>
+            <div class="param-row"><span class="param-name">post_content</span><span class="param-type">str</span><span class="param-desc">Optional post text to tailor hashtags</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; broad, niche, branded, recommended_mix, avoid</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">publish_post</div>
+          <div class="tool-desc">Publish content to one or more platforms. Auto-routes: LinkedIn UGC Posts API, Facebook Graph API, Instagram Graph API, or Ayrshare for everything else.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">platforms</span><span class="param-type">list</span><span class="param-desc">instagram | linkedin | linkedin_company | x | facebook</span></div>
+            <div class="param-row"><span class="param-name">content</span><span class="param-type">str</span><span class="param-desc">Post copy</span></div>
+            <div class="param-row"><span class="param-name">scheduled_time</span><span class="param-type">str</span><span class="param-desc">ISO 8601 datetime; None = post immediately</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; per-platform status and post IDs</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">create_content_calendar</div>
+          <div class="tool-desc">Generate a 4-week social content calendar (3x/week, Mon/Wed/Fri) and save each post as a CRM Task.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">theme</span><span class="param-type">str</span><span class="param-desc">Campaign theme (e.g. 'honeymoon season')</span></div>
+            <div class="param-row"><span class="param-name">start_date</span><span class="param-type">str</span><span class="param-desc">ISO date string</span><span class="param-optional">default today</span></div>
+            <div class="param-row"><span class="param-name">num_weeks</span><span class="param-type">int</span><span class="param-desc">Weeks to plan</span><span class="param-optional">default 4</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; calendar list + tasks_created count</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">get_calendar_week</div>
+          <div class="tool-desc">Pull this week's (or any relative week's) social content tasks from Zoho CRM Tasks tagged [Social].</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">week_offset</span><span class="param-type">int</span><span class="param-desc">0 = this week, 1 = next week, -1 = last week</span><span class="param-optional">default 0</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; week, count, posts list</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">log_post_performance</div>
+          <div class="tool-desc">Record post performance metrics (reach, likes, comments, shares, saves) in Zoho CRM Notes for benchmarking and trend analysis.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">platform</span><span class="param-type">str</span><span class="param-desc">Platform the post was on</span></div>
+            <div class="param-row"><span class="param-name">post_description</span><span class="param-type">str</span><span class="param-desc">Short description for identification</span></div>
+            <div class="param-row"><span class="param-name">reach</span><span class="param-type">int</span><span class="param-desc">Number of accounts reached</span></div>
+            <div class="param-row"><span class="param-name">likes</span><span class="param-type">int</span><span class="param-desc">Like count</span></div>
+            <div class="param-row"><span class="param-name">comments</span><span class="param-type">int</span><span class="param-desc">Comment count</span></div>
+            <div class="param-row"><span class="param-name">shares</span><span class="param-type">int</span><span class="param-desc">Share/repost count</span><span class="param-optional">default 0</span></div>
+            <div class="param-row"><span class="param-name">saves</span><span class="param-type">int</span><span class="param-desc">Save/bookmark count</span><span class="param-optional">default 0</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; platform, reach, engagement_rate, logged</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">generate_performance_brief</div>
+          <div class="tool-desc">Claude-written weekly social performance analysis against luxury travel benchmarks. Identifies wins, underperformers, and next week's content priorities. Posts to Cliq.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">platform_stats</span><span class="param-type">dict</span><span class="param-desc">Platform to metrics dict (reach, followers_gained, top_post)</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span> &mdash; formatted brief</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">generate_reply</div>
+          <div class="tool-desc">Draft a brand-voice reply to a comment or DM using Claude. Adapts tone per platform and invites lead inquiries to DM/email.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">comment_text</span><span class="param-type">str</span><span class="param-desc">The comment or message to respond to</span></div>
+            <div class="param-row"><span class="param-name">platform</span><span class="param-type">str</span><span class="param-desc">Platform context (instagram, linkedin, x, facebook)</span></div>
+            <div class="param-row"><span class="param-name">post_topic</span><span class="param-type">str</span><span class="param-desc">What the original post was about</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span> &mdash; reply draft</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">generate_campaign_burst</div>
+          <div class="tool-desc">Full 5-phase launch campaign over 2 weeks: Tease &rarr; Announce &rarr; Proof &rarr; Urgency &rarr; Close. Generates copy per platform and saves all posts as CRM Tasks.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">campaign_name</span><span class="param-type">str</span><span class="param-desc">Campaign name (e.g. 'Monsoon Maldives Package')</span></div>
+            <div class="param-row"><span class="param-name">offer</span><span class="param-type">str</span><span class="param-desc">What's being promoted</span></div>
+            <div class="param-row"><span class="param-name">launch_date</span><span class="param-type">str</span><span class="param-desc">ISO date string for the official launch day</span></div>
+            <div class="param-row"><span class="param-name">platforms</span><span class="param-type">list</span><span class="param-desc">Target platforms</span><span class="param-optional">default: ig/li/x</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; posts list + tasks_created count</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 10. Facebook Page -->
+    <section class="category" id="facebook">
+      <div class="category-header">
+        <div class="cat-icon">&#128241;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Facebook Page</div>
+          <div class="cat-module">skills_facebook.py</div>
+          <div class="cat-desc">Direct posting to the VELTM TOURS Facebook Page via Graph API v19.0. No third-party middleware required.</div>
+        </div>
+        <div class="cat-count-badge">4 tools</div>
+      </div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">fb_post_to_page</div>
+          <div class="tool-desc">Publish or schedule a post on the VELTM TOURS Facebook Page. Supports link previews and scheduled publishing (10 min to 30 days ahead).</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">content</span><span class="param-type">str</span><span class="param-desc">Post message text</span></div>
+            <div class="param-row"><span class="param-name">link</span><span class="param-type">str</span><span class="param-desc">Optional URL for link preview</span><span class="param-optional">optional</span></div>
+            <div class="param-row"><span class="param-name">scheduled_unix</span><span class="param-type">int</span><span class="param-desc">Unix timestamp (UTC) to schedule the post</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; status, post_id, message</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">fb_get_page_token</div>
+          <div class="tool-desc">Exchange a short-lived user token for a long-lived Facebook Page access token (effectively permanent for Page tokens derived from a long-lived user token).</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">user_access_token</span><span class="param-type">str</span><span class="param-desc">Short-lived user token with pages_manage_posts scope</span><span class="param-optional">optional</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">str</span> &mdash; long-lived page token</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">fb_get_recent_posts</div>
+          <div class="tool-desc">Fetch recent posts from the VELTM TOURS Facebook Page with likes, comments, and share counts.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">limit</span><span class="param-type">int</span><span class="param-desc">Number of posts to return (max 100)</span><span class="param-optional">default 10</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">list</span> &mdash; post dicts with engagement metrics</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">fb_setup_instructions</div>
+          <div class="tool-desc">Step-by-step guide to obtain Facebook Graph API credentials: App ID, App Secret, Page ID, and long-lived Page Access Token.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 11. Instagram -->
+    <section class="category" id="instagram">
+      <div class="category-header">
+        <div class="cat-icon">&#128248;</div>
+        <div class="cat-meta">
+          <div class="cat-title">Instagram</div>
+          <div class="cat-module">skills_instagram.py</div>
+          <div class="cat-desc">Direct posting to @veltmtours via Instagram Graph API v19.0. Feed photos, Reels, caption-only fallback, and account insights.</div>
+        </div>
+        <div class="cat-count-badge">6 tools</div>
+      </div>
+      <div class="tool-grid">
+
+        <div class="tool-card">
+          <div class="tool-name">ig_post_image</div>
+          <div class="tool-desc">Post a feed image to @veltmtours via the two-step Graph API container flow. Image must be at a publicly accessible HTTPS URL (JPEG or PNG).</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">image_url</span><span class="param-type">str</span><span class="param-desc">Public HTTPS URL of the image</span></div>
+            <div class="param-row"><span class="param-name">caption</span><span class="param-type">str</span><span class="param-desc">Post caption including hashtags</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; status, post_id, creation_id</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">ig_post_reel</div>
+          <div class="tool-desc">Post a Reel to @veltmtours via Graph API. MP4 H.264/AAC required, 9:16 ratio recommended. Video encodes asynchronously after publish.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">video_url</span><span class="param-type">str</span><span class="param-desc">Public HTTPS URL of the video file</span></div>
+            <div class="param-row"><span class="param-name">caption</span><span class="param-type">str</span><span class="param-desc">Reel caption including hashtags</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; status, post_id, creation_id</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">ig_post_caption_only</div>
+          <div class="tool-desc">Save an Instagram caption as a Zoho CRM Task (status: Ready to post) for manual upload via the Instagram mobile app when no public image URL is available.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">caption</span><span class="param-type">str</span><span class="param-desc">Full post caption with hashtags</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; status, task_subject, task_id</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">ig_get_account_insights</div>
+          <div class="tool-desc">Fetch reach, impressions, and follower_count for @veltmtours for the specified time period.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">period</span><span class="param-type">str</span><span class="param-desc">day | week | days_28 | month | lifetime</span><span class="param-optional">default day</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">dict</span> &mdash; period, account, metrics</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">ig_get_recent_media</div>
+          <div class="tool-desc">Return recent @veltmtours posts with like count, comments count, media type, timestamp, and permalink.</div>
+          <div class="params-label">Parameters</div>
+          <div class="params-list">
+            <div class="param-row"><span class="param-name">limit</span><span class="param-type">int</span><span class="param-desc">Number of posts to return (max 100)</span><span class="param-optional">default 10</span></div>
+          </div>
+          <div class="return-row">Returns <span class="rt">list</span> &mdash; post dicts with engagement metrics</div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-name">ig_setup_instructions</div>
+          <div class="tool-desc">Step-by-step guide for connecting @veltmtours to the Instagram Graph API: token setup, numeric IG User ID, and App Review notes.</div>
+          <div class="no-params">No parameters</div>
+          <div class="return-row">Returns <span class="rt">str</span></div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /content -->
+
+  <footer>
+    <div>Butler Button CSMO Skill Library &mdash; 79 tools &middot; 13 modules &middot; Zoho One (India DC)</div>
+    <div>
+      <a href="https://github.com/lobodotstreehouse/veltm-butler-button" target="_blank" rel="noopener">
+        github.com/lobodotstreehouse/veltm-butler-button
+      </a>
+      &nbsp;&middot;&nbsp;Updated April 2026
     </div>
-  </div>
+  </footer>
 
 </main>
 
-<footer>
-  Butler Button — <a href="https://www.butlerbutton.co" target="_blank">butlerbutton.co</a>
-  &nbsp;·&nbsp;
-  <a href="https://github.com/lobodotstreehouse/veltm-butler-button/tree/main/zoho-skills" target="_blank">GitHub</a>
-  &nbsp;·&nbsp;
-  Generated 2026-04-22 · Claude Sonnet 4.6
-</footer>
-
+<script>
+  const sections = document.querySelectorAll('.category');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector('.nav-link[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
