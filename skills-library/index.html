@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELTM Marketing Skills Library — 391 Principles as 12 Claude Skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --indigo: #4F46E5;
+      --indigo-dark: #3730A3;
+      --purple: #7C3AED;
+      --teal: #0D9488;
+      --indigo-tint: #EEF2FF;
+      --near-black: #09090B;
+      --white: #FFFFFF;
+      --off-white: #FAFAFA;
+      --gray-50: #F9FAFB;
+      --gray-100: #F3F4F6;
+      --gray-200: #E5E7EB;
+      --gray-300: #D1D5DB;
+      --gray-400: #9CA3AF;
+      --gray-500: #6B7280;
+      --gray-600: #4B5563;
+      --gray-700: #374151;
+      --gray-800: #1F2937;
+      --gradient: linear-gradient(135deg, #4F46E5, #7C3AED);
+      --gradient-subtle: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 50%, #FDF2F8 100%);
+      --green: #059669;
+      --green-light: #D1FAE5;
+      --amber: #D97706;
+      --amber-light: #FEF3C7;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+      --radius: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-display: Georgia, 'Times New Roman', serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --max-w: 1200px;
+      --max-w-narrow: 800px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--gray-700);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navigation ── */
+    .report-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0.75rem 2rem;
+    }
+    .report-nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .report-nav .logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--indigo);
+      text-decoration: none;
+    }
+    .report-nav .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .report-nav .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gray-500);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .report-nav .nav-links a:hover { color: var(--indigo); }
+    .nav-cta {
+      background: var(--indigo);
+      color: var(--white) !important;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--indigo-dark); color: var(--white) !important; }
+
+    /* ── Hero ── */
+    .report-hero {
+      background: var(--near-black);
+      color: var(--white);
+      padding: 5rem 2rem 4rem;
+    }
+    .report-hero-inner {
+      max-width: var(--max-w-narrow);
+      margin: 0 auto;
+    }
+    .report-hero .badge {
+      display: inline-block;
+      background: rgba(79, 70, 229, 0.2);
+      border: 1px solid rgba(79, 70, 229, 0.4);
+      border-radius: 50px;
+      padding: 0.35rem 1.2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      color: #A5B4FC;
+    }
+    .report-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.9rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .report-hero h1 .highlight { color: #A5B4FC; }
+    .report-hero .hero-lead {
+      font-size: 1.15rem;
+      color: var(--gray-400);
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+    }
+    .report-hero .hero-callout {
+      font-size: 1.05rem;
+      color: var(--gray-300);
+      padding: 1.25rem 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border-left: 3px solid var(--indigo);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 1.5rem;
+    }
+    .report-hero .meta {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+    }
+
+    /* ── Stat Bar ── */
+    .stat-bar {
+      background: var(--gradient);
+      color: var(--white);
+      padding: 1.25rem 2rem;
+    }
+    .stat-bar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    /* ── Sections ── */
+    .section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section-narrow { max-width: var(--max-w-narrow); }
+    .section + .section { padding-top: 0; }
+    .section-divider { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+    .section-divider hr { border: none; border-top: 1px solid var(--gray-200); }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      color: var(--near-black);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-500);
+      font-style: italic;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--near-black);
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--indigo);
+      margin-bottom: 0.5rem;
+    }
+    p { margin-bottom: 1rem; }
+    ul, ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    strong { color: var(--gray-800); }
+    code {
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.85em;
+      background: var(--gray-100);
+      padding: 0.15em 0.45em;
+      border-radius: 4px;
+      color: var(--purple);
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .discipline-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .discipline-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .card-header {
+      padding: 1.25rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .card-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .num-indigo { background: var(--indigo); }
+    .num-purple { background: var(--purple); }
+    .num-teal { background: var(--teal); }
+    .card-header-text { flex: 1; }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--near-black);
+      line-height: 1.3;
+      margin-bottom: 0.2rem;
+    }
+    .card-count {
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+    .card-body {
+      padding: 1.25rem 1.5rem;
+    }
+    .principle-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+    }
+    .principle-list li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 0.88rem;
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+    }
+    .principle-list li:last-child { border-bottom: none; }
+    .principle-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--indigo);
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+    }
+    .principle-dot.purple { background: var(--purple); }
+    .principle-dot.teal { background: var(--teal); }
+    .principle-name {
+      font-weight: 600;
+      color: var(--gray-800);
+      display: block;
+      line-height: 1.3;
+    }
+    .principle-src {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      font-style: italic;
+    }
+    .skill-tag {
+      display: inline-block;
+      background: rgba(79, 70, 229, 0.08);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      color: var(--indigo);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      margin-bottom: 0.75rem;
+    }
+    .when-callout {
+      background: var(--gray-50);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+    .when-callout strong {
+      color: var(--teal);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── Source Books ── */
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .book-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .book-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gray-200);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .book-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--near-black);
+      margin-bottom: 0.25rem;
+    }
+    .book-author {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      margin-bottom: 0.75rem;
+    }
+    .book-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+    .book-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .book-badge.indigo { background: var(--indigo-tint); color: var(--indigo); }
+    .book-badge.purple { background: rgba(124, 58, 237, 0.1); color: var(--purple); }
+    .book-badge.teal { background: rgba(13, 148, 136, 0.1); color: var(--teal); }
+    .book-desc {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ── Install Guide ── */
+    .install-block {
+      background: var(--near-black);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      margin: 1.5rem 0;
+    }
+    .install-block .step-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #A5B4FC;
+      margin-bottom: 0.4rem;
+    }
+    .install-block p {
+      color: var(--gray-300);
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+    }
+    .install-block code {
+      display: block;
+      background: rgba(255,255,255,0.07);
+      color: #86EFAC;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      overflow-x: auto;
+      line-height: 1.7;
+      margin: 0.75rem 0;
+    }
+    .step-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .step-row:last-child { border-bottom: none; }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--indigo);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-content {
+      flex: 1;
+    }
+    .step-content strong {
+      color: var(--gray-200);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .step-content p { color: var(--gray-400); font-size: 0.88rem; margin: 0; }
+
+    /* ── Attribution ── */
+    .attribution-box {
+      background: var(--indigo-tint);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 2rem;
+      margin-top: 1.5rem;
+    }
+    .attribution-box h3 {
+      font-family: var(--font-display);
+      color: var(--indigo-dark);
+      margin-top: 0;
+    }
+    .attribution-box p {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+    .attribution-box ul {
+      margin: 0;
+    }
+    .attribution-box li {
+      font-size: 0.88rem;
+      color: var(--gray-600);
+    }
+
+    /* ── Overview Steps ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .overview-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .overview-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--indigo-tint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .overview-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--near-black);
+      margin-bottom: 0.4rem;
+    }
+    .overview-card p {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin: 0;
+    }
+
+    /* ── Footer ── */
+    .report-footer {
+      background: var(--near-black);
+      color: var(--gray-500);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .report-footer a {
+      color: #A5B4FC;
+      text-decoration: none;
+    }
+    .report-footer .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .stat-bar-inner { gap: 1.5rem; }
+      .card-grid { grid-template-columns: 1fr; }
+      .book-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════
+     NAV
+     ════════════════════════ -->
+<nav class="report-nav">
+  <div class="report-nav-inner">
+    <a href="../index.html" class="logo">VELTM Butler Button</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#disciplines">12 Disciplines</a></li>
+      <li><a href="#sources">Source Books</a></li>
+      <li><a href="#install">Install &amp; Verify</a></li>
+      <li><a href="#attribution" class="nav-cta">Attribution</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ════════════════════════
+     HERO
+     ════════════════════════ -->
+<header class="report-hero">
+  <div class="report-hero-inner">
+    <div class="badge">Claude Skills Library &mdash; April 2026</div>
+
+    <h1>The VELTM Marketing Skills Library &mdash; <span class="highlight">391 Principles</span> from 1,206 Pages of Classic Marketing Theory, Installed as 12 Claude Skills</h1>
+
+    <p class="hero-lead">Six textbooks. 470&nbsp;KB of structured extraction data. Twelve disciplines. Every principle distilled from Ogilvy, Benson, Bly, Krugman, Hopkins, Halbert, Caples, and Schwartz &mdash; and installed directly into Claude Code as referenceable skills for the VELTM Butler Button launch.</p>
+
+    <div class="hero-callout">
+      <strong>What this library is:</strong> 391 synthesized marketing principles organized into 12 Claude Code skills. Each skill corresponds to a discipline (Brand Strategy, Headline Writing, Direct Response, etc.). Reference them in any Claude conversation to apply 60+ years of proven advertising science to Butler Button.
+    </div>
+
+    <p class="meta">VELTM, Inc. &middot; Marketing Skills Library &middot; All principles are synthesized extractions, not verbatim reproductions</p>
+  </div>
+</header>
+
+<!-- ════════════════════════
+     STAT BAR
+     ════════════════════════ -->
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="stat-item">
+      <span class="stat-num">391</span>
+      <span class="stat-label">Principles Extracted</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Claude Skills</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Source Textbooks</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">1,206</span>
+      <span class="stat-label">Pages Read</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">470KB</span>
+      <span class="stat-label">Extraction Data</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     OVERVIEW
+     ════════════════════════ -->
+<div class="section section-narrow" id="overview" style="margin: 0 auto;">
+  <p class="section-label">What this is</p>
+  <h2>Overview</h2>
+  <p class="section-subtitle">12 skills installed in Claude Code, each encoding dozens of proven marketing principles from classic theory.</p>
+
+  <p>Claude Code's <strong>Skills</strong> system (visible in the Customize panel) lets you install persistent knowledge files that Claude references automatically when you invoke them. Each of the 12 skills in this library maps to a marketing discipline and contains the synthesized principles extracted from the source textbooks below.</p>
+
+  <p>These were built for the <strong>VELTM Butler Button</strong> launch &mdash; a $25/day personal travel concierge. The extraction methodology was exhaustive: all 1,206 pages of all six books were read cover-to-cover, every principle was coded, and the 391 non-overlapping skills were organized into 12 discipline files.</p>
+
+  <div class="overview-grid">
+    <div class="overview-card">
+      <div class="overview-icon">&#128214;</div>
+      <h4>How They Were Built</h4>
+      <p>Full-text extraction from 6 textbooks using structured coding: each principle received a name, source citation, description, and a specific Butler Button application.</p>
+    </div>
+    <div class="overview-card">
+      <div class="overview-icon">&#128295;</div>
+      <h4>Where They Live</h4>
+      <p>Installed at <code>~/.claude/skills/marketing-*/SKILL.md</code>. Each file is a structured Markdown document that Claude Code's Customize panel surfaces as a named skill.</p>
+    </div>
+    <div class="overview-card">
+      <div class="overview-icon">&#128270;</div>
+      <h4>How to Use Them</h4>
+      <p>Open Claude Code. Navigate to Customize. Find any <code>marketing-*</code> skill. Enable it for a session, or reference it by name in your prompt to apply that discipline's principles.</p>
+    </div>
+    <div class="overview-card">
+      <div class="overview-icon">&#128202;</div>
+      <h4>What They Cover</h4>
+      <p>Brand strategy, headline writing, body copy, visual design, direct response, TV/radio, media planning, offer architecture, research/testing, retention, swipe file patterns, and digital.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><hr></div>
+
+<!-- ════════════════════════
+     12 DISCIPLINES
+     ════════════════════════ -->
+<div class="section" id="disciplines">
+  <p class="section-label">The Library</p>
+  <h2>The 12 Disciplines</h2>
+  <p class="section-subtitle">One card per skill. Representative principles, source citations, the exact skill name, and a "when to use" callout for each.</p>
+
+  <div class="card-grid">
+
+    <!-- 1 Brand Strategy -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-indigo">1</div>
+        <div class="card-header-text">
+          <div class="card-title">Brand Strategy &amp; Positioning</div>
+          <div class="card-count">35 principles &mdash; Ogilvy, Confessions, Bly</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-brand-strategy</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Brand Image as Long-Term Investment</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; every ad is a deposit in brand equity; consistency over years compounds value</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Big Idea Development (5-Test Method)</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; gasps, uniqueness, strategy fit, 30-year sustainability, emotional resonance</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Unique Selling Proposition (USP)</span>
+              <span class="principle-src">The Copywriter's Handbook, Bly &mdash; one specific, ownable differentiator stated plainly</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Competitive Repositioning Against the Leader's Weakness</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; name the competitor, own the contrast</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Honesty as Competitive Advantage</span>
+              <span class="principle-src">Confessions of an Advertising Man, Ogilvy &mdash; transparent limitations build more trust than hidden fine print</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Naming a product, writing a positioning statement, auditing brand consistency across touchpoints, deciding whether to name competitors, setting pricing strategy.
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 Headline Writing -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-indigo">2</div>
+        <div class="card-header-text">
+          <div class="card-title">Headline Writing</div>
+          <div class="card-count">30 principles &mdash; Ogilvy, Bly, Swipe File</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-headline-writing</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">5x Multiplier: Headlines Read More Than Body Copy</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; if the headline fails, the ad fails regardless of the copy beneath it</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">The 8 Headline Types (Bly's Classification)</span>
+              <span class="principle-src">The Copywriter's Handbook &mdash; Direct, Indirect, News, How-To, Question, Command, Reason-Why, Testimonial</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">The 4 U's Scoring Formula</span>
+              <span class="principle-src">The Copywriter's Handbook &mdash; Useful, Urgent, Ultra-specific, Unique; score 1-4 on each before publishing</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Long Headlines (10+ Words) Outsell Short</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; specificity and completeness outweigh brevity</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Quotation Headlines Recall +28%</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; headlines framed as quotes are recalled significantly more</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Writing any homepage headline, ad copy, email subject line, or social post. Write 25+ variations before selecting; apply 4 U's before publishing.
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Body Copy -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-purple">3</div>
+        <div class="card-header-text">
+          <div class="card-title">Body Copy &amp; Persuasion</div>
+          <div class="card-count">45 principles &mdash; Ogilvy, Bly, Confessions, Swipe File</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-body-copy</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">AIDA Framework (Non-Negotiable)</span>
+              <span class="principle-src">The Copywriter's Handbook, Bly &mdash; Attention, Interest, Desire, Action; no page skips a step</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Feature-to-Benefit Conversion</span>
+              <span class="principle-src">The Copywriter's Handbook, Bly &mdash; readers buy outcomes, not specifications; every feature rewritten as a result</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Problem-Agitate-Solve (PAS) Structure</span>
+              <span class="principle-src">The $100M Swipe File &mdash; 20% problem statement, 40% agitation, 40% solution</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Assumed-Objection Technique</span>
+              <span class="principle-src">The $100M Swipe File &mdash; name and pre-empt the reader's doubt before they can form it</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Long Copy Outsells Short for Considered Purchases</span>
+              <span class="principle-src">Ogilvy, Benson, Bly &mdash; 350+ word ads outperform shorter ones when the buyer is making a real decision</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Writing product pages, landing pages, email sequences, or any copy longer than a headline. Reference for tone, structure, and persuasion architecture.
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Visual Design -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-purple">4</div>
+        <div class="card-header-text">
+          <div class="card-title">Visual Design &amp; Layout</div>
+          <div class="card-count">28 principles &mdash; Ogilvy, Confessions, Bly, Swipe File</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-visual-design</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Photos Outperform Illustrations in Every Test</span>
+              <span class="principle-src">Ogilvy on Advertising, Confessions of an Advertising Man &mdash; more believable, more memorable, more persuasive</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Captions Read 2x More Than Body Copy</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; every caption is a miniature ad; always include brand name and a selling message</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Never Reverse Type for Body Copy</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; white on dark backgrounds kills readership; long copy always dark-on-light</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Editorial Layouts Get 50% More Readers</span>
+              <span class="principle-src">Ogilvy on Advertising, Swipe File &mdash; pages that look like magazine articles outperform pages that look like ads</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Two-Typeface Maximum</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; consistency projects professionalism; every third typeface undermines it</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Designing web pages, ad creatives, email templates, or any visual marketing asset. Reference before approving any layout or image selection.
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 Direct Response -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-teal">5</div>
+        <div class="card-header-text">
+          <div class="card-title">Direct Response &amp; Conversion</div>
+          <div class="card-count">55 principles &mdash; Benson, Ogilvy, Bly</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-direct-response</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">The List Is Most Important (Quality Over Volume)</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; 500 high-intent prospects outperform 50,000 cold followers</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Follow-Up Pulls 50% of Original Response</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; a second contact two weeks later harvests half the original results</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Never Sell Two Things at Once</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; one CTA per page; split focus halves response</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Premiums Beat Price Discounts Dollar-for-Dollar</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; a $5 premium lifts orders more than a $5 price reduction</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Risk Reversal / Guarantee Removes Buyer Anxiety</span>
+              <span class="principle-src">The $100M Swipe File, The Copywriter's Handbook &mdash; absorb the buyer's risk explicitly, prominently, near the CTA</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Designing any page or communication that asks someone to take action. CTA design, offer architecture, email sequences, conversion rate optimization.
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 TV & Radio -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-teal">6</div>
+        <div class="card-header-text">
+          <div class="card-title">TV &amp; Radio Advertising</div>
+          <div class="card-count">25 principles &mdash; Ogilvy, Confessions, Bly</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-tv-radio</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">First 5 Seconds Are Critical &mdash; Grab or Lose</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; the hook must appear in 3 seconds; viewers decide immediately whether to keep watching</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Brand Name in First 10 Seconds</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; display and speak the brand name immediately; repeat at close</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Demonstrations Are Most Persuasive</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; show the product doing what you claim; authenticity of demonstration beats any claim</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Production Cost Negatively Correlates with Effectiveness</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; expensive production does not predict better sales; authenticity beats polish</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Radio: Brand Name Early and Often (4 Rules)</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; brand early, brand often, benefit early, benefit often; name within 5 seconds</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Planning or scripting video ads, podcast sponsorships, short-form video content, or any audio-visual marketing. Apply before production begins.
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 Frequency & Media -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-indigo">7</div>
+        <div class="card-header-text">
+          <div class="card-title">Frequency &amp; Media Planning</div>
+          <div class="card-count">55 principles &mdash; Effective Frequency (Naples, Krugman)</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-frequency-media</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">3-Exposure Threshold (Krugman's Law)</span>
+              <span class="principle-src">Effective Frequency, Naples &mdash; 1st exposure: "what is it?"; 2nd: "what of it?"; 3rd: decision. Below 3, money is wasted.</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Frequency Over Reach with Limited Budget</span>
+              <span class="principle-src">Effective Frequency, Naples &mdash; 5,000 people at 3 exposures produces results; 15,000 at 1 exposure produces nothing</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Wearout Is a Copy Problem, Not a Frequency Problem</span>
+              <span class="principle-src">Effective Frequency, Naples &mdash; rotate ads only when performance data shows decline, not when you are personally bored</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Ebbinghaus Forgetting Curve: 7-Day Maximum Gap</span>
+              <span class="principle-src">Effective Frequency, Naples &mdash; after 7 days without a touchpoint, the prospect has largely forgotten the brand</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">New Brands Require More Frequency Than Established Ones</span>
+              <span class="principle-src">Effective Frequency, Naples &mdash; unknown brands need 4-5 exposures minimum to achieve what known brands achieve at 3</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Planning any paid media campaign. Budget allocation, channel selection, retargeting window settings, and reporting (report 3+ exposure reach, not raw reach).
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 Offer Architecture -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-purple">8</div>
+        <div class="card-header-text">
+          <div class="card-title">Offer Architecture &amp; Pricing</div>
+          <div class="card-count">38 principles &mdash; Benson, Swipe File, Bly</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-offer-pricing</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Tiered Price Anchoring (Three-Tier Logic)</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; the premium tier makes the middle tier look like a bargain</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Believable Reason for the Deal Doubles Response</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; a credible explanation multiplies the effect of the offer itself</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Cost-Per-Day Reframing (Drip Pricing)</span>
+              <span class="principle-src">The $100M Swipe File &mdash; compare daily cost to something the buyer already spends without thinking</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Charter / Founder Pricing Creates Exclusivity + Urgency</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; "founding member" framing combines scarcity, special status, and time pressure</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Always Probe Higher Prices (Most Companies Never Test)</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; a modest price increase across a customer base compounds significantly</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Setting or revising pricing, building a pricing page, designing an offer, writing a checkout page, or planning a promotional campaign.
+        </div>
+      </div>
+    </div>
+
+    <!-- 9 Research & Testing -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-teal">9</div>
+        <div class="card-header-text">
+          <div class="card-title">Research &amp; Testing</div>
+          <div class="card-count">28 principles &mdash; Ogilvy, Benson, Confessions, Naples</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-research-testing</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Research Determines the Promise, Not the Execution</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; research reveals what to claim; craft reveals how to say it</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Never Stop Testing (Permanent Discipline)</span>
+              <span class="principle-src">Ogilvy on Advertising, Benson &mdash; testing is not a launch phase; it is an ongoing operating practice</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Test Complete Packages, Not Individual Elements</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; elements interact; complete-page variants produce cleaner data than element swaps</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Research Is Misused When It Confirms Preconceptions</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; accept results that contradict assumptions; that is the only honest use of data</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Measure Effect on Sales, Not Awareness</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; the only test that matters is whether people buy; all other metrics are proxies</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Before writing any major campaign, after 30 paid cases (recalibration checkpoint), when designing A/B tests, when interpreting analytics, or when a campaign underperforms.
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 Customer Lifecycle -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-indigo">10</div>
+        <div class="card-header-text">
+          <div class="card-title">Customer Lifecycle &amp; Retention</div>
+          <div class="card-count">32 principles &mdash; Benson (Secrets of Successful Direct Mail)</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-customer-lifecycle</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Two-Time Buyer = 2x Likely to Buy Again</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; the first-to-second conversion is the most important in the customer lifecycle</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Calculate the Bogey (Maximum Allowable Acquisition Cost)</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; know lifetime value before setting acquisition budgets</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Open-End Billing Increases Longevity 125%</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; customer must cancel rather than renew; inertia is a retention asset</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Product Quality Determines Retention, Not Acquisition Method</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; no copy can compensate for bad service; fix operations before retention marketing</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot"></span>
+            <span>
+              <span class="principle-name">Reactivation: Former Customers Respond Far Better Than Cold Prospects</span>
+              <span class="principle-src">Secrets of Successful Direct Mail, Benson &mdash; dormant customers who liked the product are the highest-ROI reactivation segment</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Designing post-purchase email sequences, calculating lifetime value, planning retention campaigns, building upgrade paths, or deciding how much to spend on acquisition.
+        </div>
+      </div>
+    </div>
+
+    <!-- 11 Swipe File Patterns -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-purple">11</div>
+        <div class="card-header-text">
+          <div class="card-title">Proven Swipe File Patterns</div>
+          <div class="card-count">40 principles &mdash; The $100M Swipe File (Hopkins, Caples, Schwartz, Halbert)</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-swipe-file</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Product-Name-Plus-Price Headline Formula</span>
+              <span class="principle-src">The $100M Swipe File &mdash; state what it is and what it costs directly in the headline; the most reliable format across 130 pages of examples</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Ingredient-List Authority (Volume Implies Value)</span>
+              <span class="principle-src">The $100M Swipe File (Schwartz) &mdash; list every component with explanations; exhaustiveness signals thoroughness</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Social Proof Cascade (Largest Number First)</span>
+              <span class="principle-src">The $100M Swipe File &mdash; lead with the most credible large number; cascade down through specifics</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Multiple-Proof Stack (4+ Types of Evidence)</span>
+              <span class="principle-src">The $100M Swipe File &mdash; testimonials, statistics, expert endorsement, and guarantees address different skepticism vectors simultaneously</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot purple"></span>
+            <span>
+              <span class="principle-name">Specificity Imperative (Zero Vague Language in Successful Ads)</span>
+              <span class="principle-src">The $100M Swipe File &mdash; vagueness appears in none of the high-performing examples; every sentence should contain a number, name, or measurable fact</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Starting any ad from scratch. Use swipe file patterns as structural templates, then fill with Butler Button specifics. Especially useful for headlines, proof sections, and offer framing.
+        </div>
+      </div>
+    </div>
+
+    <!-- 12 Specialized & Digital -->
+    <div class="discipline-card">
+      <div class="card-header">
+        <div class="card-num num-teal">12</div>
+        <div class="card-header-text">
+          <div class="card-title">Specialized Categories &amp; Digital</div>
+          <div class="card-count">30 principles &mdash; Ogilvy, Bly, Confessions</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="skill-tag">marketing-digital-specialized</div>
+        <ul class="principle-list">
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Tourism: Promote What Travelers Want, Not What You Prefer</span>
+              <span class="principle-src">Ogilvy on Advertising &mdash; research the most-searched destinations; don't feature what the brand owner finds interesting</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Email Subject Lines Follow the Same Rules as Headlines</span>
+              <span class="principle-src">The Copywriter's Handbook, Bly &mdash; apply the 4 U's and 8 headline types to every subject line; 40-60 characters maximum</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Landing Page = Web Sales Letter (8-Element Structure)</span>
+              <span class="principle-src">The Copywriter's Handbook, Bly &mdash; headline, opening, problem, solution, proof, guarantee, CTA, P.S.; every element earns its place</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Build the Email List First (Agora Model)</span>
+              <span class="principle-src">The Copywriter's Handbook, Bly &mdash; the email list is the most valuable asset in online marketing; every page should offer a reason to subscribe</span>
+            </span>
+          </li>
+          <li>
+            <span class="principle-dot teal"></span>
+            <span>
+              <span class="principle-name">Press Releases Require Real News (Create Some if Needed)</span>
+              <span class="principle-src">The Copywriter's Handbook, Bly &mdash; if there is no news, a proprietary survey or study creates it; launch itself is news</span>
+            </span>
+          </li>
+        </ul>
+        <div class="when-callout">
+          <strong>When to use</strong>
+          Writing email campaigns, planning SEO content, drafting press releases, building landing pages, designing for B2B audiences, or adapting campaigns to international markets.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /card-grid -->
+</div>
+
+<div class="section-divider"><hr></div>
+
+<!-- ════════════════════════
+     SOURCE BOOKS
+     ════════════════════════ -->
+<div class="section" id="sources">
+  <p class="section-label">The Arsenal</p>
+  <h2>The 6 Source Textbooks</h2>
+  <p class="section-subtitle">1,206 pages fully read. 470&nbsp;KB of structured extraction data. Every principle has a page-level source.</p>
+
+  <div class="book-grid">
+
+    <div class="book-card">
+      <div class="book-num">01</div>
+      <div class="book-title">Ogilvy on Advertising</div>
+      <div class="book-author">David Ogilvy</div>
+      <div class="book-meta">
+        <span class="book-badge indigo">226 pages</span>
+        <span class="book-badge indigo">~130 skills</span>
+        <span class="book-badge indigo">99KB extracted</span>
+      </div>
+      <p class="book-desc">The broadest source: headlines, body copy, visual design, TV and radio, direct response, research methodology, corporate advertising, B2B, tourism, food, and pharmaceutical. Contributed heavily to Brand Strategy, Headline Writing, Visual Design, and Research disciplines. Ogilvy's empirical approach &mdash; every principle traceable to tested results &mdash; makes this the foundational reference.</p>
+    </div>
+
+    <div class="book-card">
+      <div class="book-num">02</div>
+      <div class="book-title">Confessions of an Advertising Man</div>
+      <div class="book-author">David Ogilvy (Chinese edition)</div>
+      <div class="book-meta">
+        <span class="book-badge purple">187 pages</span>
+        <span class="book-badge purple">100 skills</span>
+        <span class="book-badge purple">69KB extracted</span>
+      </div>
+      <p class="book-desc">Agency management, client relationships, hiring, brand culture, headline rules, body copy, illustration, and career ethics. Contributed primarily to Brand Strategy and Body Copy disciplines, particularly the honesty-as-strategy and respect-for-the-reader principles. The Chinese edition was read in full; all principles apply universally.</p>
+    </div>
+
+    <div class="book-card">
+      <div class="book-num">03</div>
+      <div class="book-title">Effective Frequency</div>
+      <div class="book-author">Michael J. Naples (foreword by Herbert Krugman)</div>
+      <div class="book-meta">
+        <span class="book-badge teal">150 pages</span>
+        <span class="book-badge teal">~55 skills</span>
+        <span class="book-badge teal">71KB extracted</span>
+      </div>
+      <p class="book-desc">The definitive treatment of exposure theory: how many times a prospect must see an ad before it produces action. Contributed entirely to the Frequency and Media Planning discipline. The 3-exposure threshold, reach vs. frequency tradeoffs, wearout theory, flighting strategy, and the Ebbinghaus forgetting curve all originate here.</p>
+    </div>
+
+    <div class="book-card">
+      <div class="book-num">04</div>
+      <div class="book-title">The $100 Million Swipe File</div>
+      <div class="book-author">Compiled from Hopkins, Collier, Caples, Ogilvy, Schwartz, Halbert</div>
+      <div class="book-meta">
+        <span class="book-badge indigo">130 pages</span>
+        <span class="book-badge indigo">~80 skills</span>
+        <span class="book-badge indigo">58KB extracted</span>
+      </div>
+      <p class="book-desc">130 pages of annotated high-performing ads from the golden age of direct response. Contributed to Headline Writing, Body Copy, Swipe File Patterns, and Offer Architecture disciplines. The structural patterns (PAS, reader-as-hero, proof stacks, curiosity gaps) were extracted from observed frequency across the examples, not claimed theory.</p>
+    </div>
+
+    <div class="book-card">
+      <div class="book-num">05</div>
+      <div class="book-title">The Copywriter's Handbook</div>
+      <div class="book-author">Robert W. Bly (Portuguese edition)</div>
+      <div class="book-meta">
+        <span class="book-badge purple">307 pages</span>
+        <span class="book-badge purple">~70 skills</span>
+        <span class="book-badge purple">65KB extracted</span>
+      </div>
+      <p class="book-desc">The most systematic treatment of copywriting technique: 8 headline types, the 4 U's formula, AIDA, USP, BFD (Beliefs/Feelings/Desires), direct mail, brochures, press releases, TV, radio, web copy, email, SEO. Contributed to Headline Writing, Body Copy, Direct Response, and Digital disciplines. The Portuguese edition was read in full.</p>
+    </div>
+
+    <div class="book-card">
+      <div class="book-num">06</div>
+      <div class="book-title">Secrets of Successful Direct Mail</div>
+      <div class="book-author">Richard V. Benson</div>
+      <div class="book-meta">
+        <span class="book-badge teal">206 pages</span>
+        <span class="book-badge teal">178 skills</span>
+        <span class="book-badge teal">108KB extracted</span>
+      </div>
+      <p class="book-desc">The most principle-dense book in the arsenal: 178 discrete rules covering lists, offers, pricing, premiums, sweepstakes, testing, formats, envelopes, letters, renewals, conversion sequences, fundraising, catalogs, and full customer lifecycle. Contributed to Direct Response, Offer Architecture, Research and Testing, and Customer Lifecycle disciplines. The single largest source by principle count.</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-divider"><hr></div>
+
+<!-- ════════════════════════
+     INSTALL & VERIFY
+     ════════════════════════ -->
+<div class="section" id="install">
+  <p class="section-label">Setup</p>
+  <h2>Install &amp; Verify</h2>
+  <p class="section-subtitle">How to confirm the 12 skills appear in Claude Code and how to reference them in conversations.</p>
+
+  <div class="install-block">
+    <div class="step-label">File Locations</div>
+    <p>The 12 skill files are installed by the parallel dev agent at the following paths. Each file is a structured Markdown document containing the synthesized principles for that discipline.</p>
+    <code>~/.claude/skills/marketing-brand-strategy/SKILL.md
+~/.claude/skills/marketing-headline-writing/SKILL.md
+~/.claude/skills/marketing-body-copy/SKILL.md
+~/.claude/skills/marketing-visual-design/SKILL.md
+~/.claude/skills/marketing-direct-response/SKILL.md
+~/.claude/skills/marketing-tv-radio/SKILL.md
+~/.claude/skills/marketing-frequency-media/SKILL.md
+~/.claude/skills/marketing-offer-pricing/SKILL.md
+~/.claude/skills/marketing-research-testing/SKILL.md
+~/.claude/skills/marketing-customer-lifecycle/SKILL.md
+~/.claude/skills/marketing-swipe-file/SKILL.md
+~/.claude/skills/marketing-digital-specialized/SKILL.md</code>
+
+    <div class="step-label" style="margin-top: 1.25rem;">Verification Steps</div>
+
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Open Claude Code</strong>
+        <p>Launch Claude Code from your terminal or applications folder. You must be running Claude Code, not the Claude.ai web interface &mdash; skills are a Claude Code feature.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Navigate to Customize</strong>
+        <p>Click the menu or settings icon and select "Customize." This panel surfaces all installed user skills from your <code>~/.claude/skills/</code> directory.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Look for marketing-* entries</strong>
+        <p>In the skills list, you should see 12 entries beginning with <code>marketing-</code>. If any are missing, verify the corresponding directory exists at <code>~/.claude/skills/</code> and contains a <code>SKILL.md</code> file.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <strong>Reference a skill in conversation</strong>
+        <p>In any Claude Code conversation, you can invoke a skill by name. For example: "Using the marketing-headline-writing skill, write 10 headline variants for Butler Button's homepage." Claude will apply the 30 principles from that discipline to the task.</p>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <strong>Verify the manifest (if generated)</strong>
+        <p>If the dev agent has generated a manifest file, it will be at <code>~/.claude/skills/marketing-manifest.json</code> and will list all 12 skills with their principle counts and descriptions.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><hr></div>
+
+<!-- ════════════════════════
+     ATTRIBUTION
+     ════════════════════════ -->
+<div class="section section-narrow" id="attribution" style="margin: 0 auto;">
+  <p class="section-label">Legal &amp; Intellectual Property</p>
+  <h2>Attribution</h2>
+  <p class="section-subtitle">These skills contain synthesized principles, not verbatim reproductions.</p>
+
+  <div class="attribution-box">
+    <h3>What These Skills Are and Are Not</h3>
+    <p>All 391 principles in this library are <strong>synthesized extractions</strong>: the substance of each author's ideas has been restated in original language by the extracting agent. No passage in any skill file reproduces more than a brief phrase from the source material. The skills represent the analysts' understanding of each author's methods and recommendations, not quotations of their text.</p>
+
+    <p><strong>Source works and authors:</strong></p>
+    <ul>
+      <li><em>Ogilvy on Advertising</em> and <em>Confessions of an Advertising Man</em> &mdash; David Ogilvy; copyright held by the Ogilvy estate and publishers</li>
+      <li><em>Effective Frequency</em> &mdash; Michael J. Naples; Association of National Advertisers</li>
+      <li><em>The $100 Million Swipe File</em> &mdash; compiled resource; underlying ads are in the public domain or attributed to their respective creators (Hopkins, Caples, Schwartz, Halbert, Collier)</li>
+      <li><em>The Copywriter's Handbook</em> &mdash; Robert W. Bly; copyright Robert W. Bly</li>
+      <li><em>Secrets of Successful Direct Mail</em> &mdash; Richard V. Benson; copyright Richard V. Benson</li>
+    </ul>
+
+    <p style="margin-top: 1rem;">These skills are intended for internal use by VELTM, Inc. to inform marketing decisions for the Butler Button product. They are not a substitute for reading the source texts, which are strongly recommended to anyone seeking a deeper understanding of these disciplines.</p>
+  </div>
+
+  <div style="margin-top: 2rem; padding: 1.5rem; background: var(--gray-50); border-radius: var(--radius-md); border: 1px solid var(--gray-200);">
+    <p class="section-label" style="margin-bottom: 0.5rem;">Phase Roadmap</p>
+    <p style="margin-bottom: 0.5rem;"><strong>Phase 2 (complete):</strong> Full extraction &mdash; 391 skills from all 1,206 pages, organized into 12 disciplines, deployed as Claude Code skills.</p>
+    <p style="margin-bottom: 0.5rem;"><strong>Phase 3 (after 30 cases):</strong> Data-driven recalibration &mdash; cross-reference the 391 skills against real Butler Button performance data. Identify which principles produce measurable results.</p>
+    <p style="margin-bottom: 0;"><strong>Phase 4 (ongoing):</strong> Automation via OpenClaw fleet &mdash; integrate high-performing skill invocations into automated marketing workflows.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     FOOTER
+     ════════════════════════ -->
+<footer class="report-footer">
+  <div class="footer-inner">
+    <p><strong style="color: var(--gray-300);">VELTM Marketing Skills Library</strong></p>
+    <p style="margin-top: 0.5rem;">391 principles &mdash; 12 disciplines &mdash; 6 textbooks &mdash; 1,206 pages &middot; Built April 2026</p>
+    <p style="margin-top: 0.5rem;"><a href="../report/index.html">View Phase 2 Taxonomy Report</a> &middot; <a href="../index.html">Butler Button Home</a></p>
+    <p style="margin-top: 1rem; font-size: 0.78rem;">All principles are synthesized extractions. No verbatim reproduction of source material. For internal VELTM use.</p>
+  </div>
+</footer>
+
+</body>
+</html>
