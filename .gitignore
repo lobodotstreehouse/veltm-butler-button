@@ -1,1 +1,6 @@
 .claude/
+
+# Zoho agent secrets
+zoho-skills/.env
+zoho-skills/__pycache__/
+zoho-skills/agents/__pycache__/
