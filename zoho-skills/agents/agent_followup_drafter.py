@@ -88,7 +88,7 @@ Output ONLY the email body."""
         "Call_Result": "Interested",
         "Description": call_notes,
         "Who_Id": {"id": contact_id, "type": "Contacts"},
-        "Call_Start_Time": f"{date.today().isoformat()}T12:00:00+05:30",
+        "Call_Start_Time": f"{date.today().isoformat()}T12:00:00-05:00",
     }]})
 
     # 5. Create next follow-up task

@@ -1,24 +1,26 @@
 """
 Butler Button — Zoho Scope Expander
 Adds Mail, Cliq, Social, and Flow scopes to your existing Zoho credentials.
-Takes 3 minutes. Run once, never again.
 
-Usage:  python setup_scopes.py
+STEP 1 — run with no args:
+    python setup_scopes.py
+
+STEP 2 — paste the code from api-console.zoho.in back here:
+    python setup_scopes.py 1000.abc123...
 """
 
+import sys
 import webbrowser
 import requests
 import json
-import os
-import time
 from pathlib import Path
 
-CLIENT_ID = "1000.J7EWP6M6H1BB9FQNKNA6ZFRM271E9Y"
+CLIENT_ID     = "1000.J7EWP6M6H1BB9FQNKNA6ZFRM271E9Y"
 CLIENT_SECRET = "56fa1e7007381113f58b06c351e71b501add649f5f"
-ENV_FILE = Path(__file__).parent / ".env"
-SECRETS_FILE = Path.home() / ".openclaw/secrets/zoho-oauth.json"
+ENV_FILE      = Path(__file__).parent / ".env"
+SECRETS_FILE  = Path.home() / ".openclaw/secrets/zoho-oauth.json"
 
-NEW_SCOPES = ",".join([
+SCOPES = ",".join([
     "ZohoCRM.modules.ALL",
     "ZohoCRM.bulk.ALL",
     "ZohoCRM.settings.ALL",
@@ -33,68 +35,35 @@ NEW_SCOPES = ",".join([
     "ZohoFlow.flows.ALL",
 ])
 
-STEPS = """
-┌─────────────────────────────────────────────────────────────────┐
-│           ZOHO SCOPE SETUP — 3 minutes, do it once             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  I'm opening api-console.zoho.in in your browser.             │
-│                                                                 │
-│  DO THIS:                                                       │
-│  1. You should see your existing Self Client                    │
-│     (named something like "openclaw" or "VELTM")               │
-│  2. Click on it                                                 │
-│  3. Click the "Generate Code" tab                               │
-│  4. Paste ALL of this into the Scope box:                      │
-│                                                                 │
-{scopes}
-│                                                                 │
-│  5. Set "Time Duration" to the max (usually 10 minutes)        │
-│  6. Click "Create"                                              │
-│  7. Copy the code it shows you                                  │
-│  8. Come back here and paste it                                 │
-│                                                                 │
-│  If you don't see a Self Client yet:                           │
-│  "Add Client" → "Self Client" → create it first               │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-"""
 
-
-def update_env(key: str, value: str):
-    if not ENV_FILE.exists():
-        print(f"  Warning: {ENV_FILE} not found — skipping .env update")
-        return
-    content = ENV_FILE.read_text()
-    lines = content.split("\n")
-    updated = False
-    for i, line in enumerate(lines):
-        if line.startswith(f"{key}=") or line.startswith(f"{key} ="):
-            lines[i] = f"{key}={value}"
-            updated = True
-            break
-    if not updated:
-        lines.append(f"{key}={value}")
-    ENV_FILE.write_text("\n".join(lines))
-
-
-def main():
-    print("\nButler Button — Zoho Scope Expander\n")
-
-    # Open browser
+def show_instructions():
     webbrowser.open("https://api-console.zoho.in")
-    time.sleep(1)
+    print("""
+╔══════════════════════════════════════════════════════════════╗
+║         STEP 1 — Get your authorization code                ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  Browser just opened to api-console.zoho.in                 ║
+║                                                              ║
+║  1. Click your existing Self Client (or create one)          ║
+║  2. Click the "Generate Code" tab                            ║
+║  3. Paste this entire block into the Scope field:            ║
+║                                                              ║""")
+    for s in SCOPES.split(","):
+        print(f"║    {s:<56} ║")
+    print("""║                                                              ║
+║  4. Set Time Duration → 10 minutes                           ║
+║  5. Click "Create"  — copy the code it shows you            ║
+║                                                              ║
+║  STEP 2 — run:                                               ║
+║    python setup_scopes.py  PASTE_CODE_HERE                   ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+""")
 
-    scope_display = "\n".join(f"│  {s}" for s in NEW_SCOPES.split(","))
-    print(STEPS.format(scopes=scope_display))
 
-    # Wait for code
-    code = input("Paste your authorization code here: ").strip()
-    if not code:
-        print("No code entered. Exiting.")
-        return
-
-    print("\nExchanging code for tokens...")
+def exchange_code(code: str):
+    print(f"\nExchanging code for tokens...")
     r = requests.post(
         "https://accounts.zoho.in/oauth/v2/token",
         params={
@@ -104,29 +73,27 @@ def main():
             "grant_type": "authorization_code",
         }
     )
-
-    if r.status_code != 200:
-        print(f"Error from Zoho: {r.text}")
-        return
-
     data = r.json()
+
     if "error" in data:
-        print(f"Zoho error: {data['error']}")
-        if data.get("error") == "invalid_code":
-            print("The code expired (only valid 10 minutes) or was already used.")
-            print("Go back to api-console.zoho.in and generate a fresh code.")
-        return
+        err = data["error"]
+        if err == "invalid_code":
+            print("ERROR: Code expired or already used (valid 10 min).")
+            print("       Run 'python setup_scopes.py' again to get a fresh one.")
+        else:
+            print(f"ERROR from Zoho: {json.dumps(data, indent=2)}")
+        sys.exit(1)
 
     refresh_token = data.get("refresh_token", "")
-    access_token = data.get("access_token", "")
-    scopes = data.get("scope", "")
+    access_token  = data.get("access_token", "")
+    scope_str     = data.get("scope", "")
 
     if not refresh_token:
-        print("No refresh token returned. Make sure you checked 'offline_access' scope.")
-        print(f"Response: {json.dumps(data, indent=2)}")
-        return
+        print("No refresh token returned.")
+        print(json.dumps(data, indent=2))
+        sys.exit(1)
 
-    # Get user's email from Zoho accounts
+    # Discover Zoho Mail from-address
     from_email = ""
     try:
         mail_r = requests.get(
@@ -140,28 +107,46 @@ def main():
         pass
 
     # Update .env
-    update_env("ZOHO_REFRESH_TOKEN", refresh_token)
+    _update_env("ZOHO_REFRESH_TOKEN", refresh_token)
+    _update_env("ZOHO_ACCESS_TOKEN",  access_token)
     if from_email:
-        update_env("ZOHO_MAIL_FROM", from_email)
+        _update_env("ZOHO_MAIL_FROM", from_email)
 
     # Update secrets file
     if SECRETS_FILE.exists():
         secrets = json.loads(SECRETS_FILE.read_text())
         secrets["refresh_token"] = refresh_token
-        secrets["access_token"] = access_token
-        secrets["scopes"] = scopes
+        secrets["access_token"]  = access_token
+        secrets["scopes"]        = scope_str
         SECRETS_FILE.write_text(json.dumps(secrets, indent=2))
 
-    print("\n" + "─" * 60)
-    print("  DONE. Credentials updated.")
-    print(f"  Refresh token: {refresh_token[:30]}...")
-    if from_email:
-        print(f"  Mail from:     {from_email}")
-    print(f"  Scopes active: {len(scopes.split())} scopes")
     print("─" * 60)
-    print("\n  Test it: python agents/agent_morning_brief.py")
-    print()
+    print("  DONE. Credentials updated.")
+    print(f"  Refresh token : {refresh_token[:35]}...")
+    print(f"  Mail from     : {from_email or '(not found — add manually to .env)'}")
+    n = len(scope_str.split(",")) if scope_str else 0
+    print(f"  Scopes active : {n}")
+    print("─" * 60)
+    print("\n  Test: python agents/agent_morning_brief.py\n")
+
+
+def _update_env(key: str, value: str):
+    if not ENV_FILE.exists():
+        return
+    lines = ENV_FILE.read_text().split("\n")
+    updated = False
+    for i, line in enumerate(lines):
+        if line.startswith(f"{key}=") or line.startswith(f"{key} ="):
+            lines[i] = f"{key}={value}"
+            updated = True
+            break
+    if not updated:
+        lines.append(f"{key}={value}")
+    ENV_FILE.write_text("\n".join(lines))
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:
+        show_instructions()
+    else:
+        exchange_code(sys.argv[1].strip())

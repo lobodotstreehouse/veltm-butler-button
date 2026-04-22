@@ -1,154 +1,130 @@
 """
 AGENT: Social Content Engine
-Input: a topic or angle.
-Output: platform-optimized posts for Instagram, LinkedIn, and X — scheduled
-in Zoho Social or saved as drafts.
+Input: topic, platforms, optional schedule flag.
+Output: platform-native posts dispatched to Zoho Social via Flow webhook,
+        or printed to terminal as drafts.
+
+NOTE: Zoho Social has no public REST API.
+      Posting routes through a Zoho Flow webhook (one-time setup).
+      Content generation runs directly via Claude.
 
 Usage:
-  python agent_social_content.py \
-    --topic "Why most luxury travel agencies are actually just booking agents" \
-    --platforms instagram linkedin x \
-    --schedule    # auto-schedule at next best time, or omit for drafts
+  # Generate + dispatch to Zoho Social via Flow:
+  python agent_social_content.py \\
+    --topic "Why most luxury travel agencies are just booking agents" \\
+    --platforms instagram linkedin x \\
+    --schedule
 
-What it does:
-  1. Claude generates native posts for each platform (different voice per platform)
-  2. Creates posts in Zoho Social (scheduled or draft)
-  3. Outputs all copy to terminal for review
+  # Copy only (no dispatch):
+  python agent_social_content.py --topic "Maldives honeymoon season" --copy-only
+
+  # Full campaign burst:
+  python agent_social_content.py \\
+    --campaign "Monsoon Maldives" \\
+    --offer "5-night overwater villa, all-inclusive" \\
+    --launch 2026-05-15
+
+  # 4-week content calendar:
+  python agent_social_content.py --calendar "honeymoon season" --weeks 4
 """
 
 import argparse
 import json
-import anthropic
-import requests
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from skills_social import (
+    generate_multi_platform,
+    generate_post,
+    schedule_post_via_flow,
+    generate_campaign_burst,
+    create_content_calendar,
+    get_calendar_week,
+)
 from datetime import datetime, timedelta
-from zoho_client import zoho
-
-SOCIAL_BASE = "https://social.zoho.in/api/v1"
-CLIQ_CHANNEL = "marketing"
-
-PLATFORM_BRIEFS = {
-    "instagram": "Instagram (visual-first, emotion-led, 150-220 words, 3-5 hashtags, NO links in caption). Tone: aspirational, intimate, like a friend's travel diary.",
-    "linkedin":  "LinkedIn (professional credibility, 120-180 words, one insight + one CTA, minimal hashtags). Tone: thought-leadership, CSMO voice — you've seen what separates great travel from great concierge.",
-    "x":         "X/Twitter (punchy, max 240 chars, no hashtags, one provocation or contrarian take). Tone: sharp, confident, slightly irreverent.",
-}
 
 
-def _social_post(portal_id: str, network_ids: list, content: str, scheduled_time: str = None) -> dict:
-    payload = {
-        "portalId": portal_id,
-        "networkIds": json.dumps(network_ids),
-        "content": content,
-    }
-    if scheduled_time:
-        payload["scheduledTime"] = scheduled_time
-        payload["status"] = "scheduled"
-    else:
-        payload["status"] = "draft"
-    r = requests.post(
-        f"{SOCIAL_BASE}/posts",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json=payload,
-    )
-    r.raise_for_status()
-    return r.json()
+def run_posts(topic: str, platforms: list, schedule: bool = False, copy_only: bool = False) -> dict:
+    results = generate_multi_platform(topic, platforms)
 
-
-def _get_portal_and_networks() -> tuple[str, dict]:
-    r = requests.get(
-        f"{SOCIAL_BASE}/portals",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}"},
-    )
-    r.raise_for_status()
-    portals = r.json().get("portals", [])
-    if not portals:
-        raise RuntimeError("No Zoho Social portals found. Connect social accounts in Zoho Social first.")
-    portal = portals[0]
-    portal_id = str(portal["id"])
-    networks = {n["type"].lower(): n["id"] for n in portal.get("networks", [])}
-    return portal_id, networks
-
-
-def run(topic: str, platforms: list[str], schedule: bool = False) -> dict:
-    client = anthropic.Anthropic()
-    results = {}
-
-    try:
-        portal_id, networks = _get_portal_and_networks()
-        zoho_social_available = True
-    except Exception:
-        zoho_social_available = False
-        portal_id, networks = "", {}
-
-    next_post_time = datetime.now() + timedelta(hours=2)
-
-    for platform in platforms:
-        brief = PLATFORM_BRIEFS.get(platform.lower())
-        if not brief:
-            results[platform] = {"error": f"Unknown platform: {platform}"}
-            continue
-
-        prompt = f"""You are the voice of Butler Button — a premium luxury travel concierge for India's discerning travelers.
-Write a social media post for {brief}
-
-Topic / angle: {topic}
-
-Butler Button's POV:
-- We handle the entire trip, not just the hotel booking
-- Our clients are successful professionals who value their time more than their money
-- We have access to things that aren't on booking.com
-- We are NOT a travel agency — we are a concierge
-
-Write ONE post. No preamble. Output ONLY the post copy."""
-
-        resp = client.messages.create(
-            model="claude-opus-4-7",
-            max_tokens=400,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        content = resp.content[0].text.strip()
-        results[platform] = {"content": content, "posted": False}
-
-        # Post to Zoho Social
-        if zoho_social_available:
-            platform_key = {"instagram": "ig", "linkedin": "ln", "x": "tw"}.get(platform.lower(), platform.lower())
-            network_id = networks.get(platform_key) or networks.get(platform.lower())
-            if network_id:
-                scheduled_time = next_post_time.strftime("%Y-%m-%dT%H:%M:%S") if schedule else None
-                try:
-                    _social_post(portal_id, [network_id], content, scheduled_time)
-                    results[platform]["posted"] = True
-                    results[platform]["scheduled_for"] = scheduled_time
-                    next_post_time += timedelta(hours=4)  # space out posts
-                except Exception as e:
-                    results[platform]["error"] = str(e)
-
-    # Cliq summary
-    cliq_msg = f"SOCIAL CONTENT — {topic[:60]}\n\n"
-    for p, r in results.items():
-        status = "scheduled" if r.get("scheduled_for") else ("draft" if r.get("posted") else "copy only")
-        cliq_msg += f"{p.upper()} [{status}]:\n{r.get('content','—')[:200]}\n\n"
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": cliq_msg},
-    )
+    if not copy_only and schedule:
+        next_time = datetime.now() + timedelta(hours=2)
+        for p, data in results.items():
+            content = data.get("content", "")
+            if content:
+                dispatch = schedule_post_via_flow(
+                    p, content, next_time.strftime("%Y-%m-%dT%H:%M:%S")
+                )
+                data["dispatch"] = dispatch
+                next_time += timedelta(hours=4)
 
     return results
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--topic", required=True)
+def main():
+    parser = argparse.ArgumentParser(description="Butler Button Social Content Engine")
+    parser.add_argument("--topic", help="Post topic / angle")
     parser.add_argument("--platforms", nargs="+", default=["instagram", "linkedin", "x"])
-    parser.add_argument("--schedule", action="store_true")
+    parser.add_argument("--schedule", action="store_true", help="Dispatch to Zoho Social via Flow")
+    parser.add_argument("--copy-only", action="store_true", help="Print copy only, no dispatch")
+
+    # Campaign mode
+    parser.add_argument("--campaign", help="Campaign name for 5-phase burst")
+    parser.add_argument("--offer", help="What is being promoted")
+    parser.add_argument("--launch", help="Launch date ISO (YYYY-MM-DD)")
+
+    # Calendar mode
+    parser.add_argument("--calendar", help="Content calendar theme")
+    parser.add_argument("--weeks", type=int, default=4)
+    parser.add_argument("--show-week", action="store_true", help="Show this week's calendar")
+
     args = parser.parse_args()
-    results = run(args.topic, args.platforms, args.schedule)
+
+    if args.show_week:
+        week = get_calendar_week()
+        print(f"\nCalendar: {week['week']} ({week['count']} posts)")
+        for p in week["posts"]:
+            print(f"  {p['date']}  {p['subject'][:60]}  [{p['status']}]")
+        return
+
+    if args.calendar:
+        result = create_content_calendar(args.calendar, num_weeks=args.weeks)
+        print(f"\nCalendar created: {result['num_posts']} posts, {result['tasks_created']} CRM tasks")
+        for entry in result.get("calendar", [])[:10]:
+            print(f"  {entry['date']}  {entry['platform'].upper():<12} {entry['topic'][:50]}")
+        if result['num_posts'] > 10:
+            print(f"  ... and {result['num_posts'] - 10} more in CRM Tasks")
+        return
+
+    if args.campaign:
+        if not args.offer or not args.launch:
+            print("Campaign mode requires --offer and --launch")
+            sys.exit(1)
+        result = generate_campaign_burst(args.campaign, args.offer, args.launch, args.platforms)
+        print(f"\nCampaign: {result['campaign']}")
+        print(f"Launch: {result['launch_date']} | {result['tasks_created']} posts in CRM\n")
+        for post in result["posts"]:
+            print(f"  [{post['date']}] {post['platform'].upper()} — {post['phase']}")
+            print(f"  {post['content'][:160]}...\n")
+        return
+
+    if not args.topic:
+        parser.print_help()
+        sys.exit(1)
+
+    results = run_posts(args.topic, args.platforms, args.schedule, args.copy_only)
+
     for platform, data in results.items():
         print(f"\n{'='*60}")
         print(f"  {platform.upper()}")
         print(f"{'='*60}")
         print(data.get("content", data.get("error", "—")))
-        if data.get("scheduled_for"):
-            print(f"\n  [Scheduled: {data['scheduled_for']}]")
+        if data.get("dispatch", {}).get("status") == "dispatched":
+            print(f"\n  [Dispatched to Zoho Social via Flow]")
+        elif data.get("dispatch", {}).get("status") == "no_webhook":
+            print(f"\n  [Set ZOHO_SOCIAL_FLOW_WEBHOOK in .env to auto-post]")
+
+
+if __name__ == "__main__":
+    main()

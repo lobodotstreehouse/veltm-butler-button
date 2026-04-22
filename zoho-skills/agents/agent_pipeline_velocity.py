@@ -1,6 +1,6 @@
 """
 AGENT 2: Pipeline Velocity Agent
-Trigger: Cron — runs every morning at 06:30 IST.
+Trigger: Cron — runs every morning at 06:30 EST.
 Actions (fully autonomous):
   1. Find every open deal with no activity in 7+ days
   2. Claude drafts a personalized re-engagement email per deal
@@ -52,7 +52,7 @@ def run():
         "fields": "Deal_Name,Stage,Amount,Last_Activity_Time,Account_Name,Contact_Name,Owner,Description",
         "criteria": (
             f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)"
-            f"and(Last_Activity_Time:less_equal:{cutoff_7}T00:00:00+05:30)"
+            f"and(Last_Activity_Time:less_equal:{cutoff_7}T00:00:00-05:00)"
         ),
         "per_page": 50,
     })
@@ -83,7 +83,7 @@ def run():
 
         # Claude drafts re-engagement email
         prompt = f"""You are writing a re-engagement email for Butler Button, a premium luxury travel concierge.
-Deal: {deal_name}  |  Stage: {stage}  |  Value: Rs.{amount:,.0f}
+Deal: {deal_name}  |  Stage: {stage}  |  Value: ${amount:,.0f}
 Client: {contact_name}  |  Days since last contact: {days_stalled}
 Context: {deal.get('Description','None')}
 
@@ -130,9 +130,9 @@ Output ONLY the email body."""
         f"  Auto-sent (14d+):     {auto_sent}  — already gone\n"
         f"  Tasks created:        {tasks_created}\n\n"
         + "\n".join(
-            f"  [{(today - date.fromisoformat(d.get('Last_Activity_Time','2020-01-01')[:10])).days}d] "
-            f"{d['Deal_Name']}  Rs.{d.get('Amount',0):,.0f}  {d.get('Stage')}"
-            for d in sorted(deals, key=lambda x: x.get("Last_Activity_Time",""), reverse=False)[:8]
+            f"  [{(today - date.fromisoformat((d.get('Last_Activity_Time') or '2020-01-01')[:10])).days}d] "
+            f"{d['Deal_Name']}  ${d.get('Amount',0):,.0f}  {d.get('Stage')}"
+            for d in sorted(deals, key=lambda x: x.get("Last_Activity_Time") or "", reverse=False)[:8]
         )
     )
     requests.post(

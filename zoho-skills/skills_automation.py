@@ -174,7 +174,7 @@ def auto_follow_up_stalled_deals(
         "fields": "Deal_Name,id,Owner",
         "criteria": (
             f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)"
-            f"and(Last_Activity_Time:less_equal:{(date.today() - timedelta(days=inactive_days)).isoformat()}T00:00:00+05:30)"
+            f"and(Last_Activity_Time:less_equal:{(date.today() - timedelta(days=inactive_days)).isoformat()}T00:00:00-05:00)"
         ),
         "per_page": 20,
     })

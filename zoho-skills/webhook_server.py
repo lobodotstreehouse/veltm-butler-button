@@ -1,96 +1,63 @@
 """
-Butler Button — Zoho Flow Webhook Receiver
-Receives POST requests from Zoho Flow and routes them to the right agent.
-Run: python webhook_server.py  (default port 8080)
-Expose via ngrok or deploy to a VPS/Railway for production.
+Butler Button — Webhook Server
+Receives Zoho Flow → Form submission events and routes to agents.
+Port: 5055 (chosen to avoid conflicts)
 
-Zoho Flow setup for each trigger:
-  1. Create a Flow with the relevant CRM trigger
-  2. Add a Webhook action pointing to: http://YOUR_SERVER:8080/webhook/<route>
-  3. Pass the record ID in the JSON body
-
-Routes:
-  POST /webhook/lead-intake    — body: {"lead_id": "..."}
-  POST /webhook/deal-won       — body: {"deal_id": "..."}
-  GET  /health                 — returns 200 OK
+Option-A routes (/webhook/asset-request, /webhook/asset-decision) are
+registered from flow_webhook_handler.py (zero-login advisor experience).
 """
+from flask import Flask, request, jsonify
+import logging, threading, importlib, os, sys
 
-import os
-import json
-import hmac
-import hashlib
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from urllib.parse import urlparse
+app = Flask(__name__)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
-import sys
-sys.path.insert(0, os.path.dirname(__file__))
+# Register Option-A zero-login advisor routes
+try:
+    sys.path.insert(0, "/Users/openclaw/.openclaw/zoho-creator/option_a")
+    from flow_webhook_handler import register_routes as _register_option_a
+    _register_option_a(app)
+except Exception as _e:
+    logging.warning("Could not register Option-A routes: %s", _e)
 
-from agents.agent_lead_intake import run as run_lead_intake
-from agents.agent_deal_won import run as run_deal_won
+AGENTS = {
+    "lead_intake": "agents.agent_lead_intake",
+    "pipeline_velocity": "agents.agent_pipeline_velocity",
+    "morning_brief": "agents.agent_morning_brief",
+    "deal_won": "agents.agent_deal_won",
+    "followup_drafter": "agents.agent_followup_drafter",
+    "campaign_builder": "agents.agent_campaign_builder",
+}
 
-WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET", "butler-button-secret-change-me")
+def run_agent(agent_key: str, payload: dict):
+    try:
+        mod = importlib.import_module(AGENTS[agent_key])
+        mod.main(payload)
+    except Exception as e:
+        logging.error(f"Agent {agent_key} failed: {e}", exc_info=True)
 
+@app.route("/webhook/lead", methods=["POST"])
+def lead_webhook():
+    payload = request.json or {}
+    threading.Thread(target=run_agent, args=("lead_intake", payload), daemon=True).start()
+    return jsonify({"status": "queued", "agent": "lead_intake"}), 202
 
-def verify_signature(body: bytes, signature: str) -> bool:
-    expected = hmac.new(WEBHOOK_SECRET.encode(), body, hashlib.sha256).hexdigest()
-    return hmac.compare_digest(expected, signature)
+@app.route("/webhook/followup", methods=["POST"])
+def followup_webhook():
+    payload = request.json or {}
+    threading.Thread(target=run_agent, args=("followup_drafter", payload), daemon=True).start()
+    return jsonify({"status": "queued", "agent": "followup_drafter"}), 202
 
+@app.route("/webhook/campaign", methods=["POST"])
+def campaign_webhook():
+    payload = request.json or {}
+    threading.Thread(target=run_agent, args=("campaign_builder", payload), daemon=True).start()
+    return jsonify({"status": "queued", "agent": "campaign_builder"}), 202
 
-class WebhookHandler(BaseHTTPRequestHandler):
-    def log_message(self, format, *args):
-        print(f"[{self.address_string()}] {format % args}")
-
-    def _send(self, code: int, body: dict):
-        self.send_response(code)
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
-        self.wfile.write(json.dumps(body).encode())
-
-    def do_GET(self):
-        if self.path == "/health":
-            self._send(200, {"status": "ok", "service": "butler-button-webhooks"})
-        else:
-            self._send(404, {"error": "not found"})
-
-    def do_POST(self):
-        path = urlparse(self.path).path
-        length = int(self.headers.get("Content-Length", 0))
-        raw_body = self.rfile.read(length)
-
-        try:
-            payload = json.loads(raw_body)
-        except json.JSONDecodeError:
-            self._send(400, {"error": "invalid JSON"})
-            return
-
-        try:
-            if path == "/webhook/lead-intake":
-                lead_id = payload.get("lead_id")
-                if not lead_id:
-                    self._send(400, {"error": "missing lead_id"})
-                    return
-                result = run_lead_intake(lead_id)
-                self._send(200, result)
-
-            elif path == "/webhook/deal-won":
-                deal_id = payload.get("deal_id")
-                if not deal_id:
-                    self._send(400, {"error": "missing deal_id"})
-                    return
-                result = run_deal_won(deal_id)
-                self._send(200, result)
-
-            else:
-                self._send(404, {"error": f"unknown route: {path}"})
-
-        except Exception as e:
-            print(f"ERROR on {path}: {e}")
-            self._send(500, {"error": str(e)})
-
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok", "service": "butler-button-webhook-server"}), 200
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    server = HTTPServer(("0.0.0.0", port), WebhookHandler)
-    print(f"Butler Button webhook server running on port {port}")
-    print(f"Routes: POST /webhook/lead-intake  |  POST /webhook/deal-won  |  GET /health")
-    server.serve_forever()
+    port = int(os.environ.get("WEBHOOK_PORT", 5055))
+    app.run(host="0.0.0.0", port=port, debug=False)

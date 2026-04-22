@@ -95,7 +95,7 @@ def broadcast_bot_message(
 @tool
 def alert_deal_won(
     deal_name: str,
-    amount_inr: float,
+    amount_usd: float,
     client_name: str,
     channel_name: str = "sales-pipeline",
 ) -> str:
@@ -103,13 +103,13 @@ def alert_deal_won(
 
     Args:
         deal_name: Name of the won deal.
-        amount_inr: Deal value in INR.
+        amount_usd: Deal value in USD.
         client_name: Client/account name.
         channel_name: Target Cliq channel (default 'sales-pipeline').
     """
     msg = (
         f"DEAL WON  |  {deal_name}\n"
-        f"Client: {client_name}  |  Value: Rs.{amount_inr:,.0f}\n"
+        f"Client: {client_name}  |  Value: ${amount_usd:,.0f}\n"
         f"Great work — log the win in CRM and schedule onboarding."
     )
     _cliq_post(f"channels/{channel_name}/message", {"text": msg})

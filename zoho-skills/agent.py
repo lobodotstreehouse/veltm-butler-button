@@ -57,7 +57,7 @@ Your priorities:
 6. Automation: Trigger Zoho Flows to handle repetitive workflows.
 
 Tone: direct, crisp, executive-level. Use numbers. Flag risks clearly.
-Currency is INR (Rs.). All dates are Asia/Kolkata time (IST).
+Currency is USD ($). All dates are America/New_York time (EST).
 """.strip()
 
 ALL_TOOLS = [

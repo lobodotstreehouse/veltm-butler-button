@@ -104,7 +104,7 @@ Output ONLY the email body, no subject line."""
         f"Name: {name}  |  Source: {source}\n"
         f"Email: {email or '—'}\n"
         f"Score: {rating} ({reason})\n"
-        f"Notes: {notes[:120] or '—'}\n"
+        f"Notes: {(notes or '')[:120] or '—'}\n"
         f"Action: First response sent. Call within 1hr task created."
     )
     _r2.post(

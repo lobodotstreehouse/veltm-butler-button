@@ -1,11 +1,12 @@
 """
 AGENT 3: Morning Brief Agent
-Trigger: Cron — fires at 07:00 IST every weekday.
+Trigger: Cron — fires at 07:00 EST every weekday.
 Actions:
   1. Pulls live data from Zoho CRM (pipeline, tasks, leads, forecast)
   2. Claude synthesizes into a sharp executive brief with ranked priorities
   3. Posts to Cliq #csmo-daily
   4. Sends as email to CSMO
+  5. Delivers via iMessage to +17272213559
 
 No fluff. Numbers only. Tells you what to do first.
 """
@@ -47,13 +48,13 @@ def _collect_data() -> dict:
 
     stalled = zoho.crm_get("Deals", params={
         "fields": "Deal_Name,Stage,Amount,Last_Activity_Time",
-        "criteria": f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)and(Last_Activity_Time:less_equal:{stale_14}T00:00:00+05:30)",
+        "criteria": f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)and(Last_Activity_Time:less_equal:{stale_14}T00:00:00-05:00)",
         "per_page": 20,
     }).get("data", [])
 
     new_leads = zoho.crm_get("Leads", params={
         "fields": "First_Name,Last_Name,Lead_Source,Rating",
-        "criteria": f"Created_Time:greater_equal:{yesterday}T00:00:00+05:30",
+        "criteria": f"Created_Time:greater_equal:{yesterday}T00:00:00-05:00",
         "per_page": 50,
     }).get("data", [])
 
@@ -72,7 +73,7 @@ def _collect_data() -> dict:
         "task_subjects": [t.get("Subject","—") for t in tasks[:5]],
         "overdue_count": len(overdue),
         "closing_soon": [
-            f"{d['Deal_Name']} Rs.{d.get('Amount',0):,.0f} closes {d.get('Closing_Date')}"
+            f"{d['Deal_Name']} ${d.get('Amount',0):,.0f} closes {d.get('Closing_Date')}"
             for d in sorted(closing_soon, key=lambda x: -(x.get("Amount") or 0))[:5]
         ],
         "stalled_count": len(stalled),
@@ -100,10 +101,10 @@ Raw CRM data:
 - Today's tasks: {', '.join(data['task_subjects']) or 'none'}
 - Overdue tasks: {data['overdue_count']}
 - Deals closing this week: {chr(10).join(data['closing_soon']) or 'none'}
-- Stalled deals: {data['stalled_count']} worth Rs.{data['stalled_value']:,.0f}
+- Stalled deals: {data['stalled_count']} worth ${data['stalled_value']:,.0f}
 - New leads (24h): {data['new_leads_24h']} (hot: {len(data['hot_leads'])})
 - Hot leads: {', '.join(data['hot_leads']) or 'none'}
-- Pipeline gross: Rs.{data['pipeline_gross']:,.0f}  |  Weighted: Rs.{data['pipeline_weighted']:,.0f}
+- Pipeline gross: ${data['pipeline_gross']:,.0f}  |  Weighted: ${data['pipeline_weighted']:,.0f}
 - Open deals: {data['open_deals']}
 
 Write a sharp morning brief in exactly this format:
@@ -151,7 +152,17 @@ Keep it under 200 words. Zero fluff. Assume the reader has 90 seconds."""
               "content": brief, "mailFormat": "plaintext"},
     )
 
-    return {"brief": brief, "cliq_posted": True, "email_sent": True}
+    # Deliver via iMessage
+    import subprocess
+    imessage_target = "+17272213559"
+    imessage_body = f"Butler Button Brief — {data['date']}\n\n{brief}"
+    subprocess.run(
+        ["osascript", "-e",
+         f'tell application "Messages" to send "{imessage_body}" to buddy "{imessage_target}" of (first service whose service type is iMessage)'],
+        check=False,
+    )
+
+    return {"brief": brief, "cliq_posted": True, "email_sent": True, "imessage_to": imessage_target}
 
 
 if __name__ == "__main__":

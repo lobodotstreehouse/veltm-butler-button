@@ -9,11 +9,12 @@ import time
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), ".env"), override=True)
 
 ZOHO_DC = "in"
 CRM_BASE = f"https://www.zohoapis.{ZOHO_DC}/crm/v2"
 BOOKS_BASE = f"https://www.zohoapis.{ZOHO_DC}/books/v3"
+MAIL_BASE = f"https://mail.zoho.{ZOHO_DC}/api"
 ACCOUNTS_BASE = f"https://accounts.zoho.{ZOHO_DC}/oauth/v2/token"
 
 

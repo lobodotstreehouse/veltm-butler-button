@@ -58,7 +58,7 @@ def run(deal_id: str):
     prompt = f"""You are writing a booking-confirmed email from Butler Button, a premium luxury travel concierge.
 Client: {contact_name}
 Booking: {deal_name}  |  Destination: {destination or 'TBD'}  |  Service: {service_type}
-Value: Rs.{amount:,.0f}
+Value: ${amount:,.0f}
 Notes: {notes or 'None'}
 
 Write a 3-4 sentence confirmation email that:
@@ -106,7 +106,7 @@ Output ONLY the email body."""
 
     # 5. Cliq celebration
     celebration = (
-        f"DEAL WON  —  Rs.{amount:,.0f}\n"
+        f"DEAL WON  —  ${amount:,.0f}\n"
         f"{deal_name}\n"
         f"Client: {contact_name}  |  {destination or 'Destination TBD'}\n"
         f"Confirmation email sent. 5 onboarding tasks created.\n"

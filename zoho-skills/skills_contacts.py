@@ -97,7 +97,7 @@ def create_contact(
 
 @tool
 def get_vip_clients() -> str:
-    """Return contacts tagged as VIP or with deals over ₹5L."""
+    """Return contacts tagged as VIP or with high-value deals."""
     data = zoho.crm_get("Contacts", params={
         "fields": "Full_Name,Email,Phone,Account_Name,Tag",
         "criteria": "Tag:equals:VIP",

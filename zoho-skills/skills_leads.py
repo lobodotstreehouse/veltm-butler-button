@@ -15,7 +15,7 @@ def get_new_leads(days: int = 7) -> str:
     since = (date.today() - timedelta(days=days)).isoformat()
     data = zoho.crm_get("Leads", params={
         "fields": "First_Name,Last_Name,Email,Phone,Lead_Source,Lead_Status,Rating,Created_Time",
-        "criteria": f"Created_Time:greater_equal:{since}T00:00:00+05:30",
+        "criteria": f"Created_Time:greater_equal:{since}T00:00:00-05:00",
         "sort_by": "Created_Time",
         "sort_order": "desc",
         "per_page": 100,
@@ -39,7 +39,7 @@ def get_lead_source_breakdown() -> str:
     today = date.today().isoformat()
     data = zoho.crm_get("Leads", params={
         "fields": "Lead_Source",
-        "criteria": f"Created_Time:between:{first_of_month}T00:00:00+05:30,{today}T23:59:59+05:30",
+        "criteria": f"Created_Time:between:{first_of_month}T00:00:00-05:00,{today}T23:59:59-05:00",
         "per_page": 200,
     })
     leads = data.get("data", [])

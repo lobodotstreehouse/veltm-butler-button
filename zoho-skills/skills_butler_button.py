@@ -40,7 +40,7 @@ def create_service_request(
     service_type: str,
     destination: str,
     travel_date: str,
-    budget_inr: float = 0,
+    budget_usd: float = 0,
     notes: str = "",
 ) -> str:
     """Create a new Butler Button concierge service request as a CRM Deal.
@@ -50,14 +50,14 @@ def create_service_request(
         service_type: Type of service — e.g. Hotel, Villa, Flight, Experience, Itinerary.
         destination: Destination city or region.
         travel_date: Approximate travel date YYYY-MM-DD.
-        budget_inr: Client's stated budget in INR.
+        budget_usd: Client's stated budget in USD.
         notes: Intake notes from conversation or form.
     """
     payload = {
         "Deal_Name": f"{client_name} — {service_type} — {destination}",
         "Stage": "Qualification",
         "Closing_Date": travel_date,
-        "Amount": budget_inr,
+        "Amount": budget_usd,
         "BB_Service_Type": service_type,
         "BB_Destination": destination,
         "Description": notes,
@@ -165,7 +165,7 @@ def get_daily_csmo_brief() -> str:
 
     new_leads_data = zoho.crm_get("Leads", params={
         "fields": "First_Name,Last_Name,Lead_Source",
-        "criteria": f"Created_Time:greater_equal:{week_ago}T00:00:00+05:30",
+        "criteria": f"Created_Time:greater_equal:{week_ago}T00:00:00-05:00",
         "per_page": 100,
     })
     new_leads = new_leads_data.get("data", [])
@@ -173,7 +173,7 @@ def get_daily_csmo_brief() -> str:
     stalled_cutoff = (date.today() - timedelta(days=14)).isoformat()
     stalled_data = zoho.crm_get("Deals", params={
         "fields": "Deal_Name,Stage,Amount",
-        "criteria": f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)and(Last_Activity_Time:less_equal:{stalled_cutoff}T00:00:00+05:30)",
+        "criteria": f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)and(Last_Activity_Time:less_equal:{stalled_cutoff}T00:00:00-05:00)",
         "per_page": 20,
     })
     stalled = stalled_data.get("data", [])

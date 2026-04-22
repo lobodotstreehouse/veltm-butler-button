@@ -142,6 +142,45 @@ BODY:
     return {"campaign_name": campaign_name, "emails": emails, "campaign_ids": campaign_ids}
 
 
+def main(asset_content: dict | None = None) -> dict:
+    """
+    Programmatic entry point called by the poll daemon when Execute_Campaign is set.
+
+    When asset_content is provided (keys: headline, body_copy, social_caption,
+    cta, asset_name) the drip campaign is seeded with that pre-generated content
+    so the three emails build on the already-approved creative rather than
+    starting from scratch.
+
+    When asset_content is None the function falls back to a default segment/goal/
+    angle drawn from environment variables or safe placeholders, matching the
+    behaviour of the CLI entry point.
+
+    Returns the result dict from run() containing campaign_name, emails, and
+    campaign_ids.
+    """
+    import os as _os
+
+    if asset_content is not None:
+        asset_name     = asset_content.get("asset_name") or "Butler Button Campaign"
+        headline       = asset_content.get("headline") or ""
+        body_copy      = asset_content.get("body_copy") or ""
+        social_caption = asset_content.get("social_caption") or ""
+        cta            = asset_content.get("cta") or "Book a discovery call"
+
+        # Derive campaign parameters from the generated content.
+        segment_desc = asset_name
+        goal         = cta
+        angle        = headline or body_copy[:120] or "Premium travel experiences"
+    else:
+        # CLI / standalone fallback — pull from env or use safe placeholders.
+        segment_desc = _os.environ.get("BB_CAMPAIGN_SEGMENT", "Butler Button prospects")
+        goal         = _os.environ.get("BB_CAMPAIGN_GOAL", "Book a discovery call")
+        angle        = _os.environ.get("BB_CAMPAIGN_ANGLE", "Tailored journeys, no detail overlooked")
+
+    list_id = _os.environ.get("ZOHO_CAMPAIGNS_LIST_ID", "")
+    return run(segment_desc, goal, angle, list_id)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--segment", required=True)

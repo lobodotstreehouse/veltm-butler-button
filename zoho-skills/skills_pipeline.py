@@ -22,9 +22,9 @@ def get_pipeline_summary() -> str:
         stages[s]["count"] += 1
         stages[s]["value"] += d.get("Amount") or 0
     total_value = sum(v["value"] for v in stages.values())
-    lines = [f"Pipeline snapshot — {len(deals)} open deals  |  ₹{total_value:,.0f} total"]
+    lines = [f"Pipeline snapshot — {len(deals)} open deals  |  ${total_value:,.0f} total"]
     for stage, agg in sorted(stages.items(), key=lambda x: -x[1]["value"]):
-        lines.append(f"  {stage}: {agg['count']} deals  ₹{agg['value']:,.0f}")
+        lines.append(f"  {stage}: {agg['count']} deals  ${agg['value']:,.0f}")
     return "\n".join(lines)
 
 
@@ -46,14 +46,14 @@ def get_revenue_forecast(days: int = 30) -> str:
     gross_total = sum(d.get("Amount") or 0 for d in deals)
     lines = [
         f"Forecast (next {days} days) — {len(deals)} deals",
-        f"  Gross pipeline: ₹{gross_total:,.0f}",
-        f"  Weighted forecast: ₹{weighted_total:,.0f}",
+        f"  Gross pipeline: ${gross_total:,.0f}",
+        f"  Weighted forecast: ${weighted_total:,.0f}",
         "",
         "Top deals:",
     ]
     for d in sorted(deals, key=lambda x: -(x.get("Amount") or 0))[:5]:
         lines.append(
-            f"  {d['Deal_Name']} — ₹{d.get('Amount', 0):,.0f}  "
+            f"  {d['Deal_Name']} — ${d.get('Amount', 0):,.0f}  "
             f"({d.get('Probability', 0)}%)  closes {d.get('Closing_Date', '?')}"
         )
     return "\n".join(lines)
@@ -82,7 +82,7 @@ def get_deals_closing_soon(days: int = 7) -> str:
         owner = (d.get("Owner") or {}).get("name", "—")
         lines.append(
             f"  [{d.get('Closing_Date')}] {d['Deal_Name']}  {d.get('Stage')}  "
-            f"₹{d.get('Amount', 0):,.0f}  Owner: {owner}"
+            f"${d.get('Amount', 0):,.0f}  Owner: {owner}"
         )
     return "\n".join(lines)
 
@@ -97,7 +97,7 @@ def get_stalled_deals(inactive_days: int = 14) -> str:
     cutoff = (date.today() - timedelta(days=inactive_days)).isoformat()
     data = zoho.crm_get("Deals", params={
         "fields": "Deal_Name,Stage,Amount,Last_Activity_Time,Account_Name,Owner",
-        "criteria": f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)and(Last_Activity_Time:less_equal:{cutoff}T00:00:00+05:30)",
+        "criteria": f"(Stage:not_equal:Closed Won)and(Stage:not_equal:Closed Lost)and(Last_Activity_Time:less_equal:{cutoff}T00:00:00-05:00)",
         "sort_by": "Last_Activity_Time",
         "per_page": 50,
     })
@@ -109,7 +109,7 @@ def get_stalled_deals(inactive_days: int = 14) -> str:
         owner = (d.get("Owner") or {}).get("name", "—")
         last = d.get("Last_Activity_Time", "never")[:10] if d.get("Last_Activity_Time") else "never"
         lines.append(
-            f"  {d['Deal_Name']}  {d.get('Stage')}  ₹{d.get('Amount', 0):,.0f}  "
+            f"  {d['Deal_Name']}  {d.get('Stage')}  ${d.get('Amount', 0):,.0f}  "
             f"last touched: {last}  Owner: {owner}"
         )
     return "\n".join(lines)
@@ -127,9 +127,9 @@ def get_won_deals_mtd() -> str:
     })
     deals = data.get("data", [])
     total = sum(d.get("Amount") or 0 for d in deals)
-    lines = [f"Won MTD: {len(deals)} deals  ₹{total:,.0f}"]
+    lines = [f"Won MTD: {len(deals)} deals  ${total:,.0f}"]
     for d in sorted(deals, key=lambda x: -(x.get("Amount") or 0)):
-        lines.append(f"  {d['Deal_Name']}  ₹{d.get('Amount', 0):,.0f}  {d.get('Closing_Date')}")
+        lines.append(f"  {d['Deal_Name']}  ${d.get('Amount', 0):,.0f}  {d.get('Closing_Date')}")
     return "\n".join(lines)
 
 

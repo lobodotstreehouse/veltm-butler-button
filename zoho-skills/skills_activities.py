@@ -107,7 +107,7 @@ def log_call(
         "Call_Result": call_result,
         "Description": description,
         "Who_Id": {"id": contact_id, "type": "Contacts"},
-        "Call_Start_Time": f"{date.today().isoformat()}T09:00:00+05:30",
+        "Call_Start_Time": f"{date.today().isoformat()}T09:00:00-05:00",
     }
     result = zoho.crm_post("Calls", {"data": [payload]})
     call_id = (result.get("data") or [{}])[0].get("details", {}).get("id", "—")
@@ -133,8 +133,8 @@ def schedule_meeting(
     """
     payload = {
         "Subject": subject,
-        "From_Time": f"{meeting_date}T10:00:00+05:30",
-        "To_Time": f"{meeting_date}T{10 + duration_minutes // 60:02d}:{duration_minutes % 60:02d}:00+05:30",
+        "From_Time": f"{meeting_date}T10:00:00-05:00",
+        "To_Time": f"{meeting_date}T{10 + duration_minutes // 60:02d}:{duration_minutes % 60:02d}:00-05:00",
         "Event_Title": subject,
         "Description": agenda,
         "Participants": [{"participant": contact_id, "type": "contact"}],
