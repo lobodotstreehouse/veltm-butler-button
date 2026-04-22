@@ -19,7 +19,7 @@ import sys
 import anthropic
 import requests
 from datetime import date, timedelta
-from zoho_client import zoho, MAIL_BASE
+from zoho_client import zoho, cliq_post, MAIL_BASE
 
 MAIL_FROM = __import__("os").environ.get("ZOHO_MAIL_FROM", "")
 
@@ -104,17 +104,7 @@ Output ONLY the email body."""
 
     # 6. Optional Cliq note
     if post_cliq:
-        requests.post(
-            "https://cliq.zoho.in/api/v2/channels/sales-pipeline/message",
-            headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                     "Content-Type": "application/json"},
-            json={"text": (
-                f"CALL LOGGED — {full_name}\n"
-                f"Deal: {deal_name or '—'}  |  {duration_min}min\n"
-                f"Notes: {call_notes[:200]}\n"
-                f"Draft ready. Follow-up task: {follow_up_date}"
-            )},
-        )
+        cliq_post(sales-pipeline, msg)
 
     return {
         "contact": full_name, "email": email, "draft_saved": bool(email),

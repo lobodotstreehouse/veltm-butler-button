@@ -72,5 +72,24 @@ class ZohoClient:
         return r.json()
 
 
+CLIQ_BASE = "https://cliq.zoho.in/api/v2"
+CLIQ_DM_FALLBACK = os.environ.get("ZOHO_MAIL_FROM", "carl.remi@veltmtours.com")
+
+
+def cliq_post(channel: str, text: str) -> bool:
+    """Post to a Cliq channel; falls back to DM if the channel doesn't exist."""
+    headers = {"Authorization": f"Zoho-oauthtoken {zoho.token}",
+               "Content-Type": "application/json"}
+    r = requests.post(f"{CLIQ_BASE}/channels/{channel}/message",
+                      headers=headers, json={"text": text})
+    if r.status_code in (200, 201):
+        return True
+    # Channel missing or no access — fall back to DM
+    requests.post(f"{CLIQ_BASE}/dm",
+                  headers=headers,
+                  json={"email": CLIQ_DM_FALLBACK, "text": f"[#{channel}]\n{text}"})
+    return False
+
+
 # Shared singleton — all skills import this
 zoho = ZohoClient()

@@ -22,7 +22,7 @@ import argparse
 import anthropic
 import json
 import requests
-from zoho_client import zoho
+from zoho_client import zoho, cliq_post
 
 CAMPAIGNS_BASE = "https://campaigns.zoho.in/api/v1.1"
 CLIQ_CHANNEL = "marketing"
@@ -147,12 +147,7 @@ Campaign IDs created: {', '.join(c.get('id','—') for c in created_campaigns)}
         + "\n".join(f"  Email {c['email']}: {c['subject']}" for c in created_campaigns)
         + f"\n\nZoho Flow: 2-minute manual activation required (see flow.zoho.in)"
     )
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": cliq_msg},
-    )
+    cliq_post({CLIQ_CHANNEL}, cliq_msg)
 
     return {"automation_name": automation_name, "spec": spec,
             "campaigns_created": created_campaigns, "flow_guide": flow_guide}

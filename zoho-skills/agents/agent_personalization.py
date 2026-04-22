@@ -23,7 +23,7 @@ import argparse
 import anthropic
 import requests
 from datetime import date, timedelta
-from zoho_client import zoho, MAIL_BASE
+from zoho_client import zoho, cliq_post, MAIL_BASE
 
 CLIQ_CHANNEL = "marketing"
 MAIL_FROM = __import__("os").environ.get("ZOHO_MAIL_FROM", "")
@@ -144,18 +144,7 @@ Output ONLY the email body (no subject line)."""
             drafted += 1
 
     # Cliq summary
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": (
-            f"PERSONALIZATION RUN — Segment: {segment}\n"
-            f"Goal: {campaign_goal}\n"
-            f"Contacts: {len(contacts)}  |  "
-            f"{'Sent' if send else 'Drafted'}: {sent or drafted}  |  Skipped (no email): {skipped}\n"
-            f"Each email is unique — references individual history."
-        )},
-    )
+    cliq_post({CLIQ_CHANNEL}, msg)
 
     return {"segment": segment, "total": len(contacts),
             "sent": sent, "drafted": drafted, "skipped": skipped}

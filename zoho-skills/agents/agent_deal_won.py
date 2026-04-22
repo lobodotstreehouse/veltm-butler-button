@@ -15,7 +15,7 @@ import json
 import anthropic
 import requests
 from datetime import date, timedelta
-from zoho_client import zoho, MAIL_BASE
+from zoho_client import zoho, cliq_post, MAIL_BASE
 
 CLIQ_CHANNEL = "sales-pipeline"
 MAIL_FROM = __import__("os").environ.get("ZOHO_MAIL_FROM", "")
@@ -112,12 +112,7 @@ Output ONLY the email body."""
         f"Confirmation email sent. 5 onboarding tasks created.\n"
         f"Next: collect preferences within 48hrs."
     )
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": celebration},
-    )
+    cliq_post({CLIQ_CHANNEL}, celebration)
 
     return {
         "deal_id": deal_id, "deal_name": deal_name, "amount": amount,

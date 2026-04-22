@@ -15,7 +15,7 @@ Deploy: webhook_server.py routes POST /webhook/lead-intake here.
 import json
 import anthropic
 from datetime import date, timedelta
-from zoho_client import zoho
+from zoho_client import zoho, cliq_post
 
 CLIQ_CHANNEL = "leads"
 MAIL_FROM = __import__("os").environ.get("ZOHO_MAIL_FROM", "")
@@ -107,11 +107,7 @@ Output ONLY the email body, no subject line."""
         f"Notes: {(notes or '')[:120] or '—'}\n"
         f"Action: First response sent. Call within 1hr task created."
     )
-    _r2.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}", "Content-Type": "application/json"},
-        json={"text": alert},
-    )
+    cliq_post({CLIQ_CHANNEL}, alert)
 
     return {
         "lead_id": lead_id, "name": name, "rating": rating,

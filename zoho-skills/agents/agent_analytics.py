@@ -19,7 +19,7 @@ import json
 import anthropic
 import requests
 from datetime import date
-from zoho_client import zoho
+from zoho_client import zoho, cliq_post
 
 CAMPAIGNS_BASE = "https://campaigns.zoho.in/api/v1.1"
 CLIQ_CHANNEL = "marketing"
@@ -96,12 +96,7 @@ Be direct. Use the actual numbers. No padding."""
     )
     report = resp.content[0].text.strip()
 
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": report},
-    )
+    cliq_post({CLIQ_CHANNEL}, report)
 
     return {"report": report, "raw": raw_stats}
 

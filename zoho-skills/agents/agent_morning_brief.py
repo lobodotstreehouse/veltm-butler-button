@@ -15,7 +15,7 @@ import json
 import anthropic
 import requests
 from datetime import date, timedelta
-from zoho_client import zoho, MAIL_BASE
+from zoho_client import zoho, cliq_post, MAIL_BASE
 
 CLIQ_CHANNEL = "csmo-daily"
 CSMO_EMAIL = __import__("os").environ.get("CSMO_EMAIL", "carlremi@gmail.com")
@@ -132,12 +132,7 @@ Keep it under 200 words. Zero fluff. Assume the reader has 90 seconds."""
     brief = resp.content[0].text.strip()
 
     # Post to Cliq
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": brief},
-    )
+    cliq_post({CLIQ_CHANNEL}, brief)
 
     # Send as email
     acct_r = requests.get(f"{MAIL_BASE}/accounts",

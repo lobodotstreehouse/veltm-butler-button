@@ -22,7 +22,7 @@ import anthropic
 import subprocess
 import os
 from pathlib import Path
-from zoho_client import zoho
+from zoho_client import zoho, cliq_post
 import requests
 
 REPO_PATH = "/Users/openclaw/veltm-butler-button"
@@ -80,18 +80,7 @@ Output ONLY the complete HTML. No markdown, no explanation."""
     live_url = f"https://lobodotstreehouse.github.io/veltm-butler-button/campaigns/{slug}/"
 
     # Cliq
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": (
-            f"LANDING PAGE LIVE\n"
-            f"Offer: {offer}\n"
-            f"Audience: {audience}\n"
-            f"CTA: {cta}\n"
-            f"URL: {live_url}"
-        )},
-    )
+    cliq_post({CLIQ_CHANNEL}, msg)
 
     return {"slug": slug, "file": str(out_file), "url": live_url}
 

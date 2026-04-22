@@ -23,7 +23,7 @@ import json
 import anthropic
 import requests
 from datetime import date, timedelta
-from zoho_client import zoho
+from zoho_client import zoho, cliq_post
 
 CAMPAIGNS_BASE = "https://campaigns.zoho.in/api/v1.1"
 CLIQ_CHANNEL = "marketing"
@@ -132,12 +132,7 @@ BODY:
         f"3-email drip: Day 0 / Day 3 / Day 7\n\n"
         + "\n".join(f"  Email {i+1} ({e['role']}): {e['subject']}" for i, e in enumerate(emails))
     )
-    requests.post(
-        f"https://cliq.zoho.in/api/v2/channels/{CLIQ_CHANNEL}/message",
-        headers={"Authorization": f"Zoho-oauthtoken {zoho.token}",
-                 "Content-Type": "application/json"},
-        json={"text": summary},
-    )
+    cliq_post({CLIQ_CHANNEL}, summary)
 
     return {"campaign_name": campaign_name, "emails": emails, "campaign_ids": campaign_ids}
 
