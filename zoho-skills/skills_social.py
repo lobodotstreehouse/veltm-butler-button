@@ -1,8 +1,14 @@
 """
 Butler Button — Social Media Skill Suite
 -----------------------------------------
-Publishing via Ayrshare API (ayrshare.com) — covers Instagram, LinkedIn, X,
-Facebook, TikTok, YouTube from a single API key. Set AYRSHARE_API_KEY in .env.
+Publishing routes:
+  instagram        → skills_instagram.py (Instagram Graph API) when INSTAGRAM_PAGE_ACCESS_TOKEN set;
+                     falls back to Ayrshare otherwise. Use skills_instagram.post_image() directly
+                     for feed photos; publish_post() triggers the caption-only CRM Task fallback.
+  linkedin_company → skills_linkedin_company.py (UGC Posts API, VELTM Tours page)
+  linkedin         → skills_linkedin_personal.py when LINKEDIN_PERSONAL_ACCESS_TOKEN set
+  facebook         → skills_facebook.py when FACEBOOK_PAGE_ACCESS_TOKEN set
+  all others       → Ayrshare API (ayrshare.com — $29/mo). Set AYRSHARE_API_KEY in .env.
 
 Zoho Social has no public API and is not available in Zoho Flow — do not attempt.
 
@@ -46,11 +52,12 @@ AYRSHARE_BASE = "https://app.ayrshare.com/api"
 CLIQ_MARKETING = "marketing"
 
 PLATFORM_MAP = {
-    "instagram": "instagram",
-    "linkedin":  "linkedin",
-    "x":         "twitter",
-    "twitter":   "twitter",
-    "facebook":  "facebook",
+    "instagram":        "instagram",
+    "linkedin":         "linkedin",
+    "linkedin_company": "linkedin_company",  # direct UGC Posts API via VELTM org page
+    "x":                "twitter",
+    "twitter":          "twitter",
+    "facebook":         "facebook",
 }
 
 PLATFORM_VOICE = {
@@ -290,20 +297,101 @@ Output ONLY valid JSON."""
 # ── Scheduling & Dispatch ──────────────────────────────────────────────────────
 
 def publish_post(platforms: list, content: str, scheduled_time: str = None) -> dict:
-    """Publish content to one or more social platforms via Ayrshare.
+    """Publish content to one or more social platforms.
 
-    Requires AYRSHARE_API_KEY in .env (get one at ayrshare.com — $29/mo).
-    Supports: instagram, linkedin, x, facebook, tiktok, youtube.
+    Routing:
+      linkedin_personal → skills_linkedin_personal.post_text() (Carl Remi Beauregard profile)
+                          Also used when platform is "linkedin" and
+                          LINKEDIN_PERSONAL_ACCESS_TOKEN is set in .env.
+      linkedin_company  → skills_linkedin_company.post_text() (VELTM Tours page)
+      facebook          → skills_facebook.post_to_page() when FACEBOOK_PAGE_ACCESS_TOKEN is set
+      all others        → Ayrshare (AYRSHARE_API_KEY required)
 
     Args:
-        platforms: List of platforms (e.g. ['instagram', 'linkedin', 'x'])
+        platforms: List of platforms —
+                   instagram | linkedin | linkedin_personal | linkedin_company | x | facebook
         content: Post copy
-        scheduled_time: ISO 8601 datetime string to schedule; None = post immediately
+        scheduled_time: ISO 8601 datetime string to schedule; None = post immediately.
+                        Note: linkedin_personal and linkedin_company do not support scheduled
+                        posting via this skill; those posts go live immediately.
     Returns:
         dict with status and per-platform results
     """
-    result = _post_to_ayrshare(platforms, content, scheduled_time)
-    return result
+    from skills_facebook import post_to_page as _fb_post  # local import avoids circular dep
+
+    results = {}
+    remaining_platforms = list(platforms)
+
+    # ── Direct LinkedIn Company Page route (UGC Posts API) ────────────────────
+    mapped_platforms = [PLATFORM_MAP.get(p.lower(), p.lower()) for p in platforms]
+    if "linkedin_company" in mapped_platforms:
+        from skills_linkedin_company import post_text as _li_company_post  # avoid circular
+        results["linkedin_company"] = _li_company_post(content)
+        remaining_platforms = [
+            p for p in remaining_platforms
+            if PLATFORM_MAP.get(p.lower(), p.lower()) != "linkedin_company"
+        ]
+
+    # ── Direct LinkedIn Personal route (UGC Posts API, Carl Remi Beauregard) ──
+    # Triggered by the explicit "linkedin_personal" key, or by "linkedin" when
+    # LINKEDIN_PERSONAL_ACCESS_TOKEN is present (takes priority over Ayrshare).
+    # Note: UGC Posts API does not support scheduled_time; posts go live immediately.
+    _li_token = os.environ.get("LINKEDIN_PERSONAL_ACCESS_TOKEN", "")
+    _li_personal_targets = {
+        p for p in remaining_platforms
+        if p.lower() == "linkedin_personal"
+        or (p.lower() == "linkedin" and _li_token)
+    }
+    if _li_personal_targets and _li_token:
+        from skills_linkedin_personal import post_text as _li_personal_post  # avoid circular
+        results["linkedin_personal"] = _li_personal_post(content)
+        remaining_platforms = [p for p in remaining_platforms if p not in _li_personal_targets]
+
+    # ── Direct Facebook Graph API route ───────────────────────────────────────
+    if "facebook" in mapped_platforms and os.environ.get("FACEBOOK_PAGE_ACCESS_TOKEN"):
+        scheduled_unix = None
+        if scheduled_time:
+            try:
+                from datetime import timezone
+                from datetime import datetime as _dt
+                # Accept ISO 8601 with or without timezone info
+                dt = _dt.fromisoformat(scheduled_time.replace("Z", "+00:00"))
+                scheduled_unix = int(dt.astimezone(timezone.utc).timestamp())
+            except Exception:
+                pass  # If parse fails, post immediately
+        results["facebook"] = _fb_post(content, scheduled_unix=scheduled_unix)
+        remaining_platforms = [
+            p for p in remaining_platforms
+            if PLATFORM_MAP.get(p.lower(), p.lower()) != "facebook"
+        ]
+
+    # ── Direct Instagram Graph API route (@veltmtours) ───────────────────────
+    # Activated when INSTAGRAM_PAGE_ACCESS_TOKEN is present in .env.
+    # Requires an image_url kwarg for actual posting; falls back to CRM Task
+    # (post_caption_only) when no image URL is available.
+    # Note: image_url is not a parameter of publish_post() in this signature —
+    # callers that have an image URL should call skills_instagram.post_image()
+    # directly.  The route here handles the caption-only fallback path for
+    # agent calls that include "instagram" without an image.
+    _ig_token = os.environ.get("INSTAGRAM_PAGE_ACCESS_TOKEN", "")
+    _ig_platforms = {p for p in remaining_platforms if p.lower() == "instagram"}
+    if _ig_platforms and _ig_token:
+        try:
+            from skills_instagram import post_caption_only as _ig_caption_only
+            results["instagram"] = _ig_caption_only(content)
+        except Exception as e:
+            results["instagram"] = {"status": "error", "message": str(e)}
+        remaining_platforms = [p for p in remaining_platforms if p not in _ig_platforms]
+
+    # ── Ayrshare for all remaining platforms ──────────────────────────────────
+    if remaining_platforms:
+        ayrshare_result = _post_to_ayrshare(remaining_platforms, content, scheduled_time)
+        results["ayrshare"] = ayrshare_result
+
+    # If only one route was used, return that result directly for backwards compat
+    if len(results) == 1:
+        return list(results.values())[0]
+    return results
 
 
 # Keep old name as alias for backwards compatibility in agent_social_content.py
